@@ -1,0 +1,51 @@
+Hi Matt,
+
+As promised, a short summary of our plans regarding our LCP paper. Perhaps you can take a quick look to see if you think this is where we stand.
+
+===========================================================================================================================
+
+Summary of discussion on our LCP submission, 17 May 2012.
+
+Timing: Your thesis has higher priority, but we should try to keep the momentum, so we can resubmit not too long after our thesis submission (in early October?)
+
+Issues from the reviews:
+
+1. We want to keep the focus on vagueness (contra reviewer 3) but (as suggested by reviewer 1) we need to flag at an early stage that vagueness is difficult to isolate for a number of reasons:
+
+(a) the difference between potential/actual vagueness
+(b) the difference between being vague and not containing a number
+(c) the difference between vagueness and non-specificity (as in Mishra's work for instance)
+
+2. We need to be clearer perhaps about the research question that we're testing. The suggestion from reviewer 2, to state alternative hypotheses before each experiment, might be good.
+
+3. We need to read all the suggested literature: Dehaene 97, Feigenson et al 2004, Dehaene 2008, Sauerland & Stateva 2007. The latter contends that "about x" is not vague. Maybe a quick check of this paper will suffice to dismiss it? (There could be a link with the issue 1(c) above.)
+
+4. Consider whether we want to measure reading times (as suggested by reviewer 1). If so, what method should we use? Also, should this influence the choice of materials (e.g., should we try harder to find expressions of similar length?) It's hard enough to find suitable materials as it is, so we should probably avoid further complications ...
+
+5. In a new version of Experiment 3, we should probably make the gaps between numbers proportional to the size of the numbers.
+
+6. The big issue: finding out how much evaluation procedures contribute to the "cost" of a description. Concretely, reviewer 1 worries that the difference that we describe to presence/absence of Number might actually be caused by the possibility/impossibility of doing the task on the basis of a comparison strategy (i.e., "choose the largest/smallest of the two").
+
+-- The first suggestion made by he reviewer might be useful: he suggests to compare "find the square with many dots" vs. "find the square with more than x dots". Both of these can be solved by a comparison strategy, so they're alike in that regard. Our hypothesis would be that the first one is easier. This sounds fine, but can't we argue that we have done almost precisely this as part of experiment 3, when we compared "few" and "fewest"?
+
+-- One could think of an analogous experiment where none of the two cases can be resolved using comparison. For example, "with about x dots" vs "with x dots". On the other hand, we did exactly this as part of experiment 3 ... The question that this raises is whether perhaps we can address this reviewer's main criticism without doing a new experiment.
+
+-- A possible new version of experiment 3, to address the comparison strategy confound. Ideally we'd look at all 8 combinations of YesNumber/NoNumber, YesVague/NoVague, YesComparison/NoComparison. "YesComparison" means that the task can be solved by a simple comparison (as opposed to laborious counting). Here's an imperfect attempt:
+
+YN, YV, YC: far fewer than 10
+YN, YV, NC: about 10  -- I do find this an intriguing contrast. We could do this as a separate experiment (analogous to the suggestion of reviewer 1).
+
+YN, NV, YC: fewer than 10
+YN, NV, NC: 10
+
+NN, YV, YC: few
+NN, YV, NC: few but not very few (?) -- Wouldn't subjects simply choose the one in the middle? (What if we used more than 3 numbers?)
+
+NN, NV, YC: fewest
+NN, NV, NC: fewest except one (?) -- Problem: this is solvable through a slightly more complex kind of comparison. Can we find a better way to fill this slot?
+
+Can we perhaps argue that the NN part of this table is impossible to complete, so the best we can do is an experiment focussing on YN (the first four items in the list)? This strikes me as an approach that might satisfy reviewer 1.
+
+========================================================================================================================
+
+k.
