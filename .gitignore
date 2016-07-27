@@ -1,0 +1,14 @@
+**/.Rproj.user
+**/.Rhistory
+**/.RData
+**/.DS_Store
+
+**/*.aux
+**/*.bbl
+**/*.blg
+**/*.ent
+**/*.fff
+**/*.lof
+**/*.log
+**/*.synctex.gz
+**/*.ttt
