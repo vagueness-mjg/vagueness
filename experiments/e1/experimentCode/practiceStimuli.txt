@@ -1,0 +1,8 @@
+1	5	25	V	L	few
+5	30	25	V	L	many
+2	10	25	P	L	10
+8	45	25	P	L	45
+3	25	15	V	R	few
+8	25	45	V	R	many
+7	25	40	P	R	40
+6	25	35	P	R	35
