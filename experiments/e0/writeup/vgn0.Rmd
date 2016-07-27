@@ -1,0 +1,256 @@
+
+---
+title: "Experiment 0 pilot"
+author: "Matt Green"
+output:
+  html_document:
+    toc: yes
+    mathjax: default
+    template: default
+    code_folding: hide
+    theme: default
+---  
+
+This document aims to be a complete and up to date record of the analysis for vagueness 0, the pilot experiment}
+
+Start clean.
+
+```{r, startClean}
+rm(list=ls())
+```
+
+Knitr doc options.
+
+```{r, docOpts}
+library(knitr)
+knit_hooks$set(crop=hook_pdfcrop)
+opts_chunk$set(cache=TRUE, autodep=TRUE)
+#opts_chunk$set(size="footnotesize")
+#options(width=60)
+```
+
+Load libraries.
+
+```{r, loadLibraries}
+suppressPackageStartupMessages(library(MASS))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(lme4))
+suppressPackageStartupMessages(library(xtable))
+suppressPackageStartupMessages(library(plyr))
+suppressPackageStartupMessages(library(reshape))
+suppressPackageStartupMessages(library(lattice))
+suppressPackageStartupMessages(library(LMERConvenienceFunctions))
+suppressPackageStartupMessages(library(car))
+suppressPackageStartupMessages(library(gridExtra))
+library(grid)
+suppressPackageStartupMessages(library(lmerTest))
+```
+
+Source additional R files with functions for computing confidence intervals.
+
+
+```{r, sourceFunctions}
+source("functions/CIfunctions.R")
+```
+
+# Preprocessing
+Get the data. 
+
+```{r, getData}
+system("cat ../experimentCode/output/*.dat > data.txt", wait=TRUE)
+d <- read.table("data.txt", header=FALSE)
+mynames <- list("gap", "target", "side", "vagueness", "pair", "Version", "Left",
+								"Right", "Text", "Condition", "correctAnswer", "subject",
+								"actualAnswer", "isCorrect", "rt")
+names(d) <- mynames
+d$obs <- 1:dim(d)[1]
+d$trial=0
+for (s in unique(d$subject)){
+  d[d$subject==s,"trial"] <- 1:nrow(subset(d,subject==s))
+}
+# For some reason there is one rt of -6. Set it to NA
+d[d$rt==-6,"rt"] <- NA
+# make a df
+d <- data.frame(
+  obs = d$obs, trial = d$trial, 
+  subject = d$subject, 
+  item = factor(d$pair, label = c("2:4", "3:5", "6:8", "7:9", "2:6", "7:3", "8:4", "5:9")),
+  gap = factor(d$gap, levels = c("BigGap", "SmallGap"), labels = c("Big Gap", "Small Gap")), 
+  quan = factor(d$target, levels = c("BigTarget", "SmallTarget"), labels = c("Big Target", "Small Target")), 
+  vag = factor(d$vagueness, levels = c("Precise", "Vague"), labels = c("Crisp", "Vague")), 
+  side = d$side, err = 1 - d$isCorrect, rt = d$rt)
+d$subit <- rep("Not subitizable", times = nrow(d))
+d$subit[d$item == "2:4"] <- "Subitizable"
+d$subit[d$item == "3:5"] <- "Subitizable"
+d$subit[d$item == "2:6"] <- "Subitizable"
+d$subit[d$item == "7:3"] <- "Subitizable"
+d$subit = as.factor(d$subit)
+d <- subset(d, select = c("obs", "trial", "subject", "item", "gap", "quan", 
+                          "vag", "subit", "side", "err", "rt"))
+```
+
+Size of the data is \Sexpr{nrow(d)} trials. 1 was removed for being minus 6 rt.
+Remove erroneous response trials. There are \Sexpr{nrow(subset(d,err==1))} error trials.
+
+```{r, removeErrorTrials}
+# by setting the RT to NA
+d[d$err==1,"rt"] <- NA
+```
+
+Do some factors and contrasts.  Set subject and item as factors. Sum code vagueness and subitizability.
+
+```{r, postProcessData}
+d$subject <- as.factor(d$subject)
+d$item <- as.factor(d$item)
+d$vag <- relevel(d$vag, ref="Vague")
+contrasts(d$vag) <- contr.sum(2)/2
+d$subit <- relevel(d$subit, ref="Subitizable")
+contrasts(d$subit) <- contr.sum(2)/2
+contrasts(d$quan) <- contr.sum(2)/2
+contrasts(d$gap) <- contr.sum(2)/2
+```
+
+Check the contrasts.
+
+```{r, checkContrasts}
+contrasts(d$vag)
+contrasts(d$subit)
+contrasts(d$quan)
+contrasts(d$gap)
+```
+
+Add transformations of rt
+
+```{r, addTransform}
+d$logRT <- log(d$rt)
+d$recipRT <- -10000/d$rt
+```
+
+For the untrimmed data, show effects of transforming rt.
+
+```{r, plotDistributions, fig.width=4, fig.height=2}
+xs=melt(d,measure.vars=c("rt","logRT","recipRT"))
+densityplot(~value|variable, data=xs, ylab=NULL,xlab=NULL,yaxt=F, scales = list(x = list(relation="free", rot=45), y=list(relation="free",at=NULL)),layout=c(3,1),cex=.3)
+```
+
+Trim the data. This function doesn't work well if there are NA values in the response, so explicitly remove them first.
+
+```{r, trimData}
+dummy <- subset(d, !is.na(rt))
+data.trim <- perSubjectTrim.fnc(dummy, response="rt",subject="subject", trim=2.5)
+```
+
+Check the distribution of the trimmed data to see if a transformation is suggested.
+
+```{r, checkTrim, fig.width=4, fig.height=2}
+xs=melt(data.trim$data,  measure.vars=c("rt","logRT","recipRT"))
+densityplot(~value|variable,data=xs,
+            ylab=NULL,xlab=NULL,yaxt=F,
+            scales=list(x=list(relation="free",rot=45),y=list(relation="free",at=NULL)),cex=.2)
+```
+
+Select either trimmed or untrimmed data by comparing this plot with the untrimmed data. Also use this plot to choose the most normal data (logRT).
+
+```{r, selectTrim}
+dat <- data.trim$data
+```
+
+# RT modelling
+Do a first lmer model. You can't put subit or gap over items because they are between-items.
+
+```{r, lmers}
+lmer2 <- lmer(data=dat, logRT~subit*vag + (subit*vag|subject) + (vag|item))
+# lmer3 is closer to the original anova than lmer2
+lmer3 <- lmer(data=dat, logRT~subit*vag+quan+gap + (subit*vag|subject) + (vag|item))
+```
+
+```{r, summaryLMER, results='asis'}
+print(xtable(summary(lmer3)$coefficients, digits=3), type="html")
+```
+
+## subitizable
+```{r, subitRT, results='asis'}
+print(xtable(summary(lmer(data=dat, subset=subit=="Subitizable",logRT~vag+quan+gap +(vag|subject)+(vag|item)))$coefficients, digits=3), type='html')
+```
+
+## not subitizable
+```{r, notsubitrT, results='asis'}
+print(xtable(summary(lmer(data=dat, subset=subit=="Not subitizable", logRT~vag+quan+gap +(vag|subject)+(vag|item)))$coefficients, digits=3), type='html')
+```
+
+# Error rate analysis
+```{r, errorrates, results='asis'}
+print(xtable(summary(glmer(data=d, err~vag*subit+quan+gap + (vag|subject) + (1|item), family=binomial, control = glmerControl(optimizer = "bobyqa")))$coefficients, digits=3), type='html')
+```
+
+# Plots of significant effects
+```{r, plot1}
+a <- summarySEwithin(data=dat, measurevar="logRT", withinvars=c("vag","subit","item"), idvar="subject")
+as <- subset(a,subit=="Subitizable")
+as$item <- as.character(as$item)
+as$item[as$item=="7:3"] <- "3:7"
+as$item <- factor(as$item)
+pd <- position_dodge(.05)
+plot1 = ggplot(data=as, aes(y=logRT, x=item, ymin=logRT-ci, ymax=ci+logRT, fill=vag, group=vag)) + 
+  geom_line(position=pd) +
+  geom_errorbar(width=.1, position=pd)+
+  geom_point(pch=21, size=4, position=pd) +
+  scale_fill_grey(name=element_blank(),start=0,end=1)+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key=element_blank()) +
+  ggtitle("Response time")
+  
+```
+
+```{r, plot2}
+a <- summarySEwithin(data=d, measurevar="err", withinvars=c("vag","subit","item"), idvar="subject")
+as <- subset(a,subit=="Subitizable")
+as$item <- as.character(as$item)
+as$item[as$item=="7:3"] <- "3:7"
+as$item <- factor(as$item)
+pd <- position_dodge(.05)
+plot2 = ggplot(data=as, aes(y=err, x=item, ymin=err-ci, ymax=ci+err, group=vag, fill=vag))+
+  geom_line(position=pd) +
+  geom_errorbar(width=.1, position=pd)+
+  geom_point(pch=21, size=4, position=pd) +
+  scale_fill_grey(name=element_blank(),start=0,end=1)+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key=element_blank()) +
+  ggtitle("Error rate")
+  
+```
+
+```{r, gridarrange, fig.width=7.5, fig.height=3}
+grid.arrange(plot1, plot2, nrow=1, top="Subitizable only")
+```
+
+```{r, barchart-rts}
+bwtheme <- standard.theme("pdf", color=FALSE)
+b1=barchart(data=ddply(dat,.(vag,subit),summarise,rt=mean(logRT)), rt~subit, group=vag, auto.key=list(),par.settings=bwtheme)
+```
+
+```{r, barchart-errors}
+b2=barchart(data=ddply(d,.(vag,subit),summarise,err=mean(err)), err~subit, group=vag, auto.key=list(),par.settings=bwtheme)
+```
+
+```{r, both-barcharts, fig.width=7, fig.height=3}
+grid.arrange(b1,b2,ncol=2)
+```
+
+Subitizability x Vagueness x Quantity
+
+```{r, plotMeansa}
+a <- summarySEwithin(data=dat, measurevar="logRT", withinvars=c("vag","quan","subit"), idvar="subject")
+pd <- position_dodge(.1)
+meansplot1 <- ggplot(a,aes(y=logRT,x=vag,group=quan,shape=quan,col=quan,ymin=logRT-ci, ymax=ci+logRT))+geom_point(size=4, position=pd)+geom_line(position=pd) +facet_grid(~subit) + geom_errorbar(width=.1, position=pd) + theme_bw()+ theme(panel.grid.major=element_blank()) 
+```
+
+```{r, plotMeans, fig.width=7, fig.height=3}
+meansplot1
+```
+
+```{r, qqplotLMER, fig.width=3, fig.height=3.5}
+qqPlot(residuals(lmer2),cex=.5)
+```
+
