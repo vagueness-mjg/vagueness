@@ -1,0 +1,193 @@
+Sub	Trl	Itm	Cnd	Ord	Qty	Prm	Lft	Mid	Rgt	key	rt	Ins
+18	101	1	3	1	1	20	6	15	24	L	1464	Choose a square with far fewer dots than the target
+18	102	2	4	1	1	30	16	25	34	L	1226	Choose a square with fewer dots than the target
+18	103	3	3	2	2	30	44	35	26	L	1119	Choose a square with far more dots than the target
+18	104	4	3	2	1	50	54	45	36	M	1817	Choose a square with far fewer dots than the target
+18	105	1	4	2	2	10	24	15	6	L	974	Choose a square with more dots than the target
+18	106	2	2	2	1	16	34	25	16	R	2385	Choose a square with the same number of dots as the target
+18	107	3	2	2	2	44	44	35	26	M	2310	Choose a square with the same number of dots as the target
+18	108	4	3	1	1	50	36	45	54	L	961	Choose a square with far fewer dots than the target
+18	109	1	3	2	1	20	24	15	6	R	873	Choose a square with far fewer dots than the target
+18	110	2	4	2	2	20	34	25	16	R	1331	Choose a square with more dots than the target
+18	111	3	4	1	1	40	26	35	44	L	1068	Choose a square with fewer dots than the target
+18	112	4	1	2	1	40	54	45	36	R	1175	Choose a square with about the same number of dots as the target
+18	113	1	4	1	1	20	6	15	24	L	689	Choose a square with fewer dots than the target
+18	114	2	1	2	2	30	34	25	16	M	1358	Choose a square with about the same number of dots as the target
+18	115	3	2	1	2	44	26	35	44	M	1150	Choose a square with the same number of dots as the target
+18	116	4	1	1	1	40	36	45	54	L	1423	Choose a square with about the same number of dots as the target
+18	117	1	2	2	1	6	24	15	6	R	826	Choose a square with the same number of dots as the target
+18	118	2	4	2	1	30	34	25	16	R	1302	Choose a square with fewer dots than the target
+18	119	3	1	1	2	40	26	35	44	M	1020	Choose a square with about the same number of dots as the target
+18	120	4	3	2	2	40	54	45	36	L	1165	Choose a square with far more dots than the target
+18	121	1	1	1	2	20	6	15	24	L	539	Choose a square with about the same number of dots as the target
+18	122	2	3	2	1	30	34	25	16	M	1456	Choose a square with far fewer dots than the target
+18	123	3	3	2	1	40	44	35	26	R	1125	Choose a square with far fewer dots than the target
+18	124	4	4	2	2	40	54	45	36	L	1029	Choose a square with more dots than the target
+18	125	1	4	1	2	10	6	15	24	R	1394	Choose a square with more dots than the target
+18	126	2	2	2	2	34	34	25	16	L	2679	Choose a square with the same number of dots as the target
+18	127	3	4	1	2	30	26	35	44	M	1299	Choose a square with more dots than the target
+18	128	4	1	1	2	50	36	45	54	M	1250	Choose a square with about the same number of dots as the target
+18	129	1	1	1	1	10	6	15	24	M	1477	Choose a square with about the same number of dots as the target
+18	130	2	3	1	1	30	16	25	34	L	1362	Choose a square with far fewer dots than the target
+18	131	3	2	1	1	26	26	35	44	L	858	Choose a square with the same number of dots as the target
+18	132	4	2	2	1	36	54	45	36	R	1133	Choose a square with the same number of dots as the target
+18	133	1	1	2	1	10	24	15	6	R	1015	Choose a square with about the same number of dots as the target
+18	134	2	4	1	2	20	16	25	34	R	967	Choose a square with more dots than the target
+18	135	3	4	2	1	40	44	35	26	R	1393	Choose a square with fewer dots than the target
+18	136	4	2	1	2	54	36	45	54	L	2231	Choose a square with the same number of dots as the target
+18	137	1	2	2	2	24	24	15	6	L	1049	Choose a square with the same number of dots as the target
+18	138	2	2	1	2	34	16	25	34	R	1504	Choose a square with the same number of dots as the target
+18	139	3	3	1	2	30	26	35	44	R	1067	Choose a square with far more dots than the target
+18	140	4	4	1	2	40	36	45	54	M	2167	Choose a square with more dots than the target
+18	141	1	1	2	2	20	24	15	6	M	1119	Choose a square with about the same number of dots as the target
+18	142	2	1	1	2	30	16	25	34	R	1010	Choose a square with about the same number of dots as the target
+18	143	3	1	1	1	30	26	35	44	M	1043	Choose a square with about the same number of dots as the target
+18	144	4	2	2	2	54	54	45	36	L	2360	Choose a square with the same number of dots as the target
+18	145	1	2	1	1	6	6	15	24	L	2281	Choose a square with the same number of dots as the target
+18	146	2	3	1	2	20	16	25	34	R	873	Choose a square with far more dots than the target
+18	147	3	1	2	1	30	44	35	26	M	904	Choose a square with about the same number of dots as the target
+18	148	4	4	1	1	50	36	45	54	L	862	Choose a square with fewer dots than the target
+18	149	1	3	1	2	10	6	15	24	R	652	Choose a square with far more dots than the target
+18	150	2	3	2	2	20	34	25	16	L	754	Choose a square with far more dots than the target
+18	151	3	4	2	2	30	44	35	26	M	963	Choose a square with more dots than the target
+18	152	4	3	1	2	40	36	45	54	R	779	Choose a square with far more dots than the target
+18	153	1	2	1	2	24	6	15	24	R	750	Choose a square with the same number of dots as the target
+18	154	2	1	1	1	20	16	25	34	M	996	Choose a square with about the same number of dots as the target
+18	155	3	1	2	2	40	44	35	26	M	863	Choose a square with about the same number of dots as the target
+18	156	4	2	1	1	36	36	45	54	M	736	Choose a square with the same number of dots as the target
+18	157	1	3	2	2	10	24	15	6	L	558	Choose a square with far more dots than the target
+18	158	2	2	1	1	16	16	25	34	L	762	Choose a square with the same number of dots as the target
+18	159	3	3	1	1	40	26	35	44	L	916	Choose a square with far fewer dots than the target
+18	160	4	4	2	1	50	54	45	36	R	665	Choose a square with fewer dots than the target
+18	161	1	4	2	1	20	24	15	6	R	549	Choose a square with fewer dots than the target
+18	162	2	1	2	1	20	34	25	16	M	888	Choose a square with about the same number of dots as the target
+18	163	3	2	2	1	26	44	35	26	M	1186	Choose a square with the same number of dots as the target
+18	164	4	1	2	2	50	54	45	36	M	955	Choose a square with about the same number of dots as the target
+18	101	1	2	1	2	24	6	15	24	M	1219	Choose a square with the same number of dots as the target
+18	102	2	2	1	2	34	16	25	34	R	713	Choose a square with the same number of dots as the target
+18	103	3	1	2	1	30	44	35	26	M	710	Choose a square with about the same number of dots as the target
+18	104	4	3	2	1	50	54	45	36	R	611	Choose a square with far fewer dots than the target
+18	105	1	1	2	2	20	24	15	6	M	981	Choose a square with about the same number of dots as the target
+18	106	2	3	2	1	30	34	25	16	R	826	Choose a square with far fewer dots than the target
+18	107	3	1	2	2	40	44	35	26	M	1498	Choose a square with about the same number of dots as the target
+18	108	4	1	2	1	40	54	45	36	M	700	Choose a square with about the same number of dots as the target
+18	109	1	2	2	2	24	24	15	6	M	701	Choose a square with the same number of dots as the target
+18	110	2	1	1	2	30	16	25	34	M	816	Choose a square with about the same number of dots as the target
+18	111	3	1	1	1	30	26	35	44	M	1010	Choose a square with about the same number of dots as the target
+18	112	4	2	1	1	36	36	45	54	M	1067	Choose a square with the same number of dots as the target
+18	113	1	2	2	1	6	24	15	6	R	1090	Choose a square with the same number of dots as the target
+18	114	2	2	2	1	16	34	25	16	R	1018	Choose a square with the same number of dots as the target
+18	115	3	2	2	1	26	44	35	26	R	718	Choose a square with the same number of dots as the target
+18	116	4	3	2	2	40	54	45	36	L	1670	Choose a square with far more dots than the target
+18	117	1	1	2	1	10	24	15	6	M	2147	Choose a square with about the same number of dots as the target
+18	118	2	2	2	2	34	34	25	16	L	1474	Choose a square with the same number of dots as the target
+18	119	3	4	1	2	30	26	35	44	R	690	Choose a square with more dots than the target
+18	120	4	1	1	1	40	36	45	54	M	1089	Choose a square with about the same number of dots as the target
+18	121	1	3	1	1	20	6	15	24	L	557	Choose a square with far fewer dots than the target
+18	122	2	4	1	1	30	16	25	34	L	2497	Choose a square with fewer dots than the target
+18	123	3	3	2	1	40	44	35	26	R	688	Choose a square with far fewer dots than the target
+18	124	4	3	1	2	40	36	45	54	R	605	Choose a square with far more dots than the target
+18	125	1	3	2	1	20	24	15	6	R	768	Choose a square with far fewer dots than the target
+18	126	2	4	1	2	20	16	25	34	R	694	Choose a square with more dots than the target
+18	127	3	4	2	1	40	44	35	26	R	1284	Choose a square with fewer dots than the target
+18	128	4	4	2	2	40	54	45	36	L	856	Choose a square with more dots than the target
+18	129	1	1	1	1	10	6	15	24	M	1373	Choose a square with about the same number of dots as the target
+18	130	2	1	1	1	20	16	25	34	M	981	Choose a square with about the same number of dots as the target
+18	131	3	4	2	2	30	44	35	26	L	770	Choose a square with more dots than the target
+18	132	4	3	1	1	50	36	45	54	L	1285	Choose a square with far fewer dots than the target
+18	133	1	4	1	1	20	6	15	24	L	563	Choose a square with fewer dots than the target
+18	134	2	3	1	2	20	16	25	34	R	546	Choose a square with far more dots than the target
+18	135	3	4	1	1	40	26	35	44	M	864	Choose a square with fewer dots than the target
+18	136	4	1	1	2	50	36	45	54	L	1233	Choose a square with about the same number of dots as the target
+18	137	1	4	2	1	20	24	15	6	R	533	Choose a square with fewer dots than the target
+18	138	2	4	2	1	30	34	25	16	R	988	Choose a square with fewer dots than the target
+18	139	3	3	1	2	30	26	35	44	R	947	Choose a square with far more dots than the target
+18	140	4	4	1	2	40	36	45	54	R	704	Choose a square with more dots than the target
+18	141	1	1	1	2	20	6	15	24	M	673	Choose a square with about the same number of dots as the target
+18	142	2	3	2	2	20	34	25	16	M	730	Choose a square with far more dots than the target
+18	143	3	2	1	2	44	26	35	44	M	2458	Choose a square with the same number of dots as the target
+18	144	4	2	2	2	54	54	45	36	M	1238	Choose a square with the same number of dots as the target
+18	145	1	2	1	1	6	6	15	24	L	1318	Choose a square with the same number of dots as the target
+18	146	2	1	2	2	30	34	25	16	M	955	Choose a square with about the same number of dots as the target
+18	147	3	1	1	2	40	26	35	44	M	1514	Choose a square with about the same number of dots as the target
+18	148	4	4	1	1	50	36	45	54	L	1293	Choose a square with fewer dots than the target
+18	149	1	3	1	2	10	6	15	24	R	473	Choose a square with far more dots than the target
+18	150	2	2	1	1	16	16	25	34	M	1713	Choose a square with the same number of dots as the target
+18	151	3	2	1	1	26	26	35	44	M	1262	Choose a square with the same number of dots as the target
+18	152	4	2	1	2	54	36	45	54	R	1428	Choose a square with the same number of dots as the target
+18	153	1	3	2	2	10	24	15	6	L	674	Choose a square with far more dots than the target
+18	154	2	1	2	1	20	34	25	16	R	1187	Choose a square with about the same number of dots as the target
+18	155	3	2	2	2	44	44	35	26	L	1095	Choose a square with the same number of dots as the target
+18	156	4	4	2	1	50	54	45	36	R	755	Choose a square with fewer dots than the target
+18	157	1	4	1	2	10	6	15	24	R	625	Choose a square with more dots than the target
+18	158	2	3	1	1	30	16	25	34	L	1150	Choose a square with far fewer dots than the target
+18	159	3	3	1	1	40	26	35	44	L	1103	Choose a square with far fewer dots than the target
+18	160	4	2	2	1	36	54	45	36	R	851	Choose a square with the same number of dots as the target
+18	161	1	4	2	2	10	24	15	6	L	832	Choose a square with more dots than the target
+18	162	2	4	2	2	20	34	25	16	L	741	Choose a square with more dots than the target
+18	163	3	3	2	2	30	44	35	26	L	697	Choose a square with far more dots than the target
+18	164	4	1	2	2	50	54	45	36	M	648	Choose a square with about the same number of dots as the target
+18	101	1	1	2	2	20	24	15	6	L	1274	Choose a square with about the same number of dots as the target
+18	102	2	3	2	2	20	34	25	16	L	700	Choose a square with far more dots than the target
+18	103	3	1	1	2	40	26	35	44	R	815	Choose a square with about the same number of dots as the target
+18	104	4	4	2	1	50	54	45	36	M	822	Choose a square with fewer dots than the target
+18	105	1	4	2	1	20	24	15	6	R	558	Choose a square with fewer dots than the target
+18	106	2	4	2	1	30	34	25	16	R	818	Choose a square with fewer dots than the target
+18	107	3	4	2	2	30	44	35	26	L	782	Choose a square with more dots than the target
+18	108	4	4	1	1	50	36	45	54	L	760	Choose a square with fewer dots than the target
+18	109	1	2	1	2	24	6	15	24	L	886	Choose a square with the same number of dots as the target
+18	110	2	2	2	1	16	34	25	16	R	1121	Choose a square with the same number of dots as the target
+18	111	3	3	1	2	30	26	35	44	R	681	Choose a square with far more dots than the target
+18	112	4	4	1	2	40	36	45	54	R	641	Choose a square with more dots than the target
+18	113	1	1	1	1	10	6	15	24	M	1407	Choose a square with about the same number of dots as the target
+18	114	2	1	1	2	30	16	25	34	M	713	Choose a square with about the same number of dots as the target
+18	115	3	1	1	1	30	26	35	44	L	967	Choose a square with about the same number of dots as the target
+18	116	4	1	1	1	40	36	45	54	M	851	Choose a square with about the same number of dots as the target
+18	117	1	4	2	2	10	24	15	6	L	1731	Choose a square with more dots than the target
+18	118	2	2	1	2	34	16	25	34	M	620	Choose a square with the same number of dots as the target
+18	119	3	3	1	1	40	26	35	44	L	1161	Choose a square with far fewer dots than the target
+18	120	4	3	1	2	40	36	45	54	R	542	Choose a square with far more dots than the target
+18	121	1	3	2	1	20	24	15	6	M	1488	Choose a square with far fewer dots than the target
+18	122	2	1	1	1	20	16	25	34	M	736	Choose a square with about the same number of dots as the target
+18	123	3	2	1	1	26	26	35	44	R	437	Choose a square with the same number of dots as the target
+18	124	4	2	1	1	36	36	45	54	M	946	Choose a square with the same number of dots as the target
+18	125	1	1	1	2	20	6	15	24	M	718	Choose a square with about the same number of dots as the target
+18	126	2	3	2	1	30	34	25	16	R	1325	Choose a square with far fewer dots than the target
+18	127	3	1	2	1	30	44	35	26	R	1269	Choose a square with about the same number of dots as the target
+18	128	4	1	2	2	50	54	45	36	M	802	Choose a square with about the same number of dots as the target
+18	129	1	3	2	2	10	24	15	6	L	1090	Choose a square with far more dots than the target
+18	130	2	1	2	1	20	34	25	16	R	1174	Choose a square with about the same number of dots as the target
+18	131	3	3	2	2	30	44	35	26	R	1631	Choose a square with far more dots than the target
+18	132	4	2	2	1	36	54	45	36	R	1040	Choose a square with the same number of dots as the target
+18	133	1	3	1	2	10	6	15	24	M	800	Choose a square with far more dots than the target
+18	134	2	1	2	2	30	34	25	16	M	618	Choose a square with about the same number of dots as the target
+18	135	3	2	2	2	44	44	35	26	M	702	Choose a square with the same number of dots as the target
+18	136	4	4	2	2	40	54	45	36	L	1033	Choose a square with more dots than the target
+18	137	1	2	1	1	6	6	15	24	L	1609	Choose a square with the same number of dots as the target
+18	138	2	4	1	2	20	16	25	34	R	440	Choose a square with more dots than the target
+18	139	3	2	1	2	44	26	35	44	M	1096	Choose a square with the same number of dots as the target
+18	140	4	2	1	2	54	36	45	54	M	561	Choose a square with the same number of dots as the target
+18	141	1	2	2	1	6	24	15	6	R	1117	Choose a square with the same number of dots as the target
+18	142	2	4	1	1	30	16	25	34	R	1112	Choose a square with fewer dots than the target
+18	143	3	3	2	1	40	44	35	26	R	1093	Choose a square with far fewer dots than the target
+18	144	4	1	1	2	50	36	45	54	M	784	Choose a square with about the same number of dots as the target
+18	145	1	1	2	1	10	24	15	6	M	1646	Choose a square with about the same number of dots as the target
+18	146	2	2	2	2	34	34	25	16	M	766	Choose a square with the same number of dots as the target
+18	147	3	1	2	2	40	44	35	26	M	448	Choose a square with about the same number of dots as the target
+18	148	4	1	2	1	40	54	45	36	M	1334	Choose a square with about the same number of dots as the target
+18	149	1	4	1	1	20	6	15	24	L	607	Choose a square with fewer dots than the target
+18	150	2	3	1	1	30	16	25	34	L	1200	Choose a square with far fewer dots than the target
+18	151	3	4	1	2	30	26	35	44	R	456	Choose a square with more dots than the target
+18	152	4	3	1	1	50	36	45	54	L	995	Choose a square with far fewer dots than the target
+18	153	1	2	2	2	24	24	15	6	R	719	Choose a square with the same number of dots as the target
+18	154	2	2	1	1	16	16	25	34	L	1175	Choose a square with the same number of dots as the target
+18	155	3	4	1	1	40	26	35	44	L	1491	Choose a square with fewer dots than the target
+18	156	4	3	2	1	50	54	45	36	R	1071	Choose a square with far fewer dots than the target
+18	157	1	3	1	1	20	6	15	24	L	599	Choose a square with far fewer dots than the target
+18	158	2	4	2	2	20	34	25	16	L	1482	Choose a square with more dots than the target
+18	159	3	4	2	1	40	44	35	26	R	990	Choose a square with fewer dots than the target
+18	160	4	3	2	2	40	54	45	36	L	1296	Choose a square with far more dots than the target
+18	161	1	4	1	2	10	6	15	24	R	666	Choose a square with more dots than the target
+18	162	2	3	1	2	20	16	25	34	R	623	Choose a square with far more dots than the target
+18	163	3	2	2	1	26	44	35	26	L	938	Choose a square with the same number of dots as the target
+18	164	4	2	2	2	54	54	45	36	L	845	Choose a square with the same number of dots as the target

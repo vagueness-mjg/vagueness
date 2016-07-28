@@ -1,0 +1,193 @@
+Sub	Trl	Itm	Cnd	Ord	Qty	Prm	Lft	Mid	Rgt	key	rt	Ins
+11	101	1	3	2	1	20	24	15	6	R	2093	Choose a square with far fewer dots than the target
+11	102	2	2	1	1	16	16	25	34	L	1922	Choose a square with the same number of dots as the target
+11	103	3	2	2	1	26	44	35	26	M	1837	Choose a square with the same number of dots as the target
+11	104	4	1	1	2	50	36	45	54	R	1435	Choose a square with about the same number of dots as the target
+11	105	1	2	1	1	6	6	15	24	L	2370	Choose a square with the same number of dots as the target
+11	106	2	4	1	2	20	16	25	34	R	1795	Choose a square with more dots than the target
+11	107	3	4	1	1	40	26	35	44	L	1401	Choose a square with fewer dots than the target
+11	108	4	1	1	1	40	36	45	54	R	1746	Choose a square with about the same number of dots as the target
+11	109	1	4	2	2	10	24	15	6	L	1607	Choose a square with more dots than the target
+11	110	2	3	1	2	20	16	25	34	R	885	Choose a square with far more dots than the target
+11	111	3	1	2	2	40	44	35	26	M	828	Choose a square with about the same number of dots as the target
+11	112	4	4	2	2	40	54	45	36	M	814	Choose a square with more dots than the target
+11	113	1	1	1	2	20	6	15	24	R	1263	Choose a square with about the same number of dots as the target
+11	114	2	2	1	2	34	16	25	34	R	1309	Choose a square with the same number of dots as the target
+11	115	3	1	2	1	30	44	35	26	M	1798	Choose a square with about the same number of dots as the target
+11	116	4	2	1	2	54	36	45	54	M	1508	Choose a square with the same number of dots as the target
+11	117	1	2	2	2	24	24	15	6	L	1224	Choose a square with the same number of dots as the target
+11	118	2	1	1	1	20	16	25	34	M	982	Choose a square with about the same number of dots as the target
+11	119	3	3	2	2	30	44	35	26	L	765	Choose a square with far more dots than the target
+11	120	4	2	2	2	54	54	45	36	L	1357	Choose a square with the same number of dots as the target
+11	121	1	1	2	1	10	24	15	6	R	1276	Choose a square with about the same number of dots as the target
+11	122	2	1	2	2	30	34	25	16	M	1078	Choose a square with about the same number of dots as the target
+11	123	3	2	1	2	44	26	35	44	R	1102	Choose a square with the same number of dots as the target
+11	124	4	4	1	2	40	36	45	54	M	1537	Choose a square with more dots than the target
+11	125	1	3	2	2	10	24	15	6	L	1654	Choose a square with far more dots than the target
+11	126	2	3	2	1	30	34	25	16	R	812	Choose a square with far fewer dots than the target
+11	127	3	3	1	2	30	26	35	44	R	1123	Choose a square with far more dots than the target
+11	128	4	3	2	1	50	54	45	36	L	918	Choose a square with far fewer dots than the target
+11	129	1	4	1	2	10	6	15	24	R	640	Choose a square with more dots than the target
+11	130	2	3	2	2	20	34	25	16	L	945	Choose a square with far more dots than the target
+11	131	3	4	2	2	30	44	35	26	L	1082	Choose a square with more dots than the target
+11	132	4	4	2	1	50	54	45	36	R	629	Choose a square with fewer dots than the target
+11	133	1	1	2	2	20	24	15	6	M	795	Choose a square with about the same number of dots as the target
+11	134	2	1	1	2	30	16	25	34	M	720	Choose a square with about the same number of dots as the target
+11	135	3	1	1	2	40	26	35	44	M	897	Choose a square with about the same number of dots as the target
+11	136	4	3	1	1	50	36	45	54	L	768	Choose a square with far fewer dots than the target
+11	137	1	3	1	1	20	6	15	24	L	585	Choose a square with far fewer dots than the target
+11	138	2	1	2	1	20	34	25	16	R	929	Choose a square with about the same number of dots as the target
+11	139	3	1	1	1	30	26	35	44	M	684	Choose a square with about the same number of dots as the target
+11	140	4	1	2	1	40	54	45	36	M	816	Choose a square with about the same number of dots as the target
+11	141	1	4	1	1	20	6	15	24	L	547	Choose a square with fewer dots than the target
+11	142	2	2	2	2	34	34	25	16	M	644	Choose a square with the same number of dots as the target
+11	143	3	2	1	1	26	26	35	44	L	1217	Choose a square with the same number of dots as the target
+11	144	4	4	1	1	50	36	45	54	L	616	Choose a square with fewer dots than the target
+11	145	1	1	1	1	10	6	15	24	L	478	Choose a square with about the same number of dots as the target
+11	146	2	4	1	1	30	16	25	34	L	1328	Choose a square with fewer dots than the target
+11	147	3	4	1	2	30	26	35	44	M	1687	Choose a square with more dots than the target
+11	148	4	2	1	1	36	36	45	54	L	1698	Choose a square with the same number of dots as the target
+11	149	1	2	1	2	24	6	15	24	R	863	Choose a square with the same number of dots as the target
+11	150	2	4	2	2	20	34	25	16	L	942	Choose a square with more dots than the target
+11	151	3	4	2	1	40	44	35	26	R	606	Choose a square with fewer dots than the target
+11	152	4	2	2	1	36	54	45	36	R	979	Choose a square with the same number of dots as the target
+11	153	1	2	2	1	6	24	15	6	R	1098	Choose a square with the same number of dots as the target
+11	154	2	2	2	1	16	34	25	16	R	840	Choose a square with the same number of dots as the target
+11	155	3	3	1	1	40	26	35	44	L	860	Choose a square with far fewer dots than the target
+11	156	4	3	1	2	40	36	45	54	M	1184	Choose a square with far more dots than the target
+11	157	1	4	2	1	20	24	15	6	R	566	Choose a square with fewer dots than the target
+11	158	2	4	2	1	30	34	25	16	R	649	Choose a square with fewer dots than the target
+11	159	3	2	2	2	44	44	35	26	M	885	Choose a square with the same number of dots as the target
+11	160	4	3	2	2	40	54	45	36	L	1498	Choose a square with far more dots than the target
+11	161	1	3	1	2	10	6	15	24	R	647	Choose a square with far more dots than the target
+11	162	2	3	1	1	30	16	25	34	L	462	Choose a square with far fewer dots than the target
+11	163	3	3	2	1	40	44	35	26	R	774	Choose a square with far fewer dots than the target
+11	164	4	1	2	2	50	54	45	36	M	874	Choose a square with about the same number of dots as the target
+11	101	1	3	2	1	20	24	15	6	M	810	Choose a square with far fewer dots than the target
+11	102	2	4	1	1	30	16	25	34	L	569	Choose a square with fewer dots than the target
+11	103	3	1	2	2	40	44	35	26	M	709	Choose a square with about the same number of dots as the target
+11	104	4	3	2	2	40	54	45	36	L	773	Choose a square with far more dots than the target
+11	105	1	1	1	2	20	6	15	24	R	890	Choose a square with about the same number of dots as the target
+11	106	2	4	2	1	30	34	25	16	R	497	Choose a square with fewer dots than the target
+11	107	3	4	2	1	40	44	35	26	R	720	Choose a square with fewer dots than the target
+11	108	4	4	2	1	50	54	45	36	L	635	Choose a square with fewer dots than the target
+11	109	1	4	2	1	20	24	15	6	R	552	Choose a square with fewer dots than the target
+11	110	2	3	2	2	20	34	25	16	L	551	Choose a square with far more dots than the target
+11	111	3	2	1	2	44	26	35	44	M	996	Choose a square with the same number of dots as the target
+11	112	4	2	2	1	36	54	45	36	L	1541	Choose a square with the same number of dots as the target
+11	113	1	3	1	1	20	6	15	24	L	512	Choose a square with far fewer dots than the target
+11	114	2	3	2	1	30	34	25	16	R	1113	Choose a square with far fewer dots than the target
+11	115	3	4	2	2	30	44	35	26	L	513	Choose a square with more dots than the target
+11	116	4	4	2	2	40	54	45	36	L	717	Choose a square with more dots than the target
+11	117	1	1	2	1	10	24	15	6	M	859	Choose a square with about the same number of dots as the target
+11	118	2	1	2	2	30	34	25	16	M	777	Choose a square with about the same number of dots as the target
+11	119	3	1	1	2	40	26	35	44	R	368	Choose a square with about the same number of dots as the target
+11	120	4	1	2	1	40	54	45	36	L	1005	Choose a square with about the same number of dots as the target
+11	121	1	4	1	1	20	6	15	24	L	601	Choose a square with fewer dots than the target
+11	122	2	1	1	2	30	16	25	34	M	1383	Choose a square with about the same number of dots as the target
+11	123	3	1	1	1	30	26	35	44	R	579	Choose a square with about the same number of dots as the target
+11	124	4	1	1	1	40	36	45	54	L	1939	Choose a square with about the same number of dots as the target
+11	125	1	1	2	2	20	24	15	6	M	805	Choose a square with about the same number of dots as the target
+11	126	2	2	1	1	16	16	25	34	L	727	Choose a square with the same number of dots as the target
+11	127	3	3	2	2	30	44	35	26	L	757	Choose a square with far more dots than the target
+11	128	4	4	1	2	40	36	45	54	M	712	Choose a square with more dots than the target
+11	129	1	2	1	2	24	6	15	24	M	796	Choose a square with the same number of dots as the target
+11	130	2	1	1	1	20	16	25	34	L	869	Choose a square with about the same number of dots as the target
+11	131	3	4	1	1	40	26	35	44	L	509	Choose a square with fewer dots than the target
+11	132	4	4	1	1	50	36	45	54	M	1775	Choose a square with fewer dots than the target
+11	133	1	2	2	2	24	24	15	6	M	906	Choose a square with the same number of dots as the target
+11	134	2	4	1	2	20	16	25	34	R	614	Choose a square with more dots than the target
+11	135	3	3	1	2	30	26	35	44	R	589	Choose a square with far more dots than the target
+11	136	4	3	2	1	50	54	45	36	R	1508	Choose a square with far fewer dots than the target
+11	137	1	2	2	1	6	24	15	6	R	928	Choose a square with the same number of dots as the target
+11	138	2	2	2	2	34	34	25	16	M	631	Choose a square with the same number of dots as the target
+11	139	3	3	1	1	40	26	35	44	R	941	Choose a square with far fewer dots than the target
+11	140	4	1	2	2	50	54	45	36	M	697	Choose a square with about the same number of dots as the target
+11	141	1	4	1	2	10	6	15	24	R	650	Choose a square with more dots than the target
+11	142	2	3	1	1	30	16	25	34	M	557	Choose a square with far fewer dots than the target
+11	143	3	2	1	1	26	26	35	44	M	707	Choose a square with the same number of dots as the target
+11	144	4	3	1	2	40	36	45	54	R	886	Choose a square with far more dots than the target
+11	145	1	2	1	1	6	6	15	24	L	634	Choose a square with the same number of dots as the target
+11	146	2	2	2	1	16	34	25	16	R	493	Choose a square with the same number of dots as the target
+11	147	3	3	2	1	40	44	35	26	M	825	Choose a square with far fewer dots than the target
+11	148	4	2	2	2	54	54	45	36	L	971	Choose a square with the same number of dots as the target
+11	149	1	1	1	1	10	6	15	24	L	1797	Choose a square with about the same number of dots as the target
+11	150	2	2	1	2	34	16	25	34	R	748	Choose a square with the same number of dots as the target
+11	151	3	1	2	1	30	44	35	26	M	612	Choose a square with about the same number of dots as the target
+11	152	4	1	1	2	50	36	45	54	R	718	Choose a square with about the same number of dots as the target
+11	153	1	3	2	2	10	24	15	6	L	423	Choose a square with far more dots than the target
+11	154	2	4	2	2	20	34	25	16	R	527	Choose a square with more dots than the target
+11	155	3	4	1	2	30	26	35	44	L	765	Choose a square with more dots than the target
+11	156	4	3	1	1	50	36	45	54	M	810	Choose a square with far fewer dots than the target
+11	157	1	4	2	2	10	24	15	6	L	606	Choose a square with more dots than the target
+11	158	2	3	1	2	20	16	25	34	R	826	Choose a square with far more dots than the target
+11	159	3	2	2	1	26	44	35	26	M	880	Choose a square with the same number of dots as the target
+11	160	4	2	1	1	36	36	45	54	R	409	Choose a square with the same number of dots as the target
+11	161	1	3	1	2	10	6	15	24	R	532	Choose a square with far more dots than the target
+11	162	2	1	2	1	20	34	25	16	M	1195	Choose a square with about the same number of dots as the target
+11	163	3	2	2	2	44	44	35	26	R	1419	Choose a square with the same number of dots as the target
+11	164	4	2	1	2	54	36	45	54	M	448	Choose a square with the same number of dots as the target
+11	101	1	3	1	2	10	6	15	24	R	971	Choose a square with far more dots than the target
+11	102	2	2	1	2	34	16	25	34	M	599	Choose a square with the same number of dots as the target
+11	103	3	1	2	2	40	44	35	26	M	783	Choose a square with about the same number of dots as the target
+11	104	4	4	2	1	50	54	45	36	L	441	Choose a square with fewer dots than the target
+11	105	1	2	1	2	24	6	15	24	R	784	Choose a square with the same number of dots as the target
+11	106	2	2	2	2	34	34	25	16	M	633	Choose a square with the same number of dots as the target
+11	107	3	2	2	1	26	44	35	26	R	776	Choose a square with the same number of dots as the target
+11	108	4	4	2	2	40	54	45	36	R	1908	Choose a square with more dots than the target
+11	109	1	2	1	1	6	6	15	24	L	877	Choose a square with the same number of dots as the target
+11	110	2	4	1	2	20	16	25	34	L	578	Choose a square with more dots than the target
+11	111	3	3	1	1	40	26	35	44	L	654	Choose a square with far fewer dots than the target
+11	112	4	3	1	1	50	36	45	54	L	977	Choose a square with far fewer dots than the target
+11	113	1	1	2	2	20	24	15	6	M	1084	Choose a square with about the same number of dots as the target
+11	114	2	4	2	2	20	34	25	16	R	665	Choose a square with more dots than the target
+11	115	3	1	1	1	30	26	35	44	L	726	Choose a square with about the same number of dots as the target
+11	116	4	4	1	2	40	36	45	54	M	476	Choose a square with more dots than the target
+11	117	1	1	1	2	20	6	15	24	L	433	Choose a square with about the same number of dots as the target
+11	118	2	4	2	1	30	34	25	16	R	542	Choose a square with fewer dots than the target
+11	119	3	3	2	1	40	44	35	26	R	582	Choose a square with far fewer dots than the target
+11	120	4	1	1	1	40	36	45	54	M	698	Choose a square with about the same number of dots as the target
+11	121	1	1	1	1	10	6	15	24	L	411	Choose a square with about the same number of dots as the target
+11	122	2	1	2	1	20	34	25	16	M	627	Choose a square with about the same number of dots as the target
+11	123	3	4	2	1	40	44	35	26	R	517	Choose a square with fewer dots than the target
+11	124	4	3	1	2	40	36	45	54	R	1247	Choose a square with far more dots than the target
+11	125	1	3	2	1	20	24	15	6	R	564	Choose a square with far fewer dots than the target
+11	126	2	2	2	1	16	34	25	16	M	2242	Choose a square with the same number of dots as the target
+11	127	3	2	1	1	26	26	35	44	M	732	Choose a square with the same number of dots as the target
+11	128	4	1	1	2	50	36	45	54	M	608	Choose a square with about the same number of dots as the target
+11	129	1	1	2	1	10	24	15	6	R	691	Choose a square with about the same number of dots as the target
+11	130	2	1	2	2	30	34	25	16	M	471	Choose a square with about the same number of dots as the target
+11	131	3	3	2	2	30	44	35	26	L	428	Choose a square with far more dots than the target
+11	132	4	3	2	1	50	54	45	36	R	521	Choose a square with far fewer dots than the target
+11	133	1	3	1	1	20	6	15	24	L	576	Choose a square with far fewer dots than the target
+11	134	2	1	1	1	20	16	25	34	M	1287	Choose a square with about the same number of dots as the target
+11	135	3	1	2	1	30	44	35	26	R	705	Choose a square with about the same number of dots as the target
+11	136	4	4	1	1	50	36	45	54	L	628	Choose a square with fewer dots than the target
+11	137	1	2	2	1	6	24	15	6	R	1329	Choose a square with the same number of dots as the target
+11	138	2	3	2	1	30	34	25	16	M	864	Choose a square with far fewer dots than the target
+11	139	3	3	1	2	30	26	35	44	R	830	Choose a square with far more dots than the target
+11	140	4	1	2	1	40	54	45	36	M	1302	Choose a square with about the same number of dots as the target
+11	141	1	4	1	1	20	6	15	24	L	637	Choose a square with fewer dots than the target
+11	142	2	3	1	2	20	16	25	34	R	1475	Choose a square with far more dots than the target
+11	143	3	4	2	2	30	44	35	26	L	825	Choose a square with more dots than the target
+11	144	4	2	2	1	36	54	45	36	M	801	Choose a square with the same number of dots as the target
+11	145	1	3	2	2	10	24	15	6	L	717	Choose a square with far more dots than the target
+11	146	2	4	1	1	30	16	25	34	L	1580	Choose a square with fewer dots than the target
+11	147	3	2	2	2	44	44	35	26	R	538	Choose a square with the same number of dots as the target
+11	148	4	1	2	2	50	54	45	36	R	913	Choose a square with about the same number of dots as the target
+11	149	1	4	2	1	20	24	15	6	M	496	Choose a square with fewer dots than the target
+11	150	2	1	1	2	30	16	25	34	M	648	Choose a square with about the same number of dots as the target
+11	151	3	1	1	2	40	26	35	44	R	723	Choose a square with about the same number of dots as the target
+11	152	4	2	1	2	54	36	45	54	R	652	Choose a square with the same number of dots as the target
+11	153	1	4	2	2	10	24	15	6	L	428	Choose a square with more dots than the target
+11	154	2	2	1	1	16	16	25	34	M	487	Choose a square with the same number of dots as the target
+11	155	3	2	1	2	44	26	35	44	R	1236	Choose a square with the same number of dots as the target
+11	156	4	2	2	2	54	54	45	36	L	1101	Choose a square with the same number of dots as the target
+11	157	1	2	2	2	24	24	15	6	M	521	Choose a square with the same number of dots as the target
+11	158	2	3	2	2	20	34	25	16	M	600	Choose a square with far more dots than the target
+11	159	3	4	1	1	40	26	35	44	L	844	Choose a square with fewer dots than the target
+11	160	4	2	1	1	36	36	45	54	M	1160	Choose a square with the same number of dots as the target
+11	161	1	4	1	2	10	6	15	24	R	431	Choose a square with more dots than the target
+11	162	2	3	1	1	30	16	25	34	L	739	Choose a square with far fewer dots than the target
+11	163	3	4	1	2	30	26	35	44	R	587	Choose a square with more dots than the target
+11	164	4	3	2	2	40	54	45	36	L	857	Choose a square with far more dots than the target
