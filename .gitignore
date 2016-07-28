@@ -16,3 +16,6 @@
 
 **/*\_cache
 **/*\_files
+
+**/octave-core
+**/diary
