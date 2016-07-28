@@ -1,30 +1,22 @@
-
 ---
 title: "Experiment 3 of 4"
 output:
   html_document:
-    toc: yes
+    toc: true
+    <!--toc_float: true-->
+    mathjax: default
+    template: default
+    code_folding: hide
+    theme: default
 ---  
 # Experiment 3
 
-```{r, startClean}
-#Start clean.
-rm(list=ls())
-```
-
-```{r,docOpts}
-#Knitr doc options.
+```{r docOpts}
 library(knitr)
-#knit_hooks$set(crop=hook_pdfcrop)
-#opts_chunk$set(cache=TRUE, autodep=TRUE)
-#options(tidy=TRUE)
-#options(replace.assign=TRUE, width=40)
 ```
 
-```{r, loadLibraries}
-# Load libraries.
+```{r loadLibraries}
 suppressPackageStartupMessages(library(MASS))
-suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(lme4))
 suppressPackageStartupMessages(library(xtable))
@@ -35,6 +27,9 @@ suppressPackageStartupMessages(library(LMERConvenienceFunctions))
 suppressPackageStartupMessages(library(car))
 suppressPackageStartupMessages(library(grid))
 suppressPackageStartupMessages(library(lmerTest))
+suppressPackageStartupMessages(library(reshape2))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(require(languageR))
 ```
 
 # Experiment Structure
@@ -46,13 +41,13 @@ The procedure for each trial was as follows. First an instruction that was a ref
 # Prepare the data
 Source additional R files with functions for computing confidence intervals.
 
-```{r,sourceFunctions}
+```{r sourceFunctions}
 source("functions/CIfunctions.R")
 ```
 
 Get data.
 
-```{r,readdata}
+```{r readdata}
 dat <- read.delim("data/allresults.txt", stringsAsFactors = FALSE)
 
 # declare local variables
@@ -71,7 +66,6 @@ for (row in 1 : nrow(dat) ) {
   )
 }
 dat$crossed=paste('Con',dat$Condition,':Quan',dat$Quantity,':Item',dat$Item,sep="")
-
 
 dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseExpected'] <-  6 
 dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseNear']     <- 15  
@@ -201,7 +195,6 @@ dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseExpected'] <- 54
 dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseNear']     <- 45
 dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseFar']      <- 36
 
-
 dat$isResponseExpected <- dat$choice == dat$ResponseExpected
 dat$isResponseNear <- dat$choice == dat$ResponseNear
 dat$isResponseFar <- dat$choice == dat$ResponseFar
@@ -211,7 +204,6 @@ for ( row in 1:nrow(dat) ) {
     ifelse(dat[row, 'isResponseExpected']==TRUE, 'Expected', 
            ifelse(dat[row, 'isResponseNear']==TRUE, 'Near', 'Far') ) 
 }
-
 
 ## treat variables
 
@@ -315,7 +307,6 @@ dat$nchar_instr_scaled = as.vector(scale(nchar(as.character(dat$Instruction)), s
 # make Instruction be a factor (17 levels)
 dat$Instruction <- as.factor(dat$Instruction) 
 
-
 # RT
 # add transformations of RT
 dat$RT_RecSqd    <- 1/dat$RT^2
@@ -326,29 +317,9 @@ dat$RT_sqt       <- sqrt(dat$RT)
 dat$RT_raw       <- dat$RT
 dat$RT_sqd       <- dat$RT^2 
 
-
-# # print to file a table with information about the design
-# design_info <- unique(subset(dat, select=c(Item, Condition, Vagueness, Selection, Quantity, Order, 
-#                                            Left, Mid, Right, Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side,Instruction)))
-# design.info <- design_info[order(design_info$Item, design_info$Condition, design_info$Quantity, design_info$Order),]
-# row.names(design_info) <- NULL
-# capture.output(  print.data.frame(design_info, row.names=F, print.gap=3, quote=F, right=F), file="design_info.table")
-
-# # put dat in better column order
-# dat <- subset(dat, 
-#               select = c(id, Subject, Trial, Condition, Order, Quantity, Vagueness, Selection, 
-#                          Item, item_range_ratio, item_range_ratio_scaled, item_mean_ratio, item_mean_ratio_scaled,
-#                          c_Trl, s_Trl, c_Itm, c_Vag, Selection.sum, f_Cnd, c_Ord, c_Qty,
-#                          RT, RT_RecSqd, RT_Rec, RT_RecSqt, RT_log, RT_sqt, RT_raw, RT_sqd,
-#                          Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side, response_num, response_side, response_category, Left, Mid, Right,
-#                          Instruction, nchar_instr
-#               ))
-
 # save dat as dat.Rda
 # This data set contains *all* trials including impossible trials and is mainly for graphs comparing different removals
 save(dat, file="dat.Rda")
-
-
 
  # lose impossible trials
   dd <- dat
@@ -380,25 +351,20 @@ dd$RTprev_sqt       <- sqrt(dd$RTprev)
 dd$RTprev_raw       <- dd$RTprev
 dd$RTprev_sqd       <- dd$RTprev^2
 
+# save dd as dd.Rda
+# This data set non-impossible trials and renamed/recomputed variables
 save(dd, file="dd.Rda")
-
 ```
 
 Check the distribution of the trimmed data to see if a transformation is suggested. Log transformation seems to be best so we adopt that for the rest of the analyses.
 
-```{r}
-# boxplot subjects and items
-
+```{r boxplot subjects and items}
 load("dd.Rda")
-suppressPackageStartupMessages(library(reshape2))
-suppressPackageStartupMessages(library(ggplot2))
-
 # allow reference to transformation
 subdata = melt(dd,
                measure.vars=c("RT_Rec", "RT_RecSqt", "RT_log", "RT_raw"),
                variable.name="transformation",
                value.name="value") 
-
 # boxplots for subjects and items separately for each dependent variable
 ggplot(subdata) + 
   facet_wrap(~ variable, scales="free", ncol=4) +
@@ -410,14 +376,11 @@ ggplot(subdata) +
   xlab("") + ylab("")
 ```
 
-```{r}
+```{r load_dd}
 load("dd.Rda")
-suppressPackageStartupMessages(require(lme4))
-suppressPackageStartupMessages(require(lmerTest))
-suppressPackageStartupMessages(require(languageR))
 ```
 
-```{r}
+```{r do_lmer}
 v5 <- lmer(data=dd, 
            RT_RecSqt ~ 
              c_Vag + Selection.sum + c_Qty + c_Ord + 
@@ -430,24 +393,23 @@ v5 <- lmer(data=dd,
 )
 ```
 
-```{r}
+```{r summary_lmer}
 summary(v5)
 ```
 
-
-```{r}
+```{r R2}
 cat("R^2")
 cor(fitted(v5), dd$RT_RecSqt)^2
 ```
 
-```{r}
+```{r plotLMER}
 par(mfrow=c(2,5))
 plotLMER.fnc(v5)
 ```
 
 Plot model coefficients and ci's
 
-```{r}
+```{r coeff}
 par(las=2, mar=c(14,6,1,1))
 y=as.data.frame(summary(v5)$coef[-1,1]) # estimates, without intercept
 q=confint(v5)[-c(1,2,3),]
@@ -459,10 +421,9 @@ axis(1, labels=row.names(y), at=1:nrow(y), srt=45)
 grid()
 ```
 
-
 Model criticism baayen plots
 
-```{r, fig.width=9, fig.height=3}
+```{r baayenplots, fig.width=9, fig.height=3}
 # Baayen 4-plot model criticism
 
 par(mfrow=c(1,4), pty='s')
