@@ -1,5 +1,6 @@
 ---
 title: "Experiment 3 of 4"
+author: "Matt Green"
 output:
   html_document:
     toc: true
@@ -9,6 +10,7 @@ output:
     code_folding: hide
     theme: default
 ---  
+
 # Experiment 3
 
 ```{r docOpts}
@@ -42,13 +44,13 @@ The procedure for each trial was as follows. First an instruction that was a ref
 Source additional R files with functions for computing confidence intervals.
 
 ```{r sourceFunctions}
-source("functions/CIfunctions.R")
+source("CIfunctions.R")
 ```
 
 Get data.
 
 ```{r readdata}
-dat <- read.delim("data/allresults.txt", stringsAsFactors = FALSE)
+dat <- read.delim("allresults.txt", stringsAsFactors = FALSE)
 
 # declare local variables
 number_of_valid_subjects <- 38
@@ -317,16 +319,15 @@ dat$RT_sqt       <- sqrt(dat$RT)
 dat$RT_raw       <- dat$RT
 dat$RT_sqd       <- dat$RT^2 
 
-# save dat as dat.Rda
-# This data set contains *all* trials including impossible trials and is mainly for graphs comparing different removals
-save(dat, file="dat.Rda")
+# The dat data set contains *all* trials including impossible trials 
+# and is mainly for graphs comparing different removals
 
- # lose impossible trials
-  dd <- dat
-  dd$RT[dd$RT == 1 ] <- NA
-  dd$RT[dd$RT > 40000 ] <- NA
-  dd <- dd[complete.cases(dd),]
-  row.names(dd) <- NULL
+# lose impossible trials
+dd <- dat
+dd$RT[dd$RT == 1 ] <- NA
+dd$RT[dd$RT > 40000 ] <- NA
+dd <- dd[complete.cases(dd),]
+row.names(dd) <- NULL
   
 # add preceding RT: because we removed impossible trials, the value for preceding RT for a trial following an impossible trial is the value of the trial that preceded the impossible trial.
 dd$RTprev <- NA
@@ -351,15 +352,15 @@ dd$RTprev_sqt       <- sqrt(dd$RTprev)
 dd$RTprev_raw       <- dd$RTprev
 dd$RTprev_sqd       <- dd$RTprev^2
 
-# save dd as dd.Rda
+# save dd as data.Rda
 # This data set non-impossible trials and renamed/recomputed variables
-save(dd, file="dd.Rda")
+save(dd, file="data.Rda")
 ```
 
 Check the distribution of the trimmed data to see if a transformation is suggested. Log transformation seems to be best so we adopt that for the rest of the analyses.
 
 ```{r boxplot subjects and items}
-load("dd.Rda")
+load("data.Rda")
 # allow reference to transformation
 subdata = melt(dd,
                measure.vars=c("RT_Rec", "RT_RecSqt", "RT_log", "RT_raw"),
@@ -374,10 +375,6 @@ ggplot(subdata) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1), aspect.ratio=1, panel.grid=element_blank()) + 
   scale_colour_manual("",values=c("Items"="red","Subjects"="blue")) +
   xlab("") + ylab("")
-```
-
-```{r load_dd}
-load("dd.Rda")
 ```
 
 ```{r do_lmer}
@@ -410,14 +407,24 @@ plotLMER.fnc(v5)
 Plot model coefficients and ci's
 
 ```{r coeff}
-par(las=2, mar=c(14,6,1,1))
-y=as.data.frame(summary(v5)$coef[-1,1]) # estimates, without intercept
-q=confint(v5)[-c(1,2,3),]
-y=cbind(y,q)
+v5 <- lme4::lmer(data=dd, 
+           RT_RecSqt ~ 
+             c_Vag + Selection.sum + c_Qty + c_Ord + 
+             Selection.sum:c_Vag:c_Qty +
+             item_mean_ratio + 
+             s_Trl +
+             RTprev_RecSqt +
+             nchar_instr +
+             (1+c_Vag + Selection.sum + c_Qty + c_Ord|Subject)
+)
+par(las=2, mar=c(6,6,1,1))
+y=data.frame(coef=summary(v5)$coef[-1,1]) # estimates, without intercept
+q=confint(v5, method="Wald")[-c(1,2,3),]
+y=cbind(y,q[15:23,])
 plot(y[,1], ylim=range(y[,1],y[,2],y[,3]), xaxt="n", xlab="", ylab="estimate\n",  pch='-', cex=2)
 segments(x0=1:nrow(y), x1=1:nrow(y), y[,2], y[,3])
 abline(h=0)
-axis(1, labels=row.names(y), at=1:nrow(y), srt=45)
+axis(1, labels = abbreviate(row.names(y), minlength=10), , at=1:nrow(y), las=2)
 grid()
 ```
 
@@ -428,18 +435,18 @@ Model criticism baayen plots
 
 par(mfrow=c(1,4), pty='s')
 # create scaled residuals
-v5$rstand = as.vector(scale(resid(v5)))
+dd$rstand = as.vector(scale(resid(v5)))
 # plot scaled residuals density
-plot(density(v5$rstand))
+plot(density(dd$rstand))
 # plot sample quantiles versus theoretical quantiles
-qqnorm(v5$rstand, cex=.5)
-qqline(v5$rstand)
+qqnorm(dd$rstand, cex=.5)
+qqline(dd$rstand)
 # plot standardised residuals versus fitted values
-plot(v5$rstand ~ fitted(v5), pch='.')
+plot(dd$rstand ~ fitted(v5), pch='.')
 # absolute standardised residuals greater than 2.5 are candidates for being outliers, the abline identifies them on the plot
 abline(h=c(-2.5,2.5))
 # create dffits
-dffits=abs(resid(v5, "dffits"))
+#dffits=abs(resid(v5, "dffits"))
 # plot dffits
-plot(dffits, type='h')
+#plot(dffits, type='h')
 ```

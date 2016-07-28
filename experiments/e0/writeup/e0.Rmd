@@ -4,6 +4,7 @@ author: "Matt Green"
 output:
   html_document:
     toc: yes
+    <!--toc_float: true-->
     mathjax: default
     template: default
     code_folding: hide

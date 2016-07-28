@@ -1,8 +1,10 @@
 ---
 title: "Experiment 1 of 4"
+author: "Matt Green"
 output:
   html_document:
     toc: yes
+    <!--toc_float: true-->
     mathjax: default
     template: default
     code_folding: hide
@@ -56,7 +58,7 @@ suppressPackageStartupMessages(library(lmerTest))
 ```
 
 ```{r sourceFunctions}
-source("functions/CIfunctions.R")
+source("CIfunctions.R")
 ```
 
 ## get data

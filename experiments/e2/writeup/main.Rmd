@@ -1,5 +1,6 @@
 ---
 title: "Experiment 2 of 4: main"
+author: "Matt Green"
 output:
   html_document:
     toc: true
