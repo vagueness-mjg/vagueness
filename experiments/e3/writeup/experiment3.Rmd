@@ -1,0 +1,484 @@
+
+---
+title: "Experiment 3 of 4"
+output:
+  html_document:
+    toc: yes
+---  
+# Experiment 3
+
+```{r, startClean}
+#Start clean.
+rm(list=ls())
+```
+
+```{r,docOpts}
+#Knitr doc options.
+library(knitr)
+#knit_hooks$set(crop=hook_pdfcrop)
+#opts_chunk$set(cache=TRUE, autodep=TRUE)
+#options(tidy=TRUE)
+#options(replace.assign=TRUE, width=40)
+```
+
+```{r, loadLibraries}
+# Load libraries.
+suppressPackageStartupMessages(library(MASS))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(lme4))
+suppressPackageStartupMessages(library(xtable))
+suppressPackageStartupMessages(library(plyr))
+suppressPackageStartupMessages(library(reshape))
+suppressPackageStartupMessages(library(lattice))
+suppressPackageStartupMessages(library(LMERConvenienceFunctions))
+suppressPackageStartupMessages(library(car))
+suppressPackageStartupMessages(library(grid))
+suppressPackageStartupMessages(library(lmerTest))
+```
+
+# Experiment Structure
+Each subject saw 192 trials, being 3 cycles of 64 trials. There were 38 participants. There were 7296 rows in the full data set.
+
+# Trial Procedure
+The procedure for each trial was as follows. First an instruction that was a referring expression was presented until participants dismissed it with a key press. Then the squares with dots were presented until the participant responded with a key press, with a 60 second timeout if they did not respond.
+
+# Prepare the data
+Source additional R files with functions for computing confidence intervals.
+
+```{r,sourceFunctions}
+source("functions/CIfunctions.R")
+```
+
+Get data.
+
+```{r,readdata}
+dat <- read.delim("data/allresults.txt", stringsAsFactors = FALSE)
+
+# declare local variables
+number_of_valid_subjects <- 38
+number_of_rows <- 7296
+number_of_trials_per_subject <- number_of_rows / number_of_valid_subjects # 192
+
+# sort out borderline responses into expected near and far
+# How many squares in the square they chose? 
+dat$RESPONSE <- as.character(dat$RESPONSE)
+for (row in 1 : nrow(dat) ) {
+  switch(dat[row,'RESPONSE'],
+         'LEFT' = {dat[row, 'choice'] <- dat[row, 'Left']},
+         'MIDDLE' = {dat[row, 'choice'] <- dat[row, 'Mid']},
+         'RIGHT' = {dat[row, 'choice'] <- dat[row, 'Right']}         
+  )
+}
+dat$crossed=paste('Con',dat$Condition,':Quan',dat$Quantity,':Item',dat$Item,sep="")
+
+
+dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseExpected'] <-  6 
+dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseNear']     <- 15  
+dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseFar']      <- 24
+
+dat[dat$crossed=='Con1:Quan1:Item2', 'ResponseExpected'] <- 16
+dat[dat$crossed=='Con1:Quan1:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con1:Quan1:Item2', 'ResponseFar']      <- 34
+
+dat[dat$crossed=='Con1:Quan1:Item3', 'ResponseExpected'] <- 26
+dat[dat$crossed=='Con1:Quan1:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con1:Quan1:Item3', 'ResponseFar']      <- 44
+
+dat[dat$crossed=='Con1:Quan1:Item4', 'ResponseExpected'] <- 36
+dat[dat$crossed=='Con1:Quan1:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con1:Quan1:Item4', 'ResponseFar']      <- 54
+
+dat[dat$crossed=='Con1:Quan2:Item1', 'ResponseExpected'] <- 24
+dat[dat$crossed=='Con1:Quan2:Item1', 'ResponseNear']     <- 15 
+dat[dat$crossed=='Con1:Quan2:Item1', 'ResponseFar']      <-  6
+
+dat[dat$crossed=='Con1:Quan2:Item2', 'ResponseExpected'] <- 34
+dat[dat$crossed=='Con1:Quan2:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con1:Quan2:Item2', 'ResponseFar']      <- 16
+
+dat[dat$crossed=='Con1:Quan2:Item3', 'ResponseExpected'] <- 44
+dat[dat$crossed=='Con1:Quan2:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con1:Quan2:Item3', 'ResponseFar']      <- 26
+
+dat[dat$crossed=='Con1:Quan2:Item4', 'ResponseExpected'] <- 54
+dat[dat$crossed=='Con1:Quan2:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con1:Quan2:Item4', 'ResponseFar']      <- 36
+
+dat[dat$crossed=='Con2:Quan1:Item1', 'ResponseExpected'] <-  6 
+dat[dat$crossed=='Con2:Quan1:Item1', 'ResponseNear']     <- 15  
+dat[dat$crossed=='Con2:Quan1:Item1', 'ResponseFar']      <- 24
+
+dat[dat$crossed=='Con2:Quan1:Item2', 'ResponseExpected'] <- 16
+dat[dat$crossed=='Con2:Quan1:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con2:Quan1:Item2', 'ResponseFar']      <- 34
+
+dat[dat$crossed=='Con2:Quan1:Item3', 'ResponseExpected'] <- 26
+dat[dat$crossed=='Con2:Quan1:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con2:Quan1:Item3', 'ResponseFar']      <- 44
+
+dat[dat$crossed=='Con2:Quan1:Item4', 'ResponseExpected'] <- 36
+dat[dat$crossed=='Con2:Quan1:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con2:Quan1:Item4', 'ResponseFar']      <- 54
+
+dat[dat$crossed=='Con2:Quan2:Item1', 'ResponseExpected'] <- 24
+dat[dat$crossed=='Con2:Quan2:Item1', 'ResponseNear']     <- 15 
+dat[dat$crossed=='Con2:Quan2:Item1', 'ResponseFar']      <-  6
+
+dat[dat$crossed=='Con2:Quan2:Item2', 'ResponseExpected'] <- 34
+dat[dat$crossed=='Con2:Quan2:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con2:Quan2:Item2', 'ResponseFar']      <- 16
+
+dat[dat$crossed=='Con2:Quan2:Item3', 'ResponseExpected'] <- 44
+dat[dat$crossed=='Con2:Quan2:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con2:Quan2:Item3', 'ResponseFar']      <- 26
+
+dat[dat$crossed=='Con2:Quan2:Item4', 'ResponseExpected'] <- 54
+dat[dat$crossed=='Con2:Quan2:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con2:Quan2:Item4', 'ResponseFar']      <- 36
+
+dat[dat$crossed=='Con3:Quan1:Item1', 'ResponseExpected'] <-  6 
+dat[dat$crossed=='Con3:Quan1:Item1', 'ResponseNear']     <- 15  
+dat[dat$crossed=='Con3:Quan1:Item1', 'ResponseFar']      <- 24
+
+dat[dat$crossed=='Con3:Quan1:Item2', 'ResponseExpected'] <- 16
+dat[dat$crossed=='Con3:Quan1:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con3:Quan1:Item2', 'ResponseFar']      <- 34
+
+dat[dat$crossed=='Con3:Quan1:Item3', 'ResponseExpected'] <- 26
+dat[dat$crossed=='Con3:Quan1:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con3:Quan1:Item3', 'ResponseFar']      <- 44
+
+dat[dat$crossed=='Con3:Quan1:Item4', 'ResponseExpected'] <- 36
+dat[dat$crossed=='Con3:Quan1:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con3:Quan1:Item4', 'ResponseFar']      <- 54
+
+dat[dat$crossed=='Con3:Quan2:Item1', 'ResponseExpected'] <- 24
+dat[dat$crossed=='Con3:Quan2:Item1', 'ResponseNear']     <- 15 
+dat[dat$crossed=='Con3:Quan2:Item1', 'ResponseFar']      <-  6
+
+dat[dat$crossed=='Con3:Quan2:Item2', 'ResponseExpected'] <- 34
+dat[dat$crossed=='Con3:Quan2:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con3:Quan2:Item2', 'ResponseFar']      <- 16
+
+dat[dat$crossed=='Con3:Quan2:Item3', 'ResponseExpected'] <- 44
+dat[dat$crossed=='Con3:Quan2:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con3:Quan2:Item3', 'ResponseFar']      <- 26
+
+dat[dat$crossed=='Con3:Quan2:Item4', 'ResponseExpected'] <- 54
+dat[dat$crossed=='Con3:Quan2:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con3:Quan2:Item4', 'ResponseFar']      <- 36
+
+dat[dat$crossed=='Con4:Quan1:Item1', 'ResponseExpected'] <-  6 
+dat[dat$crossed=='Con4:Quan1:Item1', 'ResponseNear']     <- 15  
+dat[dat$crossed=='Con4:Quan1:Item1', 'ResponseFar']      <- 24
+
+dat[dat$crossed=='Con4:Quan1:Item2', 'ResponseExpected'] <- 16
+dat[dat$crossed=='Con4:Quan1:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con4:Quan1:Item2', 'ResponseFar']      <- 34
+
+dat[dat$crossed=='Con4:Quan1:Item3', 'ResponseExpected'] <- 26
+dat[dat$crossed=='Con4:Quan1:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con4:Quan1:Item3', 'ResponseFar']      <- 44
+
+dat[dat$crossed=='Con4:Quan1:Item4', 'ResponseExpected'] <- 36
+dat[dat$crossed=='Con4:Quan1:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con4:Quan1:Item4', 'ResponseFar']      <- 54
+
+dat[dat$crossed=='Con4:Quan2:Item1', 'ResponseExpected'] <- 24
+dat[dat$crossed=='Con4:Quan2:Item1', 'ResponseNear']     <- 15 
+dat[dat$crossed=='Con4:Quan2:Item1', 'ResponseFar']      <-  6
+
+dat[dat$crossed=='Con4:Quan2:Item2', 'ResponseExpected'] <- 34
+dat[dat$crossed=='Con4:Quan2:Item2', 'ResponseNear']     <- 25  
+dat[dat$crossed=='Con4:Quan2:Item2', 'ResponseFar']      <- 16
+
+dat[dat$crossed=='Con4:Quan2:Item3', 'ResponseExpected'] <- 44
+dat[dat$crossed=='Con4:Quan2:Item3', 'ResponseNear']     <- 35
+dat[dat$crossed=='Con4:Quan2:Item3', 'ResponseFar']      <- 26
+
+dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseExpected'] <- 54
+dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseNear']     <- 45
+dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseFar']      <- 36
+
+
+dat$isResponseExpected <- dat$choice == dat$ResponseExpected
+dat$isResponseNear <- dat$choice == dat$ResponseNear
+dat$isResponseFar <- dat$choice == dat$ResponseFar
+
+for ( row in 1:nrow(dat) ) {
+  dat[row, 'switchResponse'] <- 
+    ifelse(dat[row, 'isResponseExpected']==TRUE, 'Expected', 
+           ifelse(dat[row, 'isResponseNear']==TRUE, 'Near', 'Far') ) 
+}
+
+
+## treat variables
+
+# SUBJECT
+# ensure Subject is a factor 
+dat$Subject=factor(paste("s",sprintf("%02d",dat$Subject),sep=""))
+
+# TRIAL
+# Trial for subject, 1 to 192
+dat$Trial = rep(x = 1:number_of_trials_per_subject, times = number_of_valid_subjects)
+
+# make a centred Trial for modeling
+dat$c_Trl <-dat$Trial - mean(dat$Trial)
+
+# make a scaled Trial for modelling
+dat$s_Trl <- as.numeric(scale(dat$Trial))
+
+# ID
+# id is a unique identifier for the 7680 row data
+dat$id <- factor(paste(paste(dat$Subject), 
+                       paste("t", sprintf("%03d", dat$Trial), sep="") , sep=":"))
+
+# ITEM
+# create a centred numeric item variable for modeling
+dat$c_Itm <- ifelse(dat$Item==1, -.75, 
+                    ifelse(dat$Item==2, -.25,
+                           ifelse(dat$Item==3, .25, .75)))
+
+# make Item be a factor and assign labels
+dat$Item <- factor(dat$Item, levels=c(1,2,3,4), labels=c("06:15:24", "16:25:34", "26:35:44", "36:45:54"))
+
+# add ratios for Item
+item_range_ratio = c(6 / 24, 16 / 34, 26 / 44, 36 / 54) 
+# 0.2500000 0.4705882 0.5909091 0.6666667
+item_range_ratio_scaled = as.vector(scale(c(6 / 24, 16 / 34, 26 / 44, 36 / 54)))
+# -1.3441995 -0.1316642  0.5297187  0.9461450
+item_mean_ratio = c(mean(c(6 / 15, 15 / 24)), mean(c(16 / 25, 25 / 34)), mean(c(26 /35, 35 / 44)), mean(c(36 / 45, 45 / 54))) 
+# 0.5125000 0.6876471 0.7691558 0.8166667
+item_mean_ratio_scaled = as.vector(scale(c(mean(c(6 / 15, 15 / 24)), mean(c(16 / 25, 25 / 34)), mean(c(26 /35, 35 / 44)), mean(c(36 / 45, 45 / 54))))) 
+# -1.37582241 -0.06614191  0.54334858 0.89861574
+
+dat[dat$Item == "06:15:24", "item_range_ratio"] <-  0.2500000
+dat[dat$Item == "16:25:34", "item_range_ratio"] <-  0.4705882
+dat[dat$Item == "26:35:44", "item_range_ratio"] <-  0.5909091
+dat[dat$Item == "36:45:54", "item_range_ratio"] <-  0.6666667
+
+dat[dat$Item == "06:15:24", "item_range_ratio_scaled"] <-  -1.3441995
+dat[dat$Item == "16:25:34", "item_range_ratio_scaled"] <-  -0.1316642
+dat[dat$Item == "26:35:44", "item_range_ratio_scaled"] <-   0.5297187  
+dat[dat$Item == "36:45:54", "item_range_ratio_scaled"] <-   0.9461450
+
+dat[dat$Item == "06:15:24", "item_mean_ratio"] <-  0.5125000 
+dat[dat$Item == "16:25:34", "item_mean_ratio"] <-  0.6876471 
+dat[dat$Item == "26:35:44", "item_mean_ratio"] <-  0.7691558
+dat[dat$Item == "36:45:54", "item_mean_ratio"] <-  0.8166667
+
+dat[dat$Item == "06:15:24", "item_mean_ratio_scaled"] <-   -1.37582241 
+dat[dat$Item == "16:25:34", "item_mean_ratio_scaled"] <-   -0.06614191 
+dat[dat$Item == "26:35:44", "item_mean_ratio_scaled"] <-    0.54334858 
+dat[dat$Item == "36:45:54", "item_mean_ratio_scaled"] <-    0.89861574
+
+# VAGUENESS
+# Create a factor coding for Vagueness
+dat[ dat$Condition==1 , 'Vagueness'] <- 'Vague'
+dat[ dat$Condition==2 , 'Vagueness'] <- 'Crisp'
+dat[ dat$Condition==3 , 'Vagueness'] <- 'Vague'
+dat[ dat$Condition==4 , 'Vagueness'] <- 'Crisp'
+dat$Vagueness <- as.factor(dat$Vagueness)
+
+# manually center Vagueness
+dat$c_Vag <- ifelse(dat$Vagueness=='Crisp', -.5, .5)
+
+dat$Selection = ""
+dat[dat$Condition %in% c(1,2), "Selection"] <- "matching"
+dat[dat$Condition %in% c(3,4), "Selection"] <- "comparison"
+dat$Selection.sum <- ifelse(dat$Selection=="matching", .5, -.5)
+dat$Selection <- as.factor(dat$Selection)
+
+# remove one zero RT by replacing with NA
+dat$RT[dat$RT==0]<-NA
+
+# ORDER
+# give the levels of Order meaningful names
+dat$Order <- factor(dat$Order, levels=c(1,2), labels=c('LtoR','RtoL'))
+
+# make a manually centred Order
+dat$c_Ord <- ifelse(dat$Order=="LtoR",-.5,.5)
+
+# QUANTITY
+# give the levels of Quantity meaningful names
+dat$Quantity <- factor(dat$Quantity, levels=c(1,2), labels=c('Small','Large'))
+
+# make a manually centred Quantity
+dat$c_Qty <- ifelse(dat$Quantity=="Small",-.5,.5)
+
+# INSTRUCTION
+# add number of characters in the instruction # 29 30 34 36 38
+dat$nchar_instr = nchar(as.character(dat$Instruction))
+dat$nchar_instr_scaled = as.vector(scale(nchar(as.character(dat$Instruction)), scale=TRUE))
+
+# make Instruction be a factor (17 levels)
+dat$Instruction <- as.factor(dat$Instruction) 
+
+
+# RT
+# add transformations of RT
+dat$RT_RecSqd    <- 1/dat$RT^2
+dat$RT_Rec       <- 1/dat$RT
+dat$RT_RecSqt    <- 1/sqrt(dat$RT) 
+dat$RT_log       <- log(dat$RT)
+dat$RT_sqt       <- sqrt(dat$RT)
+dat$RT_raw       <- dat$RT
+dat$RT_sqd       <- dat$RT^2 
+
+
+# # print to file a table with information about the design
+# design_info <- unique(subset(dat, select=c(Item, Condition, Vagueness, Selection, Quantity, Order, 
+#                                            Left, Mid, Right, Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side,Instruction)))
+# design.info <- design_info[order(design_info$Item, design_info$Condition, design_info$Quantity, design_info$Order),]
+# row.names(design_info) <- NULL
+# capture.output(  print.data.frame(design_info, row.names=F, print.gap=3, quote=F, right=F), file="design_info.table")
+
+# # put dat in better column order
+# dat <- subset(dat, 
+#               select = c(id, Subject, Trial, Condition, Order, Quantity, Vagueness, Selection, 
+#                          Item, item_range_ratio, item_range_ratio_scaled, item_mean_ratio, item_mean_ratio_scaled,
+#                          c_Trl, s_Trl, c_Itm, c_Vag, Selection.sum, f_Cnd, c_Ord, c_Qty,
+#                          RT, RT_RecSqd, RT_Rec, RT_RecSqt, RT_log, RT_sqt, RT_raw, RT_sqd,
+#                          Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side, response_num, response_side, response_category, Left, Mid, Right,
+#                          Instruction, nchar_instr
+#               ))
+
+# save dat as dat.Rda
+# This data set contains *all* trials including impossible trials and is mainly for graphs comparing different removals
+save(dat, file="dat.Rda")
+
+
+
+ # lose impossible trials
+  dd <- dat
+  dd$RT[dd$RT == 1 ] <- NA
+  dd$RT[dd$RT > 40000 ] <- NA
+  dd <- dd[complete.cases(dd),]
+  row.names(dd) <- NULL
+  
+# add preceding RT: because we removed impossible trials, the value for preceding RT for a trial following an impossible trial is the value of the trial that preceded the impossible trial.
+dd$RTprev <- NA
+for (s in levels(dd$Subject)) {
+  nrows = nrow(dd[dd$Subject==s,])
+  for (i in 1:nrows) {
+    if (i==1) {
+      dd[dd$Subject==s, "RTprev"][i] <- dd[dd$Subject==s, "RT"][i]
+    }
+    else
+      dd[dd$Subject==s, "RTprev"][i] <- dd[dd$Subject==s, "RT"][i-1]
+  }
+}
+
+# add transformations of previous RT
+dd$RTprev_RecSqd    <- 1/dd$RTprev^2
+dd$RTprev_Rec       <- 1/dd$RTprev
+dd$RTprev_RecSqt0   <- 1/sqrt(dd$RTprev) 
+dd$RTprev_RecSqt    <- as.vector(scale( 1/sqrt(dd$RTprev)  ))
+dd$RTprev_log       <- log(dd$RTprev)
+dd$RTprev_sqt       <- sqrt(dd$RTprev)
+dd$RTprev_raw       <- dd$RTprev
+dd$RTprev_sqd       <- dd$RTprev^2
+
+save(dd, file="dd.Rda")
+
+```
+
+Check the distribution of the trimmed data to see if a transformation is suggested. Log transformation seems to be best so we adopt that for the rest of the analyses.
+
+```{r}
+# boxplot subjects and items
+
+load("dd.Rda")
+suppressPackageStartupMessages(library(reshape2))
+suppressPackageStartupMessages(library(ggplot2))
+
+# allow reference to transformation
+subdata = melt(dd,
+               measure.vars=c("RT_Rec", "RT_RecSqt", "RT_log", "RT_raw"),
+               variable.name="transformation",
+               value.name="value") 
+
+# boxplots for subjects and items separately for each dependent variable
+ggplot(subdata) + 
+  facet_wrap(~ variable, scales="free", ncol=4) +
+  geom_boxplot(aes(y=value, x=Item, col="Items")) + 
+  geom_boxplot(aes(y=value, x=Subject, col="Subjects")) + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), aspect.ratio=1, panel.grid=element_blank()) + 
+  scale_colour_manual("",values=c("Items"="red","Subjects"="blue")) +
+  xlab("") + ylab("")
+```
+
+```{r}
+load("dd.Rda")
+suppressPackageStartupMessages(require(lme4))
+suppressPackageStartupMessages(require(lmerTest))
+suppressPackageStartupMessages(require(languageR))
+```
+
+```{r}
+v5 <- lmer(data=dd, 
+           RT_RecSqt ~ 
+             c_Vag + Selection.sum + c_Qty + c_Ord + 
+             Selection.sum:c_Vag:c_Qty +
+             item_mean_ratio + 
+             s_Trl +
+             RTprev_RecSqt +
+             nchar_instr +
+             (1+c_Vag + Selection.sum + c_Qty + c_Ord|Subject)
+)
+```
+
+```{r}
+summary(v5)
+```
+
+
+```{r}
+cat("R^2")
+cor(fitted(v5), dd$RT_RecSqt)^2
+```
+
+```{r}
+par(mfrow=c(2,5))
+plotLMER.fnc(v5)
+```
+
+Plot model coefficients and ci's
+
+```{r}
+par(las=2, mar=c(14,6,1,1))
+y=as.data.frame(summary(v5)$coef[-1,1]) # estimates, without intercept
+q=confint(v5)[-c(1,2,3),]
+y=cbind(y,q)
+plot(y[,1], ylim=range(y[,1],y[,2],y[,3]), xaxt="n", xlab="", ylab="estimate\n",  pch='-', cex=2)
+segments(x0=1:nrow(y), x1=1:nrow(y), y[,2], y[,3])
+abline(h=0)
+axis(1, labels=row.names(y), at=1:nrow(y), srt=45)
+grid()
+```
+
+
+Model criticism baayen plots
+
+```{r, fig.width=9, fig.height=3}
+# Baayen 4-plot model criticism
+
+par(mfrow=c(1,4), pty='s')
+# create scaled residuals
+v5$rstand = as.vector(scale(resid(v5)))
+# plot scaled residuals density
+plot(density(v5$rstand))
+# plot sample quantiles versus theoretical quantiles
+qqnorm(v5$rstand, cex=.5)
+qqline(v5$rstand)
+# plot standardised residuals versus fitted values
+plot(v5$rstand ~ fitted(v5), pch='.')
+# absolute standardised residuals greater than 2.5 are candidates for being outliers, the abline identifies them on the plot
+abline(h=c(-2.5,2.5))
+# create dffits
+dffits=abs(resid(v5, "dffits"))
+# plot dffits
+plot(dffits, type='h')
+```

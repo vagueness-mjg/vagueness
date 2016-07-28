@@ -1,0 +1,5 @@
+Item	Condition	Order	Quantity	Left	Mid	Right	Instruction	Subject	Instruction_RT	RESPONSE	RT
+0	0	0	0	6	15	24	'Choose a square with about 10 dots'	100	4251	LEFT	460
+0	0	0	0	34	25	16	'Choose a square with 16 dots'	100	504	LEFT	448
+0	0	0	0	44	35	26	'Choose a square with far fewer than 40 dots'	100	402	LEFT	482
+0	0	0	0	36	45	54	'Choose a square with more than 40 dots'	100	345	LEFT	397
