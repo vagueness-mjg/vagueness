@@ -600,7 +600,8 @@ if( file.exists('dat.Rda') && file.exists('dd.Rda') ) {
 Compare distributions of the various transformations of RT against random samples from normal distributions with the same mean and sd to see which transformations best approximate normal distributions.
 
 ```{r plotDists, fig.width=20, fig.height=12, message=FALSE}
-## plot the comparison of the transformations against their normal equivalents to see distributional properties using full data
+## plot the comparison of the transformations against their normal equivalents 
+# to see distributional properties using full data
 # first create a data frame specially for transformations
 # this won't be used for analysis, just for this plot
 dat_transforms <- dat
