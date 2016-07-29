@@ -1,1 +1,0 @@
-r. <- function (formula, ...) rstandard(lm(formula, ...))
