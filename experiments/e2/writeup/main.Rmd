@@ -11,7 +11,7 @@ output:
     theme: default
 ---
 
-```{r child="print_info_on_design.Rmd"}
+```{r child = "print_info_on_design.Rmd"}
 ```
 
 # Distributional stuff, including transformations.
