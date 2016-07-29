@@ -1,7 +1,0 @@
-boxplot logRT by item also showing raw data
-
-```{r, fig.width=4, fig.height=4, eval=TRUE, cache=FALSE}
-load("dd.Rda")
-boxplot(RT_log ~ Item, data = dd, outpch = NA, type='n') 
-stripchart(RT_log ~ Item, data = dd, vertical = TRUE, method = "jitter", pch = 19, cex=.25, col='lightblue',add = TRUE) 
-```
