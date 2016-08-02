@@ -23,7 +23,6 @@ suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(lme4))
 suppressPackageStartupMessages(library(xtable))
 suppressPackageStartupMessages(library(plyr))
-suppressPackageStartupMessages(library(reshape))
 suppressPackageStartupMessages(library(lattice))
 suppressPackageStartupMessages(library(LMERConvenienceFunctions))
 suppressPackageStartupMessages(library(car))
@@ -359,7 +358,7 @@ save(dd, file="data.Rda")
 
 Check the distribution of the trimmed data to see if a transformation is suggested. Log transformation seems to be best so we adopt that for the rest of the analyses.
 
-```{r boxplot subjects and items}
+```{r boxplot subjects and items, width-12, height=3}
 load("data.Rda")
 # allow reference to transformation
 subdata = melt(dd,
@@ -368,7 +367,7 @@ subdata = melt(dd,
                value.name="value") 
 # boxplots for subjects and items separately for each dependent variable
 ggplot(subdata) + 
-  facet_wrap(~ variable, scales="free", ncol=4) +
+  facet_wrap(~ transformation, scales="free", ncol=4) +
   geom_boxplot(aes(y=value, x=Item, col="Items")) + 
   geom_boxplot(aes(y=value, x=Subject, col="Subjects")) + 
   theme_bw() +
