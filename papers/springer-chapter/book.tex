@@ -6,9 +6,15 @@
 %
 %%%%%%%%%%%%%%%% Springer-Verlag %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Editor comments:
+% 8.000-10.000 words
+% I aim for end-march 2017b as submission deadline. That is, if there will be no delays, the volume should be publishable by the end of 2017. In case the submission/revision process takes longer than expected, however, the publication date should be rather 2018.
 
 % RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[graybox,envcountchap,sectrefs]{svmono}
+\documentclass[graybox,envcountchap,sectrefs%
+,footinfo
+%,referee
+]{svmono}
 
 % choose options for [] as required from the list
 % in the Reference Guide
@@ -27,7 +33,14 @@
 
 % see the list of further useful packages
 % in the Reference Guide
-
+\usepackage{natbib}
+%\usepackage{citeref}
+%\usepackage[pagebackref]{hyperref}
+%\AtBeginDocument{%
+%  \hypersetup{
+%    citecolor=Violet,
+%    linkcolor=Red,   
+%    urlcolor=Magenta}}
 \makeindex             % used for the subject index
                        % please use the style svind.ist with
                        % your makeindex program
@@ -36,9 +49,9 @@
 
 \begin{document}
 
-\author{Author name(s)}
-\title{Book title}
-\subtitle{-- Monograph --}
+\author{Kees van Deemter and Matthew Green}
+\title{(Springer Volume on)\\Vagueness \& Rationality}
+\subtitle{(-- Monograph --)\\ The Elusive Benefits of Vagueness: the Evidence So Far}
 \maketitle
 
 \frontmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,11 +69,12 @@
 \mainmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{part}
 \include{chapter}
-\include{appendix}
+%\include{chapter_template}
+%\include{appendix}
 
 \backmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{glossary}
-\include{solutions}
+%\include{solutions}
 \printindex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

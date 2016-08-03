@@ -3,7 +3,6 @@
 **/.RData
 **/.DS_Store
 **/.Rapp.history
-
 **/*.aux
 **/*.bbl
 **/*.blg
@@ -13,11 +12,13 @@
 **/*.log
 **/*.synctex.gz
 **/*.ttt
-
 **/*\_cache
 **/*\_files
-
 **/octave-core
 **/diary
-papers/springer-chapter
-
+papers/springer-chapter/book.bbl
+papers/springer-chapter/book.blg
+papers/springer-chapter/book.brf
+papers/springer-chapter/book.idx
+papers/springer-chapter/book.out
+papers/springer-chapter/book.synctex.gz
