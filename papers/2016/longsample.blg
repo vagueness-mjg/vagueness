@@ -1,0 +1,15 @@
+[0] Config.pm:343> INFO - This is Biber 2.5
+[0] Config.pm:346> INFO - Logfile is 'longsample.blg'
+[40] biber-darwin:290> INFO - === Wed Aug  3, 2016, 08:03:44
+[74] Biber.pm:351> INFO - Reading 'longsample.bcf'
+[171] Biber.pm:776> INFO - Found 3 citekeys in bib section 0
+[182] Biber.pm:3493> INFO - Processing section 0
+[195] Biber.pm:3657> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[197] bibtex.pm:1187> INFO - Decoding LaTeX character macros into UTF-8
+[199] bibtex.pm:1048> INFO - Found BibTeX data source 'bibliography.bib'
+[228] UCollate.pm:66> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[228] UCollate.pm:66> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[228] Biber.pm:3306> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-US'
+[228] Biber.pm:3310> INFO - No sort tailoring available for locale 'en-US'
+[232] bbl.pm:526> INFO - Writing 'longsample.bbl' with encoding 'ascii'
+[233] bbl.pm:619> INFO - Output to longsample.bbl
