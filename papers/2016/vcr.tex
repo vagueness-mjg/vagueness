@@ -3,7 +3,7 @@ a4paper
 %, man
 , doc
 %, jou
-, draftfirst 
+%, draftfirst 
 , longtable
 ]{apa6} 
 \usepackage{rotating} 
@@ -30,12 +30,14 @@ a4paper
                          % draftfirst or draftall (places the word DRAFT on first page or all pages)
                          % draft (is passed to, and handled by, the article documentclass)
 
-\SetWatermarkAngle{0} % Angle at which the watermark text is drawn
-\SetWatermarkColor{red} % Color of the watermark%\SetWatermarkLightness{?real?} Lightness of the watermark text (1=white, 0=black)%\SetWatermarkFontSize{?length?} Font size of the watermark text
-\SetWatermarkScale{0.5} % Scaling of the watermark text 
-%\SetWatermarkHorCenter{?length?} Horizontal center of watermark text 
-\SetWatermarkVerCenter{2cm} % Vertical center of watermark text
-\SetWatermarkText{Internal Draft} %Watermark text
+%\SetWatermarkAngle{0} % Angle at which the watermark text is drawn
+%\SetWatermarkColor{red} % Color of the watermark
+%\SetWatermarkLightness{0.7} %Lightness of the watermark text (1=white, 0=black)
+%%\SetWatermarkFontSize{?length?} Font size of the watermark text
+%\SetWatermarkScale{0.5} % Scaling of the watermark text 
+%%\SetWatermarkHorCenter{?length?} Horizontal center of watermark text 
+%\SetWatermarkVerCenter{2cm} % Vertical center of watermark text
+%\SetWatermarkText{Internal Draft} %Watermark text
 
 \title{Vagueness as Cost Reduction}
 \shorttitle{Vagueness as Cost Reduction}
@@ -44,18 +46,24 @@ a4paper
 \twoaffiliations{Computing Science\\ University of Aberdeen}{Computing Science\\ University of Aberdeen}
 \abstract{Much of everyday language is vague, yet standard game-theoretic models make it difficult to see how vague expressions can have benefits over crisp ones in co-operative situations. We report a series of experiments that aims to separate the utility of vagueness from the utility of other factors that come together with vagueness. We argue that the results support a view of vagueness where the benefits that vague terms exert are due to other influences that vagueness brings with it rather than to vagueness itself.}
 \keywords{keyword 1, keyword2, keyword3, keyword4}
-\authornote{Contact author is Matt Green mjglab@gmail.com} % The Author Note, containing contact information, acknowledgements, etc.
-\note{\date{\today~\currenttime}} % Notation of manuscript date or other information de- sired beneath affiliation line
-\journal{Aimed at Language, Cognition, and Neuroscience} % typeset in the top left header of page 1 (jou and doc modes only)
-\volume{volume info} % Volume, number, pages; typeset in the top left header in jou and doc modes, underneath the content of \journal
-\ccoppy{Copyright notice etc} % Copyright notice, etc.; typeset in the top right header of page 1 (jou and doc modes only)
-\copnum{Additional text} % Any additional text needed;  typeset in the top right header in jou and doc modes, underneath the content of \ccoppy
-
+\authornote{Contact author is Matt Green: \textsf{mjglab@gmail.com}} 
+% The Author Note, containing contact information, acknowledgements, etc.
+\note{This version compiled at: \textsf{\currenttime~\today}} 
+% Notation of manuscript date or other information desired beneath affiliation line
+\journal{Aimed at:}
+% typeset in the top left header of page 1 (jou and doc modes only)
+\volume{\textsc{Language, Cognition, and Neuroscience}} 
+% Volume, number, pages; typeset in the top left header in jou and doc modes, underneath the content of \journal
+\ccoppy{Draft date:}
+% Copyright notice, etc.; typeset in the top right header of page 1 (jou and doc modes only)
+\copnum{\today}
+% Any additional text needed;  typeset in the top right header in jou and doc modes, underneath the content of \ccoppy
 \begin{document}
-\maketitle %
+\longdate
+\maketitle % no blank line
 %\section{Introduction} % APA does not use Introduction header
 Vagueness pervades the language that we use on a daily basis. In everyday use, language use may be called vague for various reasons (see e.g. the entry ``vague'' in \cite{penguin}.) 
-In most academic use though, the word `vagueness' has a more particular meaning. Keefe and Smith, for example, state ``vague predicates have borderline cases, have fuzzy boundaries, and are susceptible to sorites paradoxes'' \cite[p.\ 4]{keefe1996vagueness} (a similar definition can be found in \textcite{EgreKlinedinst}, among many others).  The most crucial of these criteria is the existence of borderline cases: ``a word is precise if it describes a well-defined set of objects. By contrast, a word is vague if it is not precise'' \cite[p.\ 1]{lipmanvague}. A typical example is the word ``tall'', as applied to people for example, because here is no precise, known height which separates those who are tall from those who are not. The crucial point is that ``tall'' admits borderline cases (i.e., people who may or may not count as tall), which are the hallmark of vagueness as we use the term.
+In most academic use though, the word `vagueness' has a more particular meaning. Keefe and Smith, for example, state ``vague predicates have borderline cases, have fuzzy boundaries, and are susceptible to sorites paradoxes'' \cite[p.\ 4]{keefe1997vagueness} (a similar definition can be found in \textcite{EgreKlinedinst}, among many others).  The most crucial of these criteria is the existence of borderline cases: ``a word is precise if it describes a well-defined set of objects. By contrast, a word is vague if it is not precise'' \cite[p.\ 1]{lipmanvague}. A typical example is the word ``tall'', as applied to people for example, because here is no precise, known height which separates those who are tall from those who are not. The crucial point is that ``tall'' admits borderline cases (i.e., people who may or may not count as tall), which are the hallmark of vagueness as we use the term.
 
 Linguists, philosophers of language, and more recently game theorists, have asked why natural languages contain so many vague expressions, which are used so frequently \cite{Lipman:2000fk, lipmanvague}. By introducing borderline cases, these expressions create potential misunderstandings, thereby creating ``a worldwide several-thousand year efficiency loss'' \cite[][p.~1]{lipmanvague}. Lipman explains the point by means of a scenario in which a speaker describes a person to a hearer, who needs to identify that person in the arrivals hall of of an airport. Lipman argues that, in such a scenario, a precise description of the person's height (e.g., ``The person's height is 187.96 cm'') would be more useful than a vague one (``The person is tall''). Lipman uses this scenario to explain why standard game theory models of communication \cite[e.g.,]{Crawford:1982lr} predict that, under certain conditions, a crisp act of communication will always have more utility than a vague act that communicates the same state of affairs. The relevant conditions are, broadly speaking, that both interlocutors know all the relevant facts (e.g., both know the person's height precisely) and that the setting for the communication is co-operative. These conditions exclude deliberate deception, and rhetorical situations like political debate and advertising where the intention is to persuade the interlocutor to adopt some point of view, where the persuasion might not be intended to be in the addressee's best interest. 
 
@@ -71,7 +79,7 @@ The utility of vagueness is the attested aim of a small number of studies, but m
 
 In a series of studies of behaviour modification, \textcite[]{Mishra01042011} manipulated the presentation format of information about quantities in the domains of mental acuity, physical strength, and weight loss. In the weight loss study, participants were told that the study was designed to test the validity of a new (actually fictitious) health index, the HHI (Holistic Health Index). They were told that an ideal HHI score lies in the range of 45 to 55. In a longitudinal study, participants submitted their height, weight, hydration level, gender, and age to a computer each week. Participants were told that two algorithms would be used to compute their HHI, and that it was possible that the two algorithms might give different values initially, but would converge over the course of the study to a single value. They were also told that if the two algorithms did give different values, then the true score lay between the two values. In one condition, which the authors called the precise condition, the two algorithms gave the same score. In the other condition, which the authors called the vague condition, one algorithm added 3\% to the score while the other algorithm subtracted 3\% from the score, yielding a range of values whose midpoint was the same as the two values given in the precise condition. 
 
-One group of participants was given HHI scores in the ideal range: for this group their weight loss did not differ depending on whether they were given vague or precise HHI values. However for the other group, who were given HHI scores outside the ideal range, their weight loss was significantly greater if they were given vague HHI scores than if they were given precise HHI scores. The authors explain the improvement in the vague condition for this group as resulting from the participants' freedom to think of themselves a positioned on one end of the range - the end closest to the ideal HHI scores. This ``illusion of proximity'' \cite[][p.~4]{Mishra01042011} to the goal is argued to allow participants to generate positive expectancies that lead to behaviours that improve performance. In contrast, in the precise conditions, participants did not have this freedom of interpretation, and could not distort the information to bring about the beneficial \emph{illusion of proximity}. These results are interesting, and of obvious potential practical importance. We note, however, that information presented as an exact range of values does not conform with the standard definition of vagueness \cite{keefe1996vagueness, EgreKlinedinst}, since an exact range does not admit borderline cases. In the terminology of \textcite{Hobbs85granularity}, the difference between a range and a single midpoint value is a difference of \emph{granularity}. Furthermore, the experiments of \textcite{Mishra01042011} did not explore benefits in terms of processing cost, but in terms of long-term behaviour change.
+One group of participants was given HHI scores in the ideal range: for this group their weight loss did not differ depending on whether they were given vague or precise HHI values. However for the other group, who were given HHI scores outside the ideal range, their weight loss was significantly greater if they were given vague HHI scores than if they were given precise HHI scores. The authors explain the improvement in the vague condition for this group as resulting from the participants' freedom to think of themselves a positioned on one end of the range - the end closest to the ideal HHI scores. This ``illusion of proximity'' \cite[][p.~4]{Mishra01042011} to the goal is argued to allow participants to generate positive expectancies that lead to behaviours that improve performance. In contrast, in the precise conditions, participants did not have this freedom of interpretation, and could not distort the information to bring about the beneficial \emph{illusion of proximity}. These results are interesting, and of obvious potential practical importance. We note, however, that information presented as an exact range of values does not conform with the standard definition of vagueness \cite{keefe1997vagueness, EgreKlinedinst}, since an exact range does not admit borderline cases. In the terminology of \textcite{Hobbs85granularity}, the difference between a range and a single midpoint value is a difference of \emph{granularity}. Furthermore, the experiments of \textcite{Mishra01042011} did not explore benefits in terms of processing cost, but in terms of long-term behaviour change.
 
 Similar issues arise from the work of \textcite{peters2009bringing}. The authors carried out a series of studies where participants were required to rate hospitals based on various sources of information about quality of care. There was a between-subjects manipulation based on numeracy. The format of the information was manipulated within subjects: either numbers only were presented, or both numbers and evaluative categories were presented (e.g., \emph{Poor}, \emph{Fair}, \emph{Good}, \emph{Excellent}, with crisp visual boundary lines between the categories). Results showed that, for low-numeracy participants, the presence of evaluative categories resulted in a diminished influence of an irrelevant affective state on the ratings. For all participants, the presence of evaluative categories resulted in better decisions and in a greater use of the most important and reliable types of information, such as survival rates. 
 
