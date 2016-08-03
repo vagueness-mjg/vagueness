@@ -1,0 +1,38 @@
+\contentsline {part}{Part\ I\hspace {\betweenumberspace }Part Title}{1}
+\contentsline {chapter}{\numberline {1}The Elusive Benefits of Vagueness: the Evidence So Far}{3}
+\contentsline {section}{\numberline {1.1}Introduction}{3}
+\contentsline {paragraph}{Behaviour modification experiments}{5}
+\contentsline {paragraph}{Ratings experiments}{5}
+\contentsline {paragraph}{Our own experiments}{6}
+\contentsline {section}{\numberline {1.2}Experiment 1}{7}
+\contentsline {subsection}{\numberline {1.2.1}Introduction}{7}
+\contentsline {subsection}{\numberline {1.2.2}Hypotheses}{8}
+\contentsline {subsection}{\numberline {1.2.3}Method}{8}
+\contentsline {subsection}{\numberline {1.2.4}Results}{9}
+\contentsline {subsection}{\numberline {1.2.5}Discussion}{10}
+\contentsline {section}{\numberline {1.3}Experiment 2}{11}
+\contentsline {subsection}{\numberline {1.3.1}Introduction}{11}
+\contentsline {subsection}{\numberline {1.3.2}Hypotheses}{12}
+\contentsline {subsection}{\numberline {1.3.3}Method}{12}
+\contentsline {subsection}{\numberline {1.3.4}Results}{13}
+\contentsline {subsection}{\numberline {1.3.5}Discussion}{14}
+\contentsline {section}{\numberline {1.4}Experiment 3}{15}
+\contentsline {subsection}{\numberline {1.4.1}Hypotheses}{16}
+\contentsline {subsection}{\numberline {1.4.2}Method}{16}
+\contentsline {subsection}{\numberline {1.4.3}Results}{16}
+\contentsline {subsection}{\numberline {1.4.4}Discussion}{17}
+\contentsline {section}{\numberline {1.5}Experiment 4}{18}
+\contentsline {subsection}{\numberline {1.5.1}Hypotheses}{18}
+\contentsline {subsection}{\numberline {1.5.2}Method}{18}
+\contentsline {subsection}{\numberline {1.5.3}Results}{19}
+\contentsline {subsection}{\numberline {1.5.4}Discussion}{20}
+\contentsline {section}{\numberline {1.6}Discussion of experiments 3 and 4}{20}
+\contentsline {section}{\numberline {1.7}General Discussion}{20}
+\contentsline {section}{Appendix}{22}
+\contentsline {section}{References}{23}
+\contentsline {chapter}{Glossary}{25}
+\contentsline {paragraph}{glossary term}{25}
+\contentsline {paragraph}{glossary term}{25}
+\contentsline {paragraph}{glossary term}{25}
+\contentsline {paragraph}{glossary term}{25}
+\contentsline {paragraph}{glossary term}{25}
