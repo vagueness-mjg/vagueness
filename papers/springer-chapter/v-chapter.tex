@@ -1,18 +1,50 @@
-%!TEX root = book.tex 
-% springer volume on vagueness & rationality
-%%%%%%%%%%%%%%%%%%%%% chapter.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% sample chapter
-%
-% Use this file as a template for your own input.
-%
-%%%%%%%%%%%%%%%%%%%%%%%% Springer-Verlag %%%%%%%%%%%%%%%%%%%%%%%%%%
-\motto{This is a \textsf{motto}:  Use the template \emph{chapter.tex} to style the various elements of your chapter content.}
-%% \bibliographystyle{spbasic}
-%% spbasic info
-% This is an author-year citation style bibliography. As such, it is non-standard LaTeX, and requires a special package file to function properly. Such a package is natbib.sty by Patrick W. Daly
-% For Springer medical, life sciences, chemistry, geology, engineering and computer science publications.   
-% For use with the natbib package (see below). Default is author-year citations. When citations are numbered, please use \usepackage[numbers]{natbib}.
+% Editor comments:
+% 8.000-10.000 words
+% I aim for end-march 2017b as submission deadline. That is, if there will be no delays, the volume should be publishable by the end of 2017. In case the submission/revision process takes longer than expected, however, the publication date should be rather 2018. 
+\documentclass[graybox,envcountchap,sectrefs%
+,footinfo
+%,referee
+]{svmono}
+% Native packages
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{type1cm}         
+\usepackage{makeidx}		% allows index generation
+\usepackage{graphicx}		% standard LaTeX graphics tool
+\usepackage{multicol} 		% used for the two-column index
+\usepackage[bottom]{footmisc}	% places footnotes at page bottom
+% User packages
+\usepackage{natbib}
+\usepackage{lipsum}
+
+\makeindex             			% used for the subject index
+                       				% please use the style svind.ist with
+                       				% your makeindex program
+
+\begin{document}
+
+\author{Kees van Deemter and Matthew Green}
+\title{Vagueness \& Rationality}
+\subtitle{The Elusive Benefits of Vagueness: the Evidence So Far}
+\maketitle
+
+\frontmatter
+\tableofcontents
+
+\extrachap{Acronyms}
+\begin{description}[\textsc{nlg}]
+\item[\textsc{nlg}]{Natural Language Generation: for example, an \textsc{nlg} application; or the process itself of generating natural language}
+\end{description}
+
+\mainmatter
+
+\begin{partbacktext}
+\part{Part Title}
+\noindent Use the template \emph{part.tex} together with the Springer document class SVMono (monograph-type books) or SVMult (edited books) to style your part title page and, if desired, a short introductory text (maximum one page) on its verso page in the Springer layout.
+
+\end{partbacktext}
+
 % The \cite command functions as follows:
  %   \citet{key} ==>>                Jones et al. (1990)
  %   \citet*{key} ==>>               Jones, Baker, and Smith (1990)
@@ -31,18 +63,18 @@
 
 
 
-\abstract{Much of everyday language is vague, yet the benefits of vagueness for hearers and readers are proving to be elusive. We discuss a range of earlier controlled experiments with human participants, and we report on a new series of experiments that we conducted in recent years. These new experiments, which focus on vague expressions that are part of referential noun phrases, aim to separate the utility of vagueness (as defined by the existence of borderline cases, as is common in theoretical work on vagueness) from the utility of other factors that tend to co-occur with vagueness. Having presented the evidence, we argue that the evidence so far supports a view of vagueness where the benefits that vague terms exert are due to other influences, rather than to vagueness itself. These factors include: low granularity; the use of evaluative words; the avoidance of overtly numerical words; the existence of comparison strategies; and, lastly and more tentatively, a phenomenon that we call range reduction. Although it is possible that other types of vague expressions (i.e., vague words outside referential noun phrases) behave differently, our work suggests that vagueness itself may not increase the utility of an expression.}
+\abstract{Much of everyday language is vague, yet the benefits of vagueness for hearers and readers are proving to be elusive. We discuss a range of earlier controlled experiments with human participants, and we report on a new series of experiments that we conducted in recent years. These new experiments, which focus on vague expressions that are part of referential noun phrases, aim to separate the utility of vagueness (as defined by the existence of borderline cases\index{borderline cases}, as is common in theoretical work on vagueness) from the utility of other factors that tend to co-occur with vagueness. Having presented the evidence, we argue that the evidence so far supports a view of vagueness where the benefits that vague terms exert are due to other influences, rather than to vagueness itself. These factors include: low granularity; the use of evaluative words; the avoidance of overtly numerical words; the existence of comparison strategies; and, lastly and more tentatively, a phenomenon that we call range reduction. Although it is possible that other types of vague expressions (i.e., vague words outside referential noun phrases) behave differently, our work suggests that vagueness itself may not increase the utility of an expression.}
 
 \section{Introduction}
 \label{sec:1}
 
-Vagueness pervades the language that we use on a daily basis. In everyday use, language use may be called vague for various reasons -- see e.g. the entry for \emph{vague} in \cite{penguin}.  In most academic use though, the word \emph{vagueness} has a more particular meaning. \citeauthor{keefe1997vagueness}, for example, state \begin{quotation}vague predicates have borderline cases, have fuzzy boundaries, and are susceptible to sorites paradoxes \cite[p.\ 4]{keefe1997vagueness}\end{quotation} (a similar definition can be found in \cite{EgreKlinedinst}, among many others).  The most crucial of these criteria is the existence of borderline cases: \begin{quotation}a word is precise if it describes a well-defined set of objects. By contrast, a word is vague if it is not precise \cite[p.\ 1]{lipmanvague}\end{quotation} A typical example is the word \emph{tall}, as applied to people for example, because here is no precise, known height which separates those who are tall from those who are not. The crucial point is that \emph{tall} admits borderline cases (i.e., people who may or may not count as tall), which are the hallmark of vagueness as we use the term.
+Vagueness pervades the language that we use on a daily basis. In everyday use, language use may be called vague for various reasons -- see e.g. the entry for \emph{vague} in \cite{penguin}.  In most academic use though, the word \emph{vagueness} has a more particular meaning. \citeauthor{keefe1997vagueness}, for example, state \begin{quotation}vague predicates have borderline cases\index{borderline cases}, have fuzzy boundaries, and are susceptible to sorites paradoxes \cite[p.\ 4]{keefe1997vagueness}\end{quotation} (a similar definition can be found in \cite{EgreKlinedinst}, among many others).  The most crucial of these criteria is the existence of borderline cases\index{borderline cases}: \begin{quotation}a word is precise if it describes a well-defined set of objects. By contrast, a word is vague if it is not precise \cite[p.\ 1]{lipmanvague}\end{quotation} A typical example is the word \emph{tall}, as applied to people for example, because here is no precise, known height which separates those who are tall from those who are not. The crucial point is that \emph{tall} admits borderline cases\index{borderline cases} (i.e., people who may or may not count as tall), which are the hallmark of vagueness as we use the term.
 
-Linguists, philosophers of language, and more recently game theorists, have asked why natural languages contain so many vague expressions, which are used so frequently \cite{Lipman:2000fk, lipmanvague}. By introducing borderline cases, these expressions create potential misunderstandings, thereby creating \begin{quotation}a worldwide several-thousand year efficiency loss \cite[p.\ 1]{lipmanvague}\end{quotation} \citeauthor{lipmanvague} explains the point by means of a scenario in which a speaker describes a person to a hearer, who needs to identify that person in the arrivals hall of of an airport. Lipman argues that, in such a scenario, a precise description of the person's height, e.g., \textsl{The person's height is 187.96~cm} would be more useful than a vague one, e.g., \textsl{The person is tall}. Lipman uses this scenario to explain why standard game theory models of communication, \citep[e.g.][]{Crawford:1982lr} predict that, under certain conditions, a crisp act of communication will always have more utility than a vague act that communicates the same state of affairs. The relevant conditions are, broadly speaking, that both interlocutors know all the relevant facts (e.g., both know the person's height precisely) and that the setting for the communication is co-operative. These conditions exclude deliberate deception, and rhetorical situations like political debate and advertising where the intention is to persuade the interlocutor to adopt some point of view, where the persuasion might not be intended to be in the addressee's best interest. 
+Linguists, philosophers of language, and more recently game theorists, have asked why natural languages contain so many vague expressions, which are used so frequently \cite{Lipman:2000fk, lipmanvague}. By introducing borderline cases\index{borderline cases}, these expressions create potential misunderstandings, thereby creating \begin{quotation}a worldwide several-thousand year efficiency loss \cite[p.\ 1]{lipmanvague}\end{quotation} \citeauthor{lipmanvague} explains the point by means of a scenario in which a speaker describes a person to a hearer, who needs to identify that person in the arrivals hall of of an airport. Lipman argues that, in such a scenario, a precise description of the person's height, e.g., \textsl{The person's height is 187.96~cm} would be more useful than a vague one, e.g., \textsl{The person is tall}. Lipman uses this scenario to explain why standard game theory models of communication, \citep[e.g.][]{Crawford:1982lr} predict that, under certain conditions, a crisp act of communication will always have more utility than a vague act that communicates the same state of affairs. The relevant conditions are, broadly speaking, that both interlocutors know all the relevant facts (e.g., both know the person's height precisely) and that the setting for the communication is co-operative. These conditions exclude deliberate deception, and rhetorical situations like political debate and advertising where the intention is to persuade the interlocutor to adopt some point of view, where the persuasion might not be intended to be in the addressee's best interest. 
 
 Lipman argued that such the efficiency loss resulting from vague expressions would be unlikely to have arisen unless there are advantages as well as disadvantages associated with vague expressions. Lipman asked, essentially, what these advantages might be, and how they might find a place in a game-theoretical explanation. In this paper, we focus on the first part of Lipman's question.
 
-Several tentative answers to Lipman's question have been offered -- see \citet{van2009utility, van2010vagueness}. Prominent among these answers is the idea that vague expressions are somehow easier to process, by a speaker and/or a hearer, than expressions that are not \emph{vague}, i.e., that are \emph{crisp} \citep[e.g.,][]{lipmanvague,De-Jaegher:2003lr,vanrooij2003lr}. For example, Lipman writes: \begin{quotation}For the listener, information which is too specific may require more effort to analyze \citep[][p.\ 11]{lipmanvague}  \end{quotation} We shall refer to this characterisation of the utility of vague language as the \emph{cost reduction} hypothesis. The idea of vagueness as cost reduction can take various shapes, but the basic hypothesis is that it is easier for people to think in terms of loosely defined categories, such as \emph{quite a few}, or \emph{many}, than in terms of crisply defined ones, such as \emph{thirteen}, or \emph{237}. This predicts that whenever a vague expression can perform the same communicative task as a crisp one, it is rational to choose the vague expression. The corollary for comprehension is that vague expressions should be understood more readily than precise expressions. 
+Several tentative answers to Lipman's question have been offered -- see \citet{van2009utility, van2010vagueness}. Prominent among these answers is the idea that vague expressions are somehow easier to process, by a speaker and/or a hearer, than expressions that are not \emph{vague}, i.e., that are \emph{crisp} \citep[e.g.,][]{lipmanvague,De-Jaegher:2003lr,vanrooij2003lr}. For example, Lipman writes: \begin{quotation}For the listener, information which is too specific may require more effort to analyze \citep[][p.\ 11]{lipmanvague}  \end{quotation} We shall refer to this characterization of the utility of vague language as the \emph{cost reduction} hypothesis. The idea of vagueness as cost reduction can take various shapes, but the basic hypothesis is that it is easier for people to think in terms of loosely defined categories, such as \emph{quite a few}, or \emph{many}, than in terms of crisply defined ones, such as \emph{thirteen}, or \emph{237}. This predicts that whenever a vague expression can perform the same communicative task as a crisp one, it is rational to choose the vague expression. The corollary for comprehension is that vague expressions should be understood more readily than precise expressions. 
 
 Questions concerning optimal language use have many practical applications. Natural Language Generation\footnote{\textsc{nlg} systems take data or formulas as input, and transform them into natural language outputs \cite[][]{reiter2000building}. The process parallels language production in humans.}  (henceforth \textsc{nlg}) systems must make decisions between different formulations of the same information. For example, if a man's height is 6 foot 2 inches, this could be expressed as \emph{187.96 metres}, \emph{6 foot 2}, or \emph{tall}, among other ways, and the \textsc{nlg} system must decide between these.  The problem is particularly relevant for \textsc{nlg} systems that take numbers as input, as many do. In the context of an \textsc{nlg} system faced with a practical decision of this kind, Lipman's question becomes \emph{Under what circumstances should vague terms be produced?}  Relevant applications include weather forecasting on the basis of numerical weather data such as temperature and wind speed \citep{goldberg1994using, turner2006generating}, and medical decision support on the basis of clinical measurement such as oxygen saturation, heart rhythm, etc. \citep{Hripcsak01032009, hunter2008summarising, portet2009automatic}. At present, such \textsc{nlg} systems are often forced to make decisions concerning the level of precision in the utterances that they generate (e.g., \emph{the temperature will be in the high twenties tomorrow}) on the basis of little more than intuition. A better understanding of the benefits of different precision levels for readers would allow these systems to become more useful. 
 
@@ -56,7 +88,7 @@ In a series of studies of behaviour modification, \citet[]{Mishra01042011} manip
 \paragraph{Ratings experiments} 
 Similar issues arise from the work of \citet{peters2009bringing}. The authors carried out a series of studies where participants were required to rate hospitals based on various sources of information about quality of care. There was a between-subjects manipulation based on numeracy. The format of the information was manipulated within subjects: either numbers only were presented, or both numbers and evaluative categories were presented (e.g., \emph{Poor}, \emph{Fair}, \emph{Good}, \emph{Excellent}, with crisp visual boundary lines between the categories). Results showed that, for low-numeracy participants, the presence of evaluative categories resulted in a diminished influence of an irrelevant affective state on the ratings. For all participants, the presence of evaluative categories resulted in better decisions and in a greater use of the most important and reliable types of information, such as survival rates. 
 
-It is, however, questionable whether the \emph{evaluative categories} manipulation in this study can be considered a manipulation of vagueness. Certainly, terms like \emph{Fair} admit the possibility of borderline cases. However, given that the boundaries between the categories were marked crisply, and that therefore the categories mapped crisply to numerical values, it becomes doubtful whether any borderline cases could be conceived to arise in fact. For example, \emph{Fair} was mapped to 60\% -- 70\% for the variable \emph{percentage of heart attack patients given recommended treatment (ACE inhibitor)}. Accordingly, rather than the vagueness of categories such as \emph{Poor}, Peters et al. emphasise the evaluative content inherent in these categories, and the affective potential of the evaluative content rather than the vagueness of the terms like \emph{Fair}.
+It is, however, questionable whether the \emph{evaluative categories} manipulation in this study can be considered a manipulation of vagueness. Certainly, terms like \emph{Fair} admit the possibility of borderline cases\index{borderline cases}. However, given that the boundaries between the categories were marked crisply, and that therefore the categories mapped crisply to numerical values, it becomes doubtful whether any borderline cases\index{borderline cases} could be conceived to arise in fact. For example, \emph{Fair} was mapped to 60\% -- 70\% for the variable \emph{percentage of heart attack patients given recommended treatment (ACE inhibitor)}. Accordingly, rather than the vagueness of categories such as \emph{Poor}, Peters et al. emphasise the evaluative content inherent in these categories, and the affective potential of the evaluative content rather than the vagueness of the terms like \emph{Fair}.
 
 \paragraph{Our own experiments}
 The experiments reported in the present paper put the cost reduction hypothesis to the test. The question that we are trying to answer is whether vague expressions are processed more easily by readers than crisp ones. Like Lipman, we focus on situations where numerical information is used in order to identify a referent. Reference, in other words, will be the linguistic task on which we focus, partly because of the interest that this topic has recently drawn from the NLG community.  In focussing on benefits for the hearer, we will leave aside the question of audience design, leaving this for later research.
@@ -93,7 +125,7 @@ The instructions indicated the larger of the two dot arrays equally often as the
 \begin{table}
 \caption{Table of instructions for the pair (5,25). Experiment 1}
 \label{instructionse1} 
-\begin{tabular}{| l | l |}
+\begin{tabular}{lll}
 \hline\noalign{\smallskip}
 vagueness&example\\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
@@ -186,7 +218,7 @@ The main result from experiment 1 was that responses were faster and more accura
 
 In experiment 2 we set out to distinguish between the cost reduction account and the instruction format account, leaving the selection algorithm account for experiments 3 and 4. Contrast an expression from the vague condition: `the square with few dots' with an expression from the crisp condition: `the square with 15 dots'. One difference is that `few' is vague (or at least has the potential for vagueness) and `15' is crisp. Another difference is that `few' is a linguistic, or verbal quantifier while `15' is a numerical quantifier, in the sense that a number is mentioned explicitly. Since these two differences were confounded in Experiment 1, the vagueness advantage finding is vulnerable to an alternative interpretation, that what we saw as a vagueness advantage was in contrast an advantage for the verbal form of the quantifier. In the present experiment 2 we pitted these alternative interpretations against each other in a factorial design. 
 
-In Experiment 1, the participants chose one of two squares. The `vague' quantifiers (e.g., `few') uniquely identified one square. Recall our definition of vague  -- ``a word is precise if it describes a well-defined set of objects. By contrast, a word is vague if it is not precise''.  In the first experiment, the quantifiers in the vague conditions did not really meet this definition. This is because there were no borderline cases of the referent that could make the referent set `not well-defined'. Experiment 2 used three squares so that the vague quantifiers always had more than one possible referent. To enhance the potential for the vague quantifiers to have true vagueness in Experiment 2, we also used indefinite articles in the vague instructions. Thus, instead of the instruction \emph{Choose the square with few dots}, we used \emph{Choose a square with few dots}.
+In Experiment 1, the participants chose one of two squares. The `vague' quantifiers (e.g., `few') uniquely identified one square. Recall our definition of vague  -- ``a word is precise if it describes a well-defined set of objects. By contrast, a word is vague if it is not precise''.  In the first experiment, the quantifiers in the vague conditions did not really meet this definition. This is because there were no borderline cases\index{borderline cases} of the referent that could make the referent set `not well-defined'. Experiment 2 used three squares so that the vague quantifiers always had more than one possible referent. To enhance the potential for the vague quantifiers to have true vagueness in Experiment 2, we also used indefinite articles in the vague instructions. Thus, instead of the instruction \emph{Choose the square with few dots}, we used \emph{Choose a square with few dots}.
 
 In experiment 2, an item was a referring expression followed by a triple of numbers, representing the number of squares in the left, middle, and right squares. We used four different triples of numbers: (6,15,24); (16,25,34); (26,35,44); (36,45,54). Each triple had the following properties: it comprised three squares (instead of two as in Experiment 1); the central number was always presented in the middle of the three; there were two flanking numbers where one was smaller than the central number and one was bigger. 
 
@@ -198,20 +230,18 @@ An indication that the manipulation of vagueness was successful is that particip
 \begin{table}
 \caption{Table of instructions arranged by condition for the triple (6,15,24). Experiment 2}
 \label{instructionse2} 
-\begin{tabular}{rlll}
+\begin{tabular}{llll}
 \hline\noalign{\smallskip}
 vagueness&instruction format&selection task&example\\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-crisp 	& 	numeric	& matching	&Choose the square with 6 dots \\
-vague	&	numeric & matching	&Choose a square with about 10 dots\\
-crisp	&	verbal	& comparison	&Choose the square with the fewest dots\\
-vague	&	verbal	& comparison	&Choose a square with few dots\\
+crisp 	& 	numeric	& matching	&	Choose the square with 6 dots \\
+vague	&	numeric 	& matching	&	Choose a square with about 10 dots\\
+crisp		&	verbal	& comparison	&	Choose the square with the fewest dots\\
+vague	&	verbal	& comparison	&	Choose a square with few dots\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 $^a$ Table foot note (with superscript)\\
 \end{table}
-
-
 
 \subsection{Hypotheses}
 The cost reduction account predicts a main effect of vagueness such that the vague instruction conditions attract faster responses than the crisp instruction conditions. The cost reduction account also predicts an interaction with the instruction format (or selection algorithm) variable: at each level of instruction format (or selection algorithm) the vague condition should attract faster responses than the crisp condition.%why is this interaction predicted?
@@ -286,7 +316,7 @@ Participants were significantly more likely to choose the borderline option for 
 
 \subsection{Discussion}
 
-This experiment tested to see whether when borderline cases are present, vague instructions would speed responses as they did in Experiment Two when there were no borderline squares. We actually found a \emph{disadvantage} of vague instructions: vague instructions slowed people down by 112 ms on average. We also found that the effect of instruction format was significant, with numerical format slowing responses by 689 ms on average. The disadvantage of numerical format overwhelms the contribution of vagueness. The verbal vague condition was still responded to faster than the numerical crisp condition, so the pattern from Experiment 1 is reproduced, but in the light of the evidence from Experiment 2 in the presence of borderline cases, the advantage that was ascribed to vagueness before now looks more like either an advantage of verbal instruction format, or alternatively as an advantage of the comparison task, according to the selection task account.
+This experiment tested to see whether when borderline cases\index{borderline cases} are present, vague instructions would speed responses as they did in Experiment Two when there were no borderline squares. We actually found a \emph{disadvantage} of vague instructions: vague instructions slowed people down by 112 ms on average. We also found that the effect of instruction format was significant, with numerical format slowing responses by 689 ms on average. The disadvantage of numerical format overwhelms the contribution of vagueness. The verbal vague condition was still responded to faster than the numerical crisp condition, so the pattern from Experiment 1 is reproduced, but in the light of the evidence from Experiment 2 in the presence of borderline cases\index{borderline cases}, the advantage that was ascribed to vagueness before now looks more like either an advantage of verbal instruction format, or alternatively as an advantage of the comparison task, according to the selection task account.
 
 % KvD: I've tentatively added the following:
 Having effectively separated the {\bf cost reduction} hypothesis from the {\bf instruction format} hypothesis, it is important to observe that, in Experiment 2, instruction format went hand in hand with {\bf selection algorithm}: as shown by the Table of instructions \ref{instructionse2}, the instructions that used a verbal instruction format allowed a comparison algorithm, whereas the instructions that used a numeric format allowed on a matching algorithm. Therefore, our results so far permit the interpretation that what made the instructions in the verbal condition fast is not the fact that they were worded verbally, but that they allowed participants to use a comparison algorithm (which is known to be faster than matching). % KvD I assume we need to say more about this, citing some appropriate papers to support this idea.
@@ -314,10 +344,10 @@ The main aim of experiment 3 was to see whether vagueness would exert beneficial
 \hline\noalign{\smallskip}
 vagueness&instruction format&selection task&instruction\\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-crisp & numeric&matching & Choose a square with 6 dots \\ 
-crisp & numeric&comparison & Choose a square with fewer than 20 dots \\
-vague & numeric&matching & Choose a square with about 10 dots \\ 
-vague & numeric&comparison & Choose a square with far fewer than 20 dots \\ 
+crisp 	& numeric		&matching 	& Choose a square with 6 dots \\ 
+crisp 	& numeric		&comparison 	& Choose a square with fewer than 20 dots \\
+vague 	& numeric		&matching 	& Choose a square with about 10 dots \\ 
+vague 	& numeric		&comparison 	& Choose a square with far fewer than 20 dots \\ 
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 $^a$ Table foot note (with superscript)\\
@@ -379,21 +409,23 @@ An item was thus a combination of a visual prime, a numeric triple, and a referr
 The referring expressions were constrained to never mention a numeral, as in Table \ref{instructionse4}. 
 
 
-\begin{table*}[htbp]
-\centering
+\begin{table}
 \caption{Experiment 4: Instructions}
 \label{instructionse4}
-\begin{tabular}{lllp{7cm}}
-\hline
-vagueness&instruction format& selection task&instruction\\
-\hline
-crisp & verbal&matching & Choose a square with the same number of dots as the target \\ 
-crisp & verbal&comparison& Choose a square with fewer dots than the target \\
-vague & verbal&matching & Choose a square with about the same number of dots as the target \\ 
-vague & verbal&compaison& Choose a square with far fewer dots than the target \\ 
-\hline
+\begin{tabular}{llll}
+\hline\noalign{\smallskip}
+vagueness&instruction 	& selection&instruction\\
+		& format		& task	 &\\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+crisp 	& verbal	&matching 	& Choose a square with the same number of dots as the target \\ 
+crisp 	& verbal	&comparison	& Choose a square with fewer dots than the target \\
+vague 	& verbal	&matching 	& Choose a square with about the same number of dots as the target \\ 
+vague 	& verbal	&comparison	& Choose a square with far fewer dots than the target \\ 
+\noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
-\end{table*}
+$^a$ Table foot note (with superscript)\\
+\end{table}
+
 
 \subsection{Hypotheses}
 The instruction format account predicts no differences between the conditions, since all conditions used verbal quantifiers.
@@ -437,7 +469,6 @@ The benefits of vagueness in the \emph{comparison} task in experiments 3 and 4 c
 
 What is one entitled to conclude? Given that we were able to identify a class of situations -- namely: situations in which a comparison strategy suffices to identify the intended referent -- in which vague expressions led to faster response times than crisp ones, would it be valid to conclude that we have finally discovered an advantage for vagueness that cannot be ascribed to some other factor? We believe the answer to this question is negative. To see why, consider figures \ref{resultse3} and \ref{resultse4}. Both figures depict four conditions, depending on whether the expression was crisp or vague, and depending on whether the referent could be identified using a comparison strategy or not. Two of the resulting four conditions result in an expression that can denote either of two referents; the other two conditions result in an expression that can only denote one referent, with the other possible referent being a marginal candidate at best:
 
-
 \begin{table}
 \caption{Vagueness as range reduction}
 \label{vaguenessasrangereduction} 
@@ -445,15 +476,14 @@ What is one entitled to conclude? Given that we were able to identify a class of
 \hline\noalign{\smallskip}
 vagueness & selection task & candidates\\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-crisp & matching & 1 candidate\\
-crisp & comparison & 2 candidates\\
-vague & matching & 2 candidates\\
-vague & comparison & 1 candidate\\
+crisp 	& matching 	& 1 candidate\\
+crisp 	& comparison 	& 2 candidates\\
+vague 	& matching 	& 2 candidates\\
+vague 	& comparison 	& 1 candidate\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 $^a$ Table foot note (with superscript)\\
 \end{table}
-
 
 To see why vagueness thus has opposite effects, depending on whether it is used in matching or comparison situations, compare an instruction like `Choose a square with 6 dots' with its vague counterpart `Choose a square with about 10 dots': by adding the word `about', we broaden the range of squares that the expression might be referring to. On the other hand, compare `Choose a square with fewer than 20 dots' with its vague counterpart `Choose a square with far fewer than 20 dots': by adding the word `far', we did not broaden the range of squares denotable by the expression: we narrow it down, because only some of the squares that have fewer dots may have {\em far} fewer dots.
 
@@ -479,29 +509,36 @@ When placed at the end of a chapter or contribution (as opposed to at the end of
 \label{AllInstructions} 
 \begin{tabular}{clcccccc}
 \hline\noalign{\smallskip}
-$E$&\emph{Example instruction}&$V$&$Q$&$Symmetry$&$Algorithm$&$N$&$Def$\\
+$E$&\emph{Example instruction}&$V$&$Q$&$S$&$A$&$N$&$D$\\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-   1&Choose the square with 5 dots&Crisp&Number&Symmetric&Matching&1&Definite\\
-    1&Choose the square with few dots&Vague&Word&Asymmetric&Comparison&1&Definite\\
-    2&Choose the square with 6 dots&Crisp&Number&Symmetric&Matching&1&Definite\\
-    2&Choose a square with about 10 dots&Vague&Number&Symmetric&Matching&2&Indefinite\\
-    2&Choose the square with the fewest dots&Crisp&Word&Asymmetric&Comparison&1&Definite\\
-    2&Choose a square with few dots&Vague&Word&Asymmetric&Comparison&2&Indefinite\\
-    3&Choose a square with 6 dots&Crisp&Number&Symmetric&Matching&1&Indefinite\\
-    3&Choose a square with fewer than 20 dots&Crisp&Number&Asymmetric&Comparison&2&Indefinite\\
-    3&Choose a square with about 10 dots&Vague&Number&Symmetric&Matching&2&Indefinite\\
-    3&Choose a square with far fewer than 20 dots&Vague&Number&Asymmetric&Comparison&1&Indefinite\\
-    4&Choose a square with the same number of dots as the target&Crisp&Word&Symmetric&Matching&1&Indefinite\\
-    4&Choose a square with fewer dots than the target&Crisp&Word&Asymmetric&Comparison&2&Indefinite\\
-    4&Choose a square with about the same number of dots as the target&Vague&Word&Symmetric&Matching&2&Indefinite\\
-    4&Choose a square with far fewer dots than the target&Vague&Word&Asymmetric&Comparison&1&Indefinite\\
+    1&		Choose the square with 5 dots				&Cr&Nu&Sy&M&1&D\\
+    1&		Choose the square with few dots			&V&W&A&Cm&1&D\\
+    \hline\noalign{\smallskip}
+    2&		Choose the square with 6 dots				&Cr&Nu&Sy&M&1&D\\
+    2&		Choose a square with about 10 dots			&V&Nu&Sy&M&2&In\\
+    2&		Choose the square with the fewest dots		&Cr&W&A&Cm&1&D\\
+    2&		Choose a square with few dots				&V&W&A&Cm&2&In\\
+    \hline\noalign{\smallskip}
+    3&		Choose a square with 6 dots				&Cr&Nu&Sy&M&1&In\\
+    3&		Choose a square with fewer than 20 dots		&Cr&Nu&A&Cm&2&In\\
+    3&		Choose a square with about 10 dots			&V&Nu&Sy&M&2&In\\
+    3&		Choose a square with far fewer than 20 dots	&V&Nu&A&Cm&1&In\\
+    \hline\noalign{\smallskip}
+    4&		Choose a square with the same number of dots as the target			&Cr&W&Sy&M&1&In\\
+    4&		Choose a square with fewer dots than the target					&Cr&W&A&Cm&2&In\\
+    4&		Choose a square with about the same number of dots as the target		&V&W&Sy&M&2&In\\
+    4&		Choose a square with far fewer dots than the target					&V&W&A&Cm&1&In\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
-  $E$:~Experiment number\\
-   $V$:~Vagueness\\
-    $Q$:~Quantifier used\\
-     $N$:~Number of valid targets for the instruction\\
-     $Def$:~Definiteness of the article in the instruction: $\{\ldots a~square~with\ldots/~\ldots the~square~with\ldots \}$\\
+
+$E$:~Experiment number\\
+$Example\ instruction$:~The actual text\\
+$V$:~Vagueness: Cr=Crisp; V=Vague\\
+$Q$:~Quantifier used/instruction format: Nu=Number; W=Word\\
+$S$:~Symmetry: A=Asymmetric; Sy=Symmetric\\
+$A$:~Algorithm/Selection task: Cm=Comparison; M=Match\\
+$N$:~Number of valid targets for the instruction\\
+$D$:~Definiteness of the article in the instruction: D=\emph{a square with\ldots}; In=\emph{\ldots the square with\ldots}\\
 \end{table}
 
 
@@ -510,3 +547,11 @@ $E$&\emph{Example instruction}&$V$&$Q$&$Symmetry$&$Algorithm$&$N$&$Def$\\
 \bibliographystyle{spbasic} %plain, harvard, apalike, chicago, astron, authordate, natbib.
 \bibliography{bibliography}
 
+\backmatter
+\Extrachap{Glossary}
+%\runinhead{glossary term} Write here the description of the glossary term. Write here the description of the glossary term. Write here the description of the glossary term.
+
+\runinhead{natural language generation} the process of generating natural language from non-natural language input.
+
+\printindex
+\end{document}
