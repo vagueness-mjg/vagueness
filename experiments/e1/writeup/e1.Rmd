@@ -32,7 +32,7 @@ items| a
 7    |40,25
 8    |45,25
 
-In this experiment it was possible to identify errors, so error trials were removed. This is because there were only 2 squares and an istruction uniquely identified one of them.
+In this experiment it was possible to identify errors, so error trials were removed. This is because there were only 2 squares and an instruction uniquely identified one of them.
 
 # Prep data
 
