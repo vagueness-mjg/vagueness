@@ -1,16 +1,29 @@
----
-title: "Experiment 2 (of 4)"
-author: "Matt Green"
-output: 
-  pdf_document:
-    toc: true
----
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+\usepackage{placeins}
+\begin{document}
 
-```{r loadKnitr, echo=FALSE}
-suppressPackageStartupMessages(library(knitr))
-```
 
-```{r loadLibs, echo=FALSE, message=FALSE}
+<<loadKnitr, echo=FALSE, message=FALSE>>=
+library(knitr)
+opts_chunk$set(cache=FALSE, autodep = TRUE)
+@
+
+<<defineFonts>>=
+# .define.fonts <- function () {
+#     quartzFonts(avenir =    c('Avenir Book', 'Avenir Black', 'Avenir Book Oblique', 'Avenir Black Oblique'),
+#                 helvetica = c('Helvetica New Light', 'Helvetica New Bold', 'Helvetica New Light Italic', 'Helvetica New Bold Italic'),
+#                 cmodern = c('CMU Serif', 'CMU Serif Extra','CMU Classical Serif','CMU Serif Extra'))
+# }
+# .define.fonts()
+@
+
+<<loadFonts>>=
+library(extrafont)
+loadfonts()
+@
+
+<<loadLibs, echo=FALSE, message=FALSE>>=
 library(beepr)                     #
 library(car)                       #
 library(ggplot2)                   #
@@ -28,9 +41,11 @@ library(reshape2)                  #
 library(rms)                       # for varclus
 library(Rmisc)                     # for summarySEwithin and friends
 library(xtable)                    #
-```
+@
 
-```{r get_the_data, echo=FALSE}
+\section{Get the data}
+
+<<getTheData, echo=FALSE>>=
 # if the file data.Rda already exists then load it, else do data wrangling
 if( file.exists('data_processed.Rda') ) {
 	load('data_processed.Rda')
@@ -373,11 +388,11 @@ if( file.exists('data_processed.Rda') ) {
 							 ))
 	save(dd, file="data_processed.Rda")
 } # end of the else clause, which is run if the file data.Rda does not exist.
-```  
+@  
 
-Compare distributions of the various transformations of RT against random samples from normal distributions with the same mean and sd to see which transformations best approximate normal distributions.
+\section{Plots}
 
-```{r plotDists, fig.width=5, fig.height=5, message=FALSE, echo=FALSE}
+<<prepPlotData, echo=FALSE>>=
 # first create a data frame specially for transformations
 # this won't be used for analysis, just for this plot
 load('data_raw.Rda') # dat
@@ -418,20 +433,34 @@ temp <- reshape2::melt(dat_transforms,
              measure.vars=c("RT_log", "RT_raw"),
              variable.name="transformation",
              value.name="time")
-ggplot(temp, aes(time, colour=RTtype)) + geom_freqpoly() + facet_wrap(transformation~dfSubset, scales='free') + scale_color_manual(values=c("blue","red")) + theme_bw() + theme(aspect.ratio=1)
-```
+@
 
-# Now working with a data set without impossible trials.
+<<plotDists, fig.width=5, fig.height=5, fig.cap='Compare distributions of the various transformations of RT against random samples from normal distributions with the same mean and sd to see which transformations best approximate normal distributions', fig.pos='hbtp', fig.align='right', message=FALSE, warning=FALSE, echo=FALSE>>=
+ggplot(temp, aes(time, colour=RTtype)) + 
+  geom_freqpoly() + 
+  facet_wrap(transformation~dfSubset, scales='free') + 
+  scale_color_manual(values=c("blue","red")) + 
+  theme_bw() + 
+  theme(aspect.ratio=1, text=element_text(family='CMU Serif', size=12, face='italic'))
+@
 
-Show how transformations of RT affect distribution of times, and how they affect which times are outliers.
+<<exampleOfFonts, fig.width=3, fig.height=3, fig.cap='font example', echo=FALSE>>=
+p <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
+ggtitle("Fuel Efficiency of 32 Cars") +
+xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
+theme_bw() +
+theme(text=element_text(family="CMU Serif", size=14, face='plain'))
+p
+ggsave("ggplot_CMU_Serif.pdf", p, width=3.5, height=3.5)
+@
 
-```{r boxPlots, fig.width=7, fig.height=3, echo=FALSE}
+<<boxPlots, fig.width=7, fig.height=3, fig.cap='Show how transformations of RT affect distribution of times, and how they affect which times are outliers.', echo=FALSE>>=
 load('data_processed.Rda')
 # allow reference to transformation
 subdata = reshape2::melt(dd,
-               measure.vars=c("RT_log", "RT_raw"),
-               variable.name="transformation",
-               value.name="value") 
+                         measure.vars=c("RT_log", "RT_raw"),
+                         variable.name="transformation",
+                         value.name="value") 
 # boxplots for subjects and items separately for each dependent variable
 ggplot(subdata) + 
   facet_wrap(~ transformation, scales="free", ncol=4) +
@@ -441,165 +470,171 @@ ggplot(subdata) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5), aspect.ratio=1, panel.grid=element_blank()) + 
   scale_colour_manual("",values=c("Items"="orange","Subjects"="blue")) +
   xlab("") + ylab("")
-```
-
-Show how mean times for individual subjects and items vary with respect to the grand mean Log RT.
-
-```{r fastSlowRT, fig.width=7, fig.height=3, message=FALSE, echo=FALSE}
+  @
+  <<fastSlowRT, fig.width=7, fig.height=3, fig.cap='Show how mean times for individual subjects and items vary with respect to the grand mean Log RT.', message=FALSE, echo=FALSE>>=
 # Show how mean times for individual subjects and items vary with respect to the grand mean RT.
 subs=ddply(dd, .(level=Subject), 
-					 summarise, effect="subject", emean=mean(dd$RT_log), lmean=mean(RT_log),
-					 ldiff=mean(RT_log)-mean(dd$RT_log))
+summarise, effect="subject", emean=mean(dd$RT_log), lmean=mean(RT_log),
+ldiff=mean(RT_log)-mean(dd$RT_log))
 itms=ddply(dd, .(level=Item), 
-					 summarise, effect="item", emean=mean(dd$RT_log), lmean=mean(RT_log), 
-					 ldiff=mean(RT_log)-mean(dd$RT_log))
+summarise, effect="item", emean=mean(dd$RT_log), lmean=mean(RT_log), 
+ldiff=mean(RT_log)-mean(dd$RT_log))
 si=rbind(subs,itms)
 si$effect <- factor(si$effect, levels=c("subject", "item"))
 my1 <- xyplot(data=si, lmean~level | effect, 
-              aspect=1,
-              layout=c(2,1),
-              ylim = extendrange(si$lmean, f = 0.10),
-              par.settings=list(trellis.par.set(superpose.symbol = list(col='black'), 
-              																	superpose.line=list(col='black'))),
-              xlab=NULL,
-              ylab=NULL,
-              main='How mean times for individual subjects and items\nvary with respect to the grand mean Log RT',
-              mean=unique(si$emean),
-              scales=list(x=list(relation="free", at=NULL, 
-              									 labels=list("subject number", "item identifier"), cex=1 ),
-                          y=list(at=    c(0,7,unique(si$emean),8,9),
-                          			 labels=c("0","7","Mean Log RT","8","9"))),
-              panel=function(x,y,type,subscripts,...){
-                panel.abline(h=unique(si$emean), col="lightgrey",lty=1,...)
-                panel.arrows(x0=x, y0=unique(si$emean), x1=x, y1=y, subscripts=subscripts, code=3, length=0, ...)
-                panel.xyplot(x,y,type='p', pch=21, cex=.5, col='black', fill='black', subscripts=subscripts,...)
-              }) # end of my1
+aspect=1,
+layout=c(2,1),
+ylim = extendrange(si$lmean, f = 0.10),
+par.settings=list(trellis.par.set(superpose.symbol = list(col='black'), 
+superpose.line=list(col='black'))),
+xlab=NULL,
+ylab=NULL,
+main='How mean times for individual subjects and items\nvary with respect to the grand mean Log RT',
+mean=unique(si$emean),
+scales=list(x=list(relation="free", at=NULL, 
+labels=list("subject number", "item identifier"), cex=1 ),
+y=list(at=    c(0,7,unique(si$emean),8,9),
+labels=c("0","7","Mean Log RT","8","9"))),
+panel=function(x,y,type,subscripts,...){
+panel.abline(h=unique(si$emean), col="lightgrey",lty=1,...)
+panel.arrows(x0=x, y0=unique(si$emean), x1=x, y1=y, subscripts=subscripts, code=3, length=0, ...)
+panel.xyplot(x,y,type='p', pch=21, cex=.5, col='black', fill='black', subscripts=subscripts,...)
+}) # end of my1
 my2 <- xyplot(data=si, ldiff~level | effect, 
-              aspect=1, type='n',
-              ylab="Deviation from\nmean Log RT",
-              ylim=extendrange(si$ldiff,f=0.10)
-							) # creates a second y-axis scale
+aspect=1, type='n',
+ylab="Deviation from\nmean Log RT",
+ylim=extendrange(si$ldiff,f=0.10)
+) # creates a second y-axis scale
 print(doubleYScale(my1, my2, 
-									 add.axis=TRUE, 
-									 add.ylab2=TRUE, 
-									 use.style=FALSE))
-```
+add.axis=TRUE, 
+add.ylab2=TRUE, 
+use.style=FALSE))
+@
 
-
-
-
-# Plot main effects and interactions
-
-Main effects
-
-Plot main effects on several transformations
-
-```{r plotMainsa, fig.width=6, fig.height=6, warning=FALSE, echo=FALSE}
+<<plotMainsa, fig.width=6, fig.height=6, fig.cap='Plot main effects on several transformations', message=FALSE, echo=FALSE, warning=FALSE>>=
 # plot main effects on observed data
 # allow reference to transformation
 temp <- reshape2::melt(dd,
-             id.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
-             measure.vars=c("RT_Rec", "RT_RecSqt", "RT_log",  "RT_raw"),
-             variable.name="transformation",
-             value.name="score")
+id.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
+measure.vars=c("RT_Rec", "RT_RecSqt", "RT_log",  "RT_raw"),
+variable.name="transformation",
+value.name="score")
 # allow reference to effect
-temp2 <- reshape2::melt(temp, 
-              id.vars=c("transformation", "score"),
-              measure.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
-              variable.name="effect",
-              value.name="level")
+temp2 <- reshape2::melt(temp,
+id.vars=c("transformation", "score"),
+measure.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
+variable.name="effect",
+value.name="level")
 # do the plot
 ggplot(temp2, aes(y=score, x=level, group=1, col=effect)) +
-  facet_wrap(~transformation + effect, scales="free", shrink=TRUE, ncol=5) +
-  stat_summary(fun.data=mean_cl_normal, geom="pointrange") +
-  stat_summary(fun.y=mean, geom="line") +
-  theme(aspect.ratio=1, axis.text.y=element_blank())
-```
+facet_wrap(~transformation + effect, scales="free", shrink=TRUE, ncol=5) +
+stat_summary(fun.data=mean_cl_normal, geom="pointrange") +
+stat_summary(fun.y=mean, geom="line") +
+theme(aspect.ratio=1, axis.text.y=element_blank())
+@
 
-Main effects
-
-```{r mainB, fig.width=6, fig.height=3, echo=FALSE}
+<<mainB, fig.width=6, fig.height=3, fig.cap='Just the main effects', message=FALSE, echo=FALSE>>=
 # prep main effects rts data frame
-vrts <- cbind(Effect="Vagueness",x=factor(c(1,2)),summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Vagueness")));names(vrts)[3]<-"Levels"
-nrts <- cbind(Effect="Number",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number")));names(nrts)[3]<-"Levels"
-qrts <- cbind(Effect="Quantity",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Quantity")));names(qrts)[3]<-"Levels"
-orts <- cbind(Effect="Order",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Order")));names(orts)[3]<-"Levels"
-irts <- cbind(Effect="Item",x=factor(c(1,2,3,4)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Item")));names(irts)[3]<-"Levels"
+vrts <- cbind(Effect="Vagueness",x=factor(c(1,2)),summarySEwithin(dd, measurevar="RT_log", withinvars=c("Vagueness")));names(vrts)[3]<-"Levels"
+nrts <- cbind(Effect="Number",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number")));names(nrts)[3]<-"Levels"
+qrts <- cbind(Effect="Quantity",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Quantity")));names(qrts)[3]<-"Levels"
+orts <- cbind(Effect="Order",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Order")));names(orts)[3]<-"Levels"
+irts <- cbind(Effect="Item",x=factor(c(1,2,3,4)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Item")));names(irts)[3]<-"Levels"
 rts=rbind(vrts,nrts,qrts,orts)
-rts$mins=rts$RT_RecSqt-rts$ci
-rts$maxs=rts$RT_RecSqt+rts$ci
+rts$mins=rts$RT_log-rts$ci
+rts$maxs=rts$RT_log+rts$ci
 # plot main effects
-ggplot(rts, aes(y=RT_RecSqt, x=Levels, group=1, ymin=mins, ymax=maxs)) + 
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_grid(~Effect, scale="free_x") + 
-  theme_bw() +
-  theme(aspect.ratio=1) 
-```
+ggplot(rts, aes(y=RT_log, x=Levels, group=1, ymin=mins, ymax=maxs)) +
+geom_line() +
+geom_errorbar(width=.1) +
+geom_point(cex=3) +
+facet_grid(~Effect, scale="free_x") +
+theme_bw() +
+theme(aspect.ratio=1)
+@
 
-Main effects over items
+<<mainD, fig.width=6, fig.height=3.5, fig.cap='Main effects over item ratios', message=FALSE, echo=FALSE>>=
+nrts <- cbind(Effect="Number",
+xlev=factor(c(1,2)), 
+myshape='a',
+summarySEwithin(dd, measurevar="RT_log", withinvars=c("item_mean_ratio","Number")))
+names(nrts)[5]<-"Levels"
 
-```{r mainD, message=FALSE, fig.width=6, fig.height=3, echo=FALSE}
-vrts <- cbind(Effect="Vagueness",x=factor(c(1,2)),summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("item_mean_ratio","Vagueness")));names(vrts)[4]<-"Levels"
-nrts <- cbind(Effect="Number",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("item_mean_ratio","Number")));names(nrts)[4]<-"Levels"
-qrts <- cbind(Effect="Quantity",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("item_mean_ratio","Quantity")));names(qrts)[4]<-"Levels"
-orts <- cbind(Effect="Order",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("item_mean_ratio","Order")));names(orts)[4]<-"Levels"
-rts=rbind(vrts,nrts,qrts,orts)
-rts$mins=rts$RT_RecSqt-rts$ci
-rts$maxs=rts$RT_RecSqt+rts$ci
+orts <- cbind(Effect="Order",
+xlev=factor(c(1,2)), 
+myshape='b',
+summarySEwithin(dd, measurevar="RT_log", withinvars=c("item_mean_ratio","Order")))
+names(orts)[5]<-"Levels"
+
+qrts <- cbind(Effect="Quantity",
+xlev=factor(c(1,2)), 
+myshape='d',
+summarySEwithin(dd, measurevar="RT_log", withinvars=c("item_mean_ratio","Quantity")))
+names(qrts)[5]<-"Levels"
+
+vrts <- cbind(Effect="Vagueness",
+xlev=factor(c(1,2)),
+myshape='e',
+summarySEwithin(dd, measurevar="RT_log", withinvars=c("item_mean_ratio","Vagueness")))
+names(vrts)[5]<-"Levels"
+
+rts=rbind(nrts,orts,qrts,vrts)
+rts$mins=rts$RT_log-rts$ci
+rts$maxs=rts$RT_log+rts$ci
 rts$item_mean_ratio <- as.numeric(as.character(rts$item_mean_ratio))
-ggplot(rts, 
-			 aes(y=RT_RecSqt, x=item_mean_ratio, group=Levels, ymin=mins, 
-			 		ymax=maxs, shape=Levels, fill=Levels, col=Levels)) +
-  scale_shape_manual(values=c(21,21,22,22,23,23,24,24)) +
-  scale_fill_manual(values=c("black", "gray", "black", "gray", "black", "gray", "black", "gray")) +
-  scale_color_manual(values=c("black", "gray", "black", "gray", "black", "gray", "black", "gray")) +
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_grid(~Effect) + 
-  theme_bw() +
-  theme(aspect.ratio=1, 
-        panel.grid=element_blank()) +
-  scale_x_continuous(breaks = round(sort(unique(rts$item_mean_ratio)),1)) 
-```
+#rts$myshape=rep(c(21,22,23,24), each=8)
 
-2 way interactions not involving items.
+p1=
+ggplot(data=rts, aes(x=item_mean_ratio, y=RT_log, group=Levels)) +
+geom_errorbar(data=droplevels(subset(rts, Effect=='Number')),width=.01, aes(ymin=mins, ymax=maxs)) +
+geom_line(data=droplevels(subset(rts, Effect=='Number'))) +
+geom_point(data=droplevels(subset(rts, Effect=='Number')),
+aes(shape=Levels, fill=Levels), size=3 ) +
+geom_errorbar(data=droplevels(subset(rts, Effect=='Order')), width=.01, aes(ymin=mins, ymax=maxs)) +
+geom_line(data=droplevels(subset(rts, Effect=='Order'))) +
+geom_point(data=droplevels(subset(rts, Effect=='Order')),
+aes(shape=Levels, fill=Levels), size=3  ) +
+geom_errorbar(data=droplevels(subset(rts, Effect=='Quantity')),width=.01, aes(ymin=mins, ymax=maxs)) +
+geom_line(data=droplevels(subset(rts, Effect=='Quantity'))) +
+geom_point(data=droplevels(subset(rts, Effect=='Quantity')),
+aes(shape=Levels, fill=Levels), size=3  ) +
+geom_errorbar(data=droplevels(subset(rts, Effect=='Vagueness')),width=.01, aes(ymin=mins, ymax=maxs)) +
+geom_line(data=droplevels(subset(rts, Effect=='Vagueness'))) +
+geom_point(data=droplevels(subset(rts, Effect=='Vagueness')),
+aes(shape=Levels, fill=Levels), size=3  ) +
+facet_grid(~Effect) +
+scale_shape_manual(values = c(
+"Numeric"=21,
+"Verbal"=21,
+"LtoR"=22,
+"RtoL"=22,
+"Small"=23,
+"Large"=23,
+"Crisp"=24,
+"Vague"=24),
+breaks=c('Numeric','Verbal','LtoR','RtoL','Small','Large','Crisp','Vague'))  +
+scale_fill_manual(values = c(
+"Numeric"="black",
+"Verbal"="white",
+"LtoR"="black",
+"RtoL"="white",
+"Small"="black",
+"Large"="white",
+"Crisp"="black",
+"Vague"="white"),
+breaks=c('Numeric','Verbal','LtoR','RtoL','Small','Large','Crisp','Vague')) +
+scale_x_continuous(minor_breaks=NULL,
+breaks=c(0.5125000, 0.6876471, 0.7691558, 0.8166667),
+labels=abbreviate(c(0.5125000, 0.6876471, 0.7691558, 0.8166667))) +
+theme(aspect.ratio=1,
+legend.position='top',
+axis.text.x=element_text(size=7),
+legend.key=element_rect(fill = 'white'),
+panel.background=element_rect(fill = 'grey96'))
+p1
+@
 
-```{r 2way, fig.width=6, fig.height=3, echo=FALSE}
-# prep 2 ways rts data frame
-rts1 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Vagueness","Number")); names(rts1)[1] <- "F1"; names(rts1)[2] <- "F2"
-rts1$Effect <- rep("Vagueness:Number",4)
-rts2 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Vagueness","Quantity")); names(rts2)[1] <- "F1"; names(rts2)[2] <- "F2"
-rts2$Effect <- rep("Vagueness:Quantity",4)
-rts3 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Vagueness","Order")); names(rts3)[1] <- "F1"; names(rts3)[2] <- "F2"
-rts3$Effect <- rep("Vagueness:Order",4)
-rts5 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Quantity")); names(rts5)[1] <- "F1"; names(rts5)[2] <- "F2"
-rts5$Effect <- rep("Number:Quantity",4)
-rts6 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Order")); names(rts6)[1] <- "F1"; names(rts6)[2] <- "F2"
-rts6$Effect <- rep("Number:Order",4)
-rts8 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Quantity","Order")); names(rts8)[1] <- "F1"; names(rts8)[2] <- "F2"
-rts8$Effect <- rep("Quantity:Order",4)
-rts <- rbind(rts1,rts2,rts3,rts5,rts6,rts8)
-rts <- subset(rts, select=c(Effect, F1, F2, RT_RecSqt, sd, se, ci))
-rts$mins=rts$RT_RecSqt-rts$ci
-rts$maxs=rts$RT_RecSqt+rts$ci
-# plot 2 way interactions
-ggplot(rts, aes(y=RT_RecSqt, x=F2, group=F1, ymin=mins, ymax=maxs, pch=F1)) + 
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_wrap(~Effect, scale="free_x", nrow=1) + 
-  theme_bw() +
-  theme(aspect.ratio=1) +
-  theme(legend.title=element_blank()) +
-  xlab("Levels")
-```
-
-Plot 2 way interactions over items
-
-```{r 22way, message=FALSE, fig.width=6, fig.height=3, echo=FALSE}
+<<22way, fig.width=6, fig.height=3, fig.cap='2-way interactions over items', message=FALSE, echo=FALSE>>=
 # prep 2 ways over items rts data frame
 rts1 <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("item_mean_ratio", "Vagueness","Number")); names(rts1)[2] <- "F1"; names(rts1)[3] <- "F2"
 rts1$E1 <- "Vagueness"
@@ -628,180 +663,166 @@ rts$E1 <- factor(rts$E1, levels=c("Number","Order","Quantity","Vagueness"))
 rts$E2 <- factor(rts$E2, levels=c("Number","Order","Quantity","Vagueness"))
 # The palette with black:
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-ggplot(rts, aes(y=RT_RecSqt, x=item_mean_ratio, group=F3, col=F2, pch=F1)) + 
-  facet_grid(E2~E1, drop=F) + 
-  geom_point(cex=3) + 
-	geom_line() + 
-	theme_bw() + 
-  theme(aspect.ratio=1, panel.grid=element_blank()) +
-  scale_color_manual(name="colour",values=cbbPalette) +
-  scale_shape_discrete(name="shape") +
-  scale_x_continuous(breaks = round(sort(unique(rts$item_mean_ratio)),1))
-```
+ggplot(rts, aes(y=RT_RecSqt, x=item_mean_ratio, group=F3, col=F2, pch=F1)) +
+facet_grid(E2~E1, drop=F) +
+geom_point(cex=3) +
+geom_line() +
+theme_bw() +
+theme(aspect.ratio=1, panel.grid=element_blank()) +
+scale_color_manual(name="colour",values=cbbPalette) +
+scale_shape_discrete(name="shape") +
+scale_x_continuous(breaks = round(sort(unique(rts$item_mean_ratio)),1))
+@
 
-Plot vagueness by number interaction over items
-
-```{r plotInt1, fig.width=7, fig.height=3.5, echo=FALSE}
+<<plotInt1, fig.width=7, fig.height=3.5, fig.cap='Plot vagueness by number interaction over items', echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Vagueness","Item"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 dodge = position_dodge(width=0.2)
-ggplot(rts, aes(y=RT_RecSqt, x=Item, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci, 
-                group=condition, shape=condition, fill=condition)) +
-  geom_line(position=dodge) + 
-  geom_errorbar(width=.2, position=dodge) + 
-  geom_point(size=4, position=dodge) + 
-  scale_shape_manual("",values = c(22, 22, 21, 21)) + 
-  scale_fill_manual("",values=c("black","white","black","white")) +
-  ggtitle("Response time") + 
-  ylab("RT_RecSqt") + 
-  xlab("") +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
-  			legend.key = element_blank(), aspect.ratio=1, 
-  			axis.text.x = element_text(angle = 45, hjust = 1)) +
-  facet_grid(~Number)
-```
+ggplot(rts, aes(y=RT_RecSqt, x=Item, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci,
+group=condition, shape=condition, fill=condition)) +
+geom_line(position=dodge) +
+geom_errorbar(width=.2, position=dodge) +
+geom_point(size=4, position=dodge) +
+scale_shape_manual("",values = c(22, 22, 21, 21)) +
+scale_fill_manual("",values=c("black","white","black","white")) +
+ggtitle("Response time") +
+ylab("RT_RecSqt") +
+xlab("") +
+theme_bw() +
+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+legend.key = element_blank(), aspect.ratio=1,
+axis.text.x = element_text(angle = 45, hjust = 1)) +
+facet_grid(~Number)
+@
 
-3 way interactions 
-
-```{r plot3way, fig.width=7, fig.height=5, echo=FALSE}
+<<plot3way, fig.width=7, fig.height=5, fig.cap='3 way interactions',echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Vagueness","Quantity"))
 rts$mins=rts$RT_RecSqt-rts$ci
 rts$maxs=rts$RT_RecSqt+rts$ci
-p1=ggplot(rts, aes(y=RT_RecSqt, x=Number, group=Vagueness, ymin=mins, ymax=maxs, pch=Vagueness)) + 
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_grid(~Quantity, scale="free_x") + 
-  theme_bw() +
-  theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+p1=ggplot(rts, aes(y=RT_RecSqt, x=Number, group=Vagueness, ymin=mins, ymax=maxs, pch=Vagueness)) +
+geom_line() +
+geom_errorbar(width=.1) +
+geom_point(cex=3) +
+facet_grid(~Quantity, scale="free_x") +
+theme_bw() +
+theme(aspect.ratio=1) +
+theme(legend.title=element_blank(), legend.position="top")
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Vagueness","Order"))
 rts$mins=rts$RT_RecSqt-rts$ci
 rts$maxs=rts$RT_RecSqt+rts$ci
-p2=ggplot(rts, aes(y=RT_RecSqt, x=Number, group=Vagueness, ymin=mins, ymax=maxs, pch=Vagueness)) + 
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_grid(~Order, scale="free_x") + 
-  theme_bw() +
-  theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+p2=ggplot(rts, aes(y=RT_RecSqt, x=Number, group=Vagueness, ymin=mins, ymax=maxs, pch=Vagueness)) +
+geom_line() +
+geom_errorbar(width=.1) +
+geom_point(cex=3) +
+facet_grid(~Order, scale="free_x") +
+theme_bw() +
+theme(aspect.ratio=1) +
+theme(legend.title=element_blank(), legend.position="top")
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Quantity","Order"))
 rts$mins=rts$RT_RecSqt-rts$ci
 rts$maxs=rts$RT_RecSqt+rts$ci
-p3=ggplot(rts, aes(y=RT_RecSqt, x=Number, group=Quantity, ymin=mins, ymax=maxs, pch=Quantity)) + 
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_grid(~Order, scale="free_x") + 
-  theme_bw() +
-  theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+p3=ggplot(rts, aes(y=RT_RecSqt, x=Number, group=Quantity, ymin=mins, ymax=maxs, pch=Quantity)) +
+geom_line() +
+geom_errorbar(width=.1) +
+geom_point(cex=3) +
+facet_grid(~Order, scale="free_x") +
+theme_bw() +
+theme(aspect.ratio=1) +
+theme(legend.title=element_blank(), legend.position="top")
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Vagueness","Quantity","Order"))
 rts$mins=rts$RT_RecSqt-rts$ci
 rts$maxs=rts$RT_RecSqt+rts$ci
-p4=ggplot(rts, aes(y=RT_RecSqt, x=Vagueness, group=Quantity, ymin=mins, ymax=maxs, pch=Quantity)) + 
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  facet_grid(~Order, scale="free_x") + 
-  theme_bw() +
-  theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+p4=ggplot(rts, aes(y=RT_RecSqt, x=Vagueness, group=Quantity, ymin=mins, ymax=maxs, pch=Quantity)) +
+geom_line() +
+geom_errorbar(width=.1) +
+geom_point(cex=3) +
+facet_grid(~Order, scale="free_x") +
+theme_bw() +
+theme(aspect.ratio=1) +
+theme(legend.title=element_blank(), legend.position="top")
 grid.arrange(nrow=2, p1,p2,p3,p4)
-```
+@
 
-Plot vagueness by number by quantity over items.
-
-```{r vnitems, fig.width=7, fig.height=4, echo=FALSE}
+<<vnitems, fig.width=7, fig.height=4, fig.cap='Plot vagueness by number by quantity over items.',echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number","Vagueness","Item", "Quantity"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 dodge = position_dodge(width=0.2)
-ggplot(rts, aes(y=RT_RecSqt, x=Item, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci, 
-                group=Vagueness, 
-                fill=Vagueness)) +
-  geom_line(position=dodge) + 
-  geom_errorbar(width=.2, position=dodge) + 
-  geom_point(pch=21, size=4, position=dodge) + 
-  scale_fill_manual("",values=c("black","white")) +
-  ggtitle("Response time") + 
-  ylab("RT_Rec_Sqt") + 
-  xlab("") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
-        panel.background=element_rect(fill="white",color=1),
-        legend.key = element_blank(), 
-        aspect.ratio=1, axis.text.x = element_text(angle = 45, hjust = 1)) +
-  facet_grid(~Number+Quantity)
-```
+ggplot(rts, aes(y=RT_RecSqt, x=Item, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci,
+group=Vagueness,
+fill=Vagueness)) +
+geom_line(position=dodge) +
+geom_errorbar(width=.2, position=dodge) +
+geom_point(pch=21, size=4, position=dodge) +
+scale_fill_manual("",values=c("black","white")) +
+ggtitle("Response time") +
+ylab("RT_Rec_Sqt") +
+xlab("") +
+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background=element_rect(fill="white",color=1),
+legend.key = element_blank(),
+aspect.ratio=1, axis.text.x = element_text(angle = 45, hjust = 1)) +
+facet_grid(~Number+Quantity)
+@
 
-4 way interaction
-
-```{r 4way, fig.width=6, fig.height=3, echo=FALSE}
+<<4way, fig.width=6, fig.height=3, fig.cap='4 way interaction', echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number", "Vagueness",  "Quantity", "Order"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 ggplot(rts, aes(y=RT_RecSqt, x=Vagueness, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci, group=Quantity, pch=Quantity)) +
-  facet_grid(~Order+Number, scale="free_x") +
-  geom_line() +
-  geom_errorbar(width=.1) +
-  geom_point(cex=3) + 
-  theme_bw() +
-  theme(aspect.ratio=1) +
-  theme(legend.title=element_blank())
-```
+facet_grid(~Order+Number, scale="free_x") +
+geom_line() +
+geom_errorbar(width=.1) +
+geom_point(cex=3) +
+theme_bw() +
+theme(aspect.ratio=1) +
+theme(legend.title=element_blank())
+@
 
-4 way interaction split over items
-
-```{r 4waysplit, fig.width=7, fig.height=7, echo=FALSE}
+<<4waysplit, fig.width=7, fig.height=7, fig.cap='4 way interaction split over items',echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number", "Vagueness", "Item", "Quantity", "Order"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
-ggplot(rts, aes(y=RT_RecSqt, x=Item, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci, 
-                group=Vagueness,fill=Vagueness)) +
-  geom_line() + 
-  geom_errorbar(width=.12) + 
-  geom_point(pch=21, size=2) + 
-  scale_fill_manual("",values=c("black","white","black","white")) +
-  ggtitle("Number * Vagueness * Quantity * Order") + 
-  ylab("RT_RecSqt") + 
-  xlab("") +
-  theme_bw() +
-  theme( legend.key = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1),
-  			 axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio=1) +
-  facet_grid(Vagueness+Order~Number+Quantity)
-```
+ggplot(rts, aes(y=RT_RecSqt, x=Item, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci,
+group=Vagueness,fill=Vagueness)) +
+geom_line() +
+geom_errorbar(width=.12) +
+geom_point(pch=21, size=2) +
+scale_fill_manual("",values=c("black","white","black","white")) +
+ggtitle("Number * Vagueness * Quantity * Order") +
+ylab("RT_RecSqt") +
+xlab("") +
+theme_bw() +
+theme( legend.key = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1),
+axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio=1) +
+facet_grid(Vagueness+Order~Number+Quantity)
+@
 
-4 way interaction split over items showing ratio of item dots.
-
-```{r 4waySplitRatio, fig.width=7, fig.height=7, echo=FALSE, message=FALSE, warning=FALSE}
+<<4waySplitRatio, fig.width=7, fig.height=7, fig.cap='4 way interaction split over items showing ratio of item dots.',echo=FALSE, message=FALSE, warning=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_RecSqt", withinvars=c("Number", "Vagueness", "item_mean_ratio", "Quantity", "Order"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 rts$item_mean_ratio <- as.numeric(as.character(rts$item_mean_ratio))
 #dodge = position_dodge(width=0.2)
-ggplot(rts, aes(y=RT_RecSqt, x=item_mean_ratio, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci, 
-                group=Vagueness,fill=Vagueness)) +
-  # geom_line(position=dodge) + 
-	geom_line() +
-  geom_errorbar(width=.02) + 
-  geom_point(pch=21, size=2) + 
-  scale_fill_manual("",values=c("black","white","black","white")) +
-  ggtitle("Number * Vagueness * Quantity * Order") + 
-  ylab("RT_RecSqt") + 
-  xlab("") +
-  theme_bw() +
-  theme( legend.key = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), 
-  			 axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio=1) +
-  facet_grid(Vagueness+Order~Number+Quantity)
-```
+ggplot(rts, aes(y=RT_RecSqt, x=item_mean_ratio, ymin=RT_RecSqt-ci, ymax=RT_RecSqt+ci,
+group=Vagueness,fill=Vagueness)) +
+# geom_line(position=dodge) +
+geom_line() +
+geom_errorbar(width=.02) +
+geom_point(pch=21, size=2) +
+scale_fill_manual("",values=c("black","white","black","white")) +
+ggtitle("Number * Vagueness * Quantity * Order") +
+ylab("RT_RecSqt") +
+xlab("") +
+theme_bw() +
+theme( legend.key = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1),
+axis.text.x = element_text(angle = 45, hjust = 1), aspect.ratio=1) +
+facet_grid(Vagueness+Order~Number+Quantity)
+@
 
-# Show compression of item ratios
-
-```{r showCompression, fig.width=7, fig.height=7, echo=FALSE}
+<<showCompression, fig.width=7, fig.height=7, fig.cap='Show compression of item ratios', echo=FALSE>>=
 #  Show compression of ratios of numbers of dots in the items
 item_range_ratio = c(6 / 24, 16 / 34, 26 / 44, 36 / 54)
 item_range_ratio_equally_spaced = seq(from = 6 / 24, to = 36 / 54, length.out = 4)
 item_mean_ratio = c(mean(c(6 / 15, 15 / 24)), mean(c(16 / 25, 25 / 34)), mean(c(26 /35, 35 / 44)), mean(c(36 / 45, 45 / 54)))
 item_mean_ratio_equally_spaced = seq(from = mean(c(6 / 15, 15 / 24)), to = mean(c(36 / 45, 45 / 54)), length.out = 4)
-plot(y=c(2,2,2,2), x=item_range_ratio, xlim=c(0,1), ylim=c(0,3), ylab="", yaxt='n', col="blue", pch=21, bg='blue', type='o', xaxt='n', xlab="ratio: small is easily discriminable", main="Discriminability of each item, expressed as ratios between array magnitudes")
+plot(y=c(2,2,2,2), x=item_range_ratio, xlim=c(0,1), ylim=c(0,3), ylab="", yaxt='n', col="blue", pch=21, bg='blue', type='o', xaxt='n', xlab="ratio: small is easily discriminable", main="Discriminability of each item,\n expressed as ratios between array magnitudes")
 text(y=c(2.15,2.15,2.15,2.15), x=item_range_ratio, labels=round(item_range_ratio,2), col="blue")
 text(y=2.15, x=0.1, labels="ratio min/max", col='blue')
 points(y=c(2.3,2.3,2.3,2.3), x=item_range_ratio_equally_spaced, col="lightblue", pch=21, bg='lightblue', type='o')
@@ -810,58 +831,57 @@ text(y=c(1.15,1.15,1.15,1.15), x=item_mean_ratio, labels=round(item_mean_ratio,2
 text(y=1.15, x=0.2, labels="mean (ratio min/med,\n            ratio med/max)", col='red')
 points(y=c(1.3,1.3,1.3,1.3), x=item_mean_ratio_equally_spaced, col="pink", pch=21, bg='pink', type='o')
 axis(1, at=seq(0,1,0.1))
-```
+@
 
+\FloatBarrier
+\section{Lmer model}
 
-
-# Lmer model
-
-```{r rmme}
+<<rmme>>=
 load("data_processed.Rda")
-```
+@
 
-```{r lmer5}
-v5 <- lmerTest::lmer(data=dd, 
-           RT_log ~ 
-             c_Vag + c_Num + c_Qty + c_Ord + 
-             c_Num:c_Vag:c_Qty +
-             item_mean_ratio + 
-             s_Trl +
-             RTprev_log +
-             nchar_instr +
-             (1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
-v5b <- lme4::lmer(data=dd, 
-           RT_log ~ 
-             c_Vag + c_Num + c_Qty + c_Ord + 
-             c_Num:c_Vag:c_Qty +
-             item_mean_ratio + 
-             s_Trl +
-             RTprev_log +
-             nchar_instr +
-             (1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
-```
+<<lmer5, cache=TRUE>>=
+v5 <- lmerTest::lmer(data=dd,
+RT_log ~
+c_Vag + c_Num + c_Qty + c_Ord +
+c_Num:c_Vag:c_Qty +
+item_mean_ratio +
+s_Trl +
+RTprev_log +
+nchar_instr +
+(1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
+v5b <- lme4::lmer(data=dd,
+RT_log ~
+c_Vag + c_Num + c_Qty + c_Ord +
+c_Num:c_Vag:c_Qty +
+item_mean_ratio +
+s_Trl +
+RTprev_log +
+nchar_instr +
+(1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
+@
 
-```{r v51}
+<<v51, cache=TRUE>>=
 summary(v5)
-```
+@
 
-```{r v511, results='asis'}
+<<v511, results='asis', cache=TRUE>>=
 print(xtable(coef(summary(v5b))))
-```
+@
 
-```{r v52}
+<<v52>>=
 cat("R^2")
 cor(fitted(v5), dd$RT_RecSqt)^2
-```
+@
 
-```{r v53}
-par(mfrow=c(2,5))
+<<plotLMERfnc, fig.width=7, fig.height=3.5, fig.cap='caption'>>=
+par(mfrow=c(3,4), family='cmodern')
 plotLMER.fnc(v5)
-```
+@
 
 Plot model coefficients and ci's
 
-```{r v54, fig.width=7, fig.height=4}
+<<v54, fig.width=7, fig.height=4, fig.cap='Estimates plot'>>=
 e=data.frame(coef=summary(v5)$coef[-1,1]) # estimates, without intercept
 q=as.data.frame(confint(v5, method='Wald')[18:26,1:2])
 eq=cbind(e,q)
@@ -875,11 +895,11 @@ axis(2, labels=row.names(y), at=1:nrow(y), las=1)
 axis(1, las=1)
 mtext("estimate", side=1, line=2.5, cex.lab=1, las=1)
 box(col='grey')
-```
-
+@
+    
 Model criticism baayen plots
-
-```{r baayenPLots99, fig.width=9, fig.height=3}
+    
+<<baayenPLots99, fig.width=9, fig.height=3, fig.cap='caption'>>=
 # Baayen 4-plot model criticism
 par(mfrow=c(1,4), pty='s')
 # create scaled residuals
@@ -893,4 +913,6 @@ qqline(dd$rstand)
 plot(dd$rstand ~ fitted(v5), pch='.')
 # absolute standardised residuals greater than 2.5 are candidates for being outliers, the abline identifies them on the plot
 abline(h=c(-2.5,2.5))
-```
+@
+
+\end{document}
