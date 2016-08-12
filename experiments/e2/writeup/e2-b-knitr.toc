@@ -1,0 +1,6 @@
+\contentsline {section}{\numberline {1}Get the data}{2}
+\contentsline {section}{\numberline {2}Plots}{5}
+\contentsline {subsection}{\numberline {2.1}Discriminability}{6}
+\contentsline {section}{\numberline {3}Lmer model}{20}
+\contentsline {section}{\numberline {4}lmerTest Version}{24}
+\contentsline {section}{\numberline {5}Borderline responses}{25}
