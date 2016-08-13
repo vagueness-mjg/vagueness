@@ -17,7 +17,7 @@
 % User packages
 \usepackage{natbib}
 \usepackage{lipsum}
-
+\usepackage{placeins}
 \makeindex             			% used for the subject index
                        				% please use the style svind.ist with
                        				% your makeindex program
@@ -183,7 +183,7 @@ The effect of vagueness on error rates approached significance, with the vague i
 Error rates decreased as gap size increased: level one ($\beta=-.585, se=.092, ,z=-6.4, p<.001$), level 2 ($\beta=-.434, z=-5.3,p<.001$) and level three ($\beta=-.250,z=-4.1, p<.001$). 
 %
 
-\begin{figure}[b]
+\begin{figure}[hbtp]
 \sidecaption
 \includegraphics[scale=.5]{images/resultse1}
 \caption{Experiment 1 resultsIf the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
@@ -201,7 +201,7 @@ The instruction format hypothesis explains the main effect advantage for the vag
 
 The selection algorithm account explains the main effect advantage of the vague conditions as due to the vague conditions allowing a comparison strategy rather than a matching strategy in the crisp conditions. The main effect of numerical distance is explained by claiming that comparison is easier for more discriminable arrays. The diminishing returns for vagueness as numerical distance grows are explained by claiming that the advantage of being able to use comparison is greater for less discriminable arrays than for more discriminable arrays.
 
-
+\FloatBarrier
 \section{Experiment 2}
 \label{sec:3}
 % Always give a unique label
