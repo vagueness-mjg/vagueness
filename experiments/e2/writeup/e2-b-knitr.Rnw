@@ -1,7 +1,9 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt,twoside]{article}
 \usepackage[margin=2cm]{geometry}
 \usepackage{placeins}
-
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
 \title{Exp 2 of 4}
 \begin{document}
 
@@ -23,7 +25,7 @@ opts_chunk$set(fig.path='figure/graphics-',
                comment = NA,
                tidy.opts = list(blank=FALSE, 
                                 width.cutoff=100))
-knit_hooks$set(crop=hook_pdfcrop)
+#knit_hooks$set(crop=hook_pdfcrop)
 @
 
 \maketitle
@@ -351,17 +353,25 @@ if( file.exists('data_processed.Rda') ) {
 } # end else do data wrangling
 @  
 
+\clearpage
+
 <<showDataNames>>=
 names(dd)
 @
+
+\clearpage
 
 <<showDataHead>>=
 head(dd)
 @
 
+\clearpage
+
 <<showDataSummary>>=
 summary(dd)
 @
+
+\clearpage
 
 <<showDataStructure>>=
 str(dd)
@@ -389,13 +399,15 @@ mtext('mean (ratio min/med,\nratio med/max)', side = 2, line = 1)
 mtext('Discriminability index', side=1, line=3)
 mtext('Discriminability for each item', side=3, line=1, cex=1.5)
 axis(1)
-box(col='grey')
+box(which='plot', col='grey')
+
 #text(y=1.00, x=0.07, labels="mean\n(ratio min/med,\nratio med/max)", col='red')
 # axis(1, at=seq(-.1, 1,0.1)[4:11])
 # axis(1)
 @
 
 \clearpage
+\subsection{Consider using log RT}
 
 <<prepPlotData, echo=FALSE>>=
 # first create a data frame specially for transformations
@@ -452,10 +464,13 @@ ggplot(temp, aes(time, colour=RTtype)) +
         axis.text.x=element_text(angle=25),
         panel.grid=element_blank(),
         legend.position='top',
-        legend.key=element_rect(color = 'white'))
+        legend.key=element_rect(color = 'white'),
+        plot.background=element_rect(fill=NA, color='white'))
 @
 
 \clearpage
+\subsection{How logging RT affects the distribution}
+
 
 <<plotBoxPlots, fig.width=6, fig.height=4, fig.cap='Show how transformations of RT affect distribution of times, and how they affect which times are outliers.', fig.pos='hbtp', echo=FALSE>>=
 load('data_processed.Rda')
@@ -476,12 +491,15 @@ ggplot(subdata) +
         axis.ticks.x=element_blank(),
         axis.text.x=element_blank(),
         legend.position='top',
-        legend.key=element_rect(color = 'white')) + 
+        legend.key=element_rect(color = 'white'),
+        plot.background=element_rect(fill=NA, color='white')) + 
   scale_colour_manual("",values=c("Items"="orange","Subjects"="blue")) +
   xlab("") + ylab("")
 @
 
 \clearpage
+\subsection{Identify fast and slow subjects and items}
+
 
 <<plotFastSlowRTs, fig.width=6, fig.height=4, fig.cap='Show how mean times for individual subjects and items vary with respect to the grand mean Log RT.', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
 # Show how mean times for individual subjects and items vary with respect to the grand mean RT.
@@ -503,7 +521,7 @@ my1 <- xyplot(data=si, lmean~level | effect,
               par.settings=list(trellis.par.set(superpose.symbol = list(col='black'), 
                                                 superpose.line=list(col='black'))),
               xlab=NULL,
-              ylab='Log RT',
+              ylab='Log RT\n',
               #main='How mean times for individual subjects and items\nvary with respect to the grand mean Log RT',
               mean=unique(si$emean),
               scales=list(x=list(relation="free", at=NULL, 
@@ -528,64 +546,77 @@ print(doubleYScale(my1, my2,
 @
 
 \clearpage
+\subsection{Plot main effects in both transformations}
 
-<<plotMainsa, fig.width=6, fig.height=4, fig.cap='Plot main effects on several transformations', fig.pos='hbtp', message=FALSE, echo=FALSE, warning=FALSE>>=
+
+<<prepplotsMainEffects, message=FALSE, echo=FALSE, warning=FALSE>>=
 # plot main effects on observed data
 # allow reference to transformation
-temp <- reshape2::melt(dd,
-                       id.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
-                       measure.vars=c("RT_log",  "RT_raw"),
-                       variable.name="transformation",
-                       value.name="score")
+# raw
+tempraw <- reshape2::melt(dd,
+                          id.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
+                          measure.vars=c("RT_raw"),
+                          variable.name="transformation",
+                          value.name="score")
 # allow reference to effect
-temp2 <- reshape2::melt(temp,
-                        id.vars=c("transformation", "score"),
-                        measure.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
-                        variable.name="effect",
-                        value.name="level")
-# do the plot
-ggplot(temp2, aes(y=score, x=level, group=1, col=effect)) +
-  facet_wrap(~transformation + effect, scales="free", ncol=5) +
+tempraw2 <- reshape2::melt(tempraw,
+                           id.vars=c("transformation", "score"),
+                           measure.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
+                           variable.name="effect",
+                           value.name="level")
+# log
+templog <- reshape2::melt(dd,
+                          id.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
+                          measure.vars=c("RT_log"),
+                          variable.name="transformation",
+                          value.name="score")
+# allow reference to effect
+templog2 <- reshape2::melt(templog,
+                           id.vars=c("transformation", "score"),
+                           measure.vars=c("Item", "Vagueness", "Number", "Quantity", "Order"),
+                           variable.name="effect",
+                           value.name="level")
+@
+  
+<<plotMainEffectsRaw, fig.width=6, fig.height=3, fig.cap='Plot main effects in raw RT', fig.pos='hbtp', echo=FALSE>>=
+# raw
+ggplot(tempraw2, aes(y=score, x=level, group=1, col=effect)) +
+  facet_wrap(~effect, scales="free", ncol=5) +
   stat_summary(fun.data=mean_cl_normal, geom="pointrange") +
   stat_summary(fun.y=mean, geom="line") +
   theme_bw() +
   theme(aspect.ratio=1, 
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
+        # axis.text.y=element_blank(),
+        # axis.ticks.y=element_blank(),
+        panel.grid=element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1, size=8),
-        legend.position="none") +
-  ylab('Response latency\n') + xlab('')
+        legend.position="none",
+        plot.background=element_rect(fill=NA, color='white')) +
+  xlab('')
 @
-
-\clearpage
-
-<<mainB, fig.width=6, fig.height=4, fig.cap='Just the main effects', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
-# prep main effects rts data frame
-vrts <- cbind(Effect="Vagueness",x=factor(c(1,2)),summarySEwithin(dd, measurevar="RT_log", withinvars=c("Vagueness")));names(vrts)[3]<-"Levels"
-nrts <- cbind(Effect="Number",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number")));names(nrts)[3]<-"Levels"
-qrts <- cbind(Effect="Quantity",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Quantity")));names(qrts)[3]<-"Levels"
-orts <- cbind(Effect="Order",x=factor(c(1,2)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Order")));names(orts)[3]<-"Levels"
-irts <- cbind(Effect="Item",x=factor(c(1,2,3,4)), summarySEwithin(dd, measurevar="RT_log", withinvars=c("Item")));names(irts)[3]<-"Levels"
-rts=rbind(vrts,nrts,qrts,orts)
-rts$mins=rts$RT_log-rts$ci
-rts$maxs=rts$RT_log+rts$ci
-# plot main effects
-ggplot(rts, aes(y=RT_log, x=Levels, group=1, ymin=mins, ymax=maxs)) +
-  geom_line() +
-  geom_errorbar(width=.05) +
-  geom_point(pch=19) +
-  facet_grid(~Effect, scale="free_x") +
+  
+<<plotMainEffectsLog, fig.width=6, fig.height=3, fig.cap='Plot main effects in log RT', fig.pos='htbp', echo=FALSE>>=
+# log
+ggplot(templog2, aes(y=score, x=level, group=1, col=effect)) +
+  facet_wrap(~effect, scales="free", ncol=5) +
+  stat_summary(fun.data=mean_cl_normal, geom="pointrange") +
+  stat_summary(fun.y=mean, geom="line") +
   theme_bw() +
-  theme(aspect.ratio=1,
-        axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=8, angle=15),
-        panel.grid=element_blank()) +
-  ylab("RT (log)") + xlab('')
+  theme(aspect.ratio=1, 
+        # axis.text.y=element_blank(),
+        # axis.ticks.y=element_blank(),
+        panel.grid=element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1, size=8),
+        legend.position="none",
+        plot.background=element_rect(fill=NA, color='white')) +
+  xlab('')
 @
-
+  
 \clearpage
+\subsection{Main effects in log RT over discriminability}
 
-<<mainD, fig.width=6, fig.height=5, fig.cap='Main effects over item ratios', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
+
+<<mainD, fig.width=6, fig.height=5, fig.cap='Main effects in log RT over discriminability', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
 nrts <- cbind(Effect="Number",
               xlev=factor(c(1,2)), 
               myshape='a',
@@ -663,16 +694,19 @@ p1=
         legend.position='top',
         axis.text.x=element_text(size=8, angle=35),
         axis.text.y=element_text(size=8, angle=15),
-        legend.key=element_rect(color = 'white')
+        legend.key=element_rect(color = 'white'),
+        plot.background=element_rect(fill=NA, color='white')
         #,        panel.grid=element_blank()
         ) +
-  ylab("RT (log)") + xlab("Item discriminability measure")
+  xlab("Item discriminability measure")
 p1
 @
 
 \clearpage
+\subsection{2-Way interactions over discriminability}
 
-<<22way, fig.width=7, fig.height=7, fig.cap='2-way interactions over item ratios', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
+
+<<22way, fig.width=7, fig.height=7, fig.cap='2-way interactions over discriminability', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
 # prep 2 ways over items rts data frame
 rts1 <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("discriminability", "Vagueness","Number")); names(rts1)[2] <- "F1"; names(rts1)[3] <- "F2"
 rts1$E1 <- "Vagueness"
@@ -710,7 +744,8 @@ ggplot(rts, aes(y=RT_log, x=discriminability, group=F3, col=F2, pch=F1)) +
     aspect.ratio=1
     #,  panel.grid=element_blank()
     , axis.text.x=element_text(size=7, angle=45,hjust=1)
-    , axis.text.y=element_text(size=7)
+    , axis.text.y=element_text(size=7),
+    plot.background=element_rect(fill=NA, color='white')
     ) +
   scale_color_manual(name="colour",values=cbbPalette) +
   scale_shape_discrete(name="shape") +
@@ -721,6 +756,8 @@ ggplot(rts, aes(y=RT_log, x=discriminability, group=F3, col=F2, pch=F1)) +
 @
 
 \clearpage
+\subsection{Vagueness by number interaction over items}
+
 
 <<plotInt1, fig.width=6, fig.height=4, fig.cap='vagueness by number interaction over items', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number","Vagueness","Item"))
@@ -739,13 +776,16 @@ ggplot(rts, aes(y=RT_log, x=Item, ymin=RT_log-ci, ymax=RT_log+ci,
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         legend.key = element_blank(), aspect.ratio=1,
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Number) 
 @
 
 \clearpage
+\subsection{Vagueness by number interaction over discriminability}
 
-<<plotInt2, fig.width=6, fig.height=4, fig.cap='vagueness by number interaction over item ratios', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
+
+<<plotInt2, fig.width=6, fig.height=4, fig.cap='vagueness by number interaction over discriminability', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number","Vagueness","discriminability"))
 rts$discriminability <- as.numeric(as.character(rts$discriminability))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
@@ -763,7 +803,8 @@ ggplot(rts, aes(y=RT_log, x=discriminability, ymin=RT_log-ci, ymax=RT_log+ci,
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         legend.key = element_blank(), aspect.ratio=1,
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Number) +
   scale_x_continuous(minor_breaks=NULL,
                      breaks=1-c(0.5125000, 0.6876471, 0.7691558, 0.8166667),
@@ -771,8 +812,10 @@ ggplot(rts, aes(y=RT_log, x=discriminability, ymin=RT_log-ci, ymax=RT_log+ci,
 @
 
 \clearpage
+\subsection{3-Way interactions}
 
-<<plot3way, fig.width=7, fig.height=7, fig.pos='hbtp', fig.cap='3 way interactions',echo=FALSE>>=
+
+<<plot3way, fig.width=7, fig.height=7, fig.pos='hbtp', fig.cap='3-Way interactions',echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number","Vagueness","Quantity"))
 rts$mins=rts$RT_log-rts$ci
 rts$maxs=rts$RT_log+rts$ci
@@ -783,7 +826,7 @@ p1=ggplot(rts, aes(y=RT_log, x=Number, group=Vagueness, ymin=mins, ymax=maxs, pc
   facet_grid(~Quantity, scale="free_x") +
   theme_bw() +
   theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+  theme(legend.title=element_blank(), legend.position="top", plot.background=element_rect(fill=NA, color='white'))
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number","Vagueness","Order"))
 rts$mins=rts$RT_log-rts$ci
 rts$maxs=rts$RT_log+rts$ci
@@ -794,7 +837,7 @@ p2=ggplot(rts, aes(y=RT_log, x=Number, group=Vagueness, ymin=mins, ymax=maxs, pc
   facet_grid(~Order, scale="free_x") +
   theme_bw() +
   theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+  theme(legend.title=element_blank(), legend.position="top", plot.background=element_rect(fill=NA, color='white'))
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number","Quantity","Order"))
 rts$mins=rts$RT_log-rts$ci
 rts$maxs=rts$RT_log+rts$ci
@@ -805,7 +848,7 @@ p3=ggplot(rts, aes(y=RT_log, x=Number, group=Quantity, ymin=mins, ymax=maxs, pch
   facet_grid(~Order, scale="free_x") +
   theme_bw() +
   theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+  theme(legend.title=element_blank(), legend.position="top", plot.background=element_rect(fill=NA, color='white'))
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Vagueness","Quantity","Order"))
 rts$mins=rts$RT_log-rts$ci
 rts$maxs=rts$RT_log+rts$ci
@@ -816,13 +859,15 @@ p4=ggplot(rts, aes(y=RT_log, x=Vagueness, group=Quantity, ymin=mins, ymax=maxs, 
   facet_grid(~Order, scale="free_x") +
   theme_bw() +
   theme(aspect.ratio=1) +
-  theme(legend.title=element_blank(), legend.position="top")
+  theme(legend.title=element_blank(), legend.position="top", plot.background=element_rect(fill=NA, color='white'))
 grid.arrange(nrow=2, p1,p2,p3,p4)
 @
 
 \clearpage
+\subsection{Vagueness by number by quantity over discriminability}
 
-<<vnitems, fig.width=6, fig.height=4, fig.pos='hbtp', fig.cap='Plot vagueness by number by quantity over item ratios.',message = FALSE, echo=FALSE>>=
+
+<<vnitems, fig.width=6, fig.height=4, fig.pos='hbtp', fig.cap='Vagueness by number by quantity over discriminability',message = FALSE, echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number","Vagueness","discriminability", "Quantity"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 rts$discriminability <- as.numeric(as.character(rts$discriminability))
@@ -839,13 +884,14 @@ ggplot(rts, aes(y=RT_log,
   scale_shape_manual("",values = c(22, 21)) +
   scale_fill_manual("",values=c("black","white")) +
   ggtitle("Response time") +
-  ylab("RT_Rec_Sqt") +
+  #ylab("RT_Rec_Sqt") +
   xlab("Item discriminability") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background=element_rect(fill="white",color=1),
         legend.key = element_blank(),
         aspect.ratio=1, 
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Number+Quantity) +
     scale_x_continuous(minor_breaks=NULL,
                      breaks=1-c(0.5125000, 0.6876471, 0.7691558, 0.8166667),
@@ -853,8 +899,10 @@ ggplot(rts, aes(y=RT_log,
 @
 
 \clearpage
+\subsection{4-Way interaction}
 
-<<4way, fig.width=6, fig.height=4, fig.pos='hbtp', fig.cap='4 way interaction', echo=FALSE>>=
+
+<<4way, fig.width=6, fig.height=4, fig.pos='hbtp', fig.cap='4-Way interaction', echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number", "Vagueness",  "Quantity", "Order"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 ggplot(rts, aes(y=RT_log, x=Vagueness, ymin=RT_log-ci, ymax=RT_log+ci, group=Quantity, pch=Quantity)) +
@@ -866,12 +914,15 @@ ggplot(rts, aes(y=RT_log, x=Vagueness, ymin=RT_log-ci, ymax=RT_log+ci, group=Qua
   theme(aspect.ratio=1) +
   theme(legend.title=element_blank(),
         legend.position='right',
-        legend.key=element_rect(color = 'white'))  
+        legend.key=element_rect(color = 'white'),
+        plot.background=element_rect(fill=NA, color='white'))  
 @
 
 \clearpage
+\subsection{4-Way interaction split over discriminability}
 
-<<4waysplit, fig.width=7, fig.height=7, fig.cap='4 way interaction split over item discriminability', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
+
+<<4waysplit, fig.width=7, fig.height=7, fig.cap='4-Way interaction split over discriminability', fig.pos='hbtp', message=FALSE, echo=FALSE>>=
 rts <- summarySEwithin(dd, measurevar="RT_log", withinvars=c("Number", "Vagueness", "discriminability", "Quantity", "Order"))
 rts$condition=paste(rts$Number,rts$Vagueness, sep= ' ')
 rts$discriminability <- as.numeric(as.character(rts$discriminability))
@@ -890,14 +941,15 @@ ggplot(rts,
   theme( legend.key = element_blank(), 
          axis.text.x = element_text(angle = 45, hjust = 1, size=8), 
          axis.text.y = element_text(angle = 45, hjust = 1, size=6),
-         aspect.ratio=1) + 
+         aspect.ratio=1,
+         plot.background=element_rect(fill=NA, color='white')) + 
   scale_x_continuous(minor_breaks=NULL,
                      breaks=1-c(0.5125000, 0.6876471, 0.7691558, 0.8166667),
                      labels=abbreviate(1-c(0.5125000, 0.6876471, 0.7691558, 0.8166667)))
 @
 
 \clearpage
-\section{Lmer model}
+\section{Lmer model: before outlier removal}
 
 <<rmme>>=
 load("data_processed.Rda")
@@ -915,6 +967,13 @@ v5 <- lme4::lmer(data=dd,
                    (1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
 @
 
+
+<<summaryV5, echo=FALSE>>=
+summary(v5)
+@
+
+\clearpage
+
 <<printXtableV5, echo=FALSE, results='asis'>>=
 print(
   xtable(
@@ -923,7 +982,7 @@ print(
   caption = 'xtable v5'
   ),
   table.placement='htbp',
-  latex.environments='',
+  latex.environments='center',
   size='small'
 )
 @
@@ -933,9 +992,9 @@ cat("R^2")
 cor(fitted(v5), dd$RT_log)^2
 @
 
-\clearpage 
+%\clearpage 
 
-<<plotModelCoefsAndCis, fig.width=6, fig.height=4, fig.cap='Coefficient estimates and their (Wald) 95 per cent confidence intervals', fig.pos='hbtp', echo=FALSE>>=
+<<plotModelCoefsAndCis, fig.width=5.5, fig.height=4, fig.cap='Coefficient estimates and their (Wald) 95 per cent confidence intervals', fig.pos='hbtp', echo=FALSE>>=
 # Plot model coefficients and ci's
 dfr <- data.frame(coef = summary(v5)$coef[-1, 1], 
                      ci2.5  = confint(v5, method='Wald')[18:26, 1],
@@ -958,7 +1017,8 @@ axis(2, labels=row.names(dfr), at=1:nrow(dfr), las=1, tick=FALSE)
 axis(1)
 mtext("Coefficient estimates, in units of log(RT),\nwith 95% confidence intervals", side=1, line=3.5, cex.lab=1, las=1)
 mtext("Model terms", side=2, line=8)
-box(col='grey')
+box(which='plot', col='grey')
+
 @
 
 
@@ -967,6 +1027,7 @@ box(col='grey')
 <<plotLMERfnc, fig.width=6, fig.height=4, fig.pos='hbtp', fig.cap='plotMLERfnc', echo=TRUE>>=
 par(mfrow=c(2,4))
 plotLMER.fnc(v5)
+
 @
 
 \clearpage
@@ -985,22 +1046,23 @@ qqline(dd$rstand)
 plot(dd$rstand ~ fitted(v5), pch='.')
 # absolute standardised residuals greater than 2.5 are candidates for being outliers, the abline identifies them on the plot
 abline(h=c(-2.5,2.5))
+
 @
 
 \clearpage
 
 \section{lmerTest Version}
 
-<<lmerTestVersionOfModel, cache=TRUE>>=
+<<lmerTestVersionOfModel, tidy=FALSE, cache=TRUE>>=
 v6 <- lmerTest::lmer(data=dd,
-RT_log ~
-c_Vag + c_Num + c_Qty + c_Ord +
-c_Num:c_Vag:c_Qty +
-discriminability +
-s_Trl +
-RTprev_log +
-nchar_instr +
-(1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
+                     RT_log ~
+                       c_Vag + c_Num + c_Qty + c_Ord +
+                       c_Num:c_Vag:c_Qty +
+                       discriminability +
+                       s_Trl +
+                       RTprev_log +
+                       nchar_instr +
+                       (1+c_Vag + c_Num + c_Qty + c_Ord|Subject))
 @
 
 <<summaryLmerTest, cache=TRUE>>=
@@ -1008,12 +1070,15 @@ summary(v6)
 @
 
 \clearpage
+\section{Lmer model: after outlier removal}
+
+\clearpage
 \section{Borderline responses}
 
 <<barplotBorderline, fig.width=6, fig.height=4, echo=FALSE>>=
 dd$response_category <- relevel(dd$response_category, ref = 'expected')
-#barplot(table(dd$response_category,dd$Vagueness), beside=TRUE, legend=TRUE)
 barplot(table(dd$Vagueness,dd$response_category), beside=TRUE, legend=TRUE, space=c(0,.5))
+
 @
 
 <<tabBdl, echo=FALSE, results='asis'>>=
@@ -1022,6 +1087,41 @@ print(xtable(table(dd$response_category,dd$Vagueness),
       table.placement='htbp',
       latex.environments='center',
       size='small')
+@
+
+\clearpage
+\appendix
+\section{Functions listing}
+\clearpage
+\subsection{Gather Data}
+
+
+<<showgFunction, tidy=TRUE, size='scriptsize', echo=TRUE>>=
+<<gatherDataFunction>>
+@
+
+\clearpage
+\subsection{Classify Response}
+
+
+<<showcFunction, tidy=TRUE, size='scriptsize', echo=TRUE>>=
+<<classifyResponseFuntion>>
+@
+
+\clearpage
+\subsection{Processing}
+
+
+<<showpFunction, tidy=TRUE, size='scriptsize', echo=TRUE>>=
+<<processDataFunction>>
+@
+
+\clearpage
+\subsection{Post-processing}
+
+
+<<showppFunction, tidy=TRUE, size='scriptsize', echo=TRUE>>=
+<<postProcessDataFunction>>
 @
 
 \end{document}

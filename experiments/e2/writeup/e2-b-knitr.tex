@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+\documentclass[a4paper,12pt,twoside]{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -50,7 +50,9 @@
 \usepackage{alltt}
 \usepackage[margin=2cm]{geometry}
 \usepackage{placeins}
-
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
 \title{Exp 2 of 4}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
@@ -98,6 +100,8 @@
 \end{kframe}
 \end{knitrout}
 
+\clearpage
+
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -117,6 +121,8 @@
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+\clearpage
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -155,6 +161,8 @@
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+\clearpage
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -230,6 +238,8 @@
 \end{kframe}
 \end{knitrout}
 
+\clearpage
+
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -298,6 +308,7 @@
 \end{knitrout}
 
 \clearpage
+\subsection{Consider using log RT}
 
 
 
@@ -315,6 +326,8 @@
 \end{knitrout}
 
 \clearpage
+\subsection{How logging RT affects the distribution}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -330,6 +343,8 @@
 \end{knitrout}
 
 \clearpage
+\subsection{Identify fast and slow subjects and items}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -345,36 +360,40 @@
 \end{knitrout}
 
 \clearpage
+\subsection{Plot main effects in both transformations}
 
+
+
+  
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
 
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotMainsa-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotMainEffectsRaw-1} 
 
 }
 
-\caption[Plot main effects on several transformations]{Plot main effects on several transformations}\label{fig:plotMainsa}
+\caption[Plot main effects in raw RT]{Plot main effects in raw RT}\label{fig:plotMainEffectsRaw}
 \end{figure}
 
 
 \end{knitrout}
-
-\clearpage
-
+  
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[htbp]
 
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-mainB-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotMainEffectsLog-1} 
 
 }
 
-\caption[Just the main effects]{Just the main effects}\label{fig:mainB}
+\caption[Plot main effects in log RT]{Plot main effects in log RT}\label{fig:plotMainEffectsLog}
 \end{figure}
 
 
 \end{knitrout}
-
+  
 \clearpage
+\subsection{Main effects in log RT over discriminability}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -383,13 +402,15 @@
 
 }
 
-\caption[Main effects over item ratios]{Main effects over item ratios}\label{fig:mainD}
+\caption[Main effects in log RT over discriminability]{Main effects in log RT over discriminability}\label{fig:mainD}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
+\subsection{2-Way interactions over discriminability}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -398,13 +419,15 @@
 
 }
 
-\caption[2-way interactions over item ratios]{2-way interactions over item ratios}\label{fig:22way}
+\caption[2-way interactions over discriminability]{2-way interactions over discriminability}\label{fig:22way}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
+\subsection{Vagueness by number interaction over items}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -420,6 +443,8 @@
 \end{knitrout}
 
 \clearpage
+\subsection{Vagueness by number interaction over discriminability}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -428,13 +453,15 @@
 
 }
 
-\caption[vagueness by number interaction over item ratios]{vagueness by number interaction over item ratios}\label{fig:plotInt2}
+\caption[vagueness by number interaction over discriminability]{vagueness by number interaction over discriminability}\label{fig:plotInt2}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
+\subsection{3-Way interactions}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -443,13 +470,15 @@
 
 }
 
-\caption[3 way interactions]{3 way interactions}\label{fig:plot3way}
+\caption[3-Way interactions]{3-Way interactions}\label{fig:plot3way}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
+\subsection{Vagueness by number by quantity over discriminability}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -458,13 +487,15 @@
 
 }
 
-\caption[Plot vagueness by number by quantity over item ratios]{Plot vagueness by number by quantity over item ratios.}\label{fig:vnitems}
+\caption[Vagueness by number by quantity over discriminability]{Vagueness by number by quantity over discriminability}\label{fig:vnitems}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
+\subsection{4-Way interaction}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -473,13 +504,15 @@
 
 }
 
-\caption[4 way interaction]{4 way interaction}\label{fig:4way}
+\caption[4-Way interaction]{4-Way interaction}\label{fig:4way}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
+\subsection{4-Way interaction split over discriminability}
+
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -488,14 +521,14 @@
 
 }
 
-\caption[4 way interaction split over item discriminability]{4 way interaction split over item discriminability}\label{fig:4waysplit}
+\caption[4-Way interaction split over discriminability]{4-Way interaction split over discriminability}\label{fig:4waysplit}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
-\section{Lmer model}
+\section{Lmer model: before outlier removal}
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -521,9 +554,66 @@
 \end{kframe}
 \end{knitrout}
 
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+Linear mixed model fit by REML ['lmerMod']
+Formula: RT_log ~ c_Vag + c_Num + c_Qty + c_Ord + c_Num:c_Vag:c_Qty +  
+    discriminability + s_Trl + RTprev_log + nchar_instr + (1 +  
+    c_Vag + c_Num + c_Qty + c_Ord | Subject)
+   Data: dd
+
+REML criterion at convergence: 11474.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.5470 -0.6351 -0.0955  0.5372  5.0914 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr                   
+ Subject  (Intercept) 0.153949 0.39236                         
+          c_Vag       0.001546 0.03932   0.69                  
+          c_Num       0.165314 0.40659  -0.67 -0.64            
+          c_Qty       0.008148 0.09027   0.16  0.26 -0.34      
+          c_Ord       0.001559 0.03949  -0.13  0.02 -0.39 -0.52
+ Residual             0.249734 0.49973                         
+Number of obs: 7677, groups:  Subject, 30
+
+Fixed effects:
+                   Estimate Std. Error t value
+(Intercept)        7.171685   0.122236   58.67
+c_Vag              0.060938   0.013873    4.39
+c_Num             -0.433614   0.075148   -5.77
+c_Qty             -0.069067   0.020047   -3.45
+c_Ord              0.017959   0.013497    1.33
+discriminability  -0.771402   0.049267  -15.66
+s_Trl             -0.106972   0.005807  -18.42
+RTprev_log         0.060469   0.009692    6.24
+nchar_instr        0.006086   0.001944    3.13
+c_Vag:c_Num:c_Qty  0.104949   0.046066    2.28
+
+Correlation of Fixed Effects:
+            (Intr) c_Vag  c_Num  c_Qty  c_Ord  dscrmn s_Trl  RTprv_ nchr_n
+c_Vag        0.083                                                        
+c_Num       -0.369 -0.337                                                 
+c_Qty        0.069  0.117 -0.278                                          
+c_Ord       -0.052  0.007 -0.206 -0.228                                   
+discrmnblty -0.140  0.004 -0.001  0.000  0.001                            
+s_Trl       -0.114  0.003 -0.001 -0.002  0.006  0.017                     
+RTprev_log  -0.607  0.006 -0.004 -0.003  0.019  0.015  0.185              
+nchar_instr -0.524  0.237 -0.034  0.018  0.000  0.017  0.000  0.006       
+c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\clearpage
+
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Fri Aug 12 22:28:46 2016
+% Sat Aug 13 09:11:20 2016
 \begin{table}[htbp]
+\centering
 \begingroup\small
 \begin{tabular}{rrrr}
   \hline
@@ -555,7 +645,7 @@ R^2
 \end{kframe}
 \end{knitrout}
 
-\clearpage 
+%\clearpage 
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
@@ -623,8 +713,15 @@ effect size (range) for  nchar_instr is  0.05477539
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{v6} \hlkwb{<-} \hlstd{lmerTest}\hlopt{::}\hlkwd{lmer}\hlstd{(}\hlkwc{data} \hlstd{= dd, RT_log} \hlopt{~} \hlstd{c_Vag} \hlopt{+} \hlstd{c_Num} \hlopt{+} \hlstd{c_Qty} \hlopt{+} \hlstd{c_Ord} \hlopt{+} \hlstd{c_Num}\hlopt{:}\hlstd{c_Vag}\hlopt{:}\hlstd{c_Qty} \hlopt{+} \hlstd{discriminability} \hlopt{+}
-    \hlstd{s_Trl} \hlopt{+} \hlstd{RTprev_log} \hlopt{+} \hlstd{nchar_instr} \hlopt{+} \hlstd{(}\hlnum{1} \hlopt{+} \hlstd{c_Vag} \hlopt{+} \hlstd{c_Num} \hlopt{+} \hlstd{c_Qty} \hlopt{+} \hlstd{c_Ord} \hlopt{|} \hlstd{Subject))}
+\hlstd{v6} \hlkwb{<-} \hlstd{lmerTest}\hlopt{::}\hlkwd{lmer}\hlstd{(}\hlkwc{data}\hlstd{=dd,}
+                     \hlstd{RT_log} \hlopt{~}
+                       \hlstd{c_Vag} \hlopt{+} \hlstd{c_Num} \hlopt{+} \hlstd{c_Qty} \hlopt{+} \hlstd{c_Ord} \hlopt{+}
+                       \hlstd{c_Num}\hlopt{:}\hlstd{c_Vag}\hlopt{:}\hlstd{c_Qty} \hlopt{+}
+                       \hlstd{discriminability} \hlopt{+}
+                       \hlstd{s_Trl} \hlopt{+}
+                       \hlstd{RTprev_log} \hlopt{+}
+                       \hlstd{nchar_instr} \hlopt{+}
+                       \hlstd{(}\hlnum{1}\hlopt{+}\hlstd{c_Vag} \hlopt{+} \hlstd{c_Num} \hlopt{+} \hlstd{c_Qty} \hlopt{+} \hlstd{c_Ord}\hlopt{|}\hlstd{Subject))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -689,6 +786,9 @@ c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
 \end{knitrout}
 
 \clearpage
+\section{Lmer model: after outlier removal}
+
+\clearpage
 \section{Borderline responses}
 
 \begin{knitrout}\scriptsize
@@ -703,7 +803,7 @@ c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
 \end{knitrout}
 
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Fri Aug 12 22:28:47 2016
+% Sat Aug 13 09:11:21 2016
 \begin{table}[htbp]
 \centering
 \begingroup\small
@@ -720,5 +820,343 @@ expected & 3332 & 2776 \\
 \caption{Borderline cases counts} 
 \end{table}
 
+
+\clearpage
+\appendix
+\section{Functions listing}
+\clearpage
+\subsection{Gather Data}
+
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{gatherData} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{number_of_valid_subjects}\hlstd{) \{}
+    \hlstd{data_dir} \hlkwb{<-} \hlstr{"../experimentCode/output/"}
+    \hlstd{column.headers.df} \hlkwb{<-} \hlkwd{head}\hlstd{(}\hlkwd{read.table}\hlstd{(}\hlkwd{paste}\hlstd{(data_dir,} \hlstr{"subject01.data"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{),} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{),}
+        \hlnum{0}\hlstd{)}
+    \hlstd{gathered.data} \hlkwb{<-} \hlstd{column.headers.df}
+    \hlkwa{for} \hlstd{(subject} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{number_of_valid_subjects) \{}
+        \hlstd{current.filename} \hlkwb{<-} \hlkwd{paste}\hlstd{(data_dir,} \hlstr{"subject"}\hlstd{,} \hlkwd{sprintf}\hlstd{(}\hlstr{"%02d"}\hlstd{, subject),} \hlstr{".data"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{)}
+        \hlstd{current.data} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlkwc{file} \hlstd{= current.filename,} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{stringsAsFactors} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+        \hlstd{gathered.data} \hlkwb{<-} \hlkwd{rbind}\hlstd{(gathered.data, current.data)}
+    \hlstd{\}}
+    \hlkwd{message}\hlstd{(}\hlstr{"Returning gathered data"}\hlstd{)}
+    \hlkwd{return}\hlstd{(gathered.data)}
+\hlstd{\}}  \hlcom{# end of gatherData function}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\clearpage
+\subsection{Classify Response}
+
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{classifyResponses} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{dat}\hlstd{) \{}
+    \hlcom{# what were they expected to respond?}
+    \hlstd{dat}\hlopt{$}\hlstd{crossed} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"Con"}\hlstd{, dat}\hlopt{$}\hlstd{Condition,} \hlstr{":Quan"}\hlstd{, dat}\hlopt{$}\hlstd{Quantity,} \hlstr{":Item"}\hlstd{, dat}\hlopt{$}\hlstd{Item,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{))}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
+    \hlstd{dat}\hlopt{$}\hlstd{crossed} \hlkwb{<-} \hlkwa{NULL}
+    \hlcom{# what side LEFT, MIDDLE, RIGHT corresponds with Expected, Borderline, Extreme?}
+    \hlkwa{for} \hlstd{(row} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(dat)) \{}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Exp_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Exp_side"}\hlstd{]} \hlkwb{<-} \hlstr{"left"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Exp_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Exp_side"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Exp_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Exp_side"}\hlstd{]} \hlkwb{<-} \hlstr{"right"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Bline_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Bline_side"}\hlstd{]} \hlkwb{<-} \hlstr{"left"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Bline_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Bline_side"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Bline_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Bline_side"}\hlstd{]} \hlkwb{<-} \hlstr{"right"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Extr_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Extr_side"}\hlstd{]} \hlkwb{<-} \hlstr{"left"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Extr_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Extr_side"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Extr_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"Extr_side"}\hlstd{]} \hlkwb{<-} \hlstr{"right"}
+        \hlstd{\}}
+    \hlstd{\}}
+    \hlcom{# what button press did the subject actually make? LEFT, MIDDLE, RIGHT, NOANSWER?}
+    \hlstd{dat}\hlopt{$}\hlstd{RESPONSE} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{RESPONSE)}
+    \hlcom{# what number of dots corresponds with the subject's button press?}
+    \hlkwa{for} \hlstd{(row} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(dat)) \{}
+        \hlkwd{switch}\hlstd{(}\hlkwd{as.character}\hlstd{(dat[row,} \hlstr{"RESPONSE"}\hlstd{]),} \hlkwc{LEFT} \hlstd{= \{}
+            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]}
+        \hlstd{\},} \hlkwc{MIDDLE} \hlstd{= \{}
+            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]}
+        \hlstd{\},} \hlkwc{RIGHT} \hlstd{= \{}
+            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]}
+        \hlstd{\},} \hlkwc{NOANSWER} \hlstd{= \{}
+            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlnum{NA}
+        \hlstd{\})}
+    \hlstd{\}}
+    \hlcom{# what side was the subject's button-press? Left, mid right?}
+    \hlstd{dat}\hlopt{$}\hlstd{response_side} \hlkwb{<-} \hlkwd{tolower}\hlstd{(dat}\hlopt{$}\hlstd{RESPONSE)}
+    \hlstd{dat}\hlopt{$}\hlstd{response_side[dat}\hlopt{$}\hlstd{response_side} \hlopt{==} \hlstr{"middle"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
+    \hlstd{dat}\hlopt{$}\hlstd{response_side} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{response_side,} \hlkwc{exclude} \hlstd{=} \hlstr{"noanswer"}\hlstd{)}
+    \hlcom{# what category was the subject's response? Expected, Borderline, Extreme}
+    \hlstd{dat}\hlopt{$}\hlstd{response_category} \hlkwb{<-} \hlstr{"nocat"}
+    \hlkwa{for} \hlstd{(row} \hlkwa{in} \hlkwd{row.names}\hlstd{(}\hlkwd{na.omit}\hlstd{(dat))) \{}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"response_num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Exp_Num"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"response_category"}\hlstd{]} \hlkwb{<-} \hlstr{"expected"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"response_num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Bline_Num"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"response_category"}\hlstd{]} \hlkwb{<-} \hlstr{"borderline"}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"response_num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Extr_Num"}\hlstd{]) \{}
+            \hlstd{dat[row,} \hlstr{"response_category"}\hlstd{]} \hlkwb{<-} \hlstr{"extreme"}
+        \hlstd{\}}
+    \hlstd{\}}
+    \hlstd{dat}\hlopt{$}\hlstd{response_category} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{response_category,} \hlkwc{exclude} \hlstd{=} \hlstr{"nocat"}\hlstd{)}
+    \hlstd{dat}\hlopt{$}\hlstd{RESPONSE} \hlkwb{<-} \hlkwa{NULL}
+    \hlkwd{message}\hlstd{(}\hlstr{"Returning classified data"}\hlstd{)}
+    \hlkwd{return}\hlstd{(dat)}
+\hlstd{\}}  \hlcom{# end of classifyResponse function}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\clearpage
+\subsection{Processing}
+
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{processData} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{dat}\hlstd{) \{}
+    \hlcom{# SUBJECT}
+    \hlstd{dat}\hlopt{$}\hlstd{Subject} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"s"}\hlstd{,} \hlkwd{sprintf}\hlstd{(}\hlstr{"%02d"}\hlstd{, dat}\hlopt{$}\hlstd{Subject),} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{))}
+    \hlcom{# TRIAL}
+    \hlstd{dat}\hlopt{$}\hlstd{Trial} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{1}\hlopt{:}\hlstd{number_of_trials_per_subject,} \hlkwc{times} \hlstd{= number_of_valid_subjects)}
+    \hlcom{# make a centred Trial for modeling}
+    \hlstd{dat}\hlopt{$}\hlstd{c_Trl} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{Trial} \hlopt{-} \hlkwd{mean}\hlstd{(dat}\hlopt{$}\hlstd{Trial)}
+    \hlcom{# make a scaled Trial for modelling}
+    \hlstd{dat}\hlopt{$}\hlstd{s_Trl} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(}\hlkwd{scale}\hlstd{(dat}\hlopt{$}\hlstd{Trial))}
+    \hlcom{# ID id is a unique identifier for the 7680 row data}
+    \hlstd{dat}\hlopt{$}\hlstd{id} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlkwd{paste}\hlstd{(dat}\hlopt{$}\hlstd{Subject),} \hlkwd{paste}\hlstd{(}\hlstr{"t"}\hlstd{,} \hlkwd{sprintf}\hlstd{(}\hlstr{"%03d"}\hlstd{, dat}\hlopt{$}\hlstd{Trial),} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{))}
+    \hlcom{# ITEM create a centred numeric item variable for modeling}
+    \hlstd{dat}\hlopt{$}\hlstd{c_Itm} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlnum{1}\hlstd{,} \hlopt{-}\hlnum{0.75}\hlstd{,} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlnum{2}\hlstd{,} \hlopt{-}\hlnum{0.25}\hlstd{,} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlnum{3}\hlstd{,} \hlnum{0.25}\hlstd{,}
+        \hlnum{0.75}\hlstd{)))}
+    \hlcom{# make Item be a factor and assign labels}
+    \hlstd{dat}\hlopt{$}\hlstd{Item} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Item,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"06:15:24"}\hlstd{,} \hlstr{"16:25:34"}\hlstd{,} \hlstr{"26:35:44"}\hlstd{,}
+        \hlstr{"36:45:54"}\hlstd{))}
+    \hlcom{# VAGUENESS Create a factor coding for Vagueness}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{1}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Vague"}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{2}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Crisp"}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{3}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Vague"}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{4}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Crisp"}
+    \hlstd{dat}\hlopt{$}\hlstd{Vagueness} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{Vagueness)}
+    \hlcom{# manually center Vagueness}
+    \hlstd{dat}\hlopt{$}\hlstd{c_Vag} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Vagueness} \hlopt{==} \hlstr{"Crisp"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
+    \hlcom{# NUMBER Create a factor coding for Number use}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{1}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Numeric"}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{2}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Numeric"}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{3}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Verbal"}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{4}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Verbal"}
+    \hlstd{dat}\hlopt{$}\hlstd{Number} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{Number)}
+    \hlcom{# manually center Number}
+    \hlstd{dat}\hlopt{$}\hlstd{c_Num} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Number} \hlopt{==} \hlstr{"Numeric"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
+    \hlcom{# CONDITION make a factor out of Condition, as f_Cnd}
+    \hlstd{dat}\hlopt{$}\hlstd{f_Cnd} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Condition,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Vg:Nm"}\hlstd{,} \hlstr{"Cr:Nm"}\hlstd{,} \hlstr{"Vg:Vb"}\hlstd{,}
+        \hlstr{"Cr:Vb"}\hlstd{))}
+    \hlcom{# ORDER give the levels of Order meaningful names}
+    \hlstd{dat}\hlopt{$}\hlstd{Order} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Order,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"LtoR"}\hlstd{,} \hlstr{"RtoL"}\hlstd{))}
+    \hlcom{# make a manually centred Order}
+    \hlstd{dat}\hlopt{$}\hlstd{c_Ord} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Order} \hlopt{==} \hlstr{"LtoR"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
+    \hlcom{# QUANTITY give the levels of Quantity meaningful names}
+    \hlstd{dat}\hlopt{$}\hlstd{Quantity} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Quantity,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Small"}\hlstd{,} \hlstr{"Large"}\hlstd{))}
+    \hlcom{# make a manually centred Quantity}
+    \hlstd{dat}\hlopt{$}\hlstd{c_Qty} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Quantity} \hlopt{==} \hlstr{"Small"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
+    \hlcom{# INSTRUCTION add number of characters in the instruction # 29 30 34 36 38}
+    \hlstd{dat}\hlopt{$}\hlstd{nchar_instr} \hlkwb{<-} \hlkwd{nchar}\hlstd{(dat}\hlopt{$}\hlstd{Instruction)}
+    \hlstd{dat}\hlopt{$}\hlstd{nchar_instr_scaled} \hlkwb{<-} \hlkwd{as.vector}\hlstd{(}\hlkwd{scale}\hlstd{(}\hlkwd{nchar}\hlstd{(dat}\hlopt{$}\hlstd{Instruction),} \hlkwc{scale} \hlstd{=} \hlnum{TRUE}\hlstd{))}
+    \hlcom{# make Instruction be a factor (17 levels)}
+    \hlstd{dat}\hlopt{$}\hlstd{Instruction} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{Instruction)}
+    \hlcom{# RT add transformations of RT}
+    \hlstd{dat}\hlopt{$}\hlstd{RT_log} \hlkwb{<-} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{RT)}
+    \hlstd{dat}\hlopt{$}\hlstd{RT_raw} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{RT}
+    \hlcom{# print to file a table with information about the design}
+    \hlstd{design_info} \hlkwb{<-} \hlkwd{unique}\hlstd{(}\hlkwd{subset}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(Item, Condition, Vagueness, Number, Quantity, Order,}
+        \hlstd{Left, Mid, Right, Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side, Instruction)))}
+    \hlstd{design.info} \hlkwb{<-} \hlstd{design_info[}\hlkwd{order}\hlstd{(design_info}\hlopt{$}\hlstd{Item, design_info}\hlopt{$}\hlstd{Condition, design_info}\hlopt{$}\hlstd{Quantity, design_info}\hlopt{$}\hlstd{Order),}
+        \hlstd{]}
+    \hlkwd{row.names}\hlstd{(design_info)} \hlkwb{<-} \hlkwa{NULL}
+    \hlkwd{capture.output}\hlstd{(}\hlkwd{print.data.frame}\hlstd{(design_info,} \hlkwc{row.names} \hlstd{= F,} \hlkwc{print.gap} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{quote} \hlstd{= F,} \hlkwc{right} \hlstd{= F),}
+        \hlkwc{file} \hlstd{=} \hlstr{"design_info-table.txt"}\hlstd{)}
+    \hlcom{# Add discriminability metric with reference to item}
+    \hlstd{discriminability_range} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0.75}\hlstd{,} \hlnum{0.5294118}\hlstd{,} \hlnum{0.4090909}\hlstd{,} \hlnum{0.3333333}\hlstd{)}
+    \hlstd{discriminability_range_scaled} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{1.3441995}\hlstd{,} \hlnum{0.1316642}\hlstd{,} \hlopt{-}\hlnum{0.5297187}\hlstd{,} \hlopt{-}\hlnum{0.946145}\hlstd{)}
+    \hlstd{discriminability} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0.4875}\hlstd{,} \hlnum{0.3123529}\hlstd{,} \hlnum{0.2308442}\hlstd{,} \hlnum{0.1833333}\hlstd{)}
+    \hlstd{discriminability_scaled} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{1.37582241}\hlstd{,} \hlnum{0.06614191}\hlstd{,} \hlopt{-}\hlnum{0.54334858}\hlstd{,} \hlopt{-}\hlnum{0.89861574}\hlstd{)}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"06:15:24"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.4875}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"16:25:34"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.3123529}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"26:35:44"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.2308442}
+    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"36:45:54"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.1833333}
+    \hlcom{# put dat in better column order}
+    \hlstd{dat} \hlkwb{<-} \hlkwd{subset}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(id, Subject, Trial, Condition, Order, Quantity, Vagueness, Number,}
+        \hlstd{Item, discriminability, c_Trl, s_Trl, c_Itm, c_Vag, c_Num, f_Cnd, c_Ord, c_Qty, RT, RT_log, RT_raw,}
+        \hlstd{Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side, response_num, response_side, response_category,}
+        \hlstd{Left, Mid, Right, Instruction, nchar_instr))}
+    \hlcom{# This data set (dat) contains *all* trials 7680 including impossible trials and is mainly for graphs}
+    \hlcom{# comparing different removals}
+    \hlkwd{save}\hlstd{(dat,} \hlkwc{file} \hlstd{=} \hlstr{"data_raw.Rda"}\hlstd{)}
+    \hlkwd{message}\hlstd{(}\hlstr{"Returning processed data"}\hlstd{)}
+    \hlkwd{return}\hlstd{(dat)}
+\hlstd{\}}  \hlcom{# end of function processData}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\clearpage
+\subsection{Post-processing}
+
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{postProcessData} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{dat}\hlstd{) \{}
+    \hlcom{# dd removes impossible trials from dat Throw out RT = 1 and RT = 59998, and RTprev = 1 and RTprev =}
+    \hlcom{# 59998 i.e., throw out sticky fingers and timeouts, and the trials that followed sticky fingers and}
+    \hlcom{# timeouts since they were likely affected by unusual previous trials. Also lose impossible trials}
+    \hlstd{dd} \hlkwb{<-} \hlstd{dat}
+    \hlstd{dd}\hlopt{$}\hlstd{RT[dd}\hlopt{$}\hlstd{RT} \hlopt{==} \hlnum{1}\hlstd{]} \hlkwb{<-} \hlnum{NA}
+    \hlstd{dd}\hlopt{$}\hlstd{RT[dd}\hlopt{$}\hlstd{RT} \hlopt{==} \hlnum{59998}\hlstd{]} \hlkwb{<-} \hlnum{NA}
+    \hlstd{dd} \hlkwb{<-} \hlstd{dd[}\hlkwd{complete.cases}\hlstd{(dd), ]}
+    \hlkwd{row.names}\hlstd{(dd)} \hlkwb{<-} \hlkwa{NULL}
+    \hlcom{# add preceding RT: because we removed impossible trials, the value for preceding RT for a trial}
+    \hlcom{# following an impossible trial is the value of the trial that preceded the impossible trial.}
+    \hlstd{dd}\hlopt{$}\hlstd{RTprev} \hlkwb{<-} \hlnum{NA}
+    \hlkwa{for} \hlstd{(s} \hlkwa{in} \hlkwd{levels}\hlstd{(dd}\hlopt{$}\hlstd{Subject)) \{}
+        \hlstd{nrows} \hlkwb{<-} \hlkwd{nrow}\hlstd{(dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s, ])}
+        \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{nrows) \{}
+            \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{1}\hlstd{) \{}
+                \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RTprev"}\hlstd{][i]} \hlkwb{<-} \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RT"}\hlstd{][i]}
+            \hlstd{\}} \hlkwa{else} \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RTprev"}\hlstd{][i]} \hlkwb{<-} \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RT"}\hlstd{][i} \hlopt{-} \hlnum{1}\hlstd{]}
+        \hlstd{\}}
+    \hlstd{\}}
+    \hlcom{# add transformations of previous RT}
+    \hlstd{dd}\hlopt{$}\hlstd{RTprev_log} \hlkwb{<-} \hlkwd{log}\hlstd{(dd}\hlopt{$}\hlstd{RTprev)}
+    \hlstd{dd}\hlopt{$}\hlstd{RTprev_raw} \hlkwb{<-} \hlstd{dd}\hlopt{$}\hlstd{RTprev}
+    \hlcom{# put dd in better column order}
+    \hlstd{dd} \hlkwb{<-} \hlkwd{subset}\hlstd{(dd,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(id, Subject, Trial, Condition, Order, Quantity, Vagueness, Number, Item,}
+        \hlstd{discriminability, c_Trl, s_Trl, c_Itm, c_Vag, c_Num, f_Cnd, c_Ord, c_Qty, RT, RT_log, RT_raw,}
+        \hlstd{RTprev, RTprev_log, RTprev_raw, Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side,}
+        \hlstd{response_num, response_side, response_category, Left, Mid, Right, Instruction, nchar_instr))}
+    \hlkwd{save}\hlstd{(dd,} \hlkwc{file} \hlstd{=} \hlstr{"data_processed.Rda"}\hlstd{)}
+    \hlkwd{message}\hlstd{(}\hlstr{"Returning post processed data"}\hlstd{)}
+    \hlkwd{return}\hlstd{(dd)}
+\hlstd{\}}  \hlcom{# end of function postProcessResponses}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 \end{document}
