@@ -80,7 +80,11 @@ dat$vgn <- as.factor(ifelse(dat$vgn=="P", "Crisp", "Vague"))
 dat$c_Vgn <- ifelse(dat$vgn=='Crisp', -.5, .5)
 dat$logrt <- log(dat$rt)
 # item_ratio
-# NOT DONE YET
+for (c in unique(dat$condition)) {
+  x=subset(dat, condition==c)
+  x$item_ratio=unique(min(x$leftN,x$rightN)/max(x$leftN,x$rightN))
+  dat[dat$condition==c, 'item_ratio']=x$item_ratio
+}
 write.table(x=dat, "all_trials.txt")
 dat$subject <- as.factor(dat$subject)
 dat$vgn <- ifelse(dat$vgn=='Crisp', -.5, .5)
@@ -160,6 +164,42 @@ plot2 =
   ggtitle("Error rate") + 
   ylab("error rate") + 
   xlab("Gap Size") +
+  scale_fill_grey(name=element_blank(), start=0,end=1)+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() )+
+  theme(aspect.ratio=1)+xlab("")
+
+grid.arrange(plot1,plot2,ncol=2)
+```
+
+```{r plotMeansBothV2, fig.width=10, fig.height=4, message=FALSE}
+rts <- summarySEwithin(correct, measurevar="logrt", withinvars=c("vgn","item_ratio"))
+err <- summarySEwithin(alltrials, measurevar="error", withinvars=c("vgn","item_ratio"))
+dodge=0
+
+plot1 =
+  ggplot(rts, aes(y=logrt_norm, x=1-as.numeric(abbreviate(item_ratio)), group=vgn, fill=vgn, shape=vgn, ymin=logrt_norm-ci, ymax=logrt_norm+ci)) + 
+  geom_line(position=position_dodge(dodge)) + 
+  geom_errorbar(width=.01, lty=1, position=position_dodge(dodge)) + 
+  geom_point(pch=21, size=3, position=position_dodge(dodge)) +
+  ggtitle("Response time") + 
+  ylab("log RT") + 
+  xlab("item_ratio Size") +
+  scale_x_continuous(breaks = 1-as.numeric(abbreviate(sort(unique(dat$item_ratio))))) +
+  scale_fill_grey(name=element_blank(), start=0,end=1)+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() ) +
+  theme(aspect.ratio=1)+xlab("")
+
+plot2 = 
+  ggplot(err, aes(y=error_norm, x=1-as.numeric(abbreviate(item_ratio)), group=vgn, fill=vgn, shape=vgn, ymin=error_norm-ci, ymax=error_norm+ci)) + 
+  geom_line(position=position_dodge(dodge)) + 
+  geom_errorbar(width=.01, lty=1, position=position_dodge(dodge)) + 
+  geom_point(pch=21, size=3, position=position_dodge(dodge)) +
+  ggtitle("Error rate") + 
+  ylab("error rate") + 
+  xlab("item_ratio Size") +
+  scale_x_continuous(breaks = 1-as.numeric(abbreviate(sort(unique(dat$item_ratio))))) +
   scale_fill_grey(name=element_blank(), start=0,end=1)+
   theme_bw()+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() )+
