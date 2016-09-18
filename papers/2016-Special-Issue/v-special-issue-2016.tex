@@ -1,4 +1,4 @@
-\documentclass[doc,apacite]{apa6}
+\documentclass[doc,floatsintext,apacite]{apa6}
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{color}
@@ -6,8 +6,8 @@
 \usepackage{layout}
 \usepackage{apacite}
 \usepackage{datetime}
-\usepackage{rotating}
-\title{Is Vagueness Beneficial for Hearers?\\Evidence from Experiments}
+\usepackage{rotating} % comment out for man mode
+\title{Is Vagueness Beneficial for Hearers? \protect \\ Evidence from Experiments}
 \date{\today}
 \authornote{\today ~\currenttime}
 \shorttitle{Is Vagueness Beneficial for Hearers?}
@@ -20,6 +20,7 @@ The paper reports on a series of experiments that aim to separate the utility of
 
 \begin{document}
 \maketitle               
+
 \section{Introduction}\label{introduction}
 Vagueness pervades the language that we use on a daily basis, and the challenge of understanding vague language has been a prominent concern in many areas of logic and linguistics, involving both theoretical and applied work, including the area known as Natural Language Generation (NLG). 
 
@@ -49,9 +50,8 @@ One group of participants was given HHI scores in the ideal range: for this grou
 Similar issues arise from the work of \citeA{peters2009bringing}. The authors carried out a series of studies where participants were required to rate hospitals based on various sources of information about quality of care. There was a between-subjects manipulation based on numeracy. The format of the information was manipulated within subjects: either numbers only were presented, or both numbers and evaluative categories were presented (e.g., \emph{Poor}, \emph{Fair}, \emph{Good}, \emph{Excellent}, with crisp visual boundary lines between the categories). Results showed that, for low-numeracy participants, the presence of evaluative categories resulted in a diminished influence of an irrelevant affective state on the ratings. For all participants, the presence of evaluative categories resulted in better decisions and in a greater use of the most important and reliable types of information, such as survival rates. 
 
 It is, however, questionable whether the ``evaluative categories" manipulation in this study can be considered a manipulation of vagueness. Certainly, terms like \emph{Fair} admit the possibility of borderline cases. However, given that the boundaries between the categories were marked crisply, and that therefore the categories mapped crisply to numerical values, it becomes doubtful whether any borderline cases could be conceived to arise in fact. For example, \emph{Fair} was mapped to 60\% -- 70\% for the variable \emph{percentage of heart attack patients given recommended treatment (ACE inhibitor)}. Accordingly, rather than the vagueness of categories such as \emph{Poor}, Peters et al. emphasise the evaluative content inherent in these categories, and the affective potential of the evaluative content rather than the vagueness of the terms like {\em Fair}.
-\clearpage
-%\\[2ex]
-\subsection{General Methodology}
+
+\subsubsection{General Methodology}
 The experiments reported in the present paper put the cost reduction hypothesis to the test. 
 The question that we are trying to answer is whether vague expressions are processed more easily by readers than crisp ones. 
 Like Lipman, we focus on situations where numerical information is used in order to identify a referent. 
@@ -65,84 +65,96 @@ Since one prevalent view of vagueness is that a vague expression is never prefer
 
 In our experiments we used a speeded forced choice task to compare the processing costs of different references to quantities. 
 In this context, speed and accuracy of responses are the key dimensions on which the different references can be compared. 
+Each stimulus in the experiments was a set of dot arrays containing various number of dots, together with a preceding instruction (in the form of a referring expression) to choose one of the arrays with respect to its cardinality.
+The participant was asked to respond as quickly as possible while avoiding errors. 
+We manipulated the instructions and the arrays in several ways across a series of four experiments. 
 
-Each stimulus in the experiments was a set of dot arrays containing various number of dots, together with a preceding instruction (in the form of a referring expression) to choose one of the arrays with respect to its number of dots, as quickly as possible while avoiding errors. 
-We manipulated the stimuli in several ways across a series of four experiments. 
+% MG added/moved out of expt 1
+There is evidence that when the distance grows between two numbers, they become more easily distinguishable from each other: the \emph{numerical distance effect}, which has been shown for comparing the cardinality of two sets of dots \cite{van123} and for processing Arabic numerals and number words \cite{Dehaene199647}. 
+We manipulated the number of dots in each array such that some sets of arrays had smaller numerical distances and others had larger numerical distances. 
+Where a number was mentioned in the instructions, it was always in the form of an Arabic numeral.
 
-% added/moved out of expt 1 by matt 17 sept
-There is evidence that when the distance grows between two numbers, they become more easily distinguishable from each other: the \emph{numerical distance effect}, which has been shown for comparing the numerosity of two sets of dots \cite{van123} and for processing Arabic numerals and number words \cite{Dehaene199647}. 
-Where a number was mentioned in the instruction, it was always in the form of an Arabic numeral.
-
-% added/moved out of expt 1 by matt 17 sept
+% MG added/moved out of expt 1
 There is evidence that when two numbers are presented with the smaller on the left, this left-side presentation facilitates responses indicating the smaller number: the \emph{Spatial-Numerical Association of Response Codes (SNARC)} effect \cite{dehaene1993mental, gevers2006automatic}. 
 We controlled which side the smaller number appeared on to avoid systematic influences of this effect. 
 
-% General methodology moved to here
+% MG General methodology moved to here: per-experiment method sections only talk about deviations from this general method
 All the experiments shared the following properties: 
-The experiment was conducted in a quiet room.
+Stimuli were created using the language GNU Octave \cite{eaton:2002} and the Psychophysics Toolbox extensions \cite{ptbx1, ptbx2}.
+The position of the dots in each array was randomised per-trial.
+The order in which trials were presented was randomised per-participant. 
+There were 256 trials, presented in 4 blocks of 64 trials each, between which the participant could rest. 
+A MacBook Pro laptop computer with a 13 inch screen presented the stimuli to the participants and recorded responses. 
+Participants were recruited using email lists at the University of Aberdeen, and paid ten pounds for participating.
 All participants self-reported fluency in English, and had normal, or corrected-to-normal vision.
-Participants were asked to respond quickly while avoiding errors.
-Stimuli were created and presented using the language GNU Octave \cite{eaton:2002} and the Psychophysics Toolbox extensions \cite{ptbx1, ptbx2}.
+The experiment was conducted in a quiet room. 
+Participants were asked to respond as quickly as possible while avoiding errors.
 There was a block of practice trials after which participants could ask any questions, following which the experimenter left the room.
-The position of the dots was randomised per-trial.
-The order in which trials were presented was randomised per-participant.
-A MacBook Pro laptop computer with a 13 inch screen presented the stimuli to the participants. 
-
-\clearpage
 
 \section{Experiment One} 
 
 \subsection{Introduction}
-We used a forced choice task to compare choices made in response to vague instructions against choices made in response to crisp instructions. 
-The participant was presented with an instruction like ``Choose the square with many dots'' in the vague conditions, or ``Choose the square with 20 dots'' in the crisp conditions. 
-Then two dot arrays were presented in the form of squares containing a number of dots. %Fig \ref{stimuluse1} shows an example stimulus. 
-The participant was required to identify the array that corresponded with the instruction, by pressing the appropriate key.
+We used a forced choice task to elicit responses to crisp or vague forms of instructions that required the participant to choose one of two dot arrays by referring to its cardinality.  
+The participant was presented with an instruction in the form \emph{Choose the square with \ldots dots}. 
+Then a set of two two dot arrays was presented, each in the form of a square containing some number of dots. 
+ %Fig \ref{stimuluse1} shows an example stimulus. 
+The participant was required to identify the array that corresponded with the instruction, by pressing the appropriate key, as quickly as possible while avoiding errors. 
 Response time and accuracy were recorded for analysis. 
 
-Our main manipulation was of the vagueness of the instruction, with two levels, vague and crisp. %Table \ref{instructionse1} shows examples from each condition.  
-We also manipulated how discriminable the dot arrays were. 
+We manipulated how discriminable the dot arrays were by varying the numerical distance between them. 
 One array always contained 25 dots: the other contained either 5, 10, 15, 20, 30, 35, 40, or 45 dots. 
-This led to numerical differences of 5, 10, 15, and 20, with lower differences resulting in less discriminable arrays and larger differences representing more discriminable arrays. 
+This gave us numerical distances of 5, 10, 15, and 20, with smaller numerical distances resulting in less discriminable arrays and larger distances resulting in more discriminable arrays. 
+
+Our main manipulation was of the vagueness of the instruction, with two levels, \emph{crisp} and \emph{vague}.
+Assuming the dot array [5, 25], and the instruction referring to the smaller cardinality, the \emph{crisp} instruction was \emph{Choose the square with 5 dots} and its \emph{vague} counterpart was \emph{Choose the square with few dots}. 
+%Table \ref{instructionse1} shows examples from each condition. 
 
 \subsection{Hypotheses}
-(1) A main effect of vagueness: vague instructions impose a lower cognitive load for the comprehender than crisp alternatives.
+(1) A main effect advantage for vagueness: vague instructions impose a lower cognitive load for the comprehender than crisp alternatives.
 
-(2) A main effect advantage of increasing numerical distance: the task will become easier as the numerical distance increases, because the two arrays are more discriminable.
+(2) A main effect advantage of increasing numerical distance: the task will become easier as the numerical distance increases, because the two arrays are then more discriminable.
 
-(3) An interaction between vagueness and numerical distance: i.e., any facilitation for vagueness should be greater at smaller numerical distances.
+(3) An interaction between vagueness and numerical distance: i.e., any facilitation for vagueness should be greater at smaller numerical distances than at larger numerical distances.
 
 \subsection{Method}
-Twenty participants were recruited by mailing list; aged between 18 and 45 with a median age of 26; and paid ten pounds for participating. 
-On arrival in the room, each participant was told that on each trial he or she would be presented with an instruction to choose one of two squares on screen by reference to how many dots the square contained. 
-Participants were required to press the space key after reading the instruction. 
-Then there was a central fixation cross for 1000 ms, and a blank screen for 500 ms, followed by the array (without repetition of the referring expression). 
+Twenty participants were recruited, aged between 18 and 45 with a median age of 26.
+On each trial a participant was presented with an instruction to choose one of two dot arrays on screen by reference to its cardinality. 
+Following a keypress to indicate that the participant had read the instruction there was a central fixation cross for 1000 ms, and a blank screen for 500 ms, followed by the array (without repetition of the referring expression). 
 The arrays would stay on screen until the participant responded (there was no timing-out). 
 Response time was measured as the latency between the presentation of the arrays, and the keypress identifying the choice: in this way, the response time was separated from time spent reading the instructions, which is important since we are only interested in the former. 
-There were 256 trials, presented in 4 blocks of 64 trials each, between which the participant could rest. 
+A response was counted as erroneous if the square with the wrong number of dots was chosen (when the instruction contained a number); 
+if the square with the larger number of dots was selected (when the instruction was \emph{Choose the square with few dots}); 
+or if the square with the smaller number of dots was selected (when the instruction was \emph{Choose the square with many dots}). % KvD Is this addition defining "erroneous" OK? MG Yes, I moved it though
 No feedback was given on correct trials, but there was feedback on error trials in the form of the word ``\textsc{wrong!!}'' which flashed on screen.
 
 \subsection{Results}
-A response was counted as erroneous if the square with the wrong number of dots was chosen (when the instruction contained a number); if the square with the larger number of dots was selected (when the instruction was ``Choose the square with few dots"); or if the square with the smaller number of dots was selected (when the instruction was ``Choose the square with many dots".) % KvD Is this addition defining "erroneous" OK?
-RTs for trials with erroneous responses were discarded, leading to the loss of 354 trials from 5120, representing 6.9\% of the trials. 
+\subsubsection{Response times}
+Response times (RTs) for trials with erroneous responses were discarded, leading to the loss of 354 trials from 5120, representing 6.9\% of the trials. 
 The correct response RTs were trimmed at 2.5 standard deviations for each subject, leading to the loss of a further 160 trials, or 3.4\% of the remaining correct responses. 
-Means for response times and error rates are given in Fig. (\ref{resultse2}).
-A linear mixed model of RT was built using as independent variables vagueness and numerical distance and their interaction, with random slopes for vagueness and numerical distance over participants. 
-Vagueness was sum coded: vague $= -.5$, crisp $= .5$; numerical distance was Helmert coded. 
-Helmert contrasts compare each level against the mean of the previous levels. 
-Level one of this contrast is numerical distance 5 compared with numerical distance 10; level two is the mean of numerical distance 5 and numerical distance 10 versus numerical distance 15; and level three is the mean of numerical distances 5, 10 and 15 versus numerical distance 20. 
+Means for response times and error rates are given in Fig. (\ref{resultse1}).
+A linear mixed model of RT was built, using as independent variables \emph{vagueness} and \emph{numerical distance} and their interaction, with random slopes for \emph{vagueness} and \emph{numerical distance} over participants. 
+\emph{Vagueness} was sum coded: \emph{vague} $= -.5$, \emph{crisp} $= .5$; \emph{numerical distance} was Helmert coded, i.e., the variable is ordered and each level is compared against the mean of all the previous levels to that point. % MG a reviewer said he was not familiar with Helmert contrasts
+%Level one of this contrast is numerical distance 5 compared with numerical distance 10; level two is the mean of numerical distance 5 and numerical distance 10 versus numerical distance 15; and level three is the mean of numerical distances 5, 10 and 15 versus numerical distance 20. 
 All $p$ values were calculated using the R package \emph{lmerTest} \cite{lmerTest}.
+Numbering below corresponds to the numbering of the hypotheses.
 
-(1) RTs were faster for vague instructions than for crisp instructions ($\beta=.109, se=.022, t=4.9, p<.001$). 
-(2) RTs grew faster as numerical distance increased: level one $(\beta=-.116, se=.012, t=-9.3, p<.05)$, level 2 ($\beta=-.103, se=.009, t=-11.1, p<.001$) and level three ($\beta=-.082, se=.007, t=-11.0, p<.05$). 
+(1) RTs were faster for vague instructions than for crisp instructions ($\beta=.109$, $se=.022$, $t=4.9$, $p<.001$). 
+
+(2) RTs grew faster as numerical distance increased: level one ($\beta=-.116$, $se=.012$, $t=-9.3$, $p<.05$), level 2 ($\beta=-.103$, $se=.009$, $t=-11.1$, $p<.001$) and level three ($\beta=-.082$, $se=.007$, $t=-11.0$, $p<.05$). 
 Since discriminability of the arrays is easier for larger numerical distances, discriminability probably underlies this effect. 
+
 (3) Numerical distance and vagueness interacted significantly for larger numerical distances when modelling RT: essentially there were diminishing returns for vagueness as numerical distance increased.% KvD Is it worth saying how they interacted? % MG I think this is answered now?
-The interactions at the different levels of numerical distance were: level one: ($\beta=.001, se=.016, t=.03, p=.974$); level two ($\beta=-.039, se=.009, t=-4.460, p<.001$); level three ($\beta=-.043, se=.006,t=-7.0, p<.001$). 
+The interactions at the different levels of numerical distance were: level one: ($\beta=.001$, $se=.016$, $t=.03$, $p=.974$); level two ($\beta=-.039$, $se=.009$, $t=-4.460$, $p<.001$); level three ($\beta=-.043$, $se=.006$, $t=-7.0$, $p<.001$). 
 In the crisp conditions RTs started out much slower than in the vague conditions, at the smallest numerical distance, but the two conditions converged to very fast times at the largest numerical distance. 
  
+\subsubsection{Error rates}
 Error rate data were analysed using a generalized logit mixed model \cite{jaeger2008categorical}, with vagueness and numerical distance and their interaction as independent variables, and with random slopes for vagueness and numerical distance over participants. 
-The effect of vagueness on error rates approached significance, with the vague instructions leading to fewer errors ($\beta=.307, se=.173, t=1.8, p=.077$).
-Error rates decreased as numerical distance increased: level one ($\beta=-.585, se=.092, ,z=-6.4, p<.001$), level 2 ($\beta=-.434, z=-5.3,p<.001$) and level three ($\beta=-.250,z=-4.1, p<.001$). 
-Error rates were greater in the crisp conditions than the vague conditions when numerical distance was small, and this difference diminished with increasing numerical distance until it reversed at the biggest numerical distance.
+
+(1) The effect of vagueness on error rates approached significance, with the vague instructions leading to fewer errors ($\beta=.307, se=.173, t=1.8, p=.077$).
+
+(2) Error rates decreased as numerical distance increased: level one ($\beta=-.585, se=.092, ,z=-6.4, p<.001$), level 2 ($\beta=-.434, z=-5.3,p<.001$) and level three ($\beta=-.250,z=-4.1, p<.001$). 
+
+(3) Error rates were greater in the crisp conditions than the vague conditions when numerical distance was small, and this difference diminished with increasing numerical distance until it reversed at the biggest numerical distance. % MG NEED TO INSERT STATS FOR THIS INTERACTION
 
 \begin{figure}[htbp]
 \fitfigure{images/resultse1.pdf}
@@ -151,13 +163,12 @@ Error rates were greater in the crisp conditions than the vague conditions when 
 \end{figure}
 
 \subsection{Discussion}
-Responses were faster and more accurate when the instructions were in the vague conditions than when they were in the crisp conditions. 
-The speed and accuracy diminished as the arrays became more easily discriminable, and the advantage for vague instructions tailed off as the arrays became more easily discriminable.
+Responses were faster and more accurate for vague than crisp instructions. 
+Response times and error rates improved as the arrays became more easily discriminable. 
+The advantage for vague instructions tailed off as the arrays became more easily discriminable.
 
 The cost reduction hypothesis explains the vagueness advantage by claiming that the vague referring expressions place less cognitive load on the comprehender than the crisp referring expressions. 
-It explains the diminishing returns for vagueness in more-discriminable stimuli (i.e., the vagueness by numerical distance interaction) by claiming that load is low in both conditions for the easily-discriminable stimuli, and that therefore there is no extra benefit to be had from vagueness in the easily-discriminable stimuli. 
-
-\clearpage
+It explains the diminishing returns for vagueness in more-discriminable stimuli (i.e., the vagueness by numerical distance interaction) by claiming that load is low in both conditions for the easily-discriminable stimuli, and that therefore there is no extra benefit to be had from vagueness in the easily-discriminable stimuli.
 
 \section{Experiment 2}
 
@@ -178,44 +189,44 @@ In Experiment 1, it might be said that the quantifiers in the vague conditions d
 This is because there were no borderline cases of the referent that could make the referent set `not well-defined', and perhaps because using definite articles in the instructions implied that only one option was correct.
 Using error feedback in experiment 1 could have exacerbated this.
 Experiment 2 used three arrays so that the vague quantifiers always had more than one possible referent, and used indefinite articles in the vague instructions to avoid the impression that only one response counted as correct, and was carried out without error feedback.
-An indication that the potential for vagueness was realised in Experiment 2 is that the borderline response was chosen fairly often --16\% of the time.
+An indication that the potential for vagueness was realised in Experiment 2 is that the borderline response was chosen fairly often: 16\% of the time.
 
 In Experiment 2, an item was a referring expression instruction followed by a set of dot arrays defined by triple of numbers, representing the number of dots in the left, middle, and right arrays. 
 We used four different triples of numbers: (6,15,24); (16,25,34); (26,35,44); (36,45,54). 
-Each set of arrays had the following properties: it comprised three arrays (instead of two as in Experiment 1); the array representing the central number was always presented in the middle of the three; there were two flanking arrays where one had fewer dots than the central array and the other had fewer.
+Each set of arrays had the following properties: it comprised three arrays (instead of two as in Experiment 1); the array representing the central number was always presented in the middle of the three; there were two flanking arrays where one had fewer dots than the central array and the other had more.
+
 Examples of crisp and vague versions of the numerical and verbal instructions follow: the examples assume the array (6,15,24) and reference to the smaller number of dots, such that 6 was classified as the expected response; 15 was classified as the borderline response; and 24 was classified as the incorrect response. 
-In the {\em vague numerical} condition we used ``Choose a square with about 10 dots''. None of the squares displayed contained 10 dots. 10 is slightly closer to 6 than to 15, justifying 6 as the best response and 15 as the borderline response.
-In the {\em vague verbal} condition we used ``Choose a square with few dots''.
-In the {\em crisp numerical} condition we used ``Choose the square with 6 dots''. One square did contain the exact number mentioned.
-In the {\em crisp verbal} condition, we used ``Choose the square with the fewest dots".
+In the {\em vague numerical} condition we used \emph{Choose a square with about 10 dots}. None of the squares displayed contained 10 dots. 10 is slightly closer to 6 than to 15, justifying 6 as the best response and 15 as the borderline response.
+In the {\em vague verbal} condition we used \emph{Choose a square with few dots}.
+In the {\em crisp numerical} condition we used \emph{Choose the square with 6 dots} and one square always did contain the number mentioned.
+In the {\em crisp verbal} condition, we used \emph{Choose the square with the fewest dots}.
 
 \subsection{Hypotheses}
-(1) A main effect advantage of vagueness.
+(1) A main effect RT advantage for vagueness.
 
-(2) An advantage of vagueness both in \emph{numeric} and in \emph{verbal} instructions.
+(2) An RT advantage for vagueness both in \emph{numeric} and in \emph{verbal} instructions.
 
-(3) No large main effect of instruction format. %MG If we are right that vagueness was responsible for the vagueness advantage in e 1, that could also have been a number avoidance advantage, then we would not expect that number avoidance, or, instruction format, plays a role.
+(3) No large main effect of instruction format. %MG If we are right that vagueness was responsible for the vagueness advantage in e 1, that could also have been a number avoidance advantage, then we would not expect that number avoidance, or, instruction format, plays a role (?)
 
-(4) On the basis of Experiment 1, we would expect an effect of array, with faster responses to more discriminable arrays
+(4) On the basis of Experiment 1, we would expect an effect of triple, with faster responses to more discriminable triples.
 
 (5) Participants should make more borderline case choices for vague than crisp instructions.
 
 \subsection{Method}
 Participants were aged between 18 and 45 with a median age of 28. 
-We presented participants with 256 trials, arranged in 4 blocks each with 64 trials. 
 We manipulated as independent variables vagueness and instruction format, yielding four conditions, \emph{vague numeric}; \emph{vague verbal}; \emph{crisp numeric}; \emph{crisp verbal}.
 We measured two dependent variables: response time; and the probability of a participant choosing the borderline case.
 On each trial, first the referring expression that constituted the instruction for that trial was displayed. 
-The participant then pressed a key to indicate that he or she had read the instruction. 
-After 1 second, the squares and dots were presented, while preserving the text of the referring expression. 
-The response time dependent variable was measured from the presentation of the squares and dots, until the keypress indicating the participant's choice. 
-The dependent variable measuring whether the participant chose the borderline case was also recorded at this time. 
+Participants then pressed a key to indicate that they had read the instruction. 
+After 1000 ms, the arrays were presented, while preserving the text of the referring expression. 
+The response time dependent variable was measured from the presentation of the arrays, until the keypress indicating the participant's choice, which was also recorded. 
 The trial would timeout after 60 seconds if there was no response.
 In this experiment, no feedback was given. 
 This was because, in the vague conditions, we did not regard any response as `correct' or `incorrect', but instead as `borderline response', or `not borderline response', and we did not want to draw participants' attention to this distinction explicitly. 
 We simply recorded whether the participant chose the best referent, the borderline case or the poorest referent, and how long it took the participant to respond.
 
 \subsection{Results}
+\subsubsection{Response times}
 Means for response times and proportion of borderline responses are given in Fig. (\ref{resultse2}). 
 Response times from all trials were trimmed at 2.5 standard deviations for each subject, leading to the loss of 236 trials, 3.1\% of the data. 
 A linear mixed model was constructed for the (logged) response times.
@@ -224,11 +235,19 @@ The fixed effects in the model were \emph{instruction format} and \emph{vaguenes
 The random effects in the model were \emph{participant}, and slopes over \emph{participant} for \emph{instruction format}, \emph{vagueness}, and their interaction
 
 (1) The main effect of \emph{vagueness} was to slow responses down, in contrast with Experiment 1, and offering evidence against hypothesis 1 (vague: 2668 ms; crisp: 2450 ms; a difference of 218 ms; $\beta=.06, se=.01, t=4.6, p<.001$). 
-(2) This disadvantage for vagueness persisted at each level of instruction format, offering evidence against hypothesis 2. [GIVE VALUES OF A FOCUSSED T TEST] There was an interaction effect between vagueness and instruction format, such that the disadvantage for vagueness was greater in the numerical than in the verbal conditions ($\beta=-0.13, se= 0.02, t= -6.6, p=0.000$).
-(3) There was a significant effect of \emph{instruction format} with numerical conditions attracting longer responses than the verbal conditions: consistent with Experiment 1 (numeric: 3284 ms; verbal 1866 ms; a difference of 1418 ms; $\beta=.37, se=.07, t=5.1, p<.001$). 
-(4) There was a significant main effect of \emph{item} ($\beta=.06, se=.008, t=7.0, p<.001$) indicating that response times differed in some way according to which item was presented. However further analysis revealed that there was no consistent smooth trend across items. This effect seems likely to be due to the very fast responses for the smallest item. This item had the largest ratio difference so may have been particularly discriminable for participants. % MG reviews asked for an explanation of the difference for numeric crisp over items. Also reviews mention ratio differences as something that we did not control.
 
-(4) Participant grand mean percentage of borderline selections was $16.6\%$. A generalized linear mixed model \cite{jaeger2008categorical} was fit to the data for selection of the borderline response, with task, vagueness and item as fixed effects, and with random slopes for task and vagueness and item over participants.  
+(2) Vagueness was disadvantageous in both the \emph{numeric} and \emph{verbal} conditions, offering evidence against hypothesis 2. %MG [? give values of a focussed t test]
+The disadvantage for vagueness was greater in the numerical than in the verbal conditions, leading to an interaction effect between vagueness and instruction format ($\beta=-0.13, se= 0.02, t= -6.6, p=0.000$).
+
+(3) There was a significant effect of \emph{instruction format} with numerical conditions attracting longer responses than the verbal conditions: consistent with Experiment 1 (numeric: 3284 ms; verbal 1866 ms; a difference of 1418 ms; $\beta=.37, se=.07, t=5.1, p<.001$). 
+
+(4) There was a significant main effect of \emph{triple} ($\beta=.06, se=.008, t=7.0, p<.001$) indicating that response times differed in some way according to which triple was presented. 
+However further analysis revealed that there was no consistent smooth trend across different triples. 
+This effect seems likely to be due to the very fast responses for the smallest triple, which had the largest ratio difference and so may have been particularly discriminable for participants. 
+% MG reviews asked for an explanation of the difference for numeric crisp over items. Also reviews mention ratio differences as something that we did not control.
+
+\subsubsection{Borderline responses}
+(5) Participant grand mean percentage of borderline selections was $16.6\%$. A generalized linear mixed model \cite{jaeger2008categorical} was fit to the data for selection of the borderline response, with task, vagueness and item as fixed effects, and with random slopes for task and vagueness and item over participants.  
 The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Fig, \ref{resultse2}.
 Participants were significantly more likely to choose the borderline option for vague instructions than for precise instructions (21.9\% vs 11.3\%, $\beta=.79, se=.25, z=3.2, p<.01$). 
 Participants were significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%, $\beta=3.57, se=.26, z=13.6, p<.001$). 
@@ -237,8 +256,8 @@ Participants were significantly more likely to choose the borderline square when
 \centering
 \includegraphics[width=.49\textwidth]{images/response-time-sep-1.pdf}
 \includegraphics[width=.49\textwidth]{images/histbd4-ggplot-version-1.pdf}
-\label{resultse2}
 \caption{Experiment 2 results: response times and proportion of borderline cases}
+\label{resultse2}
 \end{figure}
 
 \subsection{Discussion}
@@ -250,16 +269,15 @@ The \emph{verbal vague} condition was still responded to faster than the \emph{n
 
 % KvD: I've tentatively added the following:
 Having effectively separated the {\bf cost reduction} hypothesis from the {\bf instruction format} hypothesis, it is important to observe that, in Experiment 2, instruction format went hand in hand with {\bf selection algorithm}: 
- as shown by the Table of instructions \ref{instructionse2}, the instructions that used a verbal instruction format allowed a comparison algorithm, whereas the instructions that used a numeric format allowed a matching algorithm. 
+ %as shown by the Table of instructions \ref{instructionse2}, 
+the instructions that used a verbal instruction format allowed a comparison algorithm, whereas the instructions that used a numeric format allowed a matching algorithm. 
 Therefore, our results so far permit the interpretation that what made the instructions in the verbal condition fast is not the fact that they were worded verbally, but that they allowed participants to use a comparison algorithm 
 (which is known to be faster than matching). % KvD I assume we need to say more about this, citing some appropriate papers to support this idea.
 
 In the next two experiments we pitted the comparison algorithm and matching algorithm selection tasks against each other while controlling vagueness and instruction format. 
-In Experiment 3 we would restrict all the instructions to numeric quantifiers while factorially manipulating vagueness and selection task. 
-In Experiment 4 we would ensure that all instructions used verbal quantifiers, while also factorially manipulating vagueness and selection task. 
+In Experiment 3 we restricted all the instructions to \emph{numeric} quantifiers while factorially manipulating vagueness and selection task. 
+In Experiment 4 we ensured that all instructions used \emph{verbal} quantifiers, while also factorially manipulating vagueness and selection task. 
 This allowed us to distinguish between the predictions of the selection task account and the instruction format account. 
-
-\clearpage
 
 \section{Experiment 3}
 
@@ -267,46 +285,59 @@ This allowed us to distinguish between the predictions of the selection task acc
 The main aim of experiment 3 was to see whether vagueness would exert beneficial effects when all conditions used numerals in the instructions, and when there were vague and crisp versions of the instructions for both comparison and matching strategies. 
 The main changes from experiment 2 were that the selection task was explicitly controlled, and that all conditions were constrained to mention a number. 
 We used the same arrays as in experiment 2. 
-Table \ref{Instructions for e3} shows the instructions. 
+Table \ref{Instructions for e3} shows the instructions for each condition. 
+
 % KvD I think we should motivate our choice of materials (especially "far ..er")
 
-crisp  numeric matching  Choose a square with 6 dots 
-
-crisp  numeric comparison  Choose a square with fewer than 20 dots 
-
-vague  numeric matching  Choose a square with about 10 dots 
-
-vague  numeric comparison  Choose a square with far fewer than 20 dots 
-
+\begin{table}[htbp]
+\centering
+\caption{Experiment 3: Instructions, assuming $6,15,24$ dots as the Item, and showing \emph{fewer} instead of \emph{more}}
+\label{Instructions for e3}
+\begin{tabular}{llll}
+\hline
+vagueness&instruction format&selection task&instruction\\
+\hline
+crisp & numeric&matching & Choose a square with 6 dots \\ 
+crisp & numeric&comparison & Choose a square with fewer than 20 dots \\
+vague & numeric&matching & Choose a square with about 10 dots \\ 
+vague & numeric&comparison & Choose a square with far fewer than 20 dots \\ 
+\hline
+\end{tabular}
+\end{table}%
 
 \subsection{Hypotheses}
 (1) Vague instructions are easier for the reader than crisp alternatives (main effect of vagueness)
 
-(2) Comparison is easier for the reader than matching (main effect of selection)
+(2) Comparison is easier for the reader than matching (main effect of selection task)
 
 (3) Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness).
 
 %The instruction format account predicts no differences between the conditions, since all conditions used numeric quantifiers.
 %
-%The selection task account predicts a main effect of selection task such that the comparison conditions would attract faster responses than the matching conditions.
-%
 %The cost reduction account predicts that there will be a main effect of vagueness such that the vague instruction conditions attract faster responses than the crisp instruction conditions and particularly that at each level of selection task the vague condition should attract faster responses than the crisp condition.
-
 
 \subsection{Method}
 
-38 volunteers were recruited via internal messaging at University of Aberdeen, with self-reported fluency in English. They were paid ten pounds each for participating.
-The apparatus was the same as Experiment 1.
+38 participants were recruited. 
 The design was a 2 x 2 factorial manipulation of vagueness and selection task (see Table \ref{Instructions for e3}).
-Each stimulus was an instruction followed by a triple of dots.
-First a referring expression instruction was presented. Participants pressed a key to dismiss the instruction and proceed to the squares with dots in them.
+On each trial a referring expression instruction was presented: participants pressed a key to dismiss the instruction, when the dot arrays were presented until the participant responded, and the response time and choice were recorded.
 
 \subsection{Results}
-A linear mixed effects regression model was built for log response times. The structure of the model was as follows: fixed effects were vagueness, selection task (both sum coded) and centred item and their interactions: random effects were vagueness, selection task, and item (but not their interactions - the model failed to converge when these interactions were included). The means are plotted in Figure \ref{resultse3}.
+A linear mixed effects regression model was built for log response times. 
+The structure of the model was as follows: fixed effects were vagueness, selection task (both sum coded) and centred item and their interactions: random effects were vagueness, selection task, and item (but not their interactions - the model failed to converge when these interactions were included). 
+The means are plotted in Figure \ref{resultse3}.
 
-The results showed that vagueness was beneficial for comparison but detrimental for matching. There was no significant main effect of vagueness ($\beta =.003, se=.014, t=.202, p=.841$). 
-There was a main effect of task type, with the comparison task speeding responses compared to the matching task ($\beta=-.165, se=.027, t=-6.218, p<.001$). 
-Vagueness exerted effects in different directions for the comparison task and for the matching task. 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.75\textwidth]{images/response-time-two-panels-1.pdf}
+\caption{Results for Experiment 3}
+\label{resultse3}
+\end{figure}
+
+(1) There was no significant main effect of vagueness ($\beta =.003, se=.014, t=.202, p=.841$). 
+The results showed that vagueness was beneficial for comparison but detrimental for matching. 
+(2) There was a main effect of selection task, with the comparison task speeding responses compared to the matching task ($\beta=-.165, se=.027, t=-6.218, p<.001$). 
+(3) Vagueness exerted effects in different directions for the comparison task and for the matching task. 
 Separate analyses were conducted at each level of the selection task to see whether within each task type there were significant effects of vagueness. 
 There were: in the comparison task vagueness significantly speeded response times compared with crisp controls ($\beta=-.07, se=.02, t=3.52, p<.01$). 
 In the matching task vagueness significantly slowed response times compared with crisp controls ($\beta=-.07, se=.02, t=-2.89, p<.05$).
@@ -317,25 +348,31 @@ The selection task correctly predicted the main effect of selection task, but ha
 The cost reduction account is wrong to predict main effect advantages for vagueness, and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was advantageous in the comparison task.
 
 
-
-
-\clearpage
 \section{Experiment 4}
 \subsection{Introduction}
 This experiment investigated response times for instructions that did not use a number. 
 We manipulated vagueness and the selection task (comparison and matching). 
-In order to implement the experiment without mentioning numbers,  we used a prime to visually show the numbers of dots that we wanted to refer to as {\em the target} in the instructions. 
-This presentation of a prime before the main trial shares some features with Experiment 2 in \protect \citeA{Izard20081221}, although in that experiment participants were told the numerosity of the prime - called an \emph{inducer} in that paper - in our experiment we did not tell participants the numerosity of the prime array.
-An item was thus a combination of a visual prime, a numeric triple, and a referring expression.
-The referring expressions were constrained to never mention a numeral, as in Table \ref{Instructions for e4}. 
+In order to implement the experiment without mentioning numbers in the instructions, we changed the sequence of each trial to include a 'target' (i.e., a dot array of a particular cardinality) before the instruction, so that we could then refer back to the target's cardinality in the instruction using expressions like \emph{the same number of dots as the target}; \emph{fewer dots than the target}.
+%?MG WHAT WERE THE VALUES OF THE TARGETS?
+This presentation of a target before the main body of the trial shares some features with \citeA[Experiment 2]{Izard20081221}, although in that experiment participants were told the cardinality of the target (called an \emph{inducer} in that paper) whereas in our experiment we did not tell participants the cardinality of the prime array.
+An item was thus a combination of a target dot array, an instruction that did not explicitly contain a number, and a set of dot arrays taking their cardinalities from the same triples used in experiment 2.
+Table \ref{Instructions for e4} spells out how the instructions were constrained not to mention a numeral.  
 
-crisp  verbal matching  Choose a square with the same number of dots as the target 
-
-crisp  verbal comparison Choose a square with fewer dots than the target 
-
-vague  verbal matching  Choose a square with about the same number of dots as the target 
-
-vague  verbal comparison Choose a square with far fewer dots than the target 
+\begin{table}[htbp]
+\centering
+\caption{Experiment 4: Instructions}
+\label{Instructions for e4}
+\begin{tabular}{lllp{7cm}}
+\hline
+vagueness&instruction format& selection task&instruction\\
+\hline
+crisp 	& verbal	&	matching 		& Choose a square with the same number of dots as the target \\ 
+crisp 	& verbal	&	comparison	& Choose a square with fewer dots than the target \\
+vague 	& verbal	&	matching 		& Choose a square with about the same number of dots as the target \\ 
+vague 	& verbal	&	comparison	& Choose a square with far fewer dots than the target \\ 
+\hline
+\end{tabular}
+\end{table}%
 
 \subsection{Hypotheses}
 %The instruction format account predicts no differences between the conditions, since all conditions used verbal quantifiers.
@@ -350,29 +387,49 @@ vague  verbal comparison Choose a square with far fewer dots than the target
 
 (3) Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness).
 
-\subsection{Method}
+%\subsection{Method}
 
-40 volunteers recruited via internal messaging at University of Aberdeen, with self-reported fluency in English. They were paid ten pounds for participating. 
-The apparatus was the same as Experiment 1.
-The design was a 2 x 2 factorial manipulation of vagueness and selection task.
-Each stimulus was a sequence of prime, instruction, and squares.
-The procedure for this experiment was different from the others, to accommodate the requirement not to use numbers in the instruction. We had to have a different way to indicate a numerosity in the instruction, which we did by adding a visual `prime', a square that contained the number of dots that we wanted to refer to.
+
+%40 participants were recruited. % via internal messaging at University of Aberdeen, with self-reported fluency in English. They were paid ten pounds for participating. 
+%The apparatus was the same as Experiment 1.
+%The design was a 2 x 2 factorial manipulation of vagueness and selection task.
+%Each stimulus was a sequence of prime, instruction, and squares.
+%The procedure for this experiment was different from the others, to accommodate the requirement not to use numbers in the instruction. 
+%We had to have a different way to indicate a cardinality in the instruction, which we did by adding a visual `target', a square that contained the number of dots that we wanted to refer to.
 
 \subsection{Results}
-The results showed that vagueness was beneficial for comparison but detrimental for matching (the same as Experiment 3) even when no numbers were allowed in the instructions. Figure \ref{resultse4} shows the means by condition. There was no main effect of vagueness ($\beta=.01, se=.01, t=1.51, p=.14$). There was a main effect of selection, with comparison task instructions leading to faster responses than the matching task instructions ($\beta=-.18, se=.02, t=-10.38, p<.01$). This effect was in the same direction as Experiment Four. Vagueness did  exert different effects depending on the selection task ($\beta=.12, se=.03, t=4.32, p<.05$). Separate analyses were conducted for the comparison task and for the matching task. In the comparison task, vagueness resulted in faster response times ($\beta=-0.08, se=.02, t=4.30, p<.05$). In the matching task vagueness slowed response times ($\beta=.05, se=.01, t=3.72, p<.05$). These results are in the same direction as Experiment 3.
+40 volunteers participated.
+The results showed that vagueness was beneficial for comparison but detrimental for matching (the same as Experiment 3) even when no numbers were allowed in the instructions. 
+Figure \ref{resultse4} shows the means by condition. 
 
+(1) There was no main effect of vagueness ($\beta=.01, se=.01, t=1.51, p=.14$). 
 
+(2) There was a main effect of selection, with comparison task instructions leading to faster responses than the matching task instructions ($\beta=-.18, se=.02, t=-10.38, p<.01$). This effect was in the same direction as Experiment 3. 
 
-Again none of the accounts set out in the Hypotheses section emerge well from the results. The instruction format account wrongly predicts no differences between the conditions. The selection task correctly predicted the main effect of selection task, but has no coverage of the interaction with vagueness. The cost reduction account is wrong to predict main effect advantages for vagueness, and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was advantageous in the comparison task.
+(3) Vagueness did exert different effects depending on the selection task ($\beta=.12, se=.03, t=4.32, p<.05$). 
+Separate analyses were conducted for the comparison task and for the matching task. In the comparison task, vagueness resulted in faster response times ($\beta=-0.08, se=.02, t=4.30, p<.05$). 
+In the matching task vagueness slowed response times ($\beta=.05, se=.01, t=3.72, p<.05$). These results are in the same direction as Experiment 3.
 
-\clearpage
-\subsection{Discussion of experiments 3 and 4}
+The cost reduction account is wrong to predict main effect advantages for vagueness, and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was advantageous in the comparison task.
+The instruction format account wrongly predicts no differences between the conditions. 
+The selection task account correctly predicted the main effect of selection task, but has no coverage of the interaction of selection task with vagueness. 
 
-The main aim of these two experiments was to test whether vagueness confers any cognitive benefits over and above those due to differences in the selection task according to whether the instruction mandates a \emph{comparison} selection task or a \emph{matching} selection task, when number-use is held constant.  The main effect of selection task showed that the assumption that the \emph{comparison} task is easier than the \emph{matching} task is well-founded. In both experiments people were reliably faster at responding in the \emph{comparison} task. 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.75\textwidth]{images/response-time-two-panels-1-e4.pdf}
+\caption{Results for Experiment 4}
+\label{resultse4}
+\end{figure}
 
-Vagueness, which was the phenomenon  on which our investigation focussed, did not exert a main effect in response time. However when the comparison and selection tasks were analysed separately, there was small reliable speedup in RT from the crisp to the vague \emph{comparison} tasks, but a small reliable slowdown in RT from the crisp to the vague \emph{matching} tasks. 
+\section{Discussion of experiments 3 and 4}
 
-\clearpage
+The main aim of these two experiments was to test whether vagueness confers any cognitive benefits over and above those due to differences in the selection task according to whether the instruction mandates a \emph{comparison} selection task or a \emph{matching} selection task, when number-use is held constant. 
+The main effect of selection task showed that the assumption that the \emph{comparison} task is easier than the \emph{matching} task is well-founded. 
+In both experiments people were reliably quicker to respond in the \emph{comparison} task. 
+
+Vagueness, which was the phenomenon on which our investigation focussed, did not exert a main effect in response time. 
+However when the comparison and selection tasks were analysed separately, there was small reliable advantage for vagueness in the \emph{comparison} tasks, but a small reliable disadvantage for vagueness in the \emph{matching} tasks. 
+
 \section{General Discussion}
 
 Experiment 1 showed us that responses were faster and more accurate when the instructions were vague than when they were crisp, but the experiment could not distinguish effects of vagueness from those of number-avoidance or selection task: the vague conditions were also in verbal rather than numerical format; and mandated a comparison strategy rather than a matching strategy.  Experiment 2 showed us that number avoidance in the verbal format instructions is an important factor driving the faster response times in the task, and that vagueness does not have any additional explanatory power in either the verbal format instructions or the numerical format instructions when we generated verbal and numerical versions of both crisp and vague instructions. However the experiment could not distinguish benefits of number-avoidance in the verbal instructions from benefits of the comparison selection task: the verbal instructions also mandated a comparison strategy rather than a matching strategy. In experiments 3 and 4 we manipulated vagueness and the selection task independently of numerical format. We found that there are effects of the selection task mandated by the instruction, with the comparison task instructions attracting faster response times than the matching instructions, and that vagueness exerts benefits when the selection task is \emph{comparison}, but not when the task is \emph{matching}.
@@ -423,6 +480,12 @@ One way to see why vagueness may not matter as much for NLG -- and for human com
 
 
 \bibliography{v-special-issue-2016}
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \clearpage
 \appendix
 
@@ -565,5 +628,19 @@ vague & verbal&comparison& Choose a square with far fewer dots than the target \
 \caption{Results for Experiment 4}
 \label{resultse4}
 \end{figure}
+crisp  numeric matching  Choose a square with 6 dots 
 
-\end{document}
+crisp  numeric comparison  Choose a square with fewer than 20 dots 
+
+vague  numeric matching  Choose a square with about 10 dots 
+
+vague  numeric comparison  Choose a square with far fewer than 20 dots 
+
+crisp  verbal matching  Choose a square with the same number of dots as the target 
+
+crisp  verbal comparison Choose a square with fewer dots than the target 
+
+vague  verbal matching  Choose a square with about the same number of dots as the target 
+
+vague  verbal comparison Choose a square with far fewer dots than the target 
+
