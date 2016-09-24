@@ -205,18 +205,14 @@ erdataplot1 &lt;- summarySEwithin2(erdata, measurevar=&quot;error&quot;, withinv
 <pre><code>lmerTest version 2.0-32; lme4 version 1.1-12</code></pre>
 <pre class="r"><code>rt.lmer.1 &lt;- lmerTest::lmer(
   data=rtdata, logrt ~ c_Vgn * c_Gap + (c_Vgn * c_Gap|subject))
-rt.lmer.2 &lt;- lmerTest::lmer(
-  data=rtdata, logrt ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject))
+
 ac.lmer.1 &lt;- lme4::glmer(
   data = erdata, error ~ c_Vgn * c_Gap + (c_Vgn * c_Gap | subject), 
-  family=&quot;binomial&quot;, control = glmerControl(optimizer = &quot;bobyqa&quot;))
-ac.lmer.2 &lt;- lme4::glmer(
-  data = erdata, error ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject), 
   family=&quot;binomial&quot;, control = glmerControl(optimizer = &quot;bobyqa&quot;))</code></pre>
 <div id="response-times" class="section level1">
 <h1>Response times</h1>
 <!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sat Sep 24 10:56:21 2016 -->
+<!-- Sat Sep 24 11:09:54 2016 -->
 <table border="1">
 <caption align="top">
 Condition means
@@ -457,10 +453,10 @@ gap 20
 </tr>
 </table>
 <!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sat Sep 24 10:29:27 2016 -->
+<!-- Sat Sep 24 11:09:55 2016 -->
 <table border="1">
 <caption align="top">
-Simple response time model
+Response time model
 </caption>
 <tr>
 <th>
@@ -562,157 +558,11 @@ c_Vgn:c_Gap
 </td>
 </tr>
 </table>
-<!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sat Sep 24 10:29:31 2016 -->
-<table border="1">
-<caption align="top">
-Maximal response time model
-</caption>
-<tr>
-<th>
-</th>
-<th>
-Estimate
-</th>
-<th>
-Std. Error
-</th>
-<th>
-df
-</th>
-<th>
-t value
-</th>
-<th>
-Pr(&gt;|t|)
-</th>
-</tr>
-<tr>
-<td>
-(Intercept)
-</td>
-<td align="right">
-6.71
-</td>
-<td align="right">
-0.08
-</td>
-<td align="right">
-19.00
-</td>
-<td align="right">
-81.50
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-<tr>
-<td>
-c_Vgn
-</td>
-<td align="right">
--0.16
-</td>
-<td align="right">
-0.03
-</td>
-<td align="right">
-19.09
-</td>
-<td align="right">
--5.25
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-<tr>
-<td>
-c_Gap
-</td>
-<td align="right">
--0.21
-</td>
-<td align="right">
-0.02
-</td>
-<td align="right">
-18.98
-</td>
-<td align="right">
--10.51
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-<tr>
-<td>
-c_Ord
-</td>
-<td align="right">
--0.01
-</td>
-<td align="right">
-0.02
-</td>
-<td align="right">
-19.39
-</td>
-<td align="right">
--0.29
-</td>
-<td align="right">
-0.774
-</td>
-</tr>
-<tr>
-<td>
-c_Qty
-</td>
-<td align="right">
-0.04
-</td>
-<td align="right">
-0.01
-</td>
-<td align="right">
-149.33
-</td>
-<td align="right">
-3.24
-</td>
-<td align="right">
-0.001
-</td>
-</tr>
-<tr>
-<td>
-c_Vgn:c_Gap
-</td>
-<td align="right">
-0.11
-</td>
-<td align="right">
-0.02
-</td>
-<td align="right">
-22.51
-</td>
-<td align="right">
-6.57
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-</table>
 </div>
 <div id="error-rates" class="section level1">
 <h1>Error rates</h1>
 <!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sat Sep 24 10:56:21 2016 -->
+<!-- Sat Sep 24 11:09:55 2016 -->
 <table border="1">
 <caption align="top">
 Condition means
@@ -953,10 +803,10 @@ gap 20
 </tr>
 </table>
 <!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sat Sep 24 10:39:24 2016 -->
+<!-- Sat Sep 24 11:09:55 2016 -->
 <table border="1">
 <caption align="top">
-Simple error rates model
+Error rates model
 </caption>
 <tr>
 <th>
@@ -1043,131 +893,47 @@ c_Vgn:c_Gap
 </td>
 </tr>
 </table>
-<!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sat Sep 24 10:39:24 2016 -->
-<table border="1">
-<caption align="top">
-Maximal error rates model
-</caption>
-<tr>
-<th>
-</th>
-<th>
-Estimate
-</th>
-<th>
-Std. Error
-</th>
-<th>
-z value
-</th>
-<th>
-Pr(&gt;|z|)
-</th>
-</tr>
-<tr>
-<td align="right">
-(Intercept)
-</td>
-<td align="right">
--3.196
-</td>
-<td align="right">
-0.169
-</td>
-<td align="right">
--18.909
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-<tr>
-<td align="right">
-c_Vgn
-</td>
-<td align="right">
--0.240
-</td>
-<td align="right">
-0.186
-</td>
-<td align="right">
--1.293
-</td>
-<td align="right">
-0.196
-</td>
-</tr>
-<tr>
-<td align="right">
-c_Gap
-</td>
-<td align="right">
--0.785
-</td>
-<td align="right">
-0.082
-</td>
-<td align="right">
--9.543
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-<tr>
-<td align="right">
-c_Ord
-</td>
-<td align="right">
-0.026
-</td>
-<td align="right">
-0.150
-</td>
-<td align="right">
-0.170
-</td>
-<td align="right">
-0.865
-</td>
-</tr>
-<tr>
-<td align="right">
-c_Qty
-</td>
-<td align="right">
--0.022
-</td>
-<td align="right">
-0.150
-</td>
-<td align="right">
--0.144
-</td>
-<td align="right">
-0.886
-</td>
-</tr>
-<tr>
-<td align="right">
-c_Vgn:c_Gap
-</td>
-<td align="right">
-0.793
-</td>
-<td align="right">
-0.155
-</td>
-<td align="right">
-5.130
-</td>
-<td align="right">
-0.000
-</td>
-</tr>
-</table>
+<!-- ```{r} -->
+<!-- rt.lmer.2 <- lmerTest::lmer( -->
+<!--   data=rtdata, logrt ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- ac.lmer.2 <- lme4::glmer( -->
+<!--   data = erdata, error ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject),  -->
+<!--   family="binomial", control = glmerControl(optimizer = "bobyqa")) -->
+<!-- ``` -->
+<!-- ```{r tableRTmodelMaximal, results='asis', echo=FALSE, cache=TRUE} -->
+<!-- x = as.data.frame(format(summary(rt.lmer.2)$coef, scientific=FALSE), stringsAsFactors = FALSE) -->
+<!-- for (i in 1:(ncol(x)-1)) { -->
+<!--   for (j in 1:nrow(x)) { -->
+<!--     x[j,i] <-  substr(x[j,i], start=1, stop=7) -->
+<!--   } -->
+<!-- } -->
+<!-- for (i in 1:(ncol(x)-1)) { -->
+<!--   x[,i] <- as.numeric(x[,i]) -->
+<!-- } -->
+<!-- for (i in ncol(x)) { -->
+<!--   for (j in 1:nrow(x)) { -->
+<!--     x[j,i] <-  substr(x[j,i], start=1, stop=7) -->
+<!--   } -->
+<!-- } -->
+<!-- print( -->
+<!--   xtable( -->
+<!--     align='lrrrrr',  -->
+<!--     digits=c(0,  2,2,2,2,3), -->
+<!--     x, -->
+<!--     caption="Maximal response time model"),  -->
+<!--     caption.placement="top",  -->
+<!--   type='html') -->
+<!-- ``` -->
+<!-- ```{r tableErrorModelMaximal, results='asis', cache=TRUE, echo=FALSE} -->
+<!-- print( -->
+<!--   xtable( -->
+<!--     digits=3, summary( -->
+<!--       ac.lmer.2)$coefficients, -->
+<!--              caption="Maximal error rates model"), -->
+<!--              caption.placement="top", type='html') -->
+<!-- ``` -->
 </div>
 
 

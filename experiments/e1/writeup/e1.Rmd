@@ -109,13 +109,9 @@ cat (paste(sep="",
 ```{r computeLmerModels, cache = TRUE, tidy=FALSE}
 rt.lmer.1 <- lmerTest::lmer(
   data=rtdata, logrt ~ c_Vgn * c_Gap + (c_Vgn * c_Gap|subject))
-rt.lmer.2 <- lmerTest::lmer(
-  data=rtdata, logrt ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject))
+
 ac.lmer.1 <- lme4::glmer(
   data = erdata, error ~ c_Vgn * c_Gap + (c_Vgn * c_Gap | subject), 
-  family="binomial", control = glmerControl(optimizer = "bobyqa"))
-ac.lmer.2 <- lme4::glmer(
-  data = erdata, error ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject), 
   family="binomial", control = glmerControl(optimizer = "bobyqa"))
 ```
 
@@ -153,38 +149,11 @@ print(
     align='lrrrrr', 
     digits=c(0,  2,2,2,2,3),
     x,
-    caption="Simple response time model"), 
+    caption="Response time model"), 
     caption.placement="top", 
   type='html')
 ```
 
-```{r tableRTmodelMaximal, results='asis', echo=FALSE, cache=TRUE}
-x = as.data.frame(format(summary(rt.lmer.2)$coef, scientific=FALSE), stringsAsFactors = FALSE)
-
-for (i in 1:(ncol(x)-1)) {
-  for (j in 1:nrow(x)) {
-    x[j,i] <-  substr(x[j,i], start=1, stop=7)
-  }
-}
-
-for (i in 1:(ncol(x)-1)) {
-  x[,i] <- as.numeric(x[,i])
-}
-
-for (i in ncol(x)) {
-  for (j in 1:nrow(x)) {
-    x[j,i] <-  substr(x[j,i], start=1, stop=7)
-  }
-}
-print(
-  xtable(
-    align='lrrrrr', 
-    digits=c(0,  2,2,2,2,3),
-    x,
-    caption="Maximal response time model"), 
-    caption.placement="top", 
-  type='html')
-```
 
 # Error rates
 
@@ -202,20 +171,59 @@ print(
   xtable(summary(
     ac.lmer.1)$coefficients,
          digits=3, 
-         caption="Simple error rates model"),
+         caption="Error rates model"),
          caption.placement="top", type='html')
 ```
 
-```{r tableErrorModelMaximal, results='asis', cache=TRUE, echo=FALSE}
-print(
-  xtable(
-    digits=3, summary(
-      ac.lmer.2)$coefficients,
-             caption="Maximal error rates model"),
-             caption.placement="top", type='html')
-```
 
 
+<!-- ```{r} -->
+<!-- rt.lmer.2 <- lmerTest::lmer( -->
+<!--   data=rtdata, logrt ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- ac.lmer.2 <- lme4::glmer( -->
+<!--   data = erdata, error ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject),  -->
+<!--   family="binomial", control = glmerControl(optimizer = "bobyqa")) -->
+<!-- ``` -->
 
 
+<!-- ```{r tableRTmodelMaximal, results='asis', echo=FALSE, cache=TRUE} -->
+<!-- x = as.data.frame(format(summary(rt.lmer.2)$coef, scientific=FALSE), stringsAsFactors = FALSE) -->
+
+<!-- for (i in 1:(ncol(x)-1)) { -->
+<!--   for (j in 1:nrow(x)) { -->
+<!--     x[j,i] <-  substr(x[j,i], start=1, stop=7) -->
+<!--   } -->
+<!-- } -->
+
+<!-- for (i in 1:(ncol(x)-1)) { -->
+<!--   x[,i] <- as.numeric(x[,i]) -->
+<!-- } -->
+
+<!-- for (i in ncol(x)) { -->
+<!--   for (j in 1:nrow(x)) { -->
+<!--     x[j,i] <-  substr(x[j,i], start=1, stop=7) -->
+<!--   } -->
+<!-- } -->
+<!-- print( -->
+<!--   xtable( -->
+<!--     align='lrrrrr',  -->
+<!--     digits=c(0,  2,2,2,2,3), -->
+<!--     x, -->
+<!--     caption="Maximal response time model"),  -->
+<!--     caption.placement="top",  -->
+<!--   type='html') -->
+<!-- ``` -->
+
+
+<!-- ```{r tableErrorModelMaximal, results='asis', cache=TRUE, echo=FALSE} -->
+<!-- print( -->
+<!--   xtable( -->
+<!--     digits=3, summary( -->
+<!--       ac.lmer.2)$coefficients, -->
+<!--              caption="Maximal error rates model"), -->
+<!--              caption.placement="top", type='html') -->
+<!-- ``` -->
 
