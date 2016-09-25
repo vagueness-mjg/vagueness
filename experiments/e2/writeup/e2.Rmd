@@ -1,0 +1,115 @@
+---
+title: "Experiment 2 of 4"
+author: "Matt Green"
+output:
+  html_document:
+    toc: yes
+    <!--toc_float: true-->
+    mathjax: default
+    template: default
+    <!--code_folding: show-->
+    theme: default
+---  
+<style>
+table, th, td {
+    border: 1px grey;
+    border-collapse: collapse;
+    padding:2px 5px 2px 5px
+}  
+</style>
+
+
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+library(pander)
+```
+
+```{r showInstructions, echo=FALSE, cache=TRUE}
+v = c("crisp", "crisp", "vague", "vague")
+n = c('number', 'word', 'number', 'word')
+e <- c("Choose the square with 6 dots", "Choose the square with the fewest dots", "Choose a square with about 10 dots", "Choose a square with few dots")
+i = data.frame(v, n, e)
+names(i) = c("vagueness", "number", "example instruction")
+pander(i, justify=c('center', 'left', 'left'))
+```
+
+```{r showItems, echo=FALSE, cache=TRUE}
+items = c(1,2,3,4,5,6,7,8)
+i = data.frame(Item = c("1","2","3","4"),
+               x = c("06:15:24", "16:25:34", "26:35:44", "36:45:54"))
+names(i) = c('Item', 'Numbers of dots')
+pander(i, justify=c('center', 'center'))
+```
+
+```{r loadLibraries, message=FALSE, echo=FALSE, cache=FALSE}
+library(knitr); library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); library(LMERConvenienceFunctions); source('summarySEwithin2.R') 
+```
+
+In this experiment we did not count any response as an error, instead we coded them as expected, borderline, and extreme.
+
+```{r getData, echo=T}
+rawdata <- read.table('data.txt', sep=' ')
+```
+
+```{r}
+tempdata <- perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim = 2.5)$data
+rtdata <- tempdata
+bldata <- tempdata
+```
+
+This code creates the condition means with confidence intervals used for plotting:
+
+```{r computeSummariesForGraphs, cache=TRUE, message=FALSE}
+rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log",        withinvars=c("Condition", "Vagueness", "Number", "Item"), idvar="Subject")
+```
+
+
+```{r rtplot, fig.width=5, fig.height=3}
+dodge = position_dodge(width=0.2)
+rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness))
+rtplot=ggplot(rtdataplot1, aes(y=RT_log, x=Item, ymin=RT_log-ci, ymax=RT_log+ci,
+                group=Condition, shape=Condition, fill=Condition)) +
+  geom_line(position=dodge) +
+  geom_errorbar(width=.2, position=dodge) +
+  geom_point(size=3, position=dodge) +
+  scale_shape_manual("",values = c(22, 22, 21, 21)) +
+  scale_fill_manual("",values=c("black","white","black","white")) +
+  ggtitle("Response time") +
+  ylab("Respone time (log (ms))") + 
+  xlab("") +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        legend.key = element_blank(), aspect.ratio=1,
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.background=element_rect(fill=NA, color='white')) +
+  facet_grid(~Number) 
+rtplot
+```
+
+```{r blplot, fig.width=5, fig.height=2.5}
+bldata$Condition <- as.factor(paste(sep=':', bldata$Vagueness, bldata$Number))
+bldata$response_category <- relevel(bldata$response_category, ref = 'expected')
+blplot=ggplot(bldata) + 
+  geom_bar(aes(Vagueness, fill=response_category), position = 'dodge') +
+  #geom_errorbar() +
+  facet_wrap(nrow=1,~Number) +
+  scale_fill_grey(name="Response Type") +
+  xlab(" ") +
+  ggtitle("Response Type") +
+  theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        legend.key = element_blank(), aspect.ratio=1,
+        plot.background=element_rect(fill=NA, color='white'))
+blplot
+```
+
+
+
+
+<!-- ```{r} -->
+<!-- dd$response_category <- relevel(dd$response_category, ref = 'expected') -->
+<!-- barplot(table(dd$Vagueness,dd$response_category), beside=TRUE, legend=TRUE, space=c(0,.5)) -->
+<!-- ``` -->
+
+<!-- , ymin=isBorderlineNormed-ci, ymax=isBorderlineNormed+ci,  group=Condition, fill=Condition)) + -->
