@@ -67,11 +67,11 @@ dodge=.06
 rtplot = ggplot(rtdataplot1, aes(y=logrtNormed, x=Gap, group=Vgn, fill=Vgn, shape=Vgn, ymin=logrtNormed-ci, ymax=logrtNormed+ci)) + 
   geom_line(position=position_dodge(dodge)) + 
   geom_errorbar(width=.3, lty=1, position=position_dodge(dodge)) + 
-  geom_point(pch=21, size=3, position=position_dodge(dodge)) +
+  geom_point(pch=21, size=2, position=position_dodge(dodge)) +
   ggtitle("Response time") + 
-  ylab("log RT") + 
+  ylab("Respone time (log (ms))") + 
   xlab("Gap Size") +
-  scale_fill_grey(name=element_blank(), start=0, end=1) +
+  scale_fill_grey(name=element_blank(), start=0, end=1, guide=FALSE) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() ) +
   theme(aspect.ratio=1) + xlab("")
@@ -82,18 +82,18 @@ dodge=.06
 erplot = ggplot(erdataplot1, aes(y=errorNormed, x=Gap, group=Vgn, fill=Vgn, shape=Vgn, ymin=errorNormed-ci, ymax=errorNormed+ci)) + 
   geom_line(position=position_dodge(dodge)) + 
   geom_errorbar(width=.3, lty=1, position=position_dodge(dodge)) + 
-  geom_point(pch=21, size=3, position=position_dodge(dodge)) +
+  geom_point(pch=21, size=2, position=position_dodge(dodge)) +
   ggtitle("Error rate") + 
-  ylab("error rate") + 
+  ylab("Error rate (proportion of errors)") + 
   xlab("Gap Size") +
-  scale_fill_grey(name=element_blank(), start=0,end=1)+
+  scale_fill_grey(name=element_blank(), start=0, end=1)+
   theme_bw()+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() )+
   theme(aspect.ratio=1) + xlab("")
 ```
 
 
-```{r plotRTandErrorRates, fig.width=10, fig.height=4, message=FALSE, echo=FALSE}
+```{r plotRTandErrorRates, fig.width=7.5, fig.height=3, message=FALSE, echo=FALSE}
 grid.arrange(rtplot, erplot, ncol=2)
 ```
 
