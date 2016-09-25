@@ -1,4 +1,8 @@
-\documentclass[doc,floatsintext,apacite]{apa6}
+\documentclass[%
+doc,% saying man here makes it doublespaced; saying doc here instead makes it singlespaced again as supported by the documentclass
+floatsintext,%
+apacite%
+]{apa6}
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{color}
@@ -6,9 +10,8 @@
 \usepackage{layout}
 \usepackage{apacite}
 \usepackage{datetime}
-\usepackage{rotating} % comment out for man mode
 
-\renewcommand{\baselinestretch}{1.7} % added 21 Sept 2016, copied from CRM book
+%\renewcommand{\baselinestretch}{1.7} % added 21 Sept 2016, copied from CRM book
 
 \title{Is Vagueness Beneficial for Hearers? \protect \\ Evidence from Experiments}
 \date{\today}
@@ -147,7 +150,7 @@ Error rate data were analysed using a generalized logit mixed model \cite{jaeger
 (H1$_{er}$) The effect of vagueness on error rates approached significance, with the vague instructions leading to fewer errors ($\beta=.307, se=.173, t=1.8, p=.077$).
 
 \begin{figure}[htbp]
-\fitfigure{images/resultse1.pdf}
+\fitfigure{images/plotRTandErrorRates-1}
 \caption{Experiment 1 results: response times and error rates}
 \label{resultse1}
 \end{figure}
@@ -203,27 +206,26 @@ Examples of crisp and vague versions of the numerical and verbal instructions fo
 % KvD I've re-instated the table below, because this makes it easier to understand the instruction format/selection algorithm confound.
 
 \begin{table}[tbp]
-\caption{Table of instructions arranged by condition for the triple (6,15,24)}
+\caption{Experiment 1: instructions arranged by condition for the dot triple $(6,15,24)$ and instructions indicating the smaller numbers}
 \label{instre3}
 \begin{tabular}{rll}
 &crisp&vague\\
-\hline
+\midrule
 numerical	&		Choose the square with 6 dots 			& 	Choose a square with about 10 dots			\\
 verbal	&		Choose the square with the fewest dots	&	Choose a square with few dots\\
+\midrule
 \end{tabular}
 \end{table}
 
-\subsection{Hypotheses}
-(H1) A main effect RT advantage for vagueness.
+\begin{APAenumerate}
+	\item [(H1)] A main effect RT advantage for vagueness.
+	\item [(H2)] An RT advantage for vagueness both in \emph{numeric} and in \emph{verbal} instructions.
+	\item [(H3)] No large main effect of instruction format (numeric versus verbal).
+	\item [(H4)] On the basis of Experiment 1, we would expect faster responses to more discriminable triples (i.e., an effect of triple).
+	\item [(H5)] Participants should make more borderline case choices for vague than crisp instructions.
+\end{APAenumerate}
 
-(H2) An RT advantage for vagueness both in \emph{numeric} and in \emph{verbal} instructions.
 
-(H3) No large main effect of instruction format (numeric versus verbal). 
-%MG If we are right that vagueness was responsible for the vagueness advantage in e 1, that could also have been a number avoidance advantage, then we would not expect that number avoidance, or, instruction format, plays a role (?)
-
-(H4) On the basis of Experiment 1, we would expect faster responses to more discriminable triples (i.e., an effect of triple).
-
-(H5) Participants should make more borderline case choices for vague than crisp instructions.
 
 \subsection{Method}
 Participants were aged between 18 and 45 with a median age of 28. 
@@ -303,17 +305,18 @@ Table \ref{Instructions for e3} shows the instructions for each condition.
 
 \begin{table}[htbp]
 \centering
-\caption{Experiment 3: Instructions, assuming $6,15,24$ dots as the Item} %, and showing \emph{fewer} instead of \emph{more}}
+\caption{Experiment 3: Instructions arranged by condition for the dot triple $(6,15,24)$and instructions indicating the smaller numbers} %, and showing \emph{fewer} instead of \emph{more}}
 \label{Instructions for e3}
 \begin{tabular}{llll}
-\hline
-vagueness&instruction format&selection task&instruction\\
-\hline
-crisp 	& numeric		&	matching		& Choose a square with 6 dots \\ 
-crisp 	& numeric		&	comparison 	& Choose a square with fewer than 20 dots \\
-vague	& numeric		&	matching 		& Choose a square with about 10 dots \\ 
-vague 	& numeric		&	comparison 	& Choose a square with far fewer than 20 dots \\ 
-\hline
+vagueness	&	instruction		&	selection	&	instruction\\
+			&	format		&	task		&			\\
+\toprule
+\multirow{ 2}{*}{crisp} 	& \multirow{ 2}{*}{numeric}	&	matching		& Choose a square with 6 dots \\ 
+					& 						&	comparison 	& Choose a square with fewer than 20 dots \\
+					\midrule
+\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{numeric} 	&	matching 		& Choose a square with about 10 dots \\ 
+ 					& 						&	comparison 	& Choose a square with far fewer than 20 dots \\ 
+\bottomrule
 \end{tabular}
 \end{table}%
 
@@ -376,18 +379,19 @@ Table \ref{Instructions for e4} spells out how the instructions were constrained
 \centering
 \caption{Experiment 4: Instructions}
 \label{Instructions for e4}
-\begin{tabular}{lllp{7cm}}
-\hline
-vagueness&instruction format& selection task&instruction\\
-\hline
-crisp 	& verbal	&	matching 		& Choose a square with the same number of dots as the target \\ 
-crisp 	& verbal	&	comparison	& Choose a square with fewer dots than the target \\
-vague 	& verbal	&	matching 		& Choose a square with about the same number of dots as the target \\ 
-vague 	& verbal	&	comparison	& Choose a square with far fewer dots than the target \\ 
-\hline
+\begin{tabular}{llll}
+vagueness	&	instruction		&	selection							&	instruction: Choose a square with \ldots\\
+			&	format		&	task		&			\\
+\toprule
+\multirow{ 2}{*}{crisp} 	 	& \multirow{ 2}{*}{verbal} 	&	matching 		& the same number of dots as the target \\ 
+	& 	&	comparison										& fewer dots than the target \\
+	\midrule
+\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{verbal} 	&	matching 			& about the same number of dots as the target \\ 
+	& 	&	comparison										& far fewer dots than the target \\ 
+\bottomrule
 \end{tabular}
 \end{table}%
-
+	
 \subsection{Hypotheses}
 %The instruction format account predicts no differences between the conditions, since all conditions used verbal quantifiers.
 %
@@ -685,3 +689,15 @@ vague  verbal matching  Choose a square with about the same number of dots as th
 
 vague  verbal comparison Choose a square with far fewer dots than the target 
 
+
+
+%(H1) A main effect RT advantage for vagueness.
+%
+%(H2) An RT advantage for vagueness both in \emph{numeric} and in \emph{verbal} instructions.
+%
+%(H3) No large main effect of instruction format (numeric versus verbal). 
+%%MG If we are right that vagueness was responsible for the vagueness advantage in e 1, that could also have been a number avoidance advantage, then we would not expect that number avoidance, or, instruction format, plays a role (?)
+%
+%(H4) On the basis of Experiment 1, we would expect faster responses to more discriminable triples (i.e., an effect of triple).
+%
+%(H5) Participants should make more borderline case choices for vague than crisp instructions.
