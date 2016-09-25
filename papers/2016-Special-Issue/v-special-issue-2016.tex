@@ -165,14 +165,14 @@ Error rate data were analysed using a generalized logit mixed model \cite{jaeger
 
 \subsection{Discussion}
 
-As expected, responses were faster and more accurate for vague than crisp instructions. Post hoc, we formulated some further hypotheses:
+As expected, responses were faster and more accurate for vague than crisp instructions. Post hoc, we formulated some further hypotheses, which we tested using Bonferroni's correction for multiple comparisons:
 
 \begin{APAenumerate}
 	\item [(H2)] A main effect advantage of increasing numerical distance: the task will become easier as the numerical distance increases, because the two arrays are then more discriminable.
 	\item [(H3)] An interaction between vagueness and numerical distance: i.e., any facilitation for vagueness should be greater at smaller numerical distances than at larger numerical distances.
 \end{APAenumerate}
 
-Looking at Response Times, these two post-hoc hypotheses were confirmed, at Bonferroni-corrected significance levels: 
+Looking at Response Times, these two post-hoc hypotheses were confirmed, at Bonferroni-corrected significance thresholds: 
 
 \begin{APAenumerate}
 	\item [(H2$_{rt}$)] RTs increased with numerical distance 
@@ -182,7 +182,7 @@ Looking at Response Times, these two post-hoc hypotheses were confirmed, at Bonf
 	($\beta=0.07$, $se=0.01$, $t=5.9$, $p<0.0005$). % MG added the values for these stats on 25 Sept 2016
 \end{APAenumerate}
 
-Looking at Error Rates, the two post-hoc hypotheses were confirmed as well, at Bonferroni-corrected significance levels:
+Looking at Error Rates, the two post-hoc hypotheses were confirmed as well, at Bonferroni-corrected significance thresholds:
 
 \begin{APAenumerate}
 	\item [(H2$_{er}$)] Error rates decreased as numerical distance increased: 
@@ -192,6 +192,10 @@ Looking at Error Rates, the two post-hoc hypotheses were confirmed as well, at B
 \end{APAenumerate}
 
 So far, these results are in line with the idea of cost reduction. Cost reduction explains the vagueness advantage by claiming that the vague referring expressions place less cognitive load on the comprehender than the crisp referring expressions. It explains the diminishing returns for vagueness in more-discriminable stimuli (i.e., the vagueness by numerical distance interaction) by claiming that load is low in both conditions for the easily-discriminable stimuli, and that therefore there is no extra benefit to be had from vagueness in the easily-discriminable stimuli.
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%                            E 2                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Experiment 2}
 
@@ -238,10 +242,6 @@ verbal	&		Choose the square with the fewest dots	&	Choose a square with few dots
 	\item [(H4)] On the basis of Experiment 1, we would expect faster responses to more discriminable triples (i.e., an effect of triple).
 	\item [(H5)] Participants should make more borderline case choices for vague than crisp instructions.
 \end{APAenumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%
-%                            E 2                                     %
-%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Method} % E2
 % Participants were aged between 18 and 45 with a median age of 28. 
@@ -299,13 +299,13 @@ Participant grand mean percentage of borderline selections was $16.6\%$.
 	% $\beta=.79, se=.25, z=3.2, p<.01$).  
 \end{APAenumerate}
 Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%, 
-$\beta=??$, $se=??$, $z=??$, $p<??$) % MG ADD STATS
+$\beta=??$, $se=??$, $z=??$, $p<??$). % MG ADD STATS
 % $\beta=3.57, se=.26, z=13.6, p<.001$).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.49\textwidth]{images/response-time-sep-1.pdf}
-\includegraphics[width=.49\textwidth]{images/histbd4-ggplot-version-1.pdf}
+\includegraphics[width=.49\textwidth]{images/rtplote2.pdf}
+\includegraphics[trim = 0mm -30mm 0mm 0mm, clip, width=.49\textwidth]{images/blplote2.pdf}
 \caption{Experiment 2 results: response times and proportion of borderline cases}
 \label{resultse2}
 \end{figure}
@@ -781,3 +781,7 @@ vague  verbal comparison Choose a square with far fewer dots than the target
 % Edgington 1996. Dorothy Edgington. Vagueness by Degrees. In Keefe and Smith 1997.
 % Zadeh 1965. Lotfi Zadeh. Fuzzy Sets. {\em Information and Control} 8 (3) 1965, 338-353.
 % Ioannis Konstas and Mirella Lapata. 2013. A global model for concept-to-text generation. J. Artif. Intell. Res. (JAIR), 48:305Ð346. 
+
+
+
+
