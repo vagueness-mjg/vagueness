@@ -180,7 +180,7 @@ print(
     summary(
     ac.lmer.1
     )$coefficients,
-    digits=c(0, 2, 2, 2, 5), 
+    digits=c(0, 2, 2, 2, 7), 
     caption="Error rates model"),
   caption.placement="top", type='html')
 ```
