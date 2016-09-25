@@ -20,11 +20,12 @@ table, th, td {
 
 
 
-```{r pander, echo=FALSE}
+```{r pander, echo=FALSE, cache=FALSE}
 library(pander)
+library(knitr)
 ```
 
-```{r showInstructions, echo = FALSE}
+```{r showInstructions, echo=FALSE, cache=TRUE}
 v = c("crisp","vague")
 e <- c("Choose the the square with many dots", "Choose the square with 20 dots")
 i = data.frame(v, e)
@@ -32,7 +33,7 @@ names(i) = c("vagueness", "example instruction")
 pander(i, justify=c('center', 'left'))
 ```
 
-```{r showItems, echo=FALSE}
+```{r showItems, echo=FALSE, cache=TRUE}
 items = c(1,2,3,4,5,6,7,8)
 i = data.frame(Gap = c("05","10","15","20"),
                x = c("25:20","25:15","25:10","25:05"),
@@ -41,18 +42,25 @@ names(i) = c('Gap Size', 'Small Target', 'Large Target')
 pander(i, justify=c('center', 'center', 'center'))
 ```
 
-```{r loadLibraries, message=FALSE, echo = FALSE}
-library(knitr); library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); source('summarySEwithin2.R') 
+```{r loadLibraries, message=FALSE, echo=FALSE, cache=FALSE}
+library(knitr); library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); library(LMERConvenienceFunctions); source('summarySEwithin2.R') 
 ```
 
 In this experiment it was possible to identify errors.
 This is because there were only 2 squares and an instruction uniquely identified one of them.
-Therefore error trials were removed from analysis of response times: 
+Therefore error trials were removed from analysis of response times:
 
-```{r separateDataFramesForRTandErrorAnalyses, echo=T}
+```{r separateDataFramesForRTandErrorAnalyses, echo=TRUE, cache=FALSE}
 rawdata <- read.table('data.txt', sep=' ')
 rtdata <- subset(rawdata, error==FALSE)
 erdata <- rawdata
+```
+
+Correct responses were trimmed at 2.5 sd separately for each subject:
+
+```{r trimData, echo=TRUE, cache=FALSE}
+tempdata <- perSubjectTrim.fnc(rtdata, response='rt', subject='subject', trim = 2.5)$data
+rtdata <- tempdata
 ```
 
 This code creates the condition means with confidence intervals used for plotting:
@@ -147,7 +155,7 @@ for (i in ncol(x)) {
 print(
   xtable(
     align='lrrrrr', 
-    digits=c(0,  2,2,2,2,3),
+    digits=c(0, 2, 2, 1, 1, 3),
     x,
     caption="Response time model"), 
     caption.placement="top", 
@@ -168,11 +176,13 @@ print(
 
 ```{r tableErrorModelsimple, results='asis', cache=TRUE, echo=FALSE}
 print(
-  xtable(summary(
-    ac.lmer.1)$coefficients,
-         digits=3, 
-         caption="Error rates model"),
-         caption.placement="top", type='html')
+  xtable(
+    summary(
+    ac.lmer.1
+    )$coefficients,
+    digits=c(0, 2, 2, 2, 5), 
+    caption="Error rates model"),
+  caption.placement="top", type='html')
 ```
 
 
