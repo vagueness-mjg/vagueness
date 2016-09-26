@@ -262,46 +262,26 @@ We simply recorded whether the participant chose the best referent, the borderli
 \subsubsection{Response times} % E2
 Means for response times and proportion of borderline responses are given in Fig. (\ref{resultse2}). 
 Response times from all trials were trimmed at 2.5 standard deviations for each subject, leading to the loss of 236 trials, 3.1\% of the data. 
-A linear mixed model was constructed for the (logged) response times.
-The \emph{instruction format} and \emph{vagueness} variables were sum-coded and \emph{Item} was centred.
-The fixed effects in the model were \emph{instruction format} and \emph{vagueness} and their interaction, and \emph{item}.
-The random effects in the model were \emph{participant}, and slopes over \emph{participant} for \emph{instruction format}, \emph{vagueness}, and their interaction. 
+A linear mixed model was constructed for the (logged) response times, 
+with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant for random effects.
 \begin{APAenumerate}
-	\item [(H1)] The main effect of \emph{vagueness} was to slow responses down, in contrast with Experiment 1, and offering evidence against hypothesis 1 (vague: 2668 ms; crisp: 2450 ms; a difference of 218 ms; 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
-	% $\beta=.06$, $se=.01$, $t=4.6$, $p<.001$).
-	\item [(H2)] Vagueness was disadvantageous in both the \emph{numeric} 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
-	and \emph{verbal} 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
-	conditions, offering evidence against hypothesis 2. 
-The disadvantage for vagueness was greater in the numerical than in the verbal conditions, leading to an interaction effect between vagueness and instruction format 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
-	% ($\beta=-0.13, se= 0.02, t= -6.6, p=0.000$).
-	\item [(H3)] There was a significant effect of \emph{instruction format} with numerical conditions attracting longer responses than the verbal conditions: consistent with Experiment 1 (numeric: 3284 ms; verbal 1866 ms; a difference of 1418 ms; 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
-	% ($\beta=.37, se=.07, t=5.1, p<.001$)
-	\item [(H4)] There was a significant main effect of which triple of numbers were used in the stimulus 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}). 
-	%($\beta=.06, se=.008, t=7.0, p<.001$) 
-This effect seems likely to be due to the very fast responses for stimuli 
-using arrangements of the smallest numbers of dots (6,15,24), 
-which also had the largest difference in ratio of smallest number to largest number in the stimulus, 
-suggesting that stimuli using this arrangement of numbers of dots may have been particularly discriminable for participants.
+	\item [(H1)] The main effect of \emph{vagueness} was to slow responses down, in contrast with Experiment 1, and offering evidence against hypothesis 1 (vague: 2668 ms; crisp: 2450 ms; a difference of 218 ms; $\beta=.06$, $se=.01$, $t=4.6$, $p<0.0001$) % MG added the values for these stats on 26 Sept 2016
+	\item [(H2)] In focussed comparisons, vagueness was significantly disadvantageous in the \emph{numeric} conditions ($\beta=0.09$, $se=0.02$, $t=4.5$, $p<0.0001$)% MG added the values for these stats on 26 Sept 2016
+				, and non-significantly disadvantageous in the \emph{verbal} conditions ($\beta=0.02$, $se=0.02$, $t=1.5$, $p=0.1550$)% MG added the values for these stats on 26 Sept 2016
+				, offering partial evidence against hypothesis 2. The disadvantage for vagueness was greater in the numerical than in the verbal conditions, leading to a significant overall interaction effect between vagueness and instruction format ($\beta=-0.13$, $se=0.02$, $t=-6.6$, $p=0.0169$) % MG added the values for these stats on 26 Sept 2016
+	\item [(H3)] There was a significant effect of \emph{instruction format} with numerical conditions attracting longer responses than the verbal conditions: consistent with Experiment 1 (numeric: 3284 ms; verbal 1866 ms; a difference of 1418 ms; ($\beta=-0.36$, $se=0.07$, $t=-5.1$, $p<0.0001$) % MG added the values for these stats on 26 Sept 2016
+	\item [(H4)] There was a significant main effect of item (i.e., of which triple of numbers of dots were used in the stimulus): ($\beta=0.12$, $se=0.02$, $t=7.1$, $p<0.0001$). % MG added the values for these stats on 26 Sept 2016
+				This effect seems likely to be due to the very fast responses for stimuli using arrangements of the smallest numbers of dots (6,15,24), which also had the largest difference in ratio of smallest number to largest number in the stimulus, suggesting that stimuli using this arrangement of numbers of dots may have been particularly discriminable for participants.
 \end{APAenumerate}
 
 \subsubsection{Borderline responses} % E2
-A generalized linear mixed model \cite{jaeger2008categorical} was fit to the data for selection of the borderline response, with task, vagueness and item as fixed effects, and with random slopes for task and vagueness and item over participants.  
+A generalized linear mixed model \cite{jaeger2008categorical} was fit to the data for selection of the borderline response, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant for random effects.
 The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Fig, \ref{resultse2}. 
 Participants chose the borderline square on $16.6\%$ of trials overall.  
 \begin{APAenumerate}
-	\item [(H5)] Participants were significantly more likely to choose the borderline option for vague instructions than for precise instructions (21.9\% vs 11.3\%, 
-	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
-	% $\beta=.79, se=.25, z=3.2, p<.01$).  
+	\item [(H5)] Participants were significantly more likely to choose the borderline option for vague instructions than for crisp instructions (21.9\% vs 11.3\%: $\beta=0.62$, $se=0.22$, $z=2.8$, $p=0.0059$). % MG added the values for these stats on 26 Sept 2016
+	Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%: $\beta=-3.35$, $se=0.23$, $z=-14.6$, $p<0.0001$). % MG added the values for these stats on 26 Sept 2016
 \end{APAenumerate}
-Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%, 
-\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}). % MG ADD STATS
-% $\beta=3.57, se=.26, z=13.6, p<.001$).
 
 \begin{figure}[htbp]
 \centering
@@ -390,6 +370,7 @@ The means are plotted in Figure \ref{resultse3}.
 \label{resultse3}
 \end{figure}
 
+% MG has not updated these stats yet at 26 Sept 2016
 (H1) There was no significant main effect of vagueness ($\beta =.003, se=.014, t=.202, p=.841$). 
 The results showed that vagueness was beneficial for comparison but detrimental for matching. 
 (H2) There was a main effect of selection task, with the comparison task speeding responses compared to the matching task ($\beta=-.165, se=.027, t=-6.218, p<.001$). 
@@ -415,7 +396,8 @@ The cost reduction account was wrong to predict main effect advantages for vague
 This experiment investigated response times for instructions that did not use a number. 
 We manipulated vagueness and the selection task (comparison and matching). 
 In order to implement the experiment without mentioning numbers in the instructions, we changed the sequence of each trial to include a 'target' (i.e., a dot array of a particular cardinality) before the instruction, so that we could then refer back to the target's cardinality in the instruction using expressions like \emph{the same number of dots as the target}; \emph{fewer dots than the target}.
-%?MG WHAT WERE THE VALUES OF THE TARGETS?
+% MG WHAT WERE THE VALUES OF THE TARGETS?
+\textcolor{red}{MG insert the values of the targets}
 This presentation of a target before the main body of the trial shares some features with \citeA[Experiment 2]{Izard20081221}, although in that experiment participants were told the cardinality of the target (called an \emph{inducer} in that paper) whereas in our experiment we did not tell participants the cardinality of the prime array.
 An item was thus a combination of a target dot array, an instruction that did not contain a number, and a set of dot arrays taking their cardinalities from the same triples used in Experiment 2.
 Table \ref{Instructions for e4} spells out how the instructions were constrained not to mention a numeral.  
@@ -465,6 +447,7 @@ vagueness	&	instruction		&	selection							&	instruction: Choose a square with \
 The results showed that vagueness was beneficial for comparison but detrimental for matching (the same as Experiment 3) even when no numbers were allowed in the instructions. 
 Figure \ref{resultse4} shows the means by condition. 
 
+% MG has not updated these stats yet at 26 Sept 2016
 (H1) There was no main effect of vagueness ($\beta=.01, se=.01, t=1.51, p=.14$). 
 
 (H2) There was a main effect of selection, with comparison task instructions leading to faster responses than the matching task instructions ($\beta=-.18, se=.02, t=-10.38, p<.01$). This effect was in the same direction as Experiment 3. 
@@ -789,3 +772,8 @@ vague  verbal comparison Choose a square with far fewer dots than the target
 
 \textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}
 $\beta=??$, $se=??$, $t=??$, $p<??$
+
+
+%The \emph{instruction format} and \emph{vagueness} variables were sum-coded and \emph{Item} was centred.
+%The fixed effects in the model were \emph{instruction format} and \emph{vagueness} and their interaction, and \emph{item}.
+%The random effects in the model were \emph{participant}, and slopes over \emph{participant} for \emph{instruction format}, \emph{vagueness}, and their interaction. 
