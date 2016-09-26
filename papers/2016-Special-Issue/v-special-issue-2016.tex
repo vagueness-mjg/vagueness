@@ -1,6 +1,7 @@
 \documentclass[%
-doc,% saying man here makes it doublespaced; saying doc here instead makes it singlespaced again as supported by the documentclass
-%man,
+%			% choose man or doc immediately below
+doc,			% doc is single spaced
+%man,		% man is double spaced
 floatsintext,%
 apacite%
 ]{apa6}
@@ -12,7 +13,7 @@ apacite%
 \usepackage{apacite}
 \usepackage{datetime}
 
-%\renewcommand{\baselinestretch}{1.7} % added 21 Sept 2016, copied from CRM book
+%\renewcommand{\baselinestretch}{1.7} % added 21 Sept 2016, copied from CRM book, but see documentclass option 'man' for "manuscript'' above which makes it double spaced
 
 \title{Is Vagueness Beneficial for Hearers? \protect \\ Evidence from Experiments}
 \date{\today}
@@ -91,7 +92,7 @@ All $p$ values reported for linear models were calculated using the R package \e
 % KvD I've moved the following two paragraphs towards the end of the section.
 % MG added/moved out of expt 1
 
-When the distance grows between two numbers, they become more easily distinguishable from each other: the \emph{numerical distance effect}, which has been shown for comparing the cardinality of two sets of dots \cite{van123} and for processing Arabic numerals and number words \cite{Dehaene199647}. 
+When the distance grows between two numbers, they become more easily distinguishable from each other: the \emph{numerical distance effect}, which has been shown for comparing the cardinality of two sets of dots \cite{van123} and for processing Arabic numerals and number words \cite{Dehaene1996}. 
 We manipulated the number of dots in each array such that some sets of arrays had smaller numerical distances and others had larger numerical distances. Where a number was mentioned in the instructions, it was always in the form of an Arabic numeral. 
 % MG added/moved out of expt 1
 When two numbers are presented with the smaller on the left, this left-side presentation facilitates responses indicating the smaller number: the \emph{Spatial-Numerical Association of Response Codes (SNARC)} effect \cite{dehaene1993mental, gevers2006automatic}. 
@@ -140,7 +141,7 @@ No feedback was given on correct trials, but there was feedback on error trials 
 
 \begin{figure}[htbp]
 \fitfigure{images/plotRTandErrorRates-1}
-\caption{Experiment 1 results: response times and error rates}
+\caption{Experiment 1 results: response times and error rates.}
 \label{resultse1}
 \end{figure}
 
@@ -228,8 +229,8 @@ Examples of crisp and vague versions of the numerical and verbal instructions fo
 \begin{tabular}{rll}
 &crisp&vague\\
 \midrule
-numerical	&		Choose the square with 6 dots 			& 	Choose a square with about 10 dots\\
-verbal	&		Choose the square with the fewest dots	&	Choose a square with few dots\\
+numerical	&	Choose the square with 6 dots 			& 	Choose a square with about 10 dots	\\
+verbal	&	Choose the square with the fewest dots	&	Choose a square with few dots		\\
 \midrule
 \end{tabular}
 \end{table}
@@ -267,21 +268,21 @@ The fixed effects in the model were \emph{instruction format} and \emph{vaguenes
 The random effects in the model were \emph{participant}, and slopes over \emph{participant} for \emph{instruction format}, \emph{vagueness}, and their interaction. 
 \begin{APAenumerate}
 	\item [(H1)] The main effect of \emph{vagueness} was to slow responses down, in contrast with Experiment 1, and offering evidence against hypothesis 1 (vague: 2668 ms; crisp: 2450 ms; a difference of 218 ms; 
-	($\beta=??$, $se=??$, $t=??$, $p<??$) % MG ADD STATS
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
 	% $\beta=.06$, $se=.01$, $t=4.6$, $p<.001$).
 	\item [(H2)] Vagueness was disadvantageous in both the \emph{numeric} 
-	($\beta=??$, $se=??$, $t=??$, $p<??$) % MG ADD STATS
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
 	and \emph{verbal} 
-	($\beta=??$, $se=??$, $t=??$, $p<??$) % MG ADD STATS
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
 	conditions, offering evidence against hypothesis 2. 
 The disadvantage for vagueness was greater in the numerical than in the verbal conditions, leading to an interaction effect between vagueness and instruction format 
-	($\beta=??$, $se=??$, $t=??$, $p<??$) % MG ADD STATS
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
 	% ($\beta=-0.13, se= 0.02, t= -6.6, p=0.000$).
 	\item [(H3)] There was a significant effect of \emph{instruction format} with numerical conditions attracting longer responses than the verbal conditions: consistent with Experiment 1 (numeric: 3284 ms; verbal 1866 ms; a difference of 1418 ms; 
-	($\beta=??$, $se=??$, $t=??$, $p<??$) % MG ADD STATS
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
 	% ($\beta=.37, se=.07, t=5.1, p<.001$)
 	\item [(H4)] There was a significant main effect of which triple of numbers were used in the stimulus 
-	($\beta=$, $se=$, $t=$, $p<$). 
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}). 
 	%($\beta=.06, se=.008, t=7.0, p<.001$) 
 This effect seems likely to be due to the very fast responses for stimuli 
 using arrangements of the smallest numbers of dots (6,15,24), 
@@ -292,21 +293,21 @@ suggesting that stimuli using this arrangement of numbers of dots may have been 
 \subsubsection{Borderline responses} % E2
 A generalized linear mixed model \cite{jaeger2008categorical} was fit to the data for selection of the borderline response, with task, vagueness and item as fixed effects, and with random slopes for task and vagueness and item over participants.  
 The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Fig, \ref{resultse2}. 
-Participant grand mean percentage of borderline selections was $16.6\%$.  
+Participants chose the borderline square on $16.6\%$ of trials overall.  
 \begin{APAenumerate}
 	\item [(H5)] Participants were significantly more likely to choose the borderline option for vague instructions than for precise instructions (21.9\% vs 11.3\%, 
-	($\beta=??$, $se=??$, $z=??$, $p<??$) % MG ADD STATS
+	(\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}) % MG ADD STATS
 	% $\beta=.79, se=.25, z=3.2, p<.01$).  
 \end{APAenumerate}
 Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%, 
-$\beta=??$, $se=??$, $z=??$, $p<??$). % MG ADD STATS
+\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}). % MG ADD STATS
 % $\beta=3.57, se=.26, z=13.6, p<.001$).
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.49\textwidth]{images/rtplote2.pdf}
 \includegraphics[trim = 0mm -30mm 0mm 0mm, clip, width=.49\textwidth]{images/blplote2.pdf}
-\caption{Experiment 2 results: response times and proportion of borderline cases}
+\caption{Experiment 2 results: mean response times by condition and item, and counts of borderline case responses by condition.}
 \label{resultse2}
 \end{figure}
 
@@ -322,6 +323,7 @@ However, once again there is a possibly confounding factor. Observe that, in Exp
  %as shown by the Table of instructions \ref{instructionse2}, 
 %the instructions that used a verbal instruction format allowed a comparison algorithm, whereas the instructions that used a numeric format allowed a matching algorithm. 
 To see this, consider the task of selecting the dot array that contains ``few dots": to do this, it suffices to {\em compare} the three arrays and select the one that contains the fewest elements. Therefore, our results so far permit the interpretation that what made the instructions in the verbal condition fast is not the fact that they were worded verbally, but that they allowed participants to use a comparison ``algorithm" (which is known to be faster than matching). % KvD I think we need to say more about this, citing some appropriate papers to support this idea.
+\textcolor{red}{insert citation supporting this}
 
 In the next two experiments we pitted the comparison algorithm and matching algorithm selection tasks against each other while controlling vagueness and instruction format. 
 In Experiment 3 we restricted all the instructions to \emph{numeric} quantifiers while factorially manipulating vagueness and selection task. 
@@ -785,3 +787,5 @@ vague  verbal comparison Choose a square with far fewer dots than the target
 
 
 
+\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}
+$\beta=??$, $se=??$, $t=??$, $p<??$
