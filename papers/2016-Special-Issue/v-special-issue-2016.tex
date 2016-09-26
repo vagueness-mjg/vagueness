@@ -1,7 +1,7 @@
 \documentclass[%
 %			% choose man or doc immediately below
-doc,			% doc is single spaced
-%man,		% man is double spaced
+%doc,	% doc is single spaced
+man,		% man is double spaced
 floatsintext,%
 apacite%
 ]{apa6}
@@ -17,7 +17,7 @@ apacite%
 
 \title{Is Vagueness Beneficial for Hearers? \protect \\ Evidence from Experiments}
 \date{\today}
-\authornote{\today ~\currenttime}
+\authornote{latex compiled \today ~\currenttime}
 \shorttitle{Is Vagueness Beneficial for Hearers?}
 \twoauthors{Matt Green}{Kees van Deemter}
 \twoaffiliations{Computing Science\\ University of Aberdeen}{Computing Science\\ University of Aberdeen}
@@ -26,9 +26,11 @@ apacite%
 %
 This article reports on a series of experiments that aim to separate the utility of vagueness (as defined by the existence of borderline cases) from the utility of other factors that tend to co-occur with vagueness. We argue that the evidence so far supports a view where the benefits that vague terms exert are due to other influences, rather than to vagueness itself. These factors include: low granularity; the use of evaluative words; the avoidance of overtly numerical words; the existence of comparison strategies; and, lastly and more tentatively, a phenomenon that we call range reduction. The paper concludes with a brief discussion of the implications for practical NLG.}
 
+
+
 \begin{document}
 \maketitle   
-
+\setcounter{secnumdepth}{3}
 \section{Introduction}\label{introduction}
 Vagueness pervades the language that we use on a daily basis, and the challenge of understanding vague language has been a prominent concern in many areas of logic and linguistics, involving both theoretical and applied work, including the area known as Natural Language Generation (NLG). 
 
@@ -57,7 +59,7 @@ Similar issues arise from the work of \citeA{peters2009bringing}. The authors ca
 
 It is, however, questionable whether the ``evaluative categories" manipulation in this study can be considered a manipulation of vagueness. Certainly, terms like \emph{Fair} admit the possibility of borderline cases. However, given that the boundaries between the categories were marked crisply, and that therefore the categories mapped crisply to numerical values, it becomes doubtful whether any borderline cases could be conceived to arise in fact. For example, \emph{Fair} was mapped to 60\% -- 70\% for the variable \emph{percentage of heart attack patients given recommended treatment (ACE inhibitor)}. Accordingly, rather than the vagueness of categories such as \emph{Poor}, Peters et al. emphasise the evaluative content inherent in these categories, and the affective potential of the evaluative content rather than the vagueness of the terms like {\em Fair}.
 
-\subsubsection{General Methodology}\label{method}
+\subsection{General Methodology}\label{method}
 The experiments reported in the present paper put the cost reduction hypothesis to the test. 
 The question that we are trying to answer is whether vague expressions are processed more easily by readers than crisp ones. 
 Like Lipman, we focus on situations where numerical information is used in order to identify a referent. 
@@ -371,7 +373,7 @@ The means are plotted in Figure \ref{resultse3}.
 \end{figure}
 
 % MG has not updated these stats yet at 26 Sept 2016
-(H1) There was no significant main effect of vagueness ($\beta =.003, se=.014, t=.202, p=.841$). 
+(H1) There was no significant main effect of vagueness ($\beta =.003$, $se=.014$, $t=.202$, $p=.841$). 
 The results showed that vagueness was beneficial for comparison but detrimental for matching. 
 (H2) There was a main effect of selection task, with the comparison task speeding responses compared to the matching task ($\beta=-.165, se=.027, t=-6.218, p<.001$). 
 (H3) Vagueness exerted effects in different directions for the comparison task and for the matching task. 
@@ -410,11 +412,11 @@ Table \ref{Instructions for e4} spells out how the instructions were constrained
 vagueness	&	instruction		&	selection							&	instruction: Choose a square with \ldots\\
 			&	format		&	task		&			\\
 \toprule
-\multirow{ 2}{*}{crisp} 	 	& \multirow{ 2}{*}{verbal} 	&	matching 		& the same number of dots as the target \\ 
-	& 	&	comparison										& fewer dots than the target \\
+\multirow{ 2}{*}{crisp} 	 	& \multirow{ 2}{*}{verbal} 	&	matching 		& \ldots the same number of dots as the target \\ 
+	& 	&	comparison										& \ldots fewer dots than the target \\
 	\midrule
-\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{verbal} 	&	matching 			& about the same number of dots as the target \\ 
-	& 	&	comparison										& far fewer dots than the target \\ 
+\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{verbal} 	&	matching 			& \ldots about the same number of dots as the target \\ 
+	& 	&	comparison										& \ldots far fewer dots than the target \\ 
 \bottomrule
 \end{tabular}
 \end{table}%
@@ -510,6 +512,7 @@ selection task 				& vagueness		& candidates	& effect of vageueness	\\
 What is one entitled to conclude? Given that we were able to identify a class of situations -- namely: situations in which a comparison strategy suffices to identify the intended referent -- in which vague expressions led to faster response times than crisp ones, would it be valid to conclude that we have finally discovered an advantage for vagueness that cannot be ascribed to some other factor? We believe the answer to this question is negative. To see why, consider Figures \ref{resultse3} and \ref{resultse4}. Both figures depict four conditions, depending on whether the expression was crisp or vague, and depending on whether the referent could be identified using a comparison strategy or not. Two of the resulting four conditions result in an expression that can denote either of two referents; the other two conditions result in an expression that can only denote one referent, with the other possible referent being a marginal candidate at best.
 
 % KvD Something missing here?
+\textcolor{red}{KvD Something missing here?}
 
 
 To see why vagueness thus has opposite effects, depending on whether it is used in matching or comparison situations, compare an instruction like `Choose a square with 6 dots' with its vague counterpart `Choose a square with about 10 dots': by adding the word `about', we broaden the range of squares that the expression might be referring to. On the other hand, compare `Choose a square with fewer than 20 dots' with its vague counterpart `Choose a square with far fewer than 20 dots': by adding the word `far', we did not broaden the range of squares denotable by the expression: we narrow it down, because only some of the squares that have fewer dots may have {\em far} fewer dots.
@@ -522,9 +525,6 @@ Our findings suggest that the observed benefits of vague expressions in certain 
 A comparison may clarify the logic of the situation. In recent years a number of studies, focussing on red wine, have suggested that alcohol, consumed in low doses, may have health benefits. An alternative explanation, however, asserts that it is not the alcohol in the wine that was beneficial, but antioxidants from grapes. If this alternative explanation is correct, then alcohol may not be healthy after all.\\[2ex]
 %
 {\bf Implications for practical NLG systems.} Our findings suggest a re-think of the questions on which much research on the utility of vagueness rests. The question of how a particular piece of quantitative information is best conveyed through language is an important one for practical NLG. Years of research on the logic of vagueness in natural language -- which has given rise to such logical techniques as Partial Logic (e.g, \cite{Fine}, Probabilistic Logic \cite{Edgington}, and Fuzzy Logic \cite{Zadeh} -- have primed the research community to expect that the utility of vagueness is an important part of the answer, but our findings call this expectation into question. Although our own studies in this article have focussed on vagueness in descriptive Noun Phrases, it seems plausible that vagueness plays a similar role in other linguistic constructs.
-
-\paragraph{Implications for practical NLG systems}
-Our findings suggest a re-think of the questions on which much research on the utility of vagueness rests. The question of how a particular piece of quantitative information is best conveyed through language is an important one for practical NLG. Years of research on the logic of vagueness in natural language -- which has given rise to such logical techniques as Partial Logic (e.g, \cite{Fine}, Probabilistic Logic \cite{Edgington}, and Fuzzy Logic \cite{Zadeh} -- have primed the research community to expect that the utility of vagueness is an important part of the answer, but our findings call this expectation into question. Although our own studies in this article have focussed on vagueness in descriptive Noun Phrases, it seems plausible that vagueness plays a similar role in other linguistic constructs.
 
 For example, consider air temperature, once again. Given a temperature measurement (or prediction) as input, an NLG system that addresses a non-expert audience might say that it was (or will be)
 %
@@ -548,8 +548,8 @@ If these hunches are correct then an {\em expert} may  to prefer expression (a),
 
 One way to see why vagueness (as defined in our Introduction) may not matter as much for NLG -- and for human communication -- as is often thought, is the following thought experiment. Suppose a group of speakers understand the word ``warm" as vague, agreeing that temperatures above 26 count as warm, and temperatures below 24 do not count as warm, but considering temperatures between 24 and 26 as borderline cases. Now one day these speakers agree to sharpen up their definition deciding that, henceforth, ``warm" means ``$>25$ degrees" (as in (c) above): this decision resolves the borderline cases, while everything else remains the same. It seems unlikely that this change in language use, from a vague meaning to a crisp one (i.e., one that has no borderline cases anymore), would lower the utility of the word. Our experimental findings are consistent with this idea.
 
-%\bibliography{bibliography}
 
+\setcounter{secnumdepth}{0}
 \bibliography{v-special-issue-2016}
 \end{document}
 
