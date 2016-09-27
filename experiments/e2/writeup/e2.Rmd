@@ -67,21 +67,22 @@ rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Condi
 dodge = position_dodge(width=0.2)
 rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness))
 rtplot=ggplot(rtdataplot1, aes(y=RT_log, x=Item, ymin=RT_log-ci, ymax=RT_log+ci,
-                group=Condition, shape=Condition, fill=Condition)) +
+                group=Condition, fill=Vagueness)) +
   geom_line(position=dodge) +
   geom_errorbar(width=.2, position=dodge) +
-  geom_point(size=3, position=dodge) +
-  scale_shape_manual("",values = c(22, 22, 21, 21)) +
-  scale_fill_manual("",values=c("black","white","black","white")) +
+  geom_point(pch=21, size=3, position=dodge) +
+  #scale_shape_manual("",values = c(22, 22)) +
+  scale_fill_manual("",values=c("black","white")) +
   ggtitle("Response time") +
   ylab("Respone time (log (ms))") + 
   xlab("") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        legend.key = element_blank(), aspect.ratio=1,
+        legend.key = element_blank(), legend.position="top",
+        aspect.ratio=1,
         axis.text.x = element_text(angle = 45, hjust = 1),
         plot.background=element_rect(fill=NA, color='white')) +
-  facet_grid(~Number) 
+  facet_grid(~Number)
 rtplot
 ```
 
@@ -92,12 +93,12 @@ blplot=ggplot(bldata) +
   geom_bar(aes(Vagueness, fill=response_category), position = 'dodge') +
   #geom_errorbar() +
   facet_wrap(nrow=1,~Number) +
-  scale_fill_grey(name="Response Type") +
+  scale_fill_grey(name="") +
   xlab(" ") +
   ggtitle("Response Type") +
   theme_bw() + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        legend.key = element_blank(), aspect.ratio=1,
+        legend.key = element_blank(), legend.position="top", aspect.ratio=1,
         plot.background=element_rect(fill=NA, color='white'))
 blplot
 ```
