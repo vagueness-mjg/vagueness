@@ -1,0 +1,91 @@
+```{r boxplotsubjectsanditems}
+dd = read.table("data.txt")
+# allow reference to transformation
+subdata = melt(dd,
+               measure.vars=c("RT_Rec", "RT_RecSqt", "RT_log", "RT_raw"),
+               variable.name="transformation",
+               value.name="value") 
+# boxplots for subjects and items separately for each dependent variable
+foo=ggplot(subdata) + 
+  facet_wrap(~ transformation, scales="free", ncol=4) +
+  geom_boxplot(aes(y=value, x=Item, col="Items")) + 
+  geom_boxplot(aes(y=value, x=Subject, col="Subjects")) + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), aspect.ratio=1, panel.grid=element_blank()) + 
+  scale_colour_manual("",values=c("Items"="red","Subjects"="blue")) +
+  xlab("") + ylab("")
+```
+
+```{r do_lmer}
+v5 <- lmer(data=dd, 
+           RT_RecSqt ~ 
+             c_Vag + Selection.sum + c_Qty + c_Ord + 
+             Selection.sum:c_Vag:c_Qty +
+             item_mean_ratio + 
+             s_Trl +
+             RTprev_RecSqt +
+             nchar_instr +
+             (1+c_Vag + Selection.sum + c_Qty + c_Ord|Subject)
+)
+```
+
+```{r summary_lmer}
+summary(v5)
+```
+
+```{r R2}
+cat("R^2")
+cor(fitted(v5), dd$RT_RecSqt)^2
+```
+
+```{r plotLMER}
+par(mfrow=c(2,5))
+plotLMER.fnc(v5)
+```
+
+Plot model coefficients and ci's
+
+```{r coeff}
+v5 <- lme4::lmer(data=dd, 
+RT_RecSqt ~ 
+c_Vag + Selection.sum + c_Qty + c_Ord + 
+Selection.sum:c_Vag:c_Qty +
+item_mean_ratio + 
+s_Trl +
+RTprev_RecSqt +
+nchar_instr +
+(1+c_Vag + Selection.sum + c_Qty + c_Ord|Subject)
+)
+par(las=2, mar=c(6,6,1,1))
+y=data.frame(coef=summary(v5)$coef[-1,1]) # estimates, without intercept
+q=confint(v5, method="Wald")[-c(1,2,3),]
+y=cbind(y,q[15:23,])
+plot(y[,1], ylim=range(y[,1],y[,2],y[,3]), xaxt="n", xlab="", ylab="estimate\n",  pch='-', cex=2)
+segments(x0=1:nrow(y), x1=1:nrow(y), y[,2], y[,3])
+abline(h=0)
+axis(1, labels = abbreviate(row.names(y), minlength=10), , at=1:nrow(y), las=2)
+grid()
+```
+
+Model criticism baayen plots
+
+```{r baayenplots, fig.width=9, fig.height=3}
+# Baayen 4-plot model criticism
+
+par(mfrow=c(1,4), pty='s')
+# create scaled residuals
+dd$rstand = as.vector(scale(resid(v5)))
+# plot scaled residuals density
+plot(density(dd$rstand))
+# plot sample quantiles versus theoretical quantiles
+qqnorm(dd$rstand, cex=.5)
+qqline(dd$rstand)
+# plot standardised residuals versus fitted values
+plot(dd$rstand ~ fitted(v5), pch='.')
+# absolute standardised residuals greater than 2.5 are candidates for being outliers, the abline identifies them on the plot
+abline(h=c(-2.5,2.5))
+# create dffits
+#dffits=abs(resid(v5, "dffits"))
+# plot dffits
+#plot(dffits, type='h')
+```
