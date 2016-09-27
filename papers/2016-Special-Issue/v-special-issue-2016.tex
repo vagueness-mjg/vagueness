@@ -287,8 +287,8 @@ Participants chose the borderline square on $16.6\%$ of trials overall.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.49\textwidth]{images/rtplote2.pdf}
-\includegraphics[trim = 0mm -30mm 0mm 0mm, clip, width=.49\textwidth]{images/blplote2.pdf}
+\includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=.49\textwidth]{images/e2rt.pdf}
+\includegraphics[trim = 0mm -23mm 0mm 0mm, clip, width=.49\textwidth]{images/e2bl.pdf}
 \caption{Experiment 2 results: mean response times by condition and item, and counts of borderline case responses by condition.}
 \label{resultse2}
 \end{figure}
@@ -331,22 +331,29 @@ Table \ref{Instructions for e3} shows the instructions for each condition.
 \caption{Experiment 3: Instructions arranged by condition for the dot triple $(6,15,24)$and instructions indicating the smaller numbers} %, and showing \emph{fewer} instead of \emph{more}}
 \label{Instructions for e3}
 \begin{tabular}{llll}
-vagueness	&	instruction		&	selection	&	instruction\\
-			&	format		&	task		&			\\
+instruction				&vagueness			&	selection		&	instruction							\\
+format				&					&	task			&									\\
 \toprule
-\multirow{ 2}{*}{crisp} 	& \multirow{ 2}{*}{numeric}	&	matching		& Choose a square with 6 dots \\ 
-					& 						&	comparison 	& Choose a square with fewer than 20 dots \\
-					\midrule
-\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{numeric} 	&	matching 		& Choose a square with about 10 dots \\ 
- 					& 						&	comparison 	& Choose a square with far fewer than 20 dots \\ 
+\multirow{4}{*}{numeric}	&\multirow{2}{*}{crisp} 	&	matching		& Choose a square with 6 dots 				\\ 
+					&					&	comparison 	& Choose a square with fewer than 20 dots 	\\
+					\cline{2-4}
+					&\multirow{2}{*}{vague} 	&	matching 		& Choose a square with about 10 dots 		\\ 
+ 					&					&	comparison 	& Choose a square with far fewer than 20 dots 	\\ 
 \bottomrule
 \end{tabular}
 \end{table}%
+%&	
+%
+%	instruction				&
+%	
+%	
+%	format				&
+%
 
 \subsection{Hypotheses}
 \begin{APAenumerate}
 	\item [(H1)] Vague instructions are easier for the reader than crisp alternatives (main effect of vagueness)
-	\item [(H2)] Comparison is easier for the reader than matching (main effect of selection task)
+\item [(H2)] Comparison is easier for the reader than matching (main effect of selection task)
 	\item [(H3)] Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness).
 \end{APAenumerate}
 
@@ -389,82 +396,65 @@ The cost reduction account was wrong to predict significant main effect advantag
 %                            E 4                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Experiment 4}
+\section{Experiment 4} % E 4
 
 \subsection{Introduction}
 This experiment investigated response times for instructions that did not use a number. 
 We manipulated vagueness and the selection task (comparison and matching). 
-In order to implement the experiment without mentioning numbers in the instructions, we changed the sequence of each trial to include a 'target' (i.e., a dot array of a particular cardinality) before the instruction, so that we could then refer back to the target's cardinality in the instruction using expressions like \emph{the same number of dots as the target}; \emph{fewer dots than the target}.
-% MG WHAT WERE THE VALUES OF THE TARGETS?
-\textcolor{red}{MG insert the values of the targets}
+In order to implement the experiment without mentioning numbers in the instructions, we changed the sequence of each trial to include a `target' (i.e., a dot array of a particular cardinality) before the instruction, so that we could then refer back to the target's cardinality in the instruction using expressions like \emph{the same number of dots as the target}; \emph{fewer dots than the target}.
+%
 This presentation of a target before the main body of the trial shares some features with \citeA[Experiment 2]{Izard20081221}, although in that experiment participants were told the cardinality of the target (called an \emph{inducer} in that paper) whereas in our experiment we did not tell participants the cardinality of the prime array.
 An item was thus a combination of a target dot array, an instruction that did not contain a number, and a set of dot arrays taking their cardinalities from the same triples used in Experiment 2.
-Table \ref{Instructions for e4} spells out how the instructions were constrained not to mention a numeral.  
+Table \ref{Instructions for e4} spells out how the instructions were constrained not to mention a numeral and gives examples of targets.
 
-\begin{table}[htbp]
-\centering
-\caption{Experiment 4: Instructions}
-\label{Instructions for e4}
-\begin{tabular}{llll}
-vagueness	&	instruction		&	selection							&	instruction: Choose a square with \ldots\\
-			&	format		&	task		&			\\
+\begin{table}[htp]
+\caption{Instructions and targets by condition for experiment 4}
+\begin{center}
+\begin{tabular}{llcrl}
+Item					&Selection				&Vagueness	&Target	&Choose a square with\ldots						\\
 \toprule
-\multirow{ 2}{*}{crisp} 	 	& \multirow{ 2}{*}{verbal} 	&	matching 		& \ldots the same number of dots as the target \\ 
-	& 	&	comparison										& \ldots fewer dots than the target \\
-	\midrule
-\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{verbal} 	&	matching 			& \ldots about the same number of dots as the target \\ 
-	& 	&	comparison										& \ldots far fewer dots than the target \\ 
-\bottomrule
+\multirow{4}{*}{06:15:24} 	&\multirow{2}{*}{Comparison} 	&Crisp		&20		&\ldots fewer dots than the target					\\
+\cline{3-5}
+					&						&Vague		&20		&\ldots far fewer dots than the target					\\
+					\cline{2-5}
+					&\multirow{2}{*}{Matching}		& Crisp		&6		&\ldots the same number of dots as the target			\\
+					\cline{3-5}
+					& 		 				&Vague		&10 		&\ldots about the same number of dots as the target		\\
+					\bottomrule
 \end{tabular}
+\end{center}
+\label{Instructions for e4}
 \end{table}%
 	
-\subsection{Hypotheses}
-%The instruction format account predicts no differences between the conditions, since all conditions used verbal quantifiers.
-%
-%The selection task account predicts a main effect of selection task such that the comparison conditions would attract faster responses than the matching conditions.
-%
-%The cost reduction account predicts that there will be a main effect of vagueness such that the vague instruction conditions attract faster responses than the crisp instruction conditions and particularly that at each level of selection task the vague condition should attract faster responses than the crisp condition.
+\subsection{Hypotheses}% E 4
+\begin{APAenumerate}
+	\item [(H1)] Vague instructions are easier for the reader than crisp alternatives (main effect of vagueness)
+	\item [(H2)] Comparison is easier for the reader than matching (main effect of selection)
+	\item [(H3)] Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness, and focussed comparisons at each level of selection).
+\end{APAenumerate}
 
-(H1) Vague instructions are easier for the reader than crisp alternatives (main effect of vagueness)
-
-(H2) Comparison is easier for the reader than matching (main effect of selection)
-
-(H3) Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness).
-
-%\subsection{Method}
-
-
-%40 participants were recruited. % via internal messaging at University of Aberdeen, with self-reported fluency in English. They were paid ten pounds for participating. 
-%The apparatus was the same as Experiment 1.
-%The design was a 2 x 2 factorial manipulation of vagueness and selection task.
-%Each stimulus was a sequence of prime, instruction, and squares.
-%The procedure for this experiment was different from the others, to accommodate the requirement not to use numbers in the instruction. 
-%We had to have a different way to indicate a cardinality in the instruction, which we did by adding a visual `target', a square that contained the number of dots that we wanted to refer to.
-
-\subsection{Results}
+\subsection{Results}% E 4
 40 volunteers participated.
 The results showed that vagueness was beneficial for comparison but detrimental for matching (the same as Experiment 3) even when no numbers were allowed in the instructions. 
 Figure \ref{resultse4} shows the means by condition. 
 
-% MG has not updated these stats yet at 26 Sept 2016
-(H1) There was no main effect of vagueness ($\beta=.01, se=.01, t=1.51, p=.14$). 
-
-(H2) There was a main effect of selection, with comparison task instructions leading to faster responses than the matching task instructions ($\beta=-.18, se=.02, t=-10.38, p<.01$). This effect was in the same direction as Experiment 3. 
-
-(H3) Vagueness did exert different effects depending on the selection task ($\beta=.12, se=.03, t=4.32, p<.05$). 
-Separate analyses were conducted for the comparison task and for the matching task. In the comparison task, vagueness resulted in faster response times ($\beta=-0.08, se=.02, t=4.30, p<.05$). 
-In the matching task vagueness slowed response times ($\beta=.05, se=.01, t=3.72, p<.05$). These results are in the same direction as Experiment 3.
+\begin{APAenumerate}
+	\item [(H1)] There was no significant main effect of vagueness ($\beta=-0.02$, $se=0.01$, $t=-1.5$, $p=0.1296$). % MG added the values for these stats on 27 Sept 2016
+	\item [(H2)] There was a main effect of selection, with comparison task instructions leading to faster responses than the matching task instructions ($\beta=0.18$, $se=0.02$, $t=10.4$, $p<0.0001$). % MG added the values for these stats on 27 Sept 2016
+	This effect was in the same direction as Experiment 3. 
+	\item[(H3)] Vagueness did exert different effects depending on the selection task (main interaction effect of vagueness by selection $\beta=0.12$, $se=0.02$, $t=5.1$, $p<0.0001$). % MG added the values for these stats on 27 Sept 2016
+Separate analyses of the effect of vagueness were conducted for the comparison task and for the matching task using Bonferroni-adjusted significance thresholds. 
+In the comparison task, vagueness resulted in faster response times ($\beta=-0.08$, $se=0.02$, $t=-4.3$, $p<0.0001$). % MG added the values for these stats on 27 Sept 2016
+In the matching task vagueness slowed response times ($\beta=0.05$, $se=0.01$, $t=3.7$, $p=0.0004$). % MG added the values for these stats on 27 Sept 2016
+These results are in the same direction as Experiment 3.
+\end{APAenumerate}
 
 The cost reduction account was wrong to predict main effect advantages for vagueness, and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was advantageous in the comparison task.
 
-% KvD: deleted:
-%The instruction format account wrongly predicts no differences between the conditions. 
-%The selection task account correctly predicted the main effect of selection task, but has no coverage of the interaction of selection task with vagueness. 
-
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.75\textwidth]{images/response-time-two-panels-1-e4.pdf}
-\caption{Results for Experiment 4}
+\includegraphics[trim = 0mm 30mm 0mm 10mm, clip, width=.75\textwidth]{images/rtplote4.pdf}
+\caption{Mean response times by condition for Experiment 4}
 \label{resultse4}
 \end{figure}
 
@@ -497,9 +487,11 @@ The benefits of vagueness in the \emph{comparison} task in experiments 3 and 4 c
 selection task 				& vagueness		& candidates	& effect of vageueness	\\
 \toprule
 \multirow{ 2}{*}{comparison} 	& crisp 			& 2			& \multirow{ 2}{*}{vagueness advantage}  		\\
+\cline{2-3}
   						& vague			& 1			&                                               				\\
 \midrule
 \multirow{ 2}{*}{matching} 		& crisp 			& 1 			&\multirow{ 2}{*}{vagueness disadvantage}	\\
+\cline{2-3}
  						& vague			& 2			&								 	\\
 \bottomrule
 \end{tabular}
@@ -771,3 +763,21 @@ One way to see why vagueness (as defined in our Introduction) may not matter as 
 %The \emph{instruction format} and \emph{vagueness} variables were sum-coded and \emph{Item} was centred.
 %The fixed effects in the model were \emph{instruction format} and \emph{vagueness} and their interaction, and \emph{item}.
 %The random effects in the model were \emph{participant}, and slopes over \emph{participant} for \emph{instruction format}, \emph{vagueness}, and their interaction. 
+
+
+\begin{table}[htbp]
+\centering
+\caption{Experiment 4: Instructions and targets}
+\label{Instructions for e4}
+\begin{tabular}{llll}
+vagueness	&	instruction		&	selection							&	instruction: Choose a square with \ldots\\
+			&	format		&	task		&			\\
+\toprule
+\multirow{ 2}{*}{crisp} 	 	& \multirow{ 2}{*}{verbal} 	&	matching 		& \ldots the same number of dots as the target \\ 
+	& 	&	comparison										& \ldots fewer dots than the target \\
+	\midrule
+\multirow{ 2}{*}{vague} 	& \multirow{ 2}{*}{verbal} 	&	matching 			& \ldots about the same number of dots as the target \\ 
+	& 	&	comparison										& \ldots far fewer dots than the target \\ 
+\bottomrule
+\end{tabular}
+\end{table}%
