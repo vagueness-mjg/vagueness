@@ -302,5 +302,6 @@ dd$RTprev_sqd       <- dd$RTprev^2
 
 # save dd as data.Rda
 # This data set non-impossible trials and renamed/recomputed variables
-write.table(dd, file="../data.txt")
+dd2 <- subset(dd, select=c(Subject, Trial, Item, c_Itm, Vagueness, c_Vag, Selection, c_Sel, Instruction, Order, Quantity, RT, RT_log, switchResponse))
+write.table(dd2, file="../data.txt")
 ```
