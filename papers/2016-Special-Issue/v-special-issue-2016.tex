@@ -344,49 +344,46 @@ vagueness	&	instruction		&	selection	&	instruction\\
 \end{table}%
 
 \subsection{Hypotheses}
-(H1) Vague instructions are easier for the reader than crisp alternatives (main effect of vagueness)
+\begin{APAenumerate}
+	\item [(H1)] Vague instructions are easier for the reader than crisp alternatives (main effect of vagueness)
+	\item [(H2)] Comparison is easier for the reader than matching (main effect of selection task)
+	\item [(H3)] Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness).
+\end{APAenumerate}
 
-(H2) Comparison is easier for the reader than matching (main effect of selection task)
-
-(H3) Effects of vagueness are different depending on whether selection is matching or comparison (interaction effect selection x vagueness).
-
-%The instruction format account predicts no differences between the conditions, since all conditions used numeric quantifiers.
-%
-%The cost reduction account predicts that there will be a main effect of vagueness such that the vague instruction conditions attract faster responses than the crisp instruction conditions and particularly that at each level of selection task the vague condition should attract faster responses than the crisp condition.
-
-\subsection{Method}
+\subsection{Method} % E 3
 
 38 participants were recruited. 
 The design was a 2 x 2 factorial manipulation of vagueness and selection task (see Table \ref{Instructions for e3}).
 On each trial a referring expression instruction was presented: participants pressed a key to dismiss the instruction, when the dot arrays were presented until the participant responded, and the response time and choice were recorded.
 
-\subsection{Results}
-A linear mixed effects regression model was built for log response times. 
-The structure of the model was as follows: fixed effects were vagueness, selection task (both sum coded) and centred item and their interactions: random effects were vagueness, selection task, and item (but not their interactions - the model failed to converge when these interactions were included). 
-The means are plotted in Figure \ref{resultse3}.
+\subsection{Results} % E 3
+RTs were trimmed at 2.5 sd separately for each subject, leading to the loss of 204 trials (2.8\% of the trials).
+Condition means for the remaining (logged) RTs are plotted in Figure \ref{resultse3}.
+A linear mixed model was constructed for the logged response times, 
+with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant for random effects.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.75\textwidth]{images/response-time-two-panels-1.pdf}
-\caption{Results for Experiment 3}
+\includegraphics[trim = 0mm 30mm 0mm 10mm, clip, width=.75\textwidth]{images/rtplote3}
+\caption{Mean response times by condition for Experiment 3 where all instructions were numeric}
 \label{resultse3}
 \end{figure}
 
-% MG has not updated these stats yet at 26 Sept 2016
-(H1) There was no significant main effect of vagueness ($\beta =.003$, $se=.014$, $t=.202$, $p=.841$). 
-The results showed that vagueness was beneficial for comparison but detrimental for matching. 
-(H2) There was a main effect of selection task, with the comparison task speeding responses compared to the matching task ($\beta=-.165, se=.027, t=-6.218, p<.001$). 
-(H3) Vagueness exerted effects in different directions for the comparison task and for the matching task. 
-Separate analyses were conducted at each level of the selection task to see whether within each task type there were significant effects of vagueness. 
-There were: in the comparison task vagueness significantly speeded response times compared with crisp controls ($\beta=-.07, se=.02, t=3.52, p<.01$). 
-In the matching task vagueness significantly slowed response times compared with crisp controls ($\beta=-.07, se=.02, t=-2.89, p<.05$).
+% E3
+\begin{APAenumerate}
+	\item [(H1)] Vague instructions were non-significantly easier for the reader than crisp instructions when vagueness was considered as a main effect ($\beta=-0.01$, $se=0.01$, $t=-0.4$, $p=0.7158$). % MG added the values for these stats on 26 Sept 2016
+	\item [(H2)] There was a statistically significant main effect of selection task, with the comparison task speeding responses compared to the matching task ($\beta=0.16$, $se=0.03$, $t=6.2$, $p<0.0001$). % MG added the values for these stats on 26 Sept 2016
+	\item [(H3)] Vagueness exerted effects in different directions for the comparison task and for the matching task: there was a significant interaction between vagueness and selection task ($\beta=0.13$, $se=0.03$, $t=4.2$, $p<0.0001$). % MG added the values for these stats on 26 Sept 2016
+%				
+Separate analyses were conducted testing for effects of vagueness at each level of the selection task, using Bonferroni significance thresholds to correct for multiple comparisons. 
+Within the comparison task vagueness significantly speeded response times compared with crisp controls ($\beta=-0.07$, $se=0.02$, $t=-3.5$, $p<0.0012$). % MG added the values for these stats on 26 Sept 2016
+Within the matching task vagueness significantly \emph{slowed} response times compared with crisp controls ($\beta=0.06$, $se=0.02$, $t=2.9$, $p<0.0061$). % MG added the values for these stats on 26 Sept 2016
+\end{APAenumerate}
 
-% KvD: deleted the following:
-%None of the accounts set out in the Hypotheses section emerge well from the results. 
-%The instruction format account wrongly predicts no differences between the conditions. 
-%The selection task correctly predicted the main effect of selection task, but has no coverage of the interaction with vagueness. 
+% MG edited this 27 Sept 2016:
+%The cost reduction account was wrong to predict main effect advantages for vagueness, and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was advantageous in the comparison task.
+The cost reduction account was wrong to predict significant main effect advantages for vagueness (although there was a non-significant trend in the \emph{direction} predicted by the cost reduction account), and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was significantly advantageous in the comparison task.
 
-The cost reduction account was wrong to predict main effect advantages for vagueness, and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was advantageous in the comparison task.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %                            E 4                                     %
@@ -557,163 +554,170 @@ One way to see why vagueness (as defined in our Introduction) may not matter as 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\clearpage
-\appendix
+\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}
 
-\begin{sidewaystable}
-\centering
-\caption{All Instructions}
-\label{All Instructions}
-\begin{tabular}{lp{5cm}llllp{2cm}l}
-\midrule
-Experiment&Example instruction&vagueness&quantifier type&symmetry&selection&number of valid targets&definiteness\\
-\midrule
-1&Choose the square with 5 dots&crisp&numeric&symmetric&matching&1&definite\\
-1&Choose the square with few dots&vague&linguistic&asymmetric&comparison&1&definite\\
-\midrule
-2&Choose the square with 6 dots&crisp&numeric&symmetric&matching&1&definite\\
-2&Choose a square with about 10 dots&vague&numeric&symmetric&matching&2&indefinite\\
-2&Choose the square with the fewest dots&crisp&linguistic&asymmetric&comparison&1&definite\\
-2&Choose a square with few dots&vague&linguistic&asymmetric&comparison&2&indefinite\\
-\midrule
-3&Choose a square with 6 dots&crisp&numeric&symmetric&matching&1&indefinite\\
-3&Choose a square with fewer than 20 dots&crisp&numeric&asymmetric&comparison&2&indefinite\\
-3&Choose a square with about 10 dots&vague&numeric&symmetric&matching&2&indefinite\\
-3&Choose a square with far fewer than 20 dots&vague&numeric&asymmetric&comparison&1&indefinite\\
-\midrule
-4&Choose a square with the same number of dots as the target&crisp&linguistic&symmetric&matching&1&indefinite\\
-4&Choose a square with fewer dots than the target&crisp&linguistic&asymmetric&comparison&2&indefinite\\
-4&Choose a square with about the same number of dots as the target&vague&linguistic&symmetric&matching&2&indefinite\\
-4&Choose a square with far fewer dots than the target&vague&linguistic&asymmetric&comparison&1&indefinite\\
-\midrule
-\end{tabular}
-\end{sidewaystable}
+\begin{APAenumerate}
+	\item 
+	\item 
+\end{APAenumerate}
 
-\clearpage
-
-\begin{table}[htbp]
-\caption{Table of instructions for the pair (5,25). Experiment 1}
-\label{instructionse1}
-\begin{tabular}{rl}
-\toprule
-vagueness&example\\
-\midrule
-crisp 	& 	Choose the square with 5 dots \\
-vague	&	Choose the square with few dots\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[tbp]
-\fitfigure{images/stimuluse1}
-\caption{An example stimulus from Experiment 1. First the referring expression was presented (left panel). Then after a keypress, and a fixation cross (not pictured) the squares and dots were presented without repetition of the referring expression (right panel)}
-\label{stimuluse1}
-\end{figure}
-
-\begin{figure}[htbp]
-\fitfigure{images/resultse1.pdf}
-\caption{Experiment 1 results. }
-\label{resultse1}
-\end{figure}
-
-\begin{table}[htbp]
-\caption{Table of instructions arranged by condition for the triple (6,15,24). Experiment 2}
-\label{instructionse2}
-\begin{tabular}{rlll}
-\toprule
-vagueness&instruction format&selection task&example\\
-\midrule
-vague	&	numeric 	& matching	&	Choose a square with about 10 dots\\
-vague	&	verbal	& comparison	&	Choose a square with few dots\\
-crisp 	& 	numeric	& matching	&	Choose the square with 6 dots \\
-crisp		&	verbal	& comparison	&	Choose the square with the fewest dots\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=.4\textwidth]{images/stimuluse2}
-\caption{An example stimulus from Experiment 2}
-\label{stimuluse2}
-\end{figure}
-
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.65\textwidth]{images/response-time-sep-1.pdf}
-\caption{Response time results for Experiment 2}
-\label{resultse2}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[]{images/histbd4-ggplot-version-1.pdf}
-\caption{Expt 2: Distribution of Nearest match, borderline case, and furthest match responses}
-\label{borderline-response-distribution-e2}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.5\textwidth]{images/response-time-two-panels-1.pdf}
-\caption{Results for Experiment 3}
-\label{resultse3}
-\end{figure}
-
-\begin{table}[htbp]
-\centering
-\caption{Experiment 3: Instructions, assuming $6,15,24$ dots as the Item, and showing \emph{fewer} instead of \emph{more}}
-\label{Instructions for e3}
-\begin{tabular}{llll}
-\hline
-vagueness&instruction format&selection task&instruction\\
-\hline
-crisp & numeric&matching & Choose a square with 6 dots \\ 
-crisp & numeric&comparison & Choose a square with fewer than 20 dots \\
-vague & numeric&matching & Choose a square with about 10 dots \\ 
-vague & numeric&comparison & Choose a square with far fewer than 20 dots \\ 
-\hline
-\end{tabular}
-\end{table}%
-
-
-\begin{table*}[htbp]
-\centering
-\caption{Experiment 4: Instructions}
-\label{Instructions for e4}
-\begin{tabular}{lllp{7cm}}
-\hline
-vagueness&instruction format& selection task&instruction\\
-\hline
-crisp & verbal&matching & Choose a square with the same number of dots as the target \\ 
-crisp & verbal&comparison& Choose a square with fewer dots than the target \\
-vague & verbal&matching & Choose a square with about the same number of dots as the target \\ 
-vague & verbal&comparison& Choose a square with far fewer dots than the target \\ 
-\hline
-\end{tabular}
-\end{table*}%
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.5\textwidth]{images/response-time-two-panels-1-e4.pdf}
-\caption{Results for Experiment 4}
-\label{resultse4}
-\end{figure}
-crisp  numeric matching  Choose a square with 6 dots 
-
-crisp  numeric comparison  Choose a square with fewer than 20 dots 
-
-vague  numeric matching  Choose a square with about 10 dots 
-
-vague  numeric comparison  Choose a square with far fewer than 20 dots 
-
-crisp  verbal matching  Choose a square with the same number of dots as the target 
-
-crisp  verbal comparison Choose a square with fewer dots than the target 
-
-vague  verbal matching  Choose a square with about the same number of dots as the target 
-
-vague  verbal comparison Choose a square with far fewer dots than the target 
+%\clearpage
+%\appendix
+%
+%\begin{sidewaystable}
+%\centering
+%\caption{All Instructions}
+%\label{All Instructions}
+%\begin{tabular}{lp{5cm}llllp{2cm}l}
+%\midrule
+%Experiment&Example instruction&vagueness&quantifier type&symmetry&selection&number of valid targets&definiteness\\
+%\midrule
+%1&Choose the square with 5 dots&crisp&numeric&symmetric&matching&1&definite\\
+%1&Choose the square with few dots&vague&linguistic&asymmetric&comparison&1&definite\\
+%\midrule
+%2&Choose the square with 6 dots&crisp&numeric&symmetric&matching&1&definite\\
+%2&Choose a square with about 10 dots&vague&numeric&symmetric&matching&2&indefinite\\
+%2&Choose the square with the fewest dots&crisp&linguistic&asymmetric&comparison&1&definite\\
+%2&Choose a square with few dots&vague&linguistic&asymmetric&comparison&2&indefinite\\
+%\midrule
+%3&Choose a square with 6 dots&crisp&numeric&symmetric&matching&1&indefinite\\
+%3&Choose a square with fewer than 20 dots&crisp&numeric&asymmetric&comparison&2&indefinite\\
+%3&Choose a square with about 10 dots&vague&numeric&symmetric&matching&2&indefinite\\
+%3&Choose a square with far fewer than 20 dots&vague&numeric&asymmetric&comparison&1&indefinite\\
+%\midrule
+%4&Choose a square with the same number of dots as the target&crisp&linguistic&symmetric&matching&1&indefinite\\
+%4&Choose a square with fewer dots than the target&crisp&linguistic&asymmetric&comparison&2&indefinite\\
+%4&Choose a square with about the same number of dots as the target&vague&linguistic&symmetric&matching&2&indefinite\\
+%4&Choose a square with far fewer dots than the target&vague&linguistic&asymmetric&comparison&1&indefinite\\
+%\midrule
+%\end{tabular}
+%\end{sidewaystable}
+%
+%\clearpage
+%
+%\begin{table}[htbp]
+%\caption{Table of instructions for the pair (5,25). Experiment 1}
+%\label{instructionse1}
+%\begin{tabular}{rl}
+%\toprule
+%vagueness&example\\
+%\midrule
+%crisp 	& 	Choose the square with 5 dots \\
+%vague	&	Choose the square with few dots\\
+%\bottomrule
+%\end{tabular}
+%\end{table}
+%
+%\begin{figure}[tbp]
+%\fitfigure{images/stimuluse1}
+%\caption{An example stimulus from Experiment 1. First the referring expression was presented (left panel). Then after a keypress, and a fixation cross (not pictured) the squares and dots were presented without repetition of the referring expression (right panel)}
+%\label{stimuluse1}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\fitfigure{images/resultse1.pdf}
+%\caption{Experiment 1 results. }
+%\label{resultse1}
+%\end{figure}
+%
+%\begin{table}[htbp]
+%\caption{Table of instructions arranged by condition for the triple (6,15,24). Experiment 2}
+%\label{instructionse2}
+%\begin{tabular}{rlll}
+%\toprule
+%vagueness&instruction format&selection task&example\\
+%\midrule
+%vague	&	numeric 	& matching	&	Choose a square with about 10 dots\\
+%vague	&	verbal	& comparison	&	Choose a square with few dots\\
+%crisp 	& 	numeric	& matching	&	Choose the square with 6 dots \\
+%crisp		&	verbal	& comparison	&	Choose the square with the fewest dots\\
+%\bottomrule
+%\end{tabular}
+%\end{table}
+%
+%\begin{figure}[tbp]
+%\centering
+%\includegraphics[width=.4\textwidth]{images/stimuluse2}
+%\caption{An example stimulus from Experiment 2}
+%\label{stimuluse2}
+%\end{figure}
+%
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=.65\textwidth]{images/response-time-sep-1.pdf}
+%\caption{Response time results for Experiment 2}
+%\label{resultse2}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[]{images/histbd4-ggplot-version-1.pdf}
+%\caption{Expt 2: Distribution of Nearest match, borderline case, and furthest match responses}
+%\label{borderline-response-distribution-e2}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=.5\textwidth]{images/response-time-two-panels-1.pdf}
+%\caption{Results for Experiment 3}
+%\label{resultse3}
+%\end{figure}
+%
+%\begin{table}[htbp]
+%\centering
+%\caption{Experiment 3: Instructions, assuming $6,15,24$ dots as the Item, and showing \emph{fewer} instead of \emph{more}}
+%\label{Instructions for e3}
+%\begin{tabular}{llll}
+%\hline
+%vagueness&instruction format&selection task&instruction\\
+%\hline
+%crisp & numeric&matching & Choose a square with 6 dots \\ 
+%crisp & numeric&comparison & Choose a square with fewer than 20 dots \\
+%vague & numeric&matching & Choose a square with about 10 dots \\ 
+%vague & numeric&comparison & Choose a square with far fewer than 20 dots \\ 
+%\hline
+%\end{tabular}
+%\end{table}%
+%
+%
+%\begin{table*}[htbp]
+%\centering
+%\caption{Experiment 4: Instructions}
+%\label{Instructions for e4}
+%\begin{tabular}{lllp{7cm}}
+%\hline
+%vagueness&instruction format& selection task&instruction\\
+%\hline
+%crisp & verbal&matching & Choose a square with the same number of dots as the target \\ 
+%crisp & verbal&comparison& Choose a square with fewer dots than the target \\
+%vague & verbal&matching & Choose a square with about the same number of dots as the target \\ 
+%vague & verbal&comparison& Choose a square with far fewer dots than the target \\ 
+%\hline
+%\end{tabular}
+%\end{table*}%
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=.5\textwidth]{images/response-time-two-panels-1-e4.pdf}
+%\caption{Results for Experiment 4}
+%\label{resultse4}
+%\end{figure}
+%crisp  numeric matching  Choose a square with 6 dots 
+%
+%crisp  numeric comparison  Choose a square with fewer than 20 dots 
+%
+%vague  numeric matching  Choose a square with about 10 dots 
+%
+%vague  numeric comparison  Choose a square with far fewer than 20 dots 
+%
+%crisp  verbal matching  Choose a square with the same number of dots as the target 
+%
+%crisp  verbal comparison Choose a square with fewer dots than the target 
+%
+%vague  verbal matching  Choose a square with about the same number of dots as the target 
+%
+%vague  verbal comparison Choose a square with far fewer dots than the target 
 
 
 
@@ -735,10 +739,6 @@ vague  verbal comparison Choose a square with far fewer dots than the target
 %In the crisp conditions RTs started out much slower than in the vague conditions, at the smallest numerical distance, but the two conditions converged to very fast times at the largest numerical distance. 
 
 
-\begin{APAenumerate}
-	\item 
-	\item 
-\end{APAenumerate}
 %
 %\emph{Vagueness} was sum coded: \emph{vague} $= -.5$, \emph{crisp} $= .5$; \emph{numerical distance} was Helmert coded, i.e., the variable is ordered and each level is compared against the mean of all the previous levels to that point. % MG a reviewer said he was not familiar with Helmert contrasts
 %Level one of this contrast is numerical distance 5 compared with numerical distance 10; level two is the mean of numerical distance 5 and numerical distance 10 versus numerical distance 15; and level three is the mean of numerical distances 5, 10 and 15 versus numerical distance 20. 
@@ -766,12 +766,6 @@ vague  verbal comparison Choose a square with far fewer dots than the target
 % Edgington 1996. Dorothy Edgington. Vagueness by Degrees. In Keefe and Smith 1997.
 % Zadeh 1965. Lotfi Zadeh. Fuzzy Sets. {\em Information and Control} 8 (3) 1965, 338-353.
 % Ioannis Konstas and Mirella Lapata. 2013. A global model for concept-to-text generation. J. Artif. Intell. Res. (JAIR), 48:305Ð346. 
-
-
-
-
-\textcolor{red}{$\beta=??$, $se=??$, $t=??$, $p<??$}
-$\beta=??$, $se=??$, $t=??$, $p<??$
 
 
 %The \emph{instruction format} and \emph{vagueness} variables were sum-coded and \emph{Item} was centred.
