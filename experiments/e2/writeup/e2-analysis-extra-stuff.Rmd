@@ -91,9 +91,11 @@ box(which='plot', col='grey')
 ```
 
 ```{r e2-rtplot, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE, dev='pdf'}
+dd$RT_log=log(dd$RT)
 rtdata=dd
 source('summarySEwithin2.R')
-rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Condition", "Vagueness", "Number", "Item"), idvar="Subject")
+rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", 
+                                withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
 rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness))
 rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, group=Condition, fill=Vagueness)) +
   geom_line() +
