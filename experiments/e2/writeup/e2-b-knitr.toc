@@ -19,6 +19,3 @@
 \contentsline {section}{\numberline {6}Borderline responses}{27}{section.6}
 \contentsline {section}{\numberline {A}Functions listing}{28}{appendix.A}
 \contentsline {subsection}{\numberline {A.1}Gather Data}{29}{subsection.A.1}
-\contentsline {subsection}{\numberline {A.2}Classify Response}{30}{subsection.A.2}
-\contentsline {subsection}{\numberline {A.3}Processing}{33}{subsection.A.3}
-\contentsline {subsection}{\numberline {A.4}Post-processing}{35}{subsection.A.4}

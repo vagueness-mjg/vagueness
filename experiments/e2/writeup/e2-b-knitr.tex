@@ -21,6 +21,7 @@
 \newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
 \newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
 \newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
 
 \usepackage{framed}
 \makeatletter
@@ -67,35 +68,23 @@
 
 
 
-
-
-
-
-
-
-
-
-
-\clearpage
 \section{Get the data}
 
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# if the file data_processed.Rda already exists then load it, else do data wrangling}
-\hlkwa{if} \hlstd{(}\hlkwd{file.exists}\hlstd{(}\hlstr{"data_processed.Rda"}\hlstd{)) \{}
-    \hlkwd{load}\hlstd{(}\hlstr{"data_processed.Rda"}\hlstd{)}
-\hlstd{\}} \hlkwa{else} \hlstd{\{}
-    \hlcom{# declare local variables}
-    \hlstd{number_of_valid_subjects} \hlkwb{<-} \hlnum{30}  \hlcom{# = 30}
-    \hlstd{number_of_rows} \hlkwb{<-} \hlnum{7680}  \hlcom{# 7680}
-    \hlstd{number_of_trials_per_subject} \hlkwb{<-} \hlstd{number_of_rows}\hlopt{/}\hlstd{number_of_valid_subjects}  \hlcom{# = 256}
-    \hlcom{# call functions}
-    \hlstd{dat} \hlkwb{<-} \hlkwd{gatherData}\hlstd{(number_of_valid_subjects)}  \hlcom{# = 30}
-    \hlstd{dat} \hlkwb{<-} \hlkwd{classifyResponses}\hlstd{(dat)}  \hlcom{# classify the response as expected, near, or far}
-    \hlstd{dat} \hlkwb{<-} \hlkwd{processData}\hlstd{(dat)}  \hlcom{# remove impossible trials and re-do previous rt measures}
-    \hlstd{dd} \hlkwb{<-} \hlkwd{postProcessData}\hlstd{(dat)}
-\hlstd{\}}  \hlcom{# end else do data wrangling}
+\hlkwd{source}\hlstd{(}\hlstr{"e2-preprocessing.R"}\hlstd{)}
+\hlkwa{if} \hlstd{(}\hlopt{!}\hlkwd{file.exists}\hlstd{(}\hlstr{"e2-b-data.txt"}\hlstd{)) \{}
+    \hlstd{dat} \hlkwb{<-} \hlkwd{gatherData}\hlstd{()}
+    \hlstd{dat} \hlkwb{<-} \hlkwd{declareImpossibleRT}\hlstd{(dat)}
+    \hlstd{dat} \hlkwb{<-} \hlkwd{removeImpossibleTrials}\hlstd{(dat)}
+    \hlstd{dat} \hlkwb{<-} \hlkwd{subset}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(Subject, Trial, Item, discriminability, Instruction, nchar_instr, Vagueness,}
+        \hlstd{Number, Order, Quantity, c_Vag, c_Num, c_Ord, c_Qty, NaType, response_category, isBorderline,}
+        \hlstd{RT))}
+    \hlkwd{write.table}\hlstd{(dat,} \hlkwc{file} \hlstd{=} \hlstr{"e2-b-data.txt"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{quote} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{\}}
+\hlstd{dat} \hlkwb{<-} \hlkwd{read.delim}\hlstd{(}\hlstr{"e2-b-data.txt"}\hlstd{)}
+\hlstd{dd} \hlkwb{<-} \hlkwd{read.delim}\hlstd{(}\hlstr{"e2-b-data.txt"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -108,16 +97,11 @@
 \hlkwd{names}\hlstd{(dd)}
 \end{alltt}
 \begin{verbatim}
- [1] "id"                "Subject"           "Trial"             "Condition"        
- [5] "Order"             "Quantity"          "Vagueness"         "Number"           
- [9] "Item"              "discriminability"  "c_Trl"             "s_Trl"            
-[13] "c_Itm"             "c_Vag"             "c_Num"             "f_Cnd"            
-[17] "c_Ord"             "c_Qty"             "RT"                "RT_log"           
-[21] "RT_raw"            "RTprev"            "RTprev_log"        "RTprev_raw"       
-[25] "Exp_Num"           "Bline_Num"         "Extr_Num"          "Exp_side"         
-[29] "Bline_side"        "Extr_side"         "response_num"      "response_side"    
-[33] "response_category" "Left"              "Mid"               "Right"            
-[37] "Instruction"       "nchar_instr"      
+ [1] "Subject"           "Trial"             "Item"              "discriminability" 
+ [5] "Instruction"       "nchar_instr"       "Vagueness"         "Number"           
+ [9] "Order"             "Quantity"          "c_Vag"             "c_Num"            
+[13] "c_Ord"             "c_Qty"             "NaType"            "response_category"
+[17] "isBorderline"      "RT"               
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -130,34 +114,27 @@
 \hlkwd{head}\hlstd{(dd)}
 \end{alltt}
 \begin{verbatim}
-        id Subject Trial Condition Order Quantity Vagueness  Number     Item discriminability
-1 s01:t001     s01     1         2  RtoL    Small     Crisp Numeric 06:15:24        0.4875000
-2 s01:t002     s01     2         1  LtoR    Large     Vague Numeric 16:25:34        0.3123529
-3 s01:t003     s01     3         4  LtoR    Small     Crisp  Verbal 26:35:44        0.2308442
-4 s01:t004     s01     4         1  RtoL    Large     Vague Numeric 36:45:54        0.1833333
-5 s01:t005     s01     5         1  RtoL    Small     Vague Numeric 06:15:24        0.4875000
-6 s01:t006     s01     6         3  LtoR    Large     Vague  Verbal 16:25:34        0.3123529
-   c_Trl     s_Trl c_Itm c_Vag c_Num f_Cnd c_Ord c_Qty   RT   RT_log RT_raw RTprev RTprev_log
-1 -127.5 -1.725186 -0.75  -0.5  -0.5 Cr:Nm   0.5  -0.5 1517 7.324490   1517   1517   7.324490
-2 -126.5 -1.711655 -0.25   0.5  -0.5 Vg:Nm  -0.5   0.5 1920 7.560080   1920   1517   7.324490
-3 -125.5 -1.698124  0.25  -0.5   0.5 Cr:Vb  -0.5  -0.5 2346 7.760467   2346   1920   7.560080
-4 -124.5 -1.684593  0.75   0.5  -0.5 Vg:Nm   0.5   0.5 1773 7.480428   1773   2346   7.760467
-5 -123.5 -1.671062 -0.75   0.5  -0.5 Vg:Nm   0.5  -0.5 2556 7.846199   2556   1773   7.480428
-6 -122.5 -1.657531 -0.25   0.5   0.5 Vg:Vb  -0.5   0.5 2043 7.622175   2043   2556   7.846199
-  RTprev_raw Exp_Num Bline_Num Extr_Num Exp_side Bline_side Extr_side response_num response_side
-1       1517       6        15       24    right        mid      left            6         right
-2       1517      34        25       16    right        mid      left           25           mid
-3       1920      26        35       44     left        mid     right           26          left
-4       2346      54        45       36     left        mid     right           45           mid
-5       1773       6        15       24    right        mid      left            6         right
-6       2556      34        25       16    right        mid      left           34         right
-  response_category Left Mid Right                            Instruction nchar_instr
-1          expected   24  15     6          Choose the square with 6 dots          29
-2        borderline   16  25    34     Choose a square with about 30 dots          34
-3          expected   26  35    44 Choose the square with the fewest dots          38
-4        borderline   54  45    36     Choose a square with about 50 dots          34
-5          expected   24  15     6     Choose a square with about 10 dots          34
-6          expected   16  25    34         Choose a square with many dots          30
+  Subject Trial     Item discriminability                            Instruction nchar_instr
+1     s01     1 06:15:24        0.4875000          Choose the square with 6 dots          29
+2     s01     2 16:25:34        0.3123529     Choose a square with about 30 dots          34
+3     s01     3 26:35:44        0.2308442 Choose the square with the fewest dots          38
+4     s01     4 36:45:54        0.1833333     Choose a square with about 50 dots          34
+5     s01     5 06:15:24        0.4875000     Choose a square with about 10 dots          34
+6     s01     6 16:25:34        0.3123529         Choose a square with many dots          30
+  Vagueness  Number Order Quantity c_Vag c_Num c_Ord c_Qty      NaType response_category
+1     Crisp Numeric  RtoL    Small  -0.5  -0.5   0.5  -0.5 valid_trial          expected
+2     Vague Numeric  LtoR    Large   0.5  -0.5  -0.5   0.5 valid_trial        borderline
+3     Crisp  Verbal  LtoR    Small  -0.5   0.5  -0.5  -0.5 valid_trial          expected
+4     Vague Numeric  RtoL    Large   0.5  -0.5   0.5   0.5 valid_trial        borderline
+5     Vague Numeric  RtoL    Small   0.5  -0.5   0.5  -0.5 valid_trial          expected
+6     Vague  Verbal  LtoR    Large   0.5   0.5  -0.5   0.5 valid_trial          expected
+  isBorderline   RT
+1        FALSE 1517
+2         TRUE 1920
+3        FALSE 2346
+4         TRUE 1773
+5        FALSE 2556
+6        FALSE 2043
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -170,70 +147,38 @@
 \hlkwd{summary}\hlstd{(dd)}
 \end{alltt}
 \begin{verbatim}
-        id          Subject         Trial         Condition    Order       Quantity    Vagueness   
- s01:t001:   1   s01    : 256   Min.   :  1.0   Min.   :1.0   LtoR:3838   Small:3840   Crisp:3840  
- s01:t002:   1   s02    : 256   1st Qu.: 65.0   1st Qu.:2.0   RtoL:3839   Large:3837   Vague:3837  
- s01:t003:   1   s03    : 256   Median :129.0   Median :3.0                                        
- s01:t004:   1   s04    : 256   Mean   :128.5   Mean   :2.5                                        
- s01:t005:   1   s05    : 256   3rd Qu.:193.0   3rd Qu.:4.0                                        
- s01:t006:   1   s06    : 256   Max.   :256.0   Max.   :4.0                                        
- (Other) :7671   (Other):6141                                                                      
-     Number           Item      discriminability     c_Trl                s_Trl           
- Numeric:3838   06:15:24:1919   Min.   :0.1833   Min.   :-127.50000   Min.   :-1.7251858  
- Verbal :3839   16:25:34:1919   1st Qu.:0.2308   1st Qu.: -63.50000   1st Qu.:-0.8592102  
-                26:35:44:1920   Median :0.2308   Median :   0.50000   Median : 0.0067654  
-                36:45:54:1919   Mean   :0.3035   Mean   :   0.02377   Mean   : 0.0003217  
-                                3rd Qu.:0.3124   3rd Qu.:  64.50000   3rd Qu.: 0.8727411  
-                                Max.   :0.4875   Max.   : 127.50000   Max.   : 1.7251858  
-                                                                                          
-     c_Itm               c_Vag                c_Num             f_Cnd          c_Ord          
- Min.   :-7.50e-01   Min.   :-0.5000000   Min.   :-5.00e-01   Vg:Nm:1918   Min.   :-5.00e-01  
- 1st Qu.:-2.50e-01   1st Qu.:-0.5000000   1st Qu.:-5.00e-01   Cr:Nm:1920   1st Qu.:-5.00e-01  
- Median : 2.50e-01   Median :-0.5000000   Median : 5.00e-01   Vg:Vb:1919   Median : 5.00e-01  
- Mean   : 3.26e-05   Mean   :-0.0001954   Mean   : 6.51e-05   Cr:Vb:1920   Mean   : 6.51e-05  
- 3rd Qu.: 2.50e-01   3rd Qu.: 0.5000000   3rd Qu.: 5.00e-01                3rd Qu.: 5.00e-01  
- Max.   : 7.50e-01   Max.   : 0.5000000   Max.   : 5.00e-01                Max.   : 5.00e-01  
-                                                                                              
-     c_Qty                  RT            RT_log           RT_raw          RTprev     
- Min.   :-0.5000000   Min.   :  445   Min.   : 6.098   Min.   :  445   Min.   :  445  
- 1st Qu.:-0.5000000   1st Qu.: 1240   1st Qu.: 7.123   1st Qu.: 1240   1st Qu.: 1240  
- Median :-0.5000000   Median : 1727   Median : 7.454   Median : 1727   Median : 1727  
- Mean   :-0.0001954   Mean   : 2840   Mean   : 7.595   Mean   : 2840   Mean   : 2835  
- 3rd Qu.: 0.5000000   3rd Qu.: 2699   3rd Qu.: 7.901   3rd Qu.: 2699   3rd Qu.: 2697  
- Max.   : 0.5000000   Max.   :42685   Max.   :10.662   Max.   :42685   Max.   :42685  
+    Subject         Trial             Item      discriminability
+ s01    : 256   Min.   :  1.0   06:15:24:1919   Min.   :0.1833  
+ s02    : 256   1st Qu.: 65.0   16:25:34:1919   1st Qu.:0.2308  
+ s03    : 256   Median :129.0   26:35:44:1920   Median :0.2308  
+ s04    : 256   Mean   :128.5   36:45:54:1919   Mean   :0.3035  
+ s05    : 256   3rd Qu.:193.0                   3rd Qu.:0.3124  
+ s06    : 256   Max.   :256.0                   Max.   :0.4875  
+ (Other):6141                                                   
+                                 Instruction    nchar_instr    Vagueness        Number    
+ Choose a square with few dots         : 960   Min.   :29.00   Crisp:3840   Numeric:3838  
+ Choose the square with the fewest dots: 960   1st Qu.:30.00   Vague:3837   Verbal :3839  
+ Choose the square with the most dots  : 960   Median :30.00                              
+ Choose a square with many dots        : 959   Mean   :32.59                              
+ Choose a square with about 30 dots    : 480   3rd Qu.:36.00                              
+ Choose a square with about 40 dots    : 480   Max.   :38.00                              
+ (Other)                               :2878                                              
+  Order       Quantity        c_Vag                c_Num               c_Ord          
+ LtoR:3838   Large:3837   Min.   :-0.5000000   Min.   :-5.00e-01   Min.   :-5.00e-01  
+ RtoL:3839   Small:3840   1st Qu.:-0.5000000   1st Qu.:-5.00e-01   1st Qu.:-5.00e-01  
+                          Median :-0.5000000   Median : 5.00e-01   Median : 5.00e-01  
+                          Mean   :-0.0001954   Mean   : 6.51e-05   Mean   : 6.51e-05  
+                          3rd Qu.: 0.5000000   3rd Qu.: 5.00e-01   3rd Qu.: 5.00e-01  
+                          Max.   : 0.5000000   Max.   : 5.00e-01   Max.   : 5.00e-01  
                                                                                       
-   RTprev_log       RTprev_raw       Exp_Num     Bline_Num     Extr_Num    Exp_side        
- Min.   : 6.098   Min.   :  445   Min.   : 6   Min.   :15   Min.   : 6   Length:7677       
- 1st Qu.: 7.123   1st Qu.: 1240   1st Qu.:16   1st Qu.:25   1st Qu.:24   Class :character  
- Median : 7.454   Median : 1727   Median :26   Median :35   Median :34   Mode  :character  
- Mean   : 7.594   Mean   : 2835   Mean   :30   Mean   :30   Mean   :30                     
- 3rd Qu.: 7.900   3rd Qu.: 2697   3rd Qu.:36   3rd Qu.:35   3rd Qu.:44                     
- Max.   :10.662   Max.   :42685   Max.   :54   Max.   :45   Max.   :54                     
+     c_Qty                    NaType      response_category isBorderline          RT       
+ Min.   :-0.5000000   valid_trial:7677   borderline:1274    Mode :logical   Min.   :  445  
+ 1st Qu.:-0.5000000                      expected  :6108    FALSE:6403      1st Qu.: 1240  
+ Median :-0.5000000                      extreme   : 295    TRUE :1274      Median : 1727  
+ Mean   :-0.0001954                                         NA's :0         Mean   : 2840  
+ 3rd Qu.: 0.5000000                                                         3rd Qu.: 2699  
+ Max.   : 0.5000000                                                         Max.   :42685  
                                                                                            
-  Bline_side         Extr_side          response_num   response_side  response_category
- Length:7677        Length:7677        Min.   : 6.00   left :3215    borderline:1274   
- Class :character   Class :character   1st Qu.:24.00   mid  :1274    expected  :6108   
- Mode  :character   Mode  :character   Median :34.00   right:3188    extreme   : 295   
-                                       Mean   :30.87                                   
-                                       3rd Qu.:44.00                                   
-                                       Max.   :54.00                                   
-                                                                                       
-      Left         Mid         Right                                    Instruction  
- Min.   : 6   Min.   :15   Min.   : 6   Choose a square with few dots         : 960  
- 1st Qu.:24   1st Qu.:25   1st Qu.:24   Choose the square with the fewest dots: 960  
- Median :34   Median :35   Median :26   Choose the square with the most dots  : 960  
- Mean   :30   Mean   :30   Mean   :30   Choose a square with many dots        : 959  
- 3rd Qu.:44   3rd Qu.:35   3rd Qu.:36   Choose a square with about 30 dots    : 480  
- Max.   :54   Max.   :45   Max.   :54   Choose a square with about 40 dots    : 480  
-                                        (Other)                               :2878  
-  nchar_instr   
- Min.   :29.00  
- 1st Qu.:30.00  
- Median :30.00  
- Mean   :32.59  
- 3rd Qu.:36.00  
- Max.   :38.00  
-                
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -246,45 +191,25 @@
 \hlkwd{str}\hlstd{(dd)}
 \end{alltt}
 \begin{verbatim}
-'data.frame':	7677 obs. of  38 variables:
- $ id               : Factor w/ 7680 levels "s01:t001","s01:t002",..: 1 2 3 4 5 6 7 8 9 10 ...
+'data.frame':	7677 obs. of  18 variables:
  $ Subject          : Factor w/ 30 levels "s01","s02","s03",..: 1 1 1 1 1 1 1 1 1 1 ...
  $ Trial            : int  1 2 3 4 5 6 7 8 9 10 ...
- $ Condition        : int  2 1 4 1 1 3 3 4 4 2 ...
- $ Order            : Factor w/ 2 levels "LtoR","RtoL": 2 1 1 2 2 1 2 2 1 2 ...
- $ Quantity         : Factor w/ 2 levels "Small","Large": 1 2 1 2 1 2 1 1 2 2 ...
- $ Vagueness        : Factor w/ 2 levels "Crisp","Vague": 1 2 1 2 2 2 2 1 1 1 ...
- $ Number           : Factor w/ 2 levels "Numeric","Verbal": 1 1 2 1 1 2 2 2 2 1 ...
  $ Item             : Factor w/ 4 levels "06:15:24","16:25:34",..: 1 2 3 4 1 2 3 4 1 2 ...
  $ discriminability : num  0.487 0.312 0.231 0.183 0.487 ...
- $ c_Trl            : num  -128 -126 -126 -124 -124 ...
- $ s_Trl            : num  -1.73 -1.71 -1.7 -1.68 -1.67 ...
- $ c_Itm            : num  -0.75 -0.25 0.25 0.75 -0.75 -0.25 0.25 0.75 -0.75 -0.25 ...
- $ c_Vag            : num  -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 -0.5 -0.5 -0.5 ...
- $ c_Num            : num  -0.5 -0.5 0.5 -0.5 -0.5 0.5 0.5 0.5 0.5 -0.5 ...
- $ f_Cnd            : Factor w/ 4 levels "Vg:Nm","Cr:Nm",..: 2 1 4 1 1 3 3 4 4 2 ...
- $ c_Ord            : num  0.5 -0.5 -0.5 0.5 0.5 -0.5 0.5 0.5 -0.5 0.5 ...
- $ c_Qty            : num  -0.5 0.5 -0.5 0.5 -0.5 0.5 -0.5 -0.5 0.5 0.5 ...
- $ RT               : int  1517 1920 2346 1773 2556 2043 2384 3078 1760 2218 ...
- $ RT_log           : num  7.32 7.56 7.76 7.48 7.85 ...
- $ RT_raw           : int  1517 1920 2346 1773 2556 2043 2384 3078 1760 2218 ...
- $ RTprev           : int  1517 1517 1920 2346 1773 2556 2043 2384 3078 1760 ...
- $ RTprev_log       : num  7.32 7.32 7.56 7.76 7.48 ...
- $ RTprev_raw       : int  1517 1517 1920 2346 1773 2556 2043 2384 3078 1760 ...
- $ Exp_Num          : num  6 34 26 54 6 34 26 36 24 34 ...
- $ Bline_Num        : num  15 25 35 45 15 25 35 45 15 25 ...
- $ Extr_Num         : num  24 16 44 36 24 16 44 54 6 16 ...
- $ Exp_side         : chr  "right" "right" "left" "left" ...
- $ Bline_side       : chr  "mid" "mid" "mid" "mid" ...
- $ Extr_side        : chr  "left" "left" "right" "right" ...
- $ response_num     : int  6 25 26 45 6 34 26 36 24 25 ...
- $ response_side    : Factor w/ 3 levels "left","mid","right": 3 2 1 2 3 3 3 3 3 2 ...
- $ response_category: Factor w/ 3 levels "borderline","expected",..: 2 1 2 1 2 2 2 2 2 1 ...
- $ Left             : int  24 16 26 54 24 16 44 54 6 34 ...
- $ Mid              : int  15 25 35 45 15 25 35 45 15 25 ...
- $ Right            : int  6 34 44 36 6 34 26 36 24 16 ...
  $ Instruction      : Factor w/ 17 levels "Choose a square with about 10 dots",..: 15 3 16 5 1 7 6 16 17 11 ...
  $ nchar_instr      : int  29 34 38 34 34 30 29 38 36 30 ...
+ $ Vagueness        : Factor w/ 2 levels "Crisp","Vague": 1 2 1 2 2 2 2 1 1 1 ...
+ $ Number           : Factor w/ 2 levels "Numeric","Verbal": 1 1 2 1 1 2 2 2 2 1 ...
+ $ Order            : Factor w/ 2 levels "LtoR","RtoL": 2 1 1 2 2 1 2 2 1 2 ...
+ $ Quantity         : Factor w/ 2 levels "Large","Small": 2 1 2 1 2 1 2 2 1 1 ...
+ $ c_Vag            : num  -0.5 0.5 -0.5 0.5 0.5 0.5 0.5 -0.5 -0.5 -0.5 ...
+ $ c_Num            : num  -0.5 -0.5 0.5 -0.5 -0.5 0.5 0.5 0.5 0.5 -0.5 ...
+ $ c_Ord            : num  0.5 -0.5 -0.5 0.5 0.5 -0.5 0.5 0.5 -0.5 0.5 ...
+ $ c_Qty            : num  -0.5 0.5 -0.5 0.5 -0.5 0.5 -0.5 -0.5 0.5 0.5 ...
+ $ NaType           : Factor w/ 1 level "valid_trial": 1 1 1 1 1 1 1 1 1 1 ...
+ $ response_category: Factor w/ 3 levels "borderline","expected",..: 2 1 2 1 2 2 2 2 2 1 ...
+ $ isBorderline     : logi  FALSE TRUE FALSE TRUE FALSE FALSE ...
+ $ RT               : int  1517 1920 2346 1773 2556 2043 2384 3078 1760 2218 ...
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -310,19 +235,24 @@
 \clearpage
 \subsection{Consider using log RT}
 
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `*tmp*`[[j]]: subscript out of bounds}}
+
+{\ttfamily\noindent\color{warningcolor}{Warning in mean.default(dat\_transforms[dat\_transforms\$dfSubset == k \& dat\_transforms\$RTtype == : argument is not numeric or logical: returning NA}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[<-.data.frame`(`*tmp*`, dat\_transforms\$dfSubset == k \& dat\_transforms\$RTtype == : replacement has length zero}}\end{kframe}
+\end{knitrout}
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotDistFreqPolys-1} 
-
-}
-
-\caption[Compare distributions of the various transformations of RT against random samples from normal distributions with the same mean and sd to see which transformations best approximate normal distributions]{Compare distributions of the various transformations of RT against random samples from normal distributions with the same mean and sd to see which transformations best approximate normal distributions}\label{fig:plotDistFreqPolys}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error: measure variables not found in data: RT\_log, RT\_raw}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(temp, aes(time, colour = RTtype)): object 'temp' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -330,16 +260,16 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotBoxPlots-1} 
-
-}
-
-\caption[Show how transformations of RT affect distribution of times, and how they affect which times are outliers]{Show how transformations of RT affect distribution of times, and how they affect which times are outliers.}\label{fig:plotBoxPlots}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\color{warningcolor}{Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file 'data\_processed.Rda', probable reason 'No such file or directory'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error: measure variables not found in data: RT\_log, RT\_raw}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(subdata): object 'subdata' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -347,48 +277,63 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotFastSlowRTs-1} 
-
-}
-
-\caption[Show how mean times for individual subjects and items vary with respect to the grand mean Log RT]{Show how mean times for individual subjects and items vary with respect to the grand mean Log RT.}\label{fig:plotFastSlowRTs}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\color{warningcolor}{Warning in mean.default(dd\$RT\_log): argument is not numeric or logical: returning NA}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in mean(RT\_log): object 'RT\_log' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in subs\$level = 1:30: object 'subs' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in factor(subs\$effect, levels = c("{}subject"{}, "{}discriminability"{})): object 'subs' not found}}
+
+{\ttfamily\noindent\color{warningcolor}{Warning in mean.default(dd\$RT\_log): argument is not numeric or logical: returning NA}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in mean(RT\_log): object 'RT\_log' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in factor(itms\$effect, levels = c("{}subject"{}, "{}discriminability"{})): object 'itms' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rbind(subs, itms): object 'subs' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in factor(si\$effect, levels = c("{}subject"{}, "{}discriminability"{})): object 'si' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in unique(si\$emean): object 'si' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(substitute(groups), data, environment(x)): object 'si' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in inherits(obj1, "{}trellis"{}): object 'my1' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
 \subsection{Plot main effects in both transformations}
 
 
-
-  
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotMainEffectsRaw-1} 
-
-}
-
-\caption[Plot main effects in raw RT]{Plot main effects in raw RT}\label{fig:plotMainEffectsRaw}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error: measure variables not found in data: RT\_raw}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in reshape2::melt(tempraw, id.vars = c("{}transformation"{}, "{}score"{}), : object 'tempraw' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error: measure variables not found in data: RT\_log}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in reshape2::melt(templog, id.vars = c("{}transformation"{}, "{}score"{}), : object 'templog' not found}}\end{kframe}
 \end{knitrout}
   
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[htbp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotMainEffectsLog-1} 
-
-}
-
-\caption[Plot main effects in log RT]{Plot main effects in log RT}\label{fig:plotMainEffectsLog}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(tempraw2, aes(y = score, x = level, group = 1, col = effect)): object 'tempraw2' not found}}\end{kframe}
+\end{knitrout}
+  
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(templog2, aes(y = score, x = level, group = 1, col = effect)): object 'templog2' not found}}\end{kframe}
 \end{knitrout}
   
 \clearpage
@@ -396,16 +341,36 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-mainD-1} 
-
-}
-
-\caption[Main effects in log RT over discriminability]{Main effects in log RT over discriminability}\label{fig:mainD}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(nrts)[5] <- "{}Levels"{}: object 'nrts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(orts)[5] <- "{}Levels"{}: object 'orts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(qrts)[5] <- "{}Levels"{}: object 'qrts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(vrts)[5] <- "{}Levels"{}: object 'vrts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rbind(nrts, orts, qrts, vrts): object 'nrts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(data = rts, aes(x = discriminability, y = RT\_log, group = Levels)): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'p1' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -413,16 +378,84 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-22way-1} 
-
-}
-
-\caption[2-way interactions over discriminability]{2-way interactions over discriminability}\label{fig:22way}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts1)[2] <- "{}F1"{}: object 'rts1' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts1)[3] <- "{}F2"{}: object 'rts1' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts1\$E1 <- "{}Vagueness"{}: object 'rts1' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts1\$E2 <- "{}Number"{}: object 'rts1' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts2)[2] <- "{}F1"{}: object 'rts2' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts2)[3] <- "{}F2"{}: object 'rts2' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts2\$E1 <- "{}Vagueness"{}: object 'rts2' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts2\$E2 <- "{}Quantity"{}: object 'rts2' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts3)[2] <- "{}F1"{}: object 'rts3' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts3)[3] <- "{}F2"{}: object 'rts3' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts3\$E1 <- "{}Vagueness"{}: object 'rts3' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts3\$E2 <- "{}Order"{}: object 'rts3' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts4)[2] <- "{}F1"{}: object 'rts4' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts4)[3] <- "{}F2"{}: object 'rts4' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts4\$E1 <- "{}Quantity"{}: object 'rts4' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts4\$E2 <- "{}Number"{}: object 'rts4' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts5)[2] <- "{}F1"{}: object 'rts5' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts5)[3] <- "{}F2"{}: object 'rts5' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts5\$E1 <- "{}Order"{}: object 'rts5' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts5\$E2 <- "{}Number"{}: object 'rts5' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts6)[2] <- "{}F1"{}: object 'rts6' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in names(rts6)[3] <- "{}F2"{}: object 'rts6' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts6\$E1 <- "{}Quantity"{}: object 'rts6' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rts6\$E2 <- "{}Order"{}: object 'rts6' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in rbind(rts1, rts2, rts3, rts4, rts5, rts6): object 'rts1' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in paste(rts\$F1, rts\$F2): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in factor(rts\$E1, levels = c("{}Number"{}, "{}Order"{}, "{}Quantity"{}, "{}Vagueness"{})): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in factor(rts\$E2, levels = c("{}Number"{}, "{}Order"{}, "{}Quantity"{}, "{}Vagueness"{})): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = discriminability, group = F3, : object 'rts' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -430,16 +463,14 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotInt1-1} 
-
-}
-
-\caption[vagueness by number interaction over items]{vagueness by number interaction over items}\label{fig:plotInt1}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in paste(rts\$Number, rts\$Vagueness, sep = "{} "{}): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = Item, ymin = RT\_log - ci, ymax = RT\_log + : object 'rts' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -447,16 +478,16 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plotInt2-1} 
-
-}
-
-\caption[vagueness by number interaction over discriminability]{vagueness by number interaction over discriminability}\label{fig:plotInt2}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in paste(rts\$Number, rts\$Vagueness, sep = "{} "{}): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = discriminability, ymin = RT\_log - : object 'rts' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -464,16 +495,42 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-plot3way-1} 
-
-}
-
-\caption[3-Way interactions]{3-Way interactions}\label{fig:plot3way}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = Number, group = Vagueness, ymin = mins, : object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = Number, group = Vagueness, ymin = mins, : object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = Number, group = Quantity, ymin = mins, : object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = Vagueness, group = Quantity, : object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in arrangeGrob(...): object 'p1' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -481,16 +538,16 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-vnitems-1} 
-
-}
-
-\caption[Vagueness by number by quantity over discriminability]{Vagueness by number by quantity over discriminability}\label{fig:vnitems}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in paste(rts\$Number, rts\$Vagueness, sep = "{} "{}): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = discriminability, ymin = RT\_log - : object 'rts' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -498,16 +555,14 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-4way-1} 
-
-}
-
-\caption[4-Way interaction]{4-Way interaction}\label{fig:4way}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in paste(rts\$Number, rts\$Vagueness, sep = "{} "{}): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = Vagueness, ymin = RT\_log - ci, : object 'rts' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -515,16 +570,16 @@
 
 
 \begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[hbtp]
-
-{\centering \includegraphics[width=\maxwidth]{figure/graphics-4waysplit-1} 
-
-}
-
-\caption[4-Way interaction split over discriminability]{4-Way interaction split over discriminability}\label{fig:4waysplit}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in `[.data.frame`(xx, , col): undefined columns selected}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in paste(rts\$Number, rts\$Vagueness, sep = "{} "{}): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'rts' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in ggplot(rts, aes(y = RT\_log, x = discriminability, ymin = RT\_log - : object 'rts' not found}}\end{kframe}
 \end{knitrout}
 
 \clearpage
@@ -535,7 +590,11 @@
 \begin{alltt}
 \hlkwd{load}\hlstd{(}\hlstr{"data_processed.Rda"}\hlstd{)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file 'data\_processed.Rda', probable reason 'No such file or directory'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection}}\end{kframe}
 \end{knitrout}
 
 \begin{knitrout}\scriptsize
@@ -611,7 +670,7 @@ c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
 \clearpage
 
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Sat Aug 13 09:11:20 2016
+% Sat Oct  1 13:19:27 2016
 \begin{table}[htbp]
 \centering
 \begingroup\small
@@ -640,9 +699,10 @@ c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
 R^2
-[1] 0.533722
 \end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{Error in cor(fitted(v5), dd\$RT\_log): supply both 'x' and 'y' or a matrix-like 'x'}}\end{kframe}
 \end{knitrout}
 
 %\clearpage 
@@ -787,7 +847,7 @@ c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
 
 \clearpage
 \section{Lmer model: after outlier removal}
-
+not done yet.
 \clearpage
 \section{Borderline responses}
 
@@ -803,7 +863,7 @@ c_Vg:c_N:_Q  0.073 -0.033  0.005 -0.003  0.000 -0.002 -0.001 -0.002 -0.138
 \end{knitrout}
 
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Sat Aug 13 09:11:21 2016
+% Sat Oct  1 13:19:28 2016
 \begin{table}[htbp]
 \centering
 \begingroup\small
@@ -827,335 +887,29 @@ expected & 3332 & 2776 \\
 \clearpage
 \subsection{Gather Data}
 
-
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{gatherData} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{number_of_valid_subjects}\hlstd{) \{}
-    \hlstd{data_dir} \hlkwb{<-} \hlstr{"../experimentCode/output/"}
-    \hlstd{column.headers.df} \hlkwb{<-} \hlkwd{head}\hlstd{(}\hlkwd{read.table}\hlstd{(}\hlkwd{paste}\hlstd{(data_dir,} \hlstr{"subject01.data"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{),} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{),}
-        \hlnum{0}\hlstd{)}
-    \hlstd{gathered.data} \hlkwb{<-} \hlstd{column.headers.df}
-    \hlkwa{for} \hlstd{(subject} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{number_of_valid_subjects) \{}
-        \hlstd{current.filename} \hlkwb{<-} \hlkwd{paste}\hlstd{(data_dir,} \hlstr{"subject"}\hlstd{,} \hlkwd{sprintf}\hlstd{(}\hlstr{"%02d"}\hlstd{, subject),} \hlstr{".data"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{)}
-        \hlstd{current.data} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlkwc{file} \hlstd{= current.filename,} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{stringsAsFactors} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-        \hlstd{gathered.data} \hlkwb{<-} \hlkwd{rbind}\hlstd{(gathered.data, current.data)}
-    \hlstd{\}}
-    \hlkwd{message}\hlstd{(}\hlstr{"Returning gathered data"}\hlstd{)}
-    \hlkwd{return}\hlstd{(gathered.data)}
-\hlstd{\}}  \hlcom{# end of gatherData function}
+\hlkwd{source}\hlstd{(}\hlstr{"e2-preprocessing.R"}\hlstd{,} \hlkwc{echo} \hlstd{= T)}
 \end{alltt}
-\end{kframe}
-\end{knitrout}
+\begin{verbatim}
 
-\clearpage
-\subsection{Classify Response}
+> gatherData = function() {
++     number_of_valid_subjects = 30
++     number_of_trials_per_subject = 256
++     message("Starting to gather data")
++    .... [TRUNCATED] 
 
+> declareImpossibleRT = function(dat) {
++     message("Starting to declare impossible RTs")
++     dat$NaType = "valid_trial"
++     dat$NaType[dat$RT_o .... [TRUNCATED] 
 
-\begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{classifyResponses} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{dat}\hlstd{) \{}
-    \hlcom{# what were they expected to respond?}
-    \hlstd{dat}\hlopt{$}\hlstd{crossed} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"Con"}\hlstd{, dat}\hlopt{$}\hlstd{Condition,} \hlstr{":Quan"}\hlstd{, dat}\hlopt{$}\hlstd{Quantity,} \hlstr{":Item"}\hlstd{, dat}\hlopt{$}\hlstd{Item,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{))}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con1:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con2:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con3:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan1:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item1"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{24}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item1"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{15}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item1"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{6}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item2"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{34}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item2"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{25}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item2"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{16}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item3"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{44}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item3"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{35}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item3"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{26}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item4"}\hlstd{,} \hlstr{"Exp_Num"}\hlstd{]} \hlkwb{<-} \hlnum{54}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item4"}\hlstd{,} \hlstr{"Bline_Num"}\hlstd{]} \hlkwb{<-} \hlnum{45}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{crossed} \hlopt{==} \hlstr{"Con4:Quan2:Item4"}\hlstd{,} \hlstr{"Extr_Num"}\hlstd{]} \hlkwb{<-} \hlnum{36}
-    \hlstd{dat}\hlopt{$}\hlstd{crossed} \hlkwb{<-} \hlkwa{NULL}
-    \hlcom{# what side LEFT, MIDDLE, RIGHT corresponds with Expected, Borderline, Extreme?}
-    \hlkwa{for} \hlstd{(row} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(dat)) \{}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Exp_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Exp_side"}\hlstd{]} \hlkwb{<-} \hlstr{"left"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Exp_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Exp_side"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Exp_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Exp_side"}\hlstd{]} \hlkwb{<-} \hlstr{"right"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Bline_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Bline_side"}\hlstd{]} \hlkwb{<-} \hlstr{"left"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Bline_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Bline_side"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Bline_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Bline_side"}\hlstd{]} \hlkwb{<-} \hlstr{"right"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Extr_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Extr_side"}\hlstd{]} \hlkwb{<-} \hlstr{"left"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Extr_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Extr_side"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"Extr_Num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"Extr_side"}\hlstd{]} \hlkwb{<-} \hlstr{"right"}
-        \hlstd{\}}
-    \hlstd{\}}
-    \hlcom{# what button press did the subject actually make? LEFT, MIDDLE, RIGHT, NOANSWER?}
-    \hlstd{dat}\hlopt{$}\hlstd{RESPONSE} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{RESPONSE)}
-    \hlcom{# what number of dots corresponds with the subject's button press?}
-    \hlkwa{for} \hlstd{(row} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(dat)) \{}
-        \hlkwd{switch}\hlstd{(}\hlkwd{as.character}\hlstd{(dat[row,} \hlstr{"RESPONSE"}\hlstd{]),} \hlkwc{LEFT} \hlstd{= \{}
-            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlstd{dat[row,} \hlstr{"Left"}\hlstd{]}
-        \hlstd{\},} \hlkwc{MIDDLE} \hlstd{= \{}
-            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlstd{dat[row,} \hlstr{"Mid"}\hlstd{]}
-        \hlstd{\},} \hlkwc{RIGHT} \hlstd{= \{}
-            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlstd{dat[row,} \hlstr{"Right"}\hlstd{]}
-        \hlstd{\},} \hlkwc{NOANSWER} \hlstd{= \{}
-            \hlstd{dat[row,} \hlstr{"response_num"}\hlstd{]} \hlkwb{<-} \hlnum{NA}
-        \hlstd{\})}
-    \hlstd{\}}
-    \hlcom{# what side was the subject's button-press? Left, mid right?}
-    \hlstd{dat}\hlopt{$}\hlstd{response_side} \hlkwb{<-} \hlkwd{tolower}\hlstd{(dat}\hlopt{$}\hlstd{RESPONSE)}
-    \hlstd{dat}\hlopt{$}\hlstd{response_side[dat}\hlopt{$}\hlstd{response_side} \hlopt{==} \hlstr{"middle"}\hlstd{]} \hlkwb{<-} \hlstr{"mid"}
-    \hlstd{dat}\hlopt{$}\hlstd{response_side} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{response_side,} \hlkwc{exclude} \hlstd{=} \hlstr{"noanswer"}\hlstd{)}
-    \hlcom{# what category was the subject's response? Expected, Borderline, Extreme}
-    \hlstd{dat}\hlopt{$}\hlstd{response_category} \hlkwb{<-} \hlstr{"nocat"}
-    \hlkwa{for} \hlstd{(row} \hlkwa{in} \hlkwd{row.names}\hlstd{(}\hlkwd{na.omit}\hlstd{(dat))) \{}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"response_num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Exp_Num"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"response_category"}\hlstd{]} \hlkwb{<-} \hlstr{"expected"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"response_num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Bline_Num"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"response_category"}\hlstd{]} \hlkwb{<-} \hlstr{"borderline"}
-        \hlstd{\}}
-        \hlkwa{if} \hlstd{(dat[row,} \hlstr{"response_num"}\hlstd{]} \hlopt{==} \hlstd{dat[row,} \hlstr{"Extr_Num"}\hlstd{]) \{}
-            \hlstd{dat[row,} \hlstr{"response_category"}\hlstd{]} \hlkwb{<-} \hlstr{"extreme"}
-        \hlstd{\}}
-    \hlstd{\}}
-    \hlstd{dat}\hlopt{$}\hlstd{response_category} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{response_category,} \hlkwc{exclude} \hlstd{=} \hlstr{"nocat"}\hlstd{)}
-    \hlstd{dat}\hlopt{$}\hlstd{RESPONSE} \hlkwb{<-} \hlkwa{NULL}
-    \hlkwd{message}\hlstd{(}\hlstr{"Returning classified data"}\hlstd{)}
-    \hlkwd{return}\hlstd{(dat)}
-\hlstd{\}}  \hlcom{# end of classifyResponse function}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-\clearpage
-\subsection{Processing}
-
-
-\begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{processData} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{dat}\hlstd{) \{}
-    \hlcom{# SUBJECT}
-    \hlstd{dat}\hlopt{$}\hlstd{Subject} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"s"}\hlstd{,} \hlkwd{sprintf}\hlstd{(}\hlstr{"%02d"}\hlstd{, dat}\hlopt{$}\hlstd{Subject),} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{))}
-    \hlcom{# TRIAL}
-    \hlstd{dat}\hlopt{$}\hlstd{Trial} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{1}\hlopt{:}\hlstd{number_of_trials_per_subject,} \hlkwc{times} \hlstd{= number_of_valid_subjects)}
-    \hlcom{# make a centred Trial for modeling}
-    \hlstd{dat}\hlopt{$}\hlstd{c_Trl} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{Trial} \hlopt{-} \hlkwd{mean}\hlstd{(dat}\hlopt{$}\hlstd{Trial)}
-    \hlcom{# make a scaled Trial for modelling}
-    \hlstd{dat}\hlopt{$}\hlstd{s_Trl} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(}\hlkwd{scale}\hlstd{(dat}\hlopt{$}\hlstd{Trial))}
-    \hlcom{# ID id is a unique identifier for the 7680 row data}
-    \hlstd{dat}\hlopt{$}\hlstd{id} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlkwd{paste}\hlstd{(dat}\hlopt{$}\hlstd{Subject),} \hlkwd{paste}\hlstd{(}\hlstr{"t"}\hlstd{,} \hlkwd{sprintf}\hlstd{(}\hlstr{"%03d"}\hlstd{, dat}\hlopt{$}\hlstd{Trial),} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{":"}\hlstd{))}
-    \hlcom{# ITEM create a centred numeric item variable for modeling}
-    \hlstd{dat}\hlopt{$}\hlstd{c_Itm} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlnum{1}\hlstd{,} \hlopt{-}\hlnum{0.75}\hlstd{,} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlnum{2}\hlstd{,} \hlopt{-}\hlnum{0.25}\hlstd{,} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlnum{3}\hlstd{,} \hlnum{0.25}\hlstd{,}
-        \hlnum{0.75}\hlstd{)))}
-    \hlcom{# make Item be a factor and assign labels}
-    \hlstd{dat}\hlopt{$}\hlstd{Item} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Item,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"06:15:24"}\hlstd{,} \hlstr{"16:25:34"}\hlstd{,} \hlstr{"26:35:44"}\hlstd{,}
-        \hlstr{"36:45:54"}\hlstd{))}
-    \hlcom{# VAGUENESS Create a factor coding for Vagueness}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{1}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Vague"}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{2}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Crisp"}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{3}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Vague"}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{4}\hlstd{,} \hlstr{"Vagueness"}\hlstd{]} \hlkwb{<-} \hlstr{"Crisp"}
-    \hlstd{dat}\hlopt{$}\hlstd{Vagueness} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{Vagueness)}
-    \hlcom{# manually center Vagueness}
-    \hlstd{dat}\hlopt{$}\hlstd{c_Vag} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Vagueness} \hlopt{==} \hlstr{"Crisp"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
-    \hlcom{# NUMBER Create a factor coding for Number use}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{1}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Numeric"}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{2}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Numeric"}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{3}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Verbal"}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Condition} \hlopt{==} \hlnum{4}\hlstd{,} \hlstr{"Number"}\hlstd{]} \hlkwb{<-} \hlstr{"Verbal"}
-    \hlstd{dat}\hlopt{$}\hlstd{Number} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{Number)}
-    \hlcom{# manually center Number}
-    \hlstd{dat}\hlopt{$}\hlstd{c_Num} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Number} \hlopt{==} \hlstr{"Numeric"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
-    \hlcom{# CONDITION make a factor out of Condition, as f_Cnd}
-    \hlstd{dat}\hlopt{$}\hlstd{f_Cnd} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Condition,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Vg:Nm"}\hlstd{,} \hlstr{"Cr:Nm"}\hlstd{,} \hlstr{"Vg:Vb"}\hlstd{,}
-        \hlstr{"Cr:Vb"}\hlstd{))}
-    \hlcom{# ORDER give the levels of Order meaningful names}
-    \hlstd{dat}\hlopt{$}\hlstd{Order} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Order,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"LtoR"}\hlstd{,} \hlstr{"RtoL"}\hlstd{))}
-    \hlcom{# make a manually centred Order}
-    \hlstd{dat}\hlopt{$}\hlstd{c_Ord} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Order} \hlopt{==} \hlstr{"LtoR"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
-    \hlcom{# QUANTITY give the levels of Quantity meaningful names}
-    \hlstd{dat}\hlopt{$}\hlstd{Quantity} \hlkwb{<-} \hlkwd{factor}\hlstd{(dat}\hlopt{$}\hlstd{Quantity,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Small"}\hlstd{,} \hlstr{"Large"}\hlstd{))}
-    \hlcom{# make a manually centred Quantity}
-    \hlstd{dat}\hlopt{$}\hlstd{c_Qty} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(dat}\hlopt{$}\hlstd{Quantity} \hlopt{==} \hlstr{"Small"}\hlstd{,} \hlopt{-}\hlnum{0.5}\hlstd{,} \hlnum{0.5}\hlstd{)}
-    \hlcom{# INSTRUCTION add number of characters in the instruction # 29 30 34 36 38}
-    \hlstd{dat}\hlopt{$}\hlstd{nchar_instr} \hlkwb{<-} \hlkwd{nchar}\hlstd{(dat}\hlopt{$}\hlstd{Instruction)}
-    \hlstd{dat}\hlopt{$}\hlstd{nchar_instr_scaled} \hlkwb{<-} \hlkwd{as.vector}\hlstd{(}\hlkwd{scale}\hlstd{(}\hlkwd{nchar}\hlstd{(dat}\hlopt{$}\hlstd{Instruction),} \hlkwc{scale} \hlstd{=} \hlnum{TRUE}\hlstd{))}
-    \hlcom{# make Instruction be a factor (17 levels)}
-    \hlstd{dat}\hlopt{$}\hlstd{Instruction} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(dat}\hlopt{$}\hlstd{Instruction)}
-    \hlcom{# RT add transformations of RT}
-    \hlstd{dat}\hlopt{$}\hlstd{RT_log} \hlkwb{<-} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{RT)}
-    \hlstd{dat}\hlopt{$}\hlstd{RT_raw} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{RT}
-    \hlcom{# print to file a table with information about the design}
-    \hlstd{design_info} \hlkwb{<-} \hlkwd{unique}\hlstd{(}\hlkwd{subset}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(Item, Condition, Vagueness, Number, Quantity, Order,}
-        \hlstd{Left, Mid, Right, Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side, Instruction)))}
-    \hlstd{design.info} \hlkwb{<-} \hlstd{design_info[}\hlkwd{order}\hlstd{(design_info}\hlopt{$}\hlstd{Item, design_info}\hlopt{$}\hlstd{Condition, design_info}\hlopt{$}\hlstd{Quantity, design_info}\hlopt{$}\hlstd{Order),}
-        \hlstd{]}
-    \hlkwd{row.names}\hlstd{(design_info)} \hlkwb{<-} \hlkwa{NULL}
-    \hlkwd{capture.output}\hlstd{(}\hlkwd{print.data.frame}\hlstd{(design_info,} \hlkwc{row.names} \hlstd{= F,} \hlkwc{print.gap} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{quote} \hlstd{= F,} \hlkwc{right} \hlstd{= F),}
-        \hlkwc{file} \hlstd{=} \hlstr{"design_info-table.txt"}\hlstd{)}
-    \hlcom{# Add discriminability metric with reference to item}
-    \hlstd{discriminability_range} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0.75}\hlstd{,} \hlnum{0.5294118}\hlstd{,} \hlnum{0.4090909}\hlstd{,} \hlnum{0.3333333}\hlstd{)}
-    \hlstd{discriminability_range_scaled} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{1.3441995}\hlstd{,} \hlnum{0.1316642}\hlstd{,} \hlopt{-}\hlnum{0.5297187}\hlstd{,} \hlopt{-}\hlnum{0.946145}\hlstd{)}
-    \hlstd{discriminability} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0.4875}\hlstd{,} \hlnum{0.3123529}\hlstd{,} \hlnum{0.2308442}\hlstd{,} \hlnum{0.1833333}\hlstd{)}
-    \hlstd{discriminability_scaled} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{1.37582241}\hlstd{,} \hlnum{0.06614191}\hlstd{,} \hlopt{-}\hlnum{0.54334858}\hlstd{,} \hlopt{-}\hlnum{0.89861574}\hlstd{)}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"06:15:24"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.4875}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"16:25:34"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.3123529}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"26:35:44"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.2308442}
-    \hlstd{dat[dat}\hlopt{$}\hlstd{Item} \hlopt{==} \hlstr{"36:45:54"}\hlstd{,} \hlstr{"discriminability"}\hlstd{]} \hlkwb{<-} \hlnum{0.1833333}
-    \hlcom{# put dat in better column order}
-    \hlstd{dat} \hlkwb{<-} \hlkwd{subset}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(id, Subject, Trial, Condition, Order, Quantity, Vagueness, Number,}
-        \hlstd{Item, discriminability, c_Trl, s_Trl, c_Itm, c_Vag, c_Num, f_Cnd, c_Ord, c_Qty, RT, RT_log, RT_raw,}
-        \hlstd{Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side, response_num, response_side, response_category,}
-        \hlstd{Left, Mid, Right, Instruction, nchar_instr))}
-    \hlcom{# This data set (dat) contains *all* trials 7680 including impossible trials and is mainly for graphs}
-    \hlcom{# comparing different removals}
-    \hlkwd{save}\hlstd{(dat,} \hlkwc{file} \hlstd{=} \hlstr{"data_raw.Rda"}\hlstd{)}
-    \hlkwd{message}\hlstd{(}\hlstr{"Returning processed data"}\hlstd{)}
-    \hlkwd{return}\hlstd{(dat)}
-\hlstd{\}}  \hlcom{# end of function processData}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-\clearpage
-\subsection{Post-processing}
-
-
-\begin{knitrout}\scriptsize
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{postProcessData} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{dat}\hlstd{) \{}
-    \hlcom{# dd removes impossible trials from dat Throw out RT = 1 and RT = 59998, and RTprev = 1 and RTprev =}
-    \hlcom{# 59998 i.e., throw out sticky fingers and timeouts, and the trials that followed sticky fingers and}
-    \hlcom{# timeouts since they were likely affected by unusual previous trials. Also lose impossible trials}
-    \hlstd{dd} \hlkwb{<-} \hlstd{dat}
-    \hlstd{dd}\hlopt{$}\hlstd{RT[dd}\hlopt{$}\hlstd{RT} \hlopt{==} \hlnum{1}\hlstd{]} \hlkwb{<-} \hlnum{NA}
-    \hlstd{dd}\hlopt{$}\hlstd{RT[dd}\hlopt{$}\hlstd{RT} \hlopt{==} \hlnum{59998}\hlstd{]} \hlkwb{<-} \hlnum{NA}
-    \hlstd{dd} \hlkwb{<-} \hlstd{dd[}\hlkwd{complete.cases}\hlstd{(dd), ]}
-    \hlkwd{row.names}\hlstd{(dd)} \hlkwb{<-} \hlkwa{NULL}
-    \hlcom{# add preceding RT: because we removed impossible trials, the value for preceding RT for a trial}
-    \hlcom{# following an impossible trial is the value of the trial that preceded the impossible trial.}
-    \hlstd{dd}\hlopt{$}\hlstd{RTprev} \hlkwb{<-} \hlnum{NA}
-    \hlkwa{for} \hlstd{(s} \hlkwa{in} \hlkwd{levels}\hlstd{(dd}\hlopt{$}\hlstd{Subject)) \{}
-        \hlstd{nrows} \hlkwb{<-} \hlkwd{nrow}\hlstd{(dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s, ])}
-        \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{nrows) \{}
-            \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{1}\hlstd{) \{}
-                \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RTprev"}\hlstd{][i]} \hlkwb{<-} \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RT"}\hlstd{][i]}
-            \hlstd{\}} \hlkwa{else} \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RTprev"}\hlstd{][i]} \hlkwb{<-} \hlstd{dd[dd}\hlopt{$}\hlstd{Subject} \hlopt{==} \hlstd{s,} \hlstr{"RT"}\hlstd{][i} \hlopt{-} \hlnum{1}\hlstd{]}
-        \hlstd{\}}
-    \hlstd{\}}
-    \hlcom{# add transformations of previous RT}
-    \hlstd{dd}\hlopt{$}\hlstd{RTprev_log} \hlkwb{<-} \hlkwd{log}\hlstd{(dd}\hlopt{$}\hlstd{RTprev)}
-    \hlstd{dd}\hlopt{$}\hlstd{RTprev_raw} \hlkwb{<-} \hlstd{dd}\hlopt{$}\hlstd{RTprev}
-    \hlcom{# put dd in better column order}
-    \hlstd{dd} \hlkwb{<-} \hlkwd{subset}\hlstd{(dd,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(id, Subject, Trial, Condition, Order, Quantity, Vagueness, Number, Item,}
-        \hlstd{discriminability, c_Trl, s_Trl, c_Itm, c_Vag, c_Num, f_Cnd, c_Ord, c_Qty, RT, RT_log, RT_raw,}
-        \hlstd{RTprev, RTprev_log, RTprev_raw, Exp_Num, Bline_Num, Extr_Num, Exp_side, Bline_side, Extr_side,}
-        \hlstd{response_num, response_side, response_category, Left, Mid, Right, Instruction, nchar_instr))}
-    \hlkwd{save}\hlstd{(dd,} \hlkwc{file} \hlstd{=} \hlstr{"data_processed.Rda"}\hlstd{)}
-    \hlkwd{message}\hlstd{(}\hlstr{"Returning post processed data"}\hlstd{)}
-    \hlkwd{return}\hlstd{(dd)}
-\hlstd{\}}  \hlcom{# end of function postProcessResponses}
-\end{alltt}
+> removeImpossibleTrials = function(dat) {
++     message("Starting to remove impossible trials")
++     a = nrow(dat)
++     dat <- dat[complete.cases(d .... [TRUNCATED] 
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
