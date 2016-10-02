@@ -1,6 +1,5 @@
 base
 knitr
-pander
 Matrix
 ggplot2
 xtable
@@ -10,4 +9,5 @@ lmerTest
 data.table
 dplyr
 dtplyr
+pander
 LMERConvenienceFunctions
