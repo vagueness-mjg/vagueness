@@ -189,7 +189,7 @@ gatherData = function() {
   dat$isBorderline_original <- dat$isBorderline
   message('returning data')
   return(dat)
-} 
+} # end of gatherData
 
 # declareImpossibleRT
 declareImpossibleRT = function(dat) {
@@ -212,6 +212,7 @@ declareImpossibleRT = function(dat) {
   dat$NaType <- as.factor(dat$NaType)
   dat$RT_original <- NULL
   dat$isBorderline_original <- NULL
+  dat$RT_log <- log(dat$RT)
   message('Returning data with impossible RTs declared as NA in RT and isBorderline')
   return(dat)
 }

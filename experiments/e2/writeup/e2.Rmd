@@ -42,17 +42,33 @@ pander(i, justify=c('center', 'center'))
 ```
 
 ```{r loadLibraries, message=FALSE, echo=FALSE, cache=FALSE}
-library(knitr); library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); library(LMERConvenienceFunctions); source('summarySEwithin2.R') 
+library(Matrix); library(knitr); library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); library(LMERConvenienceFunctions); source('summarySEwithin2.R'); source('e2-preprocessing.R')
+```
+
+```{r preprocessing}
+source('e2-preprocessing.R')
+if( !file.exists('e2-b-data.txt') ) {
+  dat <- gatherData() 
+  dat <- declareImpossibleRT(dat)
+  #dat <- removeImpossibleTrials(dat)
+  dat <- subset(dat, select=c(Subject, Trial, Item, c_Itm, 
+                              discriminability, 
+                              Instruction,
+                              nchar_instr,
+                              Vagueness, Number, Order, Quantity, 
+                              c_Vag, c_Num, c_Ord, c_Qty,
+                              NaType, response_category, 
+                              isBorderline, RT, RT_log)
+  )
+  write.table(dat, file='e2-b-data.txt', sep='\t', quote=FALSE, row.names = FALSE)
+}
 ```
 
 In this experiment we did not count any response as an error, instead we coded them as expected, borderline, and extreme.
 
 ```{r getData, echo=T}
-rawdata <- read.table('data.txt', sep=' ')
-```
-
-```{r}
-tempdata <- perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim = 2.5)$data
+rawdata <- read.delim('e2-b-data.txt')
+tempdata <- perSubjectTrim.fnc(rawdata[complete.cases(rawdata),], response='RT', subject='Subject', trim = 2.5)$data
 rtdata <- tempdata
 bldata <- tempdata
 ```
@@ -60,10 +76,12 @@ bldata <- tempdata
 This code creates the condition means with confidence intervals used for plotting:
 
 ```{r computeSummariesForGraphs, cache=TRUE, message=FALSE}
-rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Condition", "Vagueness", "Number", "Item"), idvar="Subject")
+rtdataplot1 <- summarySEwithin2(rtdata, 
+                                measurevar="RT_log", 
+                                withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
 ```
 
-```{r rtplot, fig.width=5, fig.height=3, echo=F}
+```{r rtplot, echo=F}
 dodge = position_dodge(width=0.2)
 rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness))
 rtplot=ggplot(rtdataplot1, aes(y=RT_log, x=Item, ymin=RT_log-ci, ymax=RT_log+ci,
@@ -80,7 +98,7 @@ rtplot=ggplot(rtdataplot1, aes(y=RT_log, x=Item, ymin=RT_log-ci, ymax=RT_log+ci,
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         legend.key = element_blank(), legend.position="top",
         aspect.ratio=1,
-        axis.text.x = element_text(angle = 45, hjust = 1),
+        #axis.text.x = element_text(angle = 45, hjust = 1),
         plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Number)
 rtplot
