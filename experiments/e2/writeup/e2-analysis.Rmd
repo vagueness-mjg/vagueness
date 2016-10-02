@@ -47,7 +47,7 @@ library(Matrix); library(knitr); library(ggplot2); library(xtable); library(grid
 
 ```{r preprocessing}
 source('e2-preprocessing.R')
-if( !file.exists('e2-b-data.txt') ) {
+if( !file.exists('e2-data.txt') ) {
   dat <- gatherData() 
   dat <- declareImpossibleRT(dat)
   #dat <- removeImpossibleTrials(dat)
@@ -60,7 +60,7 @@ if( !file.exists('e2-b-data.txt') ) {
                               NaType, response_category, 
                               isBorderline, RT, RT_log)
   )
-  write.table(dat, file='e2-b-data.txt', sep='\t', quote=FALSE, row.names = FALSE)
+  write.table(dat, file='e2-data.txt', sep='\t', quote=FALSE, row.names = FALSE)
 }
 ```
 
