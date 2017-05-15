@@ -7,7 +7,7 @@ output:
     <!--toc_float: true-->
     mathjax: default
     template: default
-    <!--code_folding: show-->
+    code_folding: show
     theme: default
 ---  
 <style>
@@ -56,11 +56,12 @@ rawdata <- read.table('data.txt', sep=' ')
 trimdata <- perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim = 2.5)$data
 rtdata <- trimdata
 ```
+
 ```{r computeSummariesForGraphs, cache=TRUE, message=FALSE}
-rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Condition", "Vagueness", "Selection", "Item"), idvar="Subject")
+rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
 ```
 
-```{r rtplot, fig.width=7, fig.height=3, echo=F}
+```{r rtplot, fig.width=7, fig.height=3}
 dodge = position_dodge(width=0.2)
 rtdataplot1$Condition <- as.factor(paste(sep=' ', rtdataplot1$Selection, rtdataplot1$Vagueness))
 rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci,
