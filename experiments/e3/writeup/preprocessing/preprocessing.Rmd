@@ -1,5 +1,5 @@
 ```{r readdata}
-dat <- read.delim("../rawdata.txt", stringsAsFactors = FALSE)
+dat <- read.delim("rawdata.txt", stringsAsFactors = FALSE)
 
 # declare local variables
 number_of_valid_subjects <- 38
