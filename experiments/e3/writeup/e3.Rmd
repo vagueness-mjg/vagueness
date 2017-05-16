@@ -21,7 +21,7 @@ table, th, td {
 # Experiment 3
 
 ```{r loadLibraries, message=FALSE}
-library(knitr); library(MASS); library(ggplot2); library(lme4); library(xtable); library(plyr); library(lattice); library(LMERConvenienceFunctions); library(car); library(grid); library(lmerTest); library(reshape2); library(ggplot2); library(languageR); library(pander); source('summarySEwithin2.R')
+library(knitr); library(MASS); library(ggplot2); library(lme4); library(xtable); library(plyr); library(lattice); library(LMERConvenienceFunctions); library(car); library(grid); library(lmerTest); library(reshape2); library(ggplot2); library(languageR); library(pander); source('summarySEwithin2.R'); library(Hmisc)
 ```
 
 Experiment Structure: 
@@ -57,14 +57,15 @@ trimdata <- perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim =
 rtdata <- trimdata
 ```
 
-```{r computeSummariesForGraphs, cache=TRUE, message=FALSE}
-rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
-```
-
-```{r rtplot, fig.width=7, fig.height=3}
+```{r rtplot1, fig.width=7, fig.height=3}
+# this plot uses a precomputed summary done by summarySEwithin
+# and data trimmed at 2.5 sd per subject
+rtdataplot1 <- summarySEwithin2(data=perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim = 2.5)$data,
+                                measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
 dodge = position_dodge(width=0.2)
 rtdataplot1$Condition <- as.factor(paste(sep=' ', rtdataplot1$Selection, rtdataplot1$Vagueness))
-rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci,
+rtplot=ggplot(rtdataplot1,
+              aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci,
                 group=Condition, shape=Condition, fill=Condition)) +
   geom_line(position=dodge) +
   geom_errorbar(width=.2, position=dodge) +
@@ -82,6 +83,33 @@ rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, yma
   facet_grid(~Selection) 
 rtplot
 ```
+
+```{r rtplotHmisc, fig.width=7, fig.height=3}
+# n.b. rtdata has been trimmed at 2.5 sd: use rawdata if you want untrimmed data
+rawdata$Condition <- as.factor(paste(sep=' ', rawdata$Selection, rawdata$Vagueness))
+ggplot(rawdata, aes(y=RT_log, x=Item, group=Condition, shape=Condition, fill=Condition)) + 
+  stat_summary(fun.data = "mean_cl_boot", position=position_dodge(0.2)) +
+  scale_shape_manual("",values = c(22, 22, 21, 21)) +
+  scale_fill_manual("",values=c("black","white","black","white")) +
+  facet_grid(~Selection) 
+
+  mapping = aes(y=RT_log, x=Item, group=Condition, shape=Condition, fill=Condition),
+  stat = stat_summary(fun.data = "mean_cl_boot") ) 
+
+ggplot(mtcars) +
+  geom_pointrange
++
+  facet_grid(~Selection) 
+
+d <- ggplot(mtcars, aes(cyl, mpg)) 
+d + stat_summary(fun.data = "mean_cl_boot", colour = "red", size = 2)
+# +
+  # theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  #       legend.key = element_blank(), aspect.ratio=1,
+  #       axis.text.x = element_text(angle = 45, hjust = 1),
+  #       plot.background=element_rect(fill=NA, color='white')
+```
+
 
 ```{r rtlmer, cache=TRUE}
 rtlmer = lmerTest::lmer(data=rtdata,
