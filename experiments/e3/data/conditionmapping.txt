@@ -1,4 +1,0 @@
-1 = vague matching
-2 = crisp matching
-3 = vague comparison
-4 = crisp comparison

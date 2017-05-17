@@ -1,13 +1,4 @@
-Condition
 1 = vague matching
 2 = crisp matching
 3 = vague comparison
 4 = crisp comparison
-
-Order
-1 = smaller number on left
-2 = smaller number on right
-
-Quantity
-1 = instruction identifies the smaller quantity
-2 = instruction identifies the larger quantity
