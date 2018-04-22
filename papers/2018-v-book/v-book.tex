@@ -1,0 +1,46 @@
+\documentclass[graybox,envcountchap,sectrefs%
+,footinfo
+%,referee
+]{svmono}
+% Native packages
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{type1cm}         
+\usepackage{makeidx}		% allows index generation
+\usepackage{graphicx}		% standard LaTeX graphics tool
+\usepackage{multicol} 		% used for the two-column index
+\usepackage[bottom]{footmisc}	% places footnotes at page bottom
+% User packages
+\usepackage{natbib}
+\usepackage{lipsum}
+\usepackage{placeins}
+\makeindex             			% used for the subject index
+                       				% please use the style svind.ist with
+                       				% your makeindex program
+
+\begin{document}
+
+\author{Kees van Deemter and Matthew Green}
+\title{Vagueness \& Rationality}
+\subtitle{The Elusive Benefits of Vagueness: the Evidence So Far}
+\maketitle
+
+\frontmatter
+\tableofcontents
+
+
+
+% BibTeX users please use
+\bibliographystyle{spbasic} %plain, harvard, apalike, chicago, astron, authordate, natbib.
+\bibliography{bibliography}
+
+\backmatter
+\Extrachap{Glossary}
+%\runinhead{glossary term} Write here the description of the glossary term. Write here the description of the glossary term. Write here the description of the glossary term.
+
+\runinhead{natural language generation} the process of generating natural language from non-natural language input.
+
+\printindex
+\end{document}
+
