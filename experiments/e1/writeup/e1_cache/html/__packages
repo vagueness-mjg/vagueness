@@ -1,0 +1,13 @@
+base
+pander
+knitr
+ggplot2
+xtable
+gridExtra
+Matrix
+lme4
+lmerTest
+data.table
+dplyr
+dtplyr
+LMERConvenienceFunctions
