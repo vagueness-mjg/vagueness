@@ -1,3 +1,4 @@
+gap	target	side	vagueness	pair	Version	Left	Right	Text	Condition	correctAnswer	subject	actualAnswer	isCorrect	rt
 BigGap	BigTarget	Right	Vague	8	1	5	9	many	3	231	1	231	1	1406
 BigGap	BigTarget	Right	Vague	5	1	2	6	many	3	231	1	231	1	1046
 BigGap	SmallTarget	Left	Precise	5	1	2	6	two	2	227	1	227	1	1323

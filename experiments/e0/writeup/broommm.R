@@ -1,0 +1,23 @@
+library(lme4)
+library(broom)
+
+lmm1 <- lme4::lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+tidy(lmm1)
+tidy(lmm1, effects = "fixed")
+tidy(lmm1, effects = "fixed", conf.int=TRUE)
+tidy(lmm1, effects = "fixed", conf.int=TRUE, conf.method="profile")
+tidy(lmm1, effects = "ran_modes", conf.int=TRUE)
+head(augment(lmm1, sleepstudy))
+glance(lmm1)
+library(dotwhisker)
+dwplot(lmm1)
+
+
+lmm2 <- lmerTest::lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+tidy(lmm2)
+tidy(lmm2, effects = "fixed")
+tidy(lmm2, effects = "fixed", conf.int=TRUE)
+tidy(lmm2, effects = "fixed", conf.int=TRUE, conf.method="profile")
+tidy(lmm2, effects = "ran_modes", conf.int=TRUE)
+head(augment(lmm2, sleepstudy))
+glance(lmm2)
