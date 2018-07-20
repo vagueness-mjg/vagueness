@@ -70,7 +70,7 @@ for (s in unique(din$subject)){
 }
 ```
 
-```{r"make a tibble with factors explicit"}
+```{r "make a tibble with factors explicit"}
 # make a df to carry forward
 d <- tibble(
   obs = din$obs, 
@@ -84,57 +84,72 @@ d <- tibble(
   side = factor(din$side), 
   text = factor(din$Text),
   err = 1 - din$isCorrect, 
-  rt_raw = ifelse(din$rt >=0, din$rt, NA),
-  rt_ms = ifelse(1-din$isCorrect==1, NA, ifelse(din$rt >=0, din$rt, NA)), # restricting rt to positive values (rt>=0) converted a score of -6 ms to NA
-  rt_log = log( ifelse(1-din$isCorrect==1, NA, ifelse(din$rt >=0, din$rt, NA)) ),
-  "rt_reciprocal[-1/rt]" = -1/ifelse(1-din$isCorrect==1, NA, ifelse(din$rt >=0, din$rt, NA)), # We multiplied reciprocal scores [1/RT] by -1 [-1/RT] to maintain the direction of effects compatible for the three variants, effectively converting speed [number of responses per ms] into 'rate of slowing' - A linear mixed model analysis of masked repetition priming, Kliegl, Masson & Richter, VISUAL COGNITION,2010,18(5),655--681 (p.~662)
-  rt_reciprocal = -1000/ifelse(1-din$isCorrect==1, NA, ifelse(din$rt >=0, din$rt, NA))
+  rt_ms = din$rt,
+  rt_log = log( din$rt ),
+  rt_reciprocal = -1/din$rt # rate of slowing: # We multiplied reciprocal scores [1/RT] by -1 [-1/RT] to maintain the direction of effects compatible for the three variants, effectively converting speed [number of responses per ms] into 'rate of slowing' - A linear mixed model analysis of masked repetition priming, Kliegl, Masson & Richter, VISUAL COGNITION,2010,18(5),655--681 (p.~662) 
 )
-d$c.vag = ifelse(d$vag=="Crisp", -.5, .5)
 ```
 
-Size of the data is `r nrow(d)` trials. 1 was removed for being impossible ($-6~ms$). There are `r nrow(subset(d,err==1))` error trials. The variable rt_ms has NA in the case that an error was made. The variable rt_raw includes rt for error trials.
+```{r "make centred variables for factors"}
+d$c.gap   <- ifelse(d$gap=="Big Gap", -.5, .5)
+d$c.quan  <- ifelse(d$quan=="Big Target", -.5, .5)
+d$c.vag   <- ifelse(d$vag=="Crisp", -.5, .5)
+d$c.subit <- ifelse(d$subit=="Subitizable", -.5, .5)
+d$c.side  <- ifelse(d$side=="Left", -.5, .5)
+```
+
+Size of the data is `r nrow(d)` trials.  There are `r nrow(subset(d,err==1))` error trials. Error trials are removed from analysis of RT
+
+```{r}
+d <- subset(d, err==0)
+```
+
+<!-- 1 was set to NA for being impossible ($-6~ms$). -->
+<!-- The variable rt_ms has NA in the case that an error was made. The variable rt_raw includes rt for error trials. -->
 
 ## Eyeball the RTs
 
-### Uncapped, max of 20,000 ms
+### Uncapped
 
 ```{r fig.show='hide', warning=FALSE, echo=FALSE}
 # all the (correct) RTs
 summary(d$rt_ms)
 
-data_for_plot <- gather(d, key=rt_metric, value=rt_value, rt_ms, rt_log, "rt_reciprocal[-1/rt]") %>%
+data_for_plot <- d %>% 
+  gather(key=rt_metric, value=rt_value, rt_ms, rt_log, rt_reciprocal) %>%
   arrange(rt_value)
 
-ga1untrimmed = ggplot(data_for_plot, aes(x=rep(1:1600,times=3), y=rt_value)) + 
+ga1untrimmed = ggplot(data_for_plot, aes(x=rep(1:(nrow(data_for_plot)/3),times=3), y=rt_value)) + 
   geom_point(na.rm=TRUE) + 
-  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal[-1/rt]")), scales="free_y") +
+  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal")), scales="free_y") +
   xlab("observations, ordered by rt_value") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
 
 ga2untrimmed = ggplot(data_for_plot, aes(rt_value)) +
   geom_density(na.rm=TRUE) +
-  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal[-1/rt]")), scales="free") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
+  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal")), scales="free") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
 
 myg1 <- grid.arrange(ga1untrimmed, ga2untrimmed, nrow=2, top = textGrob("Untrimmed",gp=gpar(fontsize=20,font=3)))
 ```
 
-### Capped at 10,000 ms
+### Capped at 0 ms and 10,000 ms
 
 ```{r fig.show='hide', warning=FALSE, echo=FALSE}
-# now with a simple cap imposed at 10000 ms, half-way through the maximum allotted time of 20000 (2 minute timeout)
-summary(d$rt_ms[d$rt_ms<10000])
+# now with a simple cap imposed to select RTs between 0 and 10000 ms
+summary(d$rt_ms[d$rt_ms >= 0 & d$rt_ms<10000])
 
-data_for_plot <- gather(d %>% filter(rt_ms<10000), key=rt_metric, value=rt_value, rt_ms, rt_log, "rt_reciprocal[-1/rt]") %>%
+data_for_plot <- d %>% 
+  filter(rt_ms >= 0 & rt_ms <= 10000) %>% 
+  gather(key=rt_metric, value=rt_value, rt_ms, rt_log, rt_reciprocal) %>%
   arrange(rt_value)
 
-ga1trimmed = ggplot(data_for_plot, aes(x=rep(1:1556,times=3), y=rt_value)) + 
+ga1trimmed = ggplot(data_for_plot, aes(x=rep(1:(nrow(data_for_plot)/3), times=3), y=rt_value)) + 
   geom_point(na.rm=TRUE) + 
-  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal[-1/rt]")), scales="free_y") +
+  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal")), scales="free_y") +
   xlab("observations, ordered by rt_value")+ theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
 
 ga2trimmed = ggplot(data_for_plot, aes(rt_value)) +
   geom_density(na.rm=TRUE) +
-  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal[-1/rt]")), scales="free") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
+  facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal")), scales="free") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
 
 myg2 <- grid.arrange(ga1trimmed, ga2trimmed, nrow=2, top = textGrob("Trimmed at 10,1000 ms",gp=gpar(fontsize=20,font=3)))
 ``` 
@@ -143,18 +158,61 @@ myg2 <- grid.arrange(ga1trimmed, ga2trimmed, nrow=2, top = textGrob("Trimmed at 
 grid.arrange(myg1, myg2, nrow=2)
 ```
 
-
 Select either trimmed or untrimmed data by comparing this plot with the untrimmed data. Also use this plot to choose the most normal data (logRT).
 
 ```{r selectTrim}
-dat <- d %>% filter(rt_ms<10000)
+dat <- d %>% filter(rt_ms >= 0 & rt_ms <= 10000) 
 ```
+
+```{r plot rt per trial by subject}
+dat %>% 
+  gather(key=rt_metric, value=rt_value, rt_ms, rt_log, rt_reciprocal) %>%
+  filter(rt_metric=="rt_log") %>%
+  ggplot(aes(x=trial, y=rt_value, col=vag)) +
+  geom_point() +
+  geom_smooth(se=F) +
+  facet_wrap(~subject) +
+  theme(aspect.ratio = 1, panel.background = element_rect(fill="white", colour="black", linetype = "solid"))
+```
+
+
+```{r}
+dat %>% 
+  gather(key=rt_metric, value=rt_value, rt_ms, rt_log, rt_reciprocal) %>%
+  filter(rt_metric=="rt_log") %>%
+  ggplot(aes(group=vag, y=rt_value)) +
+  geom_boxplot(aes(x=item, col=vag))
+```
+
 
 # RT modelling
 
 Do a first lmer model. You can't put subit or gap over items because they are between-items.
 
-```{r, lmers}
+```{r, lmer1}
+lmer1.ms  <- lmer(data=dat, rt_ms ~         vag + subit + quan + gap + side + (1|subject) + (1|item))
+lmer1.log <- lmer(data=dat, rt_log ~        vag + subit + quan + gap + side + (1|subject) + (1|item))
+lmer1.rcp <- lmer(data=dat, rt_reciprocal ~ vag + subit + quan + gap + side + (1|subject) + (1|item))
+
+models <- 
+rbind(
+  cbind(tidy(lmer1.ms),model="ms"), 
+  cbind(tidy(lmer1.log),model="log"), 
+  cbind(tidy(lmer1.rcp),model="rcp")
+)
+
+dwplot(models, vline = geom_vline(xintercept = 0)) + facet_wrap(~model, scales="free", ncol=1)
+
+```
+
+
+
+```{r mler on logrt}
+lmer2.log <- lmer(data=dat, rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item))
+dwplot(lmer2.log %>% tidy() %>% filter(group=="fixed")) + 
+  ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)")
+
+
 lmer2 <- lmer(data=dat, rt_reciprocal~subit*vag + (vag|subject) + (vag|item))
 # lmer3 is closer to the original anova than lmer2
 lmer3 <- tidy(lme4::lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item)))
