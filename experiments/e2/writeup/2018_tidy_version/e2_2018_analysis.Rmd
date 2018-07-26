@@ -11,306 +11,160 @@ output:
     theme: default
 ---
 
-In this experiment we did not count any response as an error, instead we coded them as expected, borderline, and extreme.
-
-# 2018
-
-```{r "set working directory to 2018_tidy_version"}
+```{r "set working directory to 2018_tidy_version", echo=FALSE}
 root="/home/matt/wd/vagueness/experiments/e2/writeup/2018_tidy_version"
 if (getwd() != root) setwd(root)
 ```
 
-```{r load Libraries, message=FALSE, echo=FALSE}
-library(knitr); library(Matrix); library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); library(LMERConvenienceFunctions); library(kableExtra)
-```
-
-```{r "source my functions", message=FALSE, echo=FALSE}
-source('../functions/summarySEwithin2.R')
-source('../functions/e2-preprocessing.R')
-```
-
-```{r tidy* libs, message=FALSE, echo=FALSE}
+```{r "load Libraries and source my functions", message=FALSE, echo=FALSE}
+library(knitr)
+#library(Matrix)
+library(ggplot2)
+library(xtable)
+library(gridExtra)
+library(lme4)
+library(lmerTest)
+library(data.table)
+library(dplyr)
+library(dtplyr)
+#library(pander)
+library(LMERConvenienceFunctions)
+library(kableExtra)
+library(dotwhisker)
 library(tidymodels)
 library(tidyverse)
 library(broom.mixed)
+source('../functions/summarySEwithin2.R')
+source('../functions/e2-preprocessing.R')
+source('../functions/pretty_coef_table.R')
+source('../functions/pretty_coef_plot.R')
 ```
 
+In this experiment we did not count any response as an error, instead we coded them as expected, borderline, and extreme.
+
+These are the example instructions:
 ```{r showInstructions, echo=FALSE}
-v = c("crisp", "crisp", "vague", "vague")
-n = c('number', 'word', 'number', 'word')
-e <- c("Choose the square with 6 dots", "Choose the square with the fewest dots", "Choose a square with about 10 dots", "Choose a square with few dots")
-i = data.frame(v, n, e)
-names(i) = c("vagueness", "number", "example instruction")
-pander(i, justify=c('center', 'left', 'left'))
+data.frame(
+  vagueness = c("crisp", "crisp", "vague", "vague"),
+  number = c('number', 'word', 'number', 'word'),
+  example_instruction = c("Choose the square with 6 dots", "Choose the square with the fewest dots", "Choose a square with about 10 dots", "Choose a square with few dots")  
+) %>% kable() %>% kable_styling(full_width = F, position = "left", font_size = 11)
 ```
 
+These are the items:
 ```{r showItems, echo=FALSE}
-items = c(1,2,3,4,5,6,7,8)
-i = data.frame(Item = c("1","2","3","4"),
-               x = c("06:15:24", "16:25:34", "26:35:44", "36:45:54"))
-names(i) = c('Item', 'Numbers of dots')
-pander(i, justify=c('center', 'center'))
+data.frame(
+  Item = c("1","2","3","4"),
+  'Numbers of dots' = c("06:15:24", "16:25:34", "26:35:44", "36:45:54")
+) %>% kable() %>% kable_styling(full_width = F, position = "left", font_size = 11)
 ```
 
+Pre-process the raw data.
 ```{r preprocessing, echo=FALSE, message=FALSE}
 if( !file.exists('e2-data.txt') ) {
   dat <- gatherData() 
   dat <- declareImpossibleRT(dat)
   #dat <- removeImpossibleTrials(dat)
-  dat <- subset(dat, select=c(Subject, Trial, Item, c_Itm, 
-                              discriminability, 
-                              Instruction,
-                              nchar_instr,
-                              Vagueness, Number, Order, Quantity, 
-                              c_Vag, c_Num, c_Ord, c_Qty,
-                              NaType, response_category, 
-                              isBorderline, RT, RT_log)
-  )
+  dat <- subset(dat, select=c(Subject, Trial, Item, c_Itm, discriminability, Instruction, nchar_instr, Vagueness, Number, Order, Quantity, c_Vag, c_Num, c_Ord, c_Qty, NaType, response_category, isBorderline, RT, RT_log))
   write.table(dat, file='e2-data.txt', sep='\t', quote=FALSE, row.names = FALSE)
 }
 ```
 
-```{r getData, echo=TRUE, tidy=FALSE}
-rawdata <- read.delim('e2-data.txt')
-tempdata <- perSubjectTrim.fnc(data = rawdata[complete.cases(rawdata),], 
-                               response='RT', subject='Subject', trim = 2.5)$data
-rtdata <- tempdata
-bldata <- tempdata
+```{r}
+raw_data <- read.delim('e2-data.txt')
+```
+
+```{r}
+trim_data <- perSubjectTrim.fnc(data = raw_data[complete.cases(raw_data),], response='RT', subject='Subject', trim = 2.5)$data
+```
+
+# Response time data
+
+```{r}
+rtdata <- trim_data
 ```
 
 ```{r e2-rtplot, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE}
-rtdataplot1 <- summarySEwithin2(rtdata, 
-                                measurevar="RT_log", 
-                                withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
+rtdataplot1 <- summarySEwithin2(rtdata, measurevar="RT_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
+
 rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness))
-rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, group=Condition, fill=Vagueness)) +
-  geom_line() +
-  geom_errorbar(width=.2, aes(ymin=RT_logNormed-ci, ymax=RT_logNormed+ci)) +
-  geom_point(size=2, col=1, aes(shape=Vagueness)) +
-  scale_fill_grey(name="Vagueness", start=0, end=1) +
-  scale_shape_manual(name="Vagueness", values=c(21,22)) +
-  ggtitle("Response time") +
-  ylab("Respone time (log (ms))") + 
-  xlab(NULL) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        legend.key = element_blank(), legend.position="right",
-        aspect.ratio=1,
-        plot.background=element_rect(fill=NA, color='white'),
-        strip.background=element_blank(),
-        axis.text.x = element_text(angle = 15)) +
-  facet_grid(~Number)
+
+rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, group=Condition, fill=Vagueness)) + geom_line() + geom_errorbar(width=.2, aes(ymin=RT_logNormed-ci, ymax=RT_logNormed+ci)) + geom_point(size=2, col=1, aes(shape=Vagueness)) + scale_fill_grey(name="Vagueness", start=0, end=1) +  scale_shape_manual(name="Vagueness", values=c(21,22)) + ggtitle("Response time") + ylab("Respone time (log (ms))") + xlab(NULL) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background=element_rect(fill=NA, color='white'), strip.background=element_blank(), axis.text.x = element_text(angle = 15)) + facet_grid(~Number)
+
 rtplot
+```
+
+
+## Response time models 
+
+### Full RT model
+
+```{r 'rt-full-model', cache=TRUE, echo=TRUE}
+rtFullModel <- lmerTest::lmer(RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), rtdata)
+```
+
+```{r 'make a pretty coefficients table for rtFullModel', echo=FALSE, results='asis'}
+pretty_coef_table(rtFullModel, "rtFullModel") %>% print()
+```
+
+```{r, 'make a pretty coefficients plot for rtFullModel', echo=FALSE, fig.width=6, fig.height=3}
+pretty_coef_plot(rtFullModel, "rtFullModel")
+```
+
+### Numeric only RT model
+
+```{r 'rt-numeric-only model', cache=TRUE, echo=TRUE}
+rtNumOnlyModel <- lmerTest::lmer(RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), subset(rtdata,Number=="Numeric"))
+```
+
+```{r 'make a pretty coefficients table for rtNumOnlyModel', echo=FALSE, results='asis'}
+pretty_coef_table(rtNumOnlyModel, "rtNumOnlyModel") %>% print()
+```
+
+```{r, 'make a pretty coefficients plot for rtNumOnlyModel', echo=FALSE, fig.width=6, fig.height=3}
+pretty_coef_plot(rtNumOnlyModel, "rtNumOnlyModel")
+```
+
+### Verbal only RT model
+
+```{r 'rt-verbal-only model', cache=TRUE, echo=TRUE}
+rtVerbalOnlyModel <- lmerTest::lmer(RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), subset(rtdata,Number=="Verbal"))
+```
+
+```{r 'make a pretty coefficients table for rtVerbalOnlyModel', echo=FALSE, results='asis'}
+pretty_coef_table(rtVerbalOnlyModel, "rtVerbalOnlyModel") %>% print()
+```
+
+```{r, 'make a pretty coefficients plot for rtVerbalOnlyModel', echo=FALSE, fig.width=6, fig.height=3}
+pretty_coef_plot(rtVerbalOnlyModel, "rtVerbalOnlyModel")
+```
+
+# Borderline response data
+
+```{r}
+bldata <- trim_data
 ```
 
 ```{r e2-blBarChart, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE}
 bldata$response_category <- relevel(bldata$response_category, ref='expected')
-blBarChart = ggplot(bldata) +
-  geom_bar(aes(response_category, group=Number:Vagueness, fill=Vagueness),
-           position=position_dodge(width=NULL)) +
-  scale_fill_grey() +
-  xlab(NULL) +
-  ggtitle('Borderline response distribution') +
-  facet_grid(~Number) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        legend.key = element_blank(), legend.position="right", 
-        aspect.ratio=1,
-        plot.background=element_rect(fill=NA, color='white'),
-        strip.background=element_blank(),
-        legend.key.size=unit(4, 'mm'),
-        axis.text.x = element_text(angle = 15))
+
+blBarChart = ggplot(bldata) + geom_bar(aes(response_category, group=Number:Vagueness, fill=Vagueness), possition=position_dodge(width=NULL)) +   scale_fill_grey() + xlab(NULL) + ggtitle('Borderline response distribution') + facet_grid(~Number) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15))
+
 blBarChart
 ```
 
-# Response time models 
+## Borderline response models
 
-```{r e2-rtlmerTest1, cache=TRUE, echo=TRUE}
-rtlmerTest1 = lmerTest::lmer(RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), rtdata)
+### Full borderline response model
+
+```{r 'bl-full-model', cache=TRUE, echo=TRUE}
+blFullModel <- lme4::glmer(isBorderline ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), bldata, family="binomial", control = glmerControl(optimizer = "bobyqa"))
 ```
 
-## Different ways of viewing the tables of coefficients
-
-```{r "scientific penalty"}
-#options(scipen = 999)
-#options("scipen"=0, "digits"=7)
+```{r 'make a pretty coefficients table for blFullModel', echo=FALSE, results='asis'}
+pretty_coef_table(blFullModel, "blFullModel") %>% print()
 ```
 
-```{r "make a pretty coefficients table for an lmerTest object"}
-coef_table <- tidy(rtlmerTest1, effects="fixed") 
-
-
-# set names of the table
-names(coef_table) <- c("effect", "term", "coefficient", "std.error", "df", "t_value", "p_value_raw")
-coef_table$p_value <- as.character("")
-coef_table$star <- as.character("")
-
-# categorise p values and add significance stars
-# "\u2007" is a space the same width as a numeric, that is preserved in printing
-# "\u0020" is just a space
-for (i in 1:nrow(coef_table)) {
-  if (!is.na(coef_table$p_value_raw[i])) {
-    if (coef_table$p_value_raw[i] >= 0     & coef_table$p_value[i] < 0.001) {coef_table$p_value[i] <-    "<0.001";                        coef_table$star[i] <- paste(sep="","\uFF0A","\uFF0A","\uFF0A")}
-    if (coef_table$p_value_raw[i] >= 0.001 & coef_table$p_value[i] < 0.01 ) {coef_table$p_value[i] <-    paste(sep="","<0.01", "\u2007"); coef_table$star[i] <- paste(sep="","\uFF0A","\uFF0A"," ")}
-    if (coef_table$p_value_raw[i] >= 0.01  & coef_table$p_value[i] < 0.05 ) {coef_table$p_value[i] <-    paste(sep="","<0.05", "\u2007"); coef_table$star[i] <- paste(sep="","\uFF0A"," "," ")}
-    if (coef_table$p_value_raw[i] >= 0.05  ) {coef_table$p_value[i] <-    coef_table$p_value_raw[i]; coef_table$star[i] <-  ""}
-  }
-}
-# un-tibble the table
-coef_table <- coef_table %>% as.data.frame()
-
-# convert numerics to formatted chars for pretty printing
-coef_table$coefficient <- format(x=coef_table$coefficient, nsmall=2, digits=2)
-coef_table$std.error   <- format(x=coef_table$std.error, nsmall=2, digits=2)
-coef_table$df          <- format(x=coef_table$df, nsmall=2, digits=1)
-coef_table$t_value     <- format(x=coef_table$t_value, nsmall=2, digits=2)
-coef_table$p_value_raw <- format(x=coef_table$p_value_raw, nsmall=2, digits=3)
+```{r, 'make a pretty coefficients plot for blFullModel', echo=FALSE, fig.width=6, fig.height=3}
+pretty_coef_plot(blFullModel, "blFullModel")
 ```
-
-```{r}
-# print raw df
-print(coef_table)
-
-# default kable
-kable(coef_table)
-
-# print kable html style with alignment 
-kable(coef_table, align='llrrrrrrl')
-
-# no fullwidth
-# "\u2007" is a space the same width as a numeric, that is preserved in printing
-names(coef_table)[3] <- paste(sep="","\uD835\uDEFD","\u2007")            #'\u03B2' beta
-names(coef_table)[4] <- paste(sep="","\u2007","s.e.")
-names(coef_table)[5] <- paste(sep="","\u2007","d.f.")                    #
-names(coef_table)[6] <- paste(sep="","\uD835\uDC61","\u2007")            # t
-names(coef_table)[7] <- paste(sep="","\uD835\uDC5D","\u2007","\u2007")            # p
-names(coef_table)[8] <- paste(sep="","Pr(>|t|)")  # Pr(>|t|)
-names(coef_table)[9] <- paste(sep="","\u2007","sig.")
-coef_table %>%
-  select(-effect) %>%
-  filter(term!="(Intercept)") %>%
-  kable(align='rrllrrrl') %>% 
-  kable_styling(full_width = F, position = "left", font_size = 11)
-
-# lmerTest's default summary 
-summary(rtlmerTest1)$coefficients
-
-# lmerTest's conversion to F-test style
-anova(rtlmerTest1)
-```
-
-```{r, results='asis'}
-# xtable
-print(
-  xtable(
-    summary(rtlmerTest1)$coefficients[,-3], 
-    display=c("s","f","f","f","f"),
-    digits=c(0,2,2,1,3),
-    caption="Response time model"),
-  caption.placement="top", 
-  type='html')
-```
-
-
-```{r e2-rtlmerTest1Visuals, cache=FALSE, echo=FALSE, results='asis', dependson='e2-rtlmerTest1', fig.width=6, fig.height=3}
-dfr <- data.frame(coef = summary(rtlmerTest1)$coef[,1],
-                  ci2.5 = confint(rtlmerTest1, method='Wald')[,1][!is.na(confint(rtlmerTest1, method='Wald')[,1])],
-                  ci97.5 = confint(rtlmerTest1, method='Wald')[,2][!is.na(confint(rtlmerTest1, method='Wald')[,2])]
-)
-intercept = round(dfr[1,1],2)
-dfr <- dfr[-1,] # lose the intercept for plotting
-dfr <- dfr[rev(rownames(dfr)),]
-par(mar=c(5,7,2,1))
-plot(y=1:nrow(dfr), 
-     x=dfr$coef, 
-     xlim=extendrange(range(dfr$ci2.5, dfr$ci97.5)), 
-     ylim=extendrange(c(1,nrow(dfr))),
-     type='n', axes=F, 
-     xlab=substitute(paste('deviation from an intercept of ', intercept, ' log RT, with 95% CI.'), list(intercept=intercept)),
-     ylab="",
-     main = 'Response time model')
-abline(v=0, lty=1, col='lightgrey')
-arrows(y0=1:nrow(dfr), y1=1:nrow(dfr), 
-       x0=dfr$ci2.5, x1=dfr$ci97.5, 
-       length=0.035,
-       col='black',
-       lwd=2, code=3, angle=90)
-points(y=1:nrow(dfr), x=dfr$coef, pch=21, bg='white')
-axis(2, labels=row.names(dfr), at=1:nrow(dfr), las=1, tick=FALSE)
-axis(1)
-box(which='plot', col='grey')
-```
-
-
-
-<!-- ```{r e2-seplmerforNum, results='asis', cache=FALSE} -->
-<!-- numOnly <- subset(rtdata, subset=Number=='Numeric') -->
-<!-- numOnlylm <- lmerTest::lmer(data=numOnly, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject)) -->
-<!-- print( -->
-<!--   xtable( -->
-<!--     summary(numOnlylm)$coefficients[,-3],  -->
-<!--     display=c("s","f","f","f","f"), -->
-<!--     digits=c(0,2,2,1,3), -->
-<!--     caption="Response time model: Numeric only"), -->
-<!--   caption.placement="top",  -->
-<!--   type='html') -->
-<!-- ``` -->
-
-<!-- ```{r e2-seplmerforVerbal, results='asis', cache=FALSE} -->
-<!-- verbalOnly <- subset(rtdata, subset=Number=='Verbal') -->
-<!-- verbalOnlylm <- lmerTest::lmer(data=verbalOnly, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject)) -->
-<!-- print( -->
-<!--   xtable( -->
-<!--     summary(verbalOnlylm)$coefficients[,-3],  -->
-<!--     display=c("s","f","f","f","f"), -->
-<!--     digits=c(0,2,2,1,3), -->
-<!--     caption="Response time model: Verbal only"), -->
-<!--   caption.placement="top",  -->
-<!--   type='html') -->
-<!-- ``` -->
-
-<!-- # Borderline response models -->
-
-<!-- ```{r e2-bllmer, cache=TRUE, echo=TRUE} -->
-<!-- bllmer = lme4::glmer(data=bldata, -->
-<!--                         isBorderline ~ c_Vag * c_Num + c_Itm + -->
-<!--                           (1 + c_Vag * c_Num + c_Itm | Subject), -->
-<!--                         family="binomial", control = glmerControl(optimizer = "bobyqa")) -->
-<!-- ``` -->
-
-<!-- ```{r e2-bllmerVisuals, cache=FALSE, echo=FALSE, results='asis', dependson='e2-bllmer', fig.width=6, fig.height=3} -->
-<!-- print( -->
-<!--   xtable( -->
-<!--     summary(bllmer)$coefficients, -->
-<!--     digits=c(0, 2, 2, 1, 3), -->
-<!--     caption="Error rates model"), -->
-<!--   caption.placement="top",  -->
-<!--   type='html') -->
-<!-- dfr <- data.frame(coef = summary(bllmer)$coef[,1], -->
-<!--                   ci2.5 = confint(bllmer, method='Wald')[,1][!is.na(confint(bllmer, method='Wald')[,1])], -->
-<!--                   ci97.5 = confint(bllmer, method='Wald')[,2][!is.na(confint(bllmer, method='Wald')[,2])] -->
-<!-- ) -->
-<!-- intercept = round(dfr[1,1],2) -->
-<!-- dfr <- dfr[-1,] # lose the intercept for plotting -->
-<!-- dfr <- dfr[rev(rownames(dfr)),] -->
-<!-- par(mar=c(5,7,2,1)) -->
-<!-- plot(y=1:nrow(dfr),  -->
-<!--      x=dfr$coef,  -->
-<!--      xlim=extendrange(range(dfr$ci2.5, dfr$ci97.5)),  -->
-<!--      ylim=extendrange(c(1,nrow(dfr))), -->
-<!--      type='n', axes=F,  -->
-<!--      xlab=substitute(paste('deviation from an intercept of ', intercept, ' with 95% CI.'), list(intercept=intercept)), -->
-<!--      ylab="", -->
-<!--      main='Borderline response model') -->
-<!-- abline(v=0, lty=1, col='grey') -->
-<!-- arrows(y0=1:nrow(dfr), y1=1:nrow(dfr),  -->
-<!--        x0=dfr$ci2.5, x1=dfr$ci97.5,  -->
-<!--        length=0.035, -->
-<!--        col='black', -->
-<!--        lwd=2, code=3, angle=90) -->
-<!-- points(y=1:nrow(dfr), x=dfr$coef, pch=21, bg='white') -->
-<!-- axis(2, labels=row.names(dfr), at=1:nrow(dfr), las=1, tick=FALSE) -->
-<!-- axis(1) -->
-<!-- box(which='plot', col='grey') -->
-<!-- ``` -->
-
