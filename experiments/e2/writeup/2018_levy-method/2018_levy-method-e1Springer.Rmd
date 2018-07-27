@@ -1,5 +1,5 @@
 ---
-title: "Experiment 2 of 4"
+title: "This is experiment one in the springer 1 to 3 numbering (originaly called e2)"
 author: "Matt Green"
 output:
   html_document:
@@ -11,12 +11,12 @@ output:
     theme: default
 ---
 
-```{r "set working directory to 2018_tidy_version", echo=FALSE}
-root="/home/matt/wd/vagueness/experiments/e2/writeup/2018_tidy_version"
+```{r 'set working directory', echo=FALSE}
+root="/home/matt/wd/vagueness/experiments/e2/writeup/2018_levy-method"
 if (getwd() != root) setwd(root)
 ```
 
-```{r "load Libraries and source my functions", message=FALSE, echo=FALSE}
+```{r 'load Libraries and source my functions', message=FALSE, echo=FALSE}
 library(knitr)
 library(tidyverse)
 library(tidymodels)
@@ -27,16 +27,18 @@ library(dotwhisker)
 library(kableExtra)
 library(LMERConvenienceFunctions)
 library(data.table)
-source('../functions/summarySEwithin2.R')
-source('../functions/e2-preprocessing.R')
-source('../functions/pretty_coef_table.R')
-source('../functions/pretty_coef_plot.R')
+source('summarySEwithin2.R')
+source('concatenate_raw_data.R')
+source('declare_impossible_rt.R')
+source('remove_impossible_trials.R')
+source('pretty_coef_table.R')
+source('pretty_coef_plot.R')
 ```
 
 In this experiment we did not count any response as an error, instead we coded them as expected, borderline, and extreme.
 
 These are the example instructions:
-```{r showInstructions, echo=FALSE}
+```{r 'showInstructions', echo=FALSE}
 data.frame(
   vagueness = c("crisp", "crisp", "vague", "vague"),
   number = c('number', 'word', 'number', 'word'),
@@ -45,50 +47,49 @@ data.frame(
 ```
 
 These are the items:
-```{r showItems, echo=FALSE}
+```{r 'showItems', echo=FALSE}
 data.frame(
   Item = c("1","2","3","4"),
   'Numbers of dots' = c("06:15:24", "16:25:34", "26:35:44", "36:45:54")
 ) %>% kable() %>% kable_styling(full_width = F, position = "left", font_size = 11)
 ```
 
-Pre-process the raw data.
-```{r preprocessing, echo=FALSE, message=FALSE}
-if( !file.exists('e2-data.txt') ) {
-  dat <- gatherData() 
-  dat <- declareImpossibleRT(dat)
-  #dat <- removeImpossibleTrials(dat)
-  dat <- subset(dat, select=c(Subject, Trial, Item, c_Itm, discriminability, Instruction, nchar_instr, Vagueness, Number, Order, Quantity, c_Vag, c_Num, c_Ord, c_Qty, NaType, response_category, isBorderline, RT, RT_log))
-  write.table(dat, file='e2-data.txt', sep='\t', quote=FALSE, row.names = FALSE)
-}
+Concatenate the raw data.
+```{r, 'Concatenate the raw data'}
+dat <- concatenate_raw_data()
+dat %>% select(RT, RESPONSE, response_category) %>% summary() 
 ```
 
-```{r}
+Catch impossible RTs: sticky fingers (RT<=1) and near timeouts (RT>59,998ms)
+```{r, 'declare_impossible_rt'}
+dat <- declare_impossible_rt(dat)
+dat %>% select(RT, RESPONSE, response_category, NaType) %>% summary()
+# show the NA trials
+dat %>% filter(is.na(RT)) %>% select(RT_original, RESPONSE, NaType, RT, response_category) 
+```
+
+```{r, 'write the raw data to file'}
+write.table(dat %>% select(Subject, Trial, Item, c_Itm, discriminability, Instruction, nchar_instr, Vagueness, Number, Order, Quantity, c_Vag, c_Num, c_Ord, c_Qty, NaType, response_category, isBorderline, RT, RT_log), file='e2-data.txt', sep='\t', quote=FALSE, row.names = FALSE)
+```
+
+Get the raw data.
+```{r, 'get the raw data from file'}
 raw_data <- read.delim('e2-data.txt')
 ```
 
-```{r}
-ggplot(data=raw_data, aes(RT_log)) + geom_density() +xlim(6,11)+ylim(0,0.8)
-```
-
-```{r}
+Trim the data.
+```{r, 'trim the data'}
 trim_data <- perSubjectTrim.fnc(data = raw_data[complete.cases(raw_data),], response='RT', subject='Subject', trim = 2.5)$data
-```
-
-```{r}
-ggplot(data=trim_data, aes(RT_log)) + geom_density()+xlim(6,11)+ylim(0,0.8)
-```
-
-```{r}
-data.frame(obs=1:7680, raw=raw_data$RT_log, trim=c(trim_data$RT_log,rep(NA, times=239))) %>% 
-  gather(key="type", value="value", raw, trim) %>%
-  ggplot(aes(x=value, col=type)) + geom_density() + theme_bw() + theme(panel.grid = element_blank()) 
 ```
 
 # Response time data
 
-```{r}
+```{r, 'select the response time data'}
 rtdata <- trim_data
+```
+
+```{r, 'plot the distribution of the trimmed data', fig.width=3, fig.height=3}
+ggplot(data=rtdata, aes(RT_log)) + geom_density() + theme(aspect.ratio = 1)
 ```
 
 ```{r e2-rtplot, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE}
