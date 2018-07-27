@@ -18,22 +18,15 @@ if (getwd() != root) setwd(root)
 
 ```{r "load Libraries and source my functions", message=FALSE, echo=FALSE}
 library(knitr)
-#library(Matrix)
-library(ggplot2)
-library(xtable)
-library(gridExtra)
+library(tidyverse)
+library(tidymodels)
+library(broom.mixed)
 library(lme4)
 library(lmerTest)
-library(data.table)
-library(dplyr)
-library(dtplyr)
-#library(pander)
-library(LMERConvenienceFunctions)
-library(kableExtra)
 library(dotwhisker)
-library(tidymodels)
-library(tidyverse)
-library(broom.mixed)
+library(kableExtra)
+library(LMERConvenienceFunctions)
+library(data.table)
 source('../functions/summarySEwithin2.R')
 source('../functions/e2-preprocessing.R')
 source('../functions/pretty_coef_table.R')
@@ -148,7 +141,7 @@ bldata <- trim_data
 ```{r e2-blBarChart, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE}
 bldata$response_category <- relevel(bldata$response_category, ref='expected')
 
-blBarChart = ggplot(bldata) + geom_bar(aes(response_category, group=Number:Vagueness, fill=Vagueness), possition=position_dodge(width=NULL)) +   scale_fill_grey() + xlab(NULL) + ggtitle('Borderline response distribution') + facet_grid(~Number) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15))
+blBarChart = ggplot(bldata) + geom_bar(aes(response_category, group=Number:Vagueness, fill=Vagueness), position=position_dodge(width=NULL)) +   scale_fill_grey() + xlab(NULL) + ggtitle('Borderline response distribution') + facet_grid(~Number) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15))
 
 blBarChart
 ```
