@@ -1,0 +1,52 @@
+\documentclass[ %
+  graybox       %
+ ,envcountchap  %
+ ,sectrefs      %
+ ,footinfo      %
+ ,graphics      %
+%,referee
+]{svmono}
+% Native packages
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{type1cm}
+\usepackage{makeidx}		    % allows index generation
+\usepackage{graphicx}		    % standard LaTeX graphics tool
+\usepackage{multicol} 		    % used for the two-column index
+\usepackage[bottom]{footmisc}	% places footnotes at page bottom
+% User packages
+\usepackage{natbib}
+\usepackage{lipsum}
+\usepackage{placeins}
+\usepackage{multirow}			% added by Matt
+\usepackage{marginnote}			% added by Matt
+%\makeindex             		% used for the subject index: please use the style svind.ist with your makeindex program
+\begin{document}
+\author{Kees van Deemter and Matthew Green}
+\title{Vagueness \& Rationality}
+\subtitle{The Elusive Benefits of Vagueness: the Evidence So Far}
+\input{authoring-notes}\newpage~\newpage
+\maketitle
+\frontmatter
+\tableofcontents
+\mainmatter
+\chapter{The Elusive Benefits of Vagueness: Evidence from Experiments}\label{chapterlabel}
+\input{abstract}
+\section{Introduction}\label{introduction}\input{introduction}
+\section{Related work}\label{related-work}\input{related-work}
+\section{Our Approach to the Problem}\label{our-approach-to-the-problem}\input{our-approach-to-the-problem}
+%\section{Experiment 0: the pilot experiment} % This was never in the submitted version
+%\section{Experiment 1: initial experiment}\label{e1}\input{e1}% The reviewer wants this experiment excised.
+\marginnote{the former E1 was excised here. The new numbering is the former E2,3,4 map to the new E1,2,3.}
+\section{Experiment 1: separating vagueness from instruction format}\label{e1}\input{e1}
+\section{Experiment 2: focus on instructions that contain numerals}\label{e2}\input{e2}
+\section{Experiment 3: focus on instructions that do not contain numerals}\label{e3}\input{e3}
+\section{Discussion of experiments 2 and 3}\label{discussion-of-e2-and-e3}\input{discussion-of-e2-and-e3}
+\section{General Discussion}\label{general-discussion}\input{general-discussion}
+\backmatter
+\bibliographystyle{spbasic}
+\bibliography{v-book-2018}
+\backmatter
+%\printindex
+\end{document}
