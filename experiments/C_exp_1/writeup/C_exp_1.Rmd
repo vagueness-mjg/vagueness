@@ -1,20 +1,11 @@
 ---
-title: "This is experiment one in the springer 1 to 3 numbering (originaly called e2)"
+title: "C_exp_1"
 author: "Matt Green"
 output:
   html_document:
     toc: yes
-    toc_float: true
-    mathjax: default
-    template: default
-    <!--code_folding: show-->
-    theme: default
----
-
-```{r 'set working directory', echo=FALSE}
-root="/home/matt/wd/vagueness/experiments/e2/writeup/2018_levy-method"
-if (getwd() != root) setwd(root)
-```
+    toc_float: false
+---    
 
 ```{r 'load Libraries and source my functions', message=FALSE, echo=FALSE}
 library(knitr)
@@ -37,43 +28,114 @@ source('pretty_coef_table.R')
 source('pretty_coef_plot.R')
 ```
 
-```{r "read in the data", echo=F}
+```{r, echo=FALSE}
 dat <- concatenate_raw_data()
 dat <- annotate_the_raw_data(dat)
+```
+
+# Info and Procedure (Method)
+
+To find out what happens when words are used in a context where their potential for vagueness comes to the fore, Experiment 1 used three arrays (rather than two arrays as in pilot experiment B) so that the vague description had more than one possible referent; it used indefinite articles in the vague instructions to avoid the impression that only one response counted as correct; and it was carried out without error feedback.
+
+An indication that the potential for vagueness was realised in Experiment 1 is that the borderline response was chosen fairly often: 16\% of the time.
+
+In Experiment 1, an item was a referring expression instruction followed by a set of three dot arrays defined by a triple of numbers, representing the number of dots in the left, middle, and right arrays. We used four different triples of numbers: (6,15,24); (16,25,34); (26,35,44); (36,45,54). Each set of arrays comprised three arrays (instead of two as in pilot experiment B); the array representing the central number was always presented in the middle of the three; there were two flanking arrays where one had fewer dots than the central array and the other had more, and these flanking arrays appeared equally often on the left and right of the central array.
+
+The way in which borderline responses were construed is as follows, using as an example the array (6:15:24) and instructions that identified the smaller flanking array (6). 6 was classified as the expected response. 15 was classified as the borderline response. 24 was classified as the extreme response. 
+
+* In the "vague numerical" condition the instruction was "Choose a square with about 10 dots" -- none of the arrays contained exactly 10 dots, but 10 is closer to 6 than it is to 15, making 6 a better response to that instruction, 15 a borderline response, and 24 an extreme response. 
+
+* In the vague verbal condition we used "Choose a square with few dots". We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
+
+* In the crisp numerical condition we used "Choose the square with 6 dots". The smaller flanking array always contained exactly the specified number of dots. We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
+
+* For crisp verbal, we used Choose the square with the fewest dots. We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
+
+On each trial, first the referring expression that constituted the instruction for that trial was displayed. 
+Participants then pressed a key to indicate that they had read the instruction. 
+After 1000 ms, the arrays were presented, while preserving the text of the referring expression. 
+The response time dependent variable was measured from the presentation of the arrays, until the keypress indicating the participant's choice, which was also recorded. 
+The trial would timeout after 60 seconds if there was no response.
+In this experiment, no feedback was given. This was because, in the vague conditions, we did not regard any response as "correct" or "incorrect", but instead as "expected response"; "borderline response"; and "extreme response", and we did not want to draw participants' attention to this distinction explicitly. 
+We simply recorded whether the participant chose the best referent, the borderline case or the poorest referent, and how long it took the participant to respond.
+
+# Sample display
+
+Remember to do a screenshot for the sample display.
+
+# Full table of instructions
+
+```{r, echo=FALSE}
+instructions_table <- 
+  dat %>%
+    select(Item, Quantity, Vagueness, Number, Instruction) %>%
+    unique() %>%
+    arrange(Item, Quantity, Vagueness, Number) %>%
+    spread(key=Vagueness, value=Instruction)
+```
+
+```{r, echo=FALSE}
+instructions_table %>% 
+  kable(align='cccll', caption="Full table of instructions") %>% 
+      kable_styling(full_width = F, position = "left", font_size = 11) 
+```
+
+```{r, echo=FALSE, eval=FALSE}
+kable(instructions_table, format="latex", booktabs = TRUE)
+```
+
+# Means plots
+
+```{r, echo=F, message=F, warning=F, results='hide'}
 # at this point RT has min=1 (resp_type="sticky") and max=59,999 (resp_type="timeout")
 dat <- subset(dat, RT>1 & RT<59999)
 # at this point RT has min=445, max=42,685 (42 seconds) and nrow(dat) is 7677 down from 7680
 # Now trim the data
 dat <- perSubjectTrim.fnc(data = dat, response='RT', subject='Subject', trim = 2.5)$data %>% select(-SD, -Mean, -Scaled)
-# Now log the remaining RT
+# Now add log(RT) for the remaining RTs
 dat$RT_log <- log(dat$RT)
 ```
 
-# Analysis including 6:15:24
-
-```{r "make means table", echo=F, message=F, warning=F, results='hide'}
+```{r, echo=F}
 dat_plot <- summarySEwithin2(dat, measurevar="RT_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
 ```
 
-```{r "plotmeans", echo=F}
+```{r, echo=F}
 # correction from Morey (2008) applied to condition means
 mywidth=0
 pdodge=position_dodge(width=mywidth)
 #
 ggplot(dat_plot, aes(x=Item, y=RT_logNormed, group=Vagueness, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci, shape=Vagueness, fill=Vagueness)) +
   facet_wrap(~Number) +
-  scale_fill_grey(name="Vagueness", start=0, end=1) +  
+  scale_fill_grey(name="Vagueness", start=0, end=1) +
   scale_shape_manual(name="Vagueness", values=c(21,22)) +
   theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) +
   ylab("RT log(ms)") +
   #
   geom_errorbar(position=pdodge, width=0.25) +
   geom_line(position=pdodge) +
-  geom_point(position=pdodge, size=2) 
+  geom_point(position=pdodge, size=2)
 ```
 
-Original full model
-```{r "original full RT model", echo=F}
+# Hypotheses
+
+We formulated the following hypotheses for Experiment 1:
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * Vague instructions should result in faster responses than crisp instructions; and this pattern should hold when the model is restricted to numeric-only data and when it is restricted to verbal-only data.
+* [Hypothesis 2] Numeric/Verbal RT: 
+    * There should be no real difference between responses to Numeric instructions and Verbal instructions (based on our interpretation of pilot experiment B, where we thought that vague instructions alone were driving the advantage for instructions that were both vague, and also in verbal format).
+* [Hypothesis 3] Item RT: 
+    * Responses should take longer as the number of dots in the display grows larger (i.e., as the levels of Item increase).
+* [Hypothesis 4] Crisp/Vague Response Type: 
+    * Vague instructions should lead to more borderline responses than crisp instructions.
+
+# Results 
+
+## Full data
+
+Original full model: RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject)
+```{r "original full RT model", echo=F, cache=TRUE}
 dat_model <- dat
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
@@ -82,89 +144,167 @@ rtFullModel <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * 
 pretty_coef_table(rtFullModel, "rtFullModel")
 ```
 
-The reviewer wants us to re-run this analysis without 6:15:24 but just removing that level results in a model that doesn't converge.
-I had to drop c_Vag * c_Itm and c_Itm slopes over subjects to get it to converge.
+Numeric only
+```{r, echo=FALSE}
+dat_model <- droplevels(subset(dat, Number=="Numeric"))
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+rtFullModel_num <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), dat_model)
+pretty_coef_table(rtFullModel_num, "rtFullModel_num")
+```
 
-```{r "original full Model after dropping 6:15:24", echo=F}
+Verbal only
+```{r, echo=FALSE}
+dat_model <- droplevels(subset(dat, Number=="Verbal"))
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+rtFullModel_verb <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), dat_model)
+pretty_coef_table(rtFullModel_verb, "rtFullModel_verb")
+```
+
+On the basis of the initial full model:
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * Vague instructions actually led to significantly slower responses than crisp instructions, against Hypothesis 1.
+    * When the model was restricted to numeric-only instructions Vague instructions still led to significantly slower responses than crisp instructions
+    * When the model was restricted to verbal-only instructions Vague instructions tended to slow responses, but not significantly.
+* [Hypothesis 2] Numeric/Verbal RT: 
+    * There was actually a significant difference between numeric and verbal instructions, with numeric instructions leading to longer responses than verbal instructions, against Hypothesis 2
+* [Hypothesis 3] Item RT: 
+    * Responses took longer as the levels of Item increased, supporting Hypothesis 3
+* [Hypothesis 4] Response Type:
+    * Participants were significantly more likely to choose the borderline option for vague instructions than for crisp instructions (Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format).
+* _Interaction comment goes here_
+
+## Data less 6:15:24
+
+However, given that the plot shows that responses to 6:15:24 in the "crisp numeric" instructions condition were extremely fast relative to the "vague numeric" instructions to 6:15:24, the effects in the model of the full dataset could be driven by this difference. 
+
+A clearer picture of the effects of interest might be obtained by removing the 6:15:24 level of Item from the data set, and fitting the model to this restricted data. Doing this results in the effects tabled below. 
+
+With less data available, the model formula had to be simplified in order to converge -- specifically the following terms were dropped: per-subject slopes for the Vagueness by Item interaction, and per-subject slopes for the effect of Item.
+
+Model of the data after the 6:15:24 level of Item is removed: RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject)
+```{r, echo=F, cache=TRUE}
 dat_model <- droplevels(subset(dat, Item!="06:15:24"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="16:25:34", -.3333, ifelse(dat_model$Item=="26:35:44", .0000, .3333))
-
-# now trying dropping c_Vag * Item slopes for subject, but the model didn't converge.
-#rtFullModelMinus <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num + c_Itm | Subject), dat_model)
-
-# now tring droppping c_Vag * Item slopes for subject, and c_Itm slopes for subject
-rtFullModelMinus <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject), dat_model)
-pretty_coef_table(rtFullModelMinus, "rtFullModelMinus 6:15:24")
+rtRestrictedModel <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject), dat_model)
+pretty_coef_table(rtRestrictedModel, "rtRestrictedModel")
 ```
 
-So, after dropping the 6:15:24 level, there is still a disadvantage for Vagueness, but it is not significant (p=.24). There is still a significant disadvantage for Numeric instruction format (p<.001). There is still a disadvantage for increasing the number of dots but it is not significant (p=.323). The interaction between Vagueness and Instruction format changes sign, and is now non-significant (beta=-.022, p=.374). 
-
-However the full model and the reduced model are not really equivalent because the terms are different in order for the reduced model to converge. What we really want is a full model structure that converges with and without the 6:15:24 item.
-
-If we use the structure of the reduced model for the structure of the full model we get this for the full model:
-
-```{r "full RT model", echo=F}
-dat_model <- dat
+Numeric only after the 6:15:24 level of Item is removed
+```{r, echo=F, cache=TRUE}
+dat_model <- droplevels(subset(dat, Item!="06:15:24" & Number=="Numeric"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
-dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
-dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
-rtFullModel2 <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject), dat_model)
-pretty_coef_table(rtFullModel2, "rtFullModel2")
+dat_model$c_Itm <- ifelse(dat_model$Item=="16:25:34", -.3333, ifelse(dat_model$Item=="26:35:44", .0000, .3333))
+rtRestrictedModel_num <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag | Subject), dat_model)
+pretty_coef_table(rtRestrictedModel_num, "rtRestrictedModel_num")
 ```
 
-and this for the reduced model:
-
-```{r}
-pretty_coef_table(rtFullModelMinus, "rtFullModelMinus 6:15:24")
-```
-
-
-
-
-fullmodel with Helmert contrasts on Item
-```{r "full RT model Helmert", echo=F}
-dat_model <- dat
+Verbal-only after the 6:15:24 level of Item is removed
+```{r, echo=F, cache=TRUE}
+dat_model <- droplevels(subset(dat, Item!="06:15:24" & Number=="Verbal"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
-dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
-contrasts(dat_model$Item) <- contr.helmert(4)
-# had to drop c_Vag * Item slopes for subject
-rtFullModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model)
-pretty_coef_table(rtFullModel_helmert, "c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject)")
+dat_model$c_Itm <- ifelse(dat_model$Item=="16:25:34", -.3333, ifelse(dat_model$Item=="26:35:44", .0000, .3333))
+rtRestrictedModel_verb <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), dat_model)
+pretty_coef_table(rtRestrictedModel_verb, "rtRestrictedModel_verb")
 ```
 
-reducedmodel with Helmert contrasts on Item
-```{r "reduced RT model Helmert", echo=F}
-dat_model <- droplevels(subset(dat, Item!="06:15:24"))
-dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
-dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
-contrasts(dat_model$Item) <- contr.helmert(3)
-# had to drop c_Vag * Item slopes for subject
-rtReducedModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model)
-pretty_coef_table(rtReducedModel_helmert, "c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject)")
-```
+On the basis of the restricted model:
 
-However the plot of means suggests that the main variables are c_Num and Item so it might be better to have a model structure that includes a c_Num*Item term.
+* [Hypothesis 1] Crisp/Vague RT:
+    * after dropping the 6:15:24 level, there is still a disadvantage for Vagueness, but it is not significant (p=.24).
+    * When the model was restricted to numeric-only instructions the disadvantage for vagueness was very small and not significant.
+    * When the model was restricted to verbal-only instructions there was a small and non-significant disadvantage for vagueness.
+* [Hypothesis 2] Numeric/Verbal RT: 
+    * There is still a significant disadvantage for Numeric instruction format (p<.001).
+* [Hypothesis 3] Item RT: 
+    * There is still a disadvantage for increasing the number of dots but it is not significant (p=.323).
+* _Interaction comment goes here_ The interaction between Vagueness and Instruction format changes sign, and is now non-significant (beta=-.022, p=.374). 
 
-```{r}
-dat_model <- dat
-dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
-dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
-contrasts(dat_model$Item) <- contr.helmert(4)
-myMod1 <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Num + Item + c_Num:Item +(1|Subject), dat_model)
-pretty_coef_table(myMod1, "myMod1")
-```
+# Discussion
 
-```{r}
-dat_model <- droplevels(subset(dat, Item!="06:15:24"))
-dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
-dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
-contrasts(dat_model$Item) <- contr.helmert(3)
-myMod2 <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Num + Item + c_Num:Item +(1|Subject), dat_model)
-pretty_coef_table(myMod2, "myMod2:no6:15:24")
-```
 
+
+
+
+
+
+
+
+
+
+
+
+<!-- So,     -->
+
+<!-- However the full model and the reduced model are not really equivalent because the terms are different in order for the reduced model to converge. What we really want is a full model structure that converges with and without the 6:15:24 item. -->
+
+<!-- If we use the structure of the reduced model for the structure of the full model we get this for the full model: -->
+
+<!-- ```{r "full RT model", echo=F} -->
+<!-- dat_model <- dat -->
+<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
+<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
+<!-- dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75))) -->
+<!-- rtFullModel2 <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject), dat_model) -->
+<!-- pretty_coef_table(rtFullModel2, "rtFullModel2") -->
+<!-- ``` -->
+
+<!-- and this for the reduced model: -->
+
+<!-- ```{r} -->
+<!-- pretty_coef_table(rtFullModelMinus, "rtFullModelMinus 6:15:24") -->
+<!-- ``` -->
+
+
+
+
+<!-- fullmodel with Helmert contrasts on Item -->
+<!-- ```{r "full RT model Helmert", echo=F} -->
+<!-- dat_model <- dat -->
+<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
+<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
+<!-- contrasts(dat_model$Item) <- contr.helmert(4) -->
+<!-- # had to drop c_Vag * Item slopes for subject -->
+<!-- rtFullModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model) -->
+<!-- pretty_coef_table(rtFullModel_helmert, "c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject)") -->
+<!-- ``` -->
+
+<!-- reducedmodel with Helmert contrasts on Item -->
+<!-- ```{r "reduced RT model Helmert", echo=F} -->
+<!-- dat_model <- droplevels(subset(dat, Item!="06:15:24")) -->
+<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
+<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
+<!-- contrasts(dat_model$Item) <- contr.helmert(3) -->
+<!-- # had to drop c_Vag * Item slopes for subject -->
+<!-- rtReducedModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model) -->
+<!-- pretty_coef_table(rtReducedModel_helmert, "c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject)") -->
+<!-- ``` -->
+
+<!-- However the plot of means suggests that the main variables are c_Num and Item so it might be better to have a model structure that includes a c_Num*Item term. -->
+
+<!-- ```{r} -->
+<!-- dat_model <- dat -->
+<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
+<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
+<!-- contrasts(dat_model$Item) <- contr.helmert(4) -->
+<!-- myMod1 <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Num + Item + c_Num:Item +(1|Subject), dat_model) -->
+<!-- pretty_coef_table(myMod1, "myMod1") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- dat_model <- droplevels(subset(dat, Item!="06:15:24")) -->
+<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
+<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
+<!-- contrasts(dat_model$Item) <- contr.helmert(3) -->
+<!-- myMod2 <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Num + Item + c_Num:Item +(1|Subject), dat_model) -->
+<!-- pretty_coef_table(myMod2, "myMod2:no6:15:24") -->
+<!-- ``` -->
+
+<!-- ################################################################################################## -->
 
 <!-- Show which RTs were removed by trimming -->
 <!-- ```{r} -->

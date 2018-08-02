@@ -1,4 +1,4 @@
-PWD /home/matt/wd/vagueness-springer-2018/v-book-2018-1-for-resubmission
+PWD /home/matt/wd/vagueness/springer/current
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
@@ -51,6 +51,8 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/marginnote/marginnote.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/marginnote/marginnote.sty
 INPUT v-book-2018.aux
 INPUT v-book-2018.aux
 OUTPUT v-book-2018.aux
@@ -204,12 +206,6 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmbi7t.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7t.vf
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7m.vf
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/psyro.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmbi7t.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmbi8r.tfm
 INPUT figures/e2-rtplot-1.pdf
@@ -220,6 +216,12 @@ INPUT ./figures/e2-blBarChart-1.pdf
 INPUT ./figures/e2-blBarChart-1.pdf
 INPUT e2.tex
 INPUT e2.tex
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7t.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/zptmcm7m.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/psyro.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT figures/e3-rtplot-1.pdf
 INPUT ./figures/e3-rtplot-1.pdf
 INPUT ./figures/e3-rtplot-1.pdf
