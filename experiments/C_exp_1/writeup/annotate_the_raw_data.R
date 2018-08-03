@@ -33,7 +33,7 @@ annotate_the_raw_data = function (dat) {
   dat$Obs <- 1:7680
   
   # remove variables that don't matter for purposes of RT analysis
-  dat <- select(dat, Obs, Trial, Instruction, Subject, Item, Quantity, Order, Vagueness, Number, RT)
+  #dat <- select(dat, Obs, Trial, Instruction, Subject, Item, Quantity, Order, Vagueness, Number, response_category, isBorderline, RT)
   
   return(dat)
 }  

@@ -10,7 +10,7 @@ output:
 ```{r 'load Libraries and source my functions', message=FALSE, echo=FALSE}
 library(knitr)
 library(tidyverse)
-#library(tidymodels)
+library(tidymodels)
 library(broom.mixed)
 library(lme4)
 library(lmerTest)
@@ -21,6 +21,7 @@ library(data.table)
 library(gridExtra)
 source('summarySEwithin2.R')
 source('concatenate_raw_data.R')
+source('add_borderline_vars.R')
 source('annotate_the_raw_data.R')
 source('declare_impossible_rt.R')
 source('remove_impossible_trials.R')
@@ -28,10 +29,23 @@ source('pretty_coef_table.R')
 source('pretty_coef_plot.R')
 ```
 
-```{r, echo=FALSE}
-dat <- concatenate_raw_data()
-dat <- annotate_the_raw_data(dat)
+```{r, "get data for RT analysis", echo=F, message=F, warning=F, results='hide'}
+dat <- 
+  concatenate_raw_data() %>%
+  annotate_the_raw_data() %>% # at this point RT has min=1 (resp_type="sticky") and max=59,999 (resp_type="timeout")
+  filter(RT>1 & RT<59999) # at this point RT has min=445, max=42,685 (42 seconds) and nrow(dat) is 7677 down from 7680
+dat <- perSubjectTrim.fnc(dat, response='RT', subject='Subject', trim = 2.5)$data %>% select(-SD, -Mean, -Scaled)
+dat$RT_log <- log(dat$RT)
 ```
+
+```{r, "get data for borderline analysis", echo=F}
+dat_borderline <- 
+  concatenate_raw_data() %>%
+  add_borderline_vars() %>%
+  annotate_the_raw_data() %>% # at this point RT has min=1 (resp_type="sticky") and max=59,999 (resp_type="timeout")
+  filter(RT>1 & RT<59999) # at this point RT has min=445, max=42,685 (42 seconds) and nrow(dat) is 7677 down from 7680
+```
+
 
 # Info and Procedure (Method)
 
@@ -86,36 +100,43 @@ kable(instructions_table, format="latex", booktabs = TRUE)
 
 # Means plots
 
-```{r, echo=F, message=F, warning=F, results='hide'}
-# at this point RT has min=1 (resp_type="sticky") and max=59,999 (resp_type="timeout")
-dat <- subset(dat, RT>1 & RT<59999)
-# at this point RT has min=445, max=42,685 (42 seconds) and nrow(dat) is 7677 down from 7680
-# Now trim the data
-dat <- perSubjectTrim.fnc(data = dat, response='RT', subject='Subject', trim = 2.5)$data %>% select(-SD, -Mean, -Scaled)
-# Now add log(RT) for the remaining RTs
-dat$RT_log <- log(dat$RT)
-```
-
 ```{r, echo=F}
 dat_plot <- summarySEwithin2(dat, measurevar="RT_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
 ```
 
-```{r, echo=F}
+```{r, "RT condition means plot", fig.width=7, fig.height=3.5, echo=FALSE, results='hide'}
 # correction from Morey (2008) applied to condition means
 mywidth=0
 pdodge=position_dodge(width=mywidth)
 #
 ggplot(dat_plot, aes(x=Item, y=RT_logNormed, group=Vagueness, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci, shape=Vagueness, fill=Vagueness)) +
+  ggtitle("Response time condition means") +
   facet_wrap(~Number) +
   scale_fill_grey(name="Vagueness", start=0, end=1) +
   scale_shape_manual(name="Vagueness", values=c(21,22)) +
-  theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) +
-  ylab("RT log(ms)") +
+  theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_rect(fill="white", colour="black"), strip.background=element_blank(), legend.key = element_blank(), legend.key.size=unit(4, 'mm'), legend.position="top", axis.text.x = element_text(angle = 15)) +
+  ylab("RT log(ms)") + xlab(NULL) +
   #
   geom_errorbar(position=pdodge, width=0.25) +
   geom_line(position=pdodge) +
   geom_point(position=pdodge, size=2)
+
 ```
+
+```{r, "Borderline response distribution plot", fig.width=7, fig.height=3.5, echo=FALSE, results='hide'}
+dat_borderline$response_category <- relevel(dat_borderline$response_category, ref='expected')
+
+ggplot(dat_borderline) + 
+  geom_bar(aes(response_category, group=Number:Vagueness, fill=Vagueness), position=position_dodge(width=NULL)) +   
+  scale_fill_grey() + 
+  xlab(NULL) + 
+  ggtitle('Borderline response distribution') + 
+  facet_grid(~Number) +
+  theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="top", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15))
+
+```
+
 
 # Hypotheses
 
@@ -134,7 +155,7 @@ We formulated the following hypotheses for Experiment 1:
 
 ## Full data
 
-Original full model: RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject)
+Original full model
 ```{r "original full RT model", echo=F, cache=TRUE}
 dat_model <- dat
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
@@ -162,6 +183,16 @@ rtFullModel_verb <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_I
 pretty_coef_table(rtFullModel_verb, "rtFullModel_verb")
 ```
 
+Borderline model
+```{r 'bl-full-model', cache=TRUE, echo=FALSE}
+dat_model <- dat_borderline
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+blFullModel <- lme4::glmer(isBorderline ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), dat_model, family="binomial", control = glmerControl(optimizer = "bobyqa"))
+pretty_coef_table(blFullModel, "blFullModel")
+```
+
 On the basis of the initial full model:
 
 * [Hypothesis 1] Crisp/Vague RT:
@@ -184,7 +215,7 @@ A clearer picture of the effects of interest might be obtained by removing the 6
 
 With less data available, the model formula had to be simplified in order to converge -- specifically the following terms were dropped: per-subject slopes for the Vagueness by Item interaction, and per-subject slopes for the effect of Item.
 
-Model of the data after the 6:15:24 level of Item is removed: RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject)
+Model of the data after the 6:15:24 level of Item is removed
 ```{r, echo=F, cache=TRUE}
 dat_model <- droplevels(subset(dat, Item!="06:15:24"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
@@ -222,7 +253,7 @@ On the basis of the restricted model:
     * There is still a significant disadvantage for Numeric instruction format (p<.001).
 * [Hypothesis 3] Item RT: 
     * There is still a disadvantage for increasing the number of dots but it is not significant (p=.323).
-* _Interaction comment goes here_ The interaction between Vagueness and Instruction format changes sign, and is now non-significant (beta=-.022, p=.374). 
+* The interaction between Vagueness and Instruction format changes sign, and is now non-significant (beta=-.022, p=.374). 
 
 # Discussion
 
@@ -232,303 +263,7 @@ In this experiment we found in contrast that vague instructions resulted in slow
 
 We also found that the effect of instruction format was significant, with numerical format slowing responses by 689 ms on average, such that the disadvantage of numerical format overwhelmed the contribution of vagueness. The verbal vague condition still yielded faster responses than the numerical crisp condition, so the pattern from pilot experiment B was reproduced, but in the light of the evidence from this experiment (Experiment 1), in the presence of borderline cases, the advantage that was ascribed to vagueness before now looks more like an advantage of verbal instruction format.
 
-However, once again there is a possibly confounding factor. Observe that, in Experiment 1, instruction format (i.e., the choice between numeric and verbal) went hand in hand with might be called the (human) "selection algorithm": To see this, consider the task of selecting the dot array that contains "few dots":" to do this, it suffices to _compare_ the three arrays and select the one that contains the fewest elements.  To select the dot array that contains "16 dots" seems to require the participant to estimate, and then _match_, the cardinality of (at least) one dot array to 16, a process which could plausibly take longer, independently of vagueness. Therefore, our results so far permit the interpretation that what made the instructions in the verbal condition fast is not the fact that they were worded verbally, but that they allowed participants to use _comparison_ rather than having to resort to _matching_.
+However, once again there is a possibly confounding factor. Observe that, in Experiment 1, instruction format (i.e., the difference between numeric and verbal) went hand in hand with might be called the (human) "selection algorithm": To see this, consider the task of selecting the dot array that contains "few dots":" to do this, it suffices to _compare_ the three arrays and select the one that contains the fewest elements.  To select the dot array that contains "16 dots" seems to require the participant to estimate, and then _match_, the cardinality of (at least) one dot array to 16, a process which could plausibly take longer, independently of vagueness. Therefore, our results so far permit the interpretation that what made the instructions in the verbal condition fast is not the fact that they were worded verbally, but that they allowed participants to use _comparison_ rather than having to resort to _matching_.
 
 In the next two experiments we pitted the comparison algorithm and matching algorithm selection tasks against each other while controlling vagueness and instruction format. In Experiment 2 we restricted all the instructions to numeric quantifiers while factorially manipulating vagueness and selection task. In Experiment 3 we ensured that all instructions used verbal quantifiers, while also factorially manipulating vagueness and selection task. This allowed us to distinguish between the predictions of the selection task account and the instruction format account. 
 
-
-
-
-
-
-
-
-
-
-<!-- So,     -->
-
-<!-- However the full model and the reduced model are not really equivalent because the terms are different in order for the reduced model to converge. What we really want is a full model structure that converges with and without the 6:15:24 item. -->
-
-<!-- If we use the structure of the reduced model for the structure of the full model we get this for the full model: -->
-
-<!-- ```{r "full RT model", echo=F} -->
-<!-- dat_model <- dat -->
-<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
-<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
-<!-- dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75))) -->
-<!-- rtFullModel2 <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject), dat_model) -->
-<!-- pretty_coef_table(rtFullModel2, "rtFullModel2") -->
-<!-- ``` -->
-
-<!-- and this for the reduced model: -->
-
-<!-- ```{r} -->
-<!-- pretty_coef_table(rtFullModelMinus, "rtFullModelMinus 6:15:24") -->
-<!-- ``` -->
-
-
-
-
-<!-- fullmodel with Helmert contrasts on Item -->
-<!-- ```{r "full RT model Helmert", echo=F} -->
-<!-- dat_model <- dat -->
-<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
-<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
-<!-- contrasts(dat_model$Item) <- contr.helmert(4) -->
-<!-- # had to drop c_Vag * Item slopes for subject -->
-<!-- rtFullModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model) -->
-<!-- pretty_coef_table(rtFullModel_helmert, "c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject)") -->
-<!-- ``` -->
-
-<!-- reducedmodel with Helmert contrasts on Item -->
-<!-- ```{r "reduced RT model Helmert", echo=F} -->
-<!-- dat_model <- droplevels(subset(dat, Item!="06:15:24")) -->
-<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
-<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
-<!-- contrasts(dat_model$Item) <- contr.helmert(3) -->
-<!-- # had to drop c_Vag * Item slopes for subject -->
-<!-- rtReducedModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model) -->
-<!-- pretty_coef_table(rtReducedModel_helmert, "c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject)") -->
-<!-- ``` -->
-
-<!-- However the plot of means suggests that the main variables are c_Num and Item so it might be better to have a model structure that includes a c_Num*Item term. -->
-
-<!-- ```{r} -->
-<!-- dat_model <- dat -->
-<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
-<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
-<!-- contrasts(dat_model$Item) <- contr.helmert(4) -->
-<!-- myMod1 <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Num + Item + c_Num:Item +(1|Subject), dat_model) -->
-<!-- pretty_coef_table(myMod1, "myMod1") -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- dat_model <- droplevels(subset(dat, Item!="06:15:24")) -->
-<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
-<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
-<!-- contrasts(dat_model$Item) <- contr.helmert(3) -->
-<!-- myMod2 <- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Num + Item + c_Num:Item +(1|Subject), dat_model) -->
-<!-- pretty_coef_table(myMod2, "myMod2:no6:15:24") -->
-<!-- ``` -->
-
-<!-- ################################################################################################## -->
-
-<!-- Show which RTs were removed by trimming -->
-<!-- ```{r} -->
-<!-- ggplot(data=dat, aes(x=Trial, y=RT)) + -->
-<!--   geom_point(aes(colour=was_RT_removed_by_trimming), size=.5) +  -->
-<!--   facet_wrap(~Subject)+ -->
-<!--   theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) -->
-<!-- ``` -->
-
-<!-- Show which Rts were removed by trimming, shown as log RT -->
-<!-- ```{r} -->
-<!-- ggplot(data=dat, aes(x=Trial, y=log(RT))) + -->
-<!--   geom_point(aes(colour=was_RT_removed_by_trimming), size=.5) +  -->
-<!--   facet_wrap(~Subject)+ -->
-<!--   theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) -->
-<!-- ``` -->
-
-<!-- Show how distributions of Rt change according to trimming, in log RT -->
-<!-- ```{r} -->
-<!-- dat %>% gather(key=whether_trimmed, value=time, RT, RT_trimmed) %>% -->
-<!--   ggplot(aes(log(time))) + -->
-<!--   geom_density(aes(group=whether_trimmed, colour=whether_trimmed)) +  -->
-<!--   facet_wrap(~Subject, scales="free") + -->
-<!--   theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black"))  -->
-<!-- ``` -->
-
-<!-- Make RT log and reciprocal, from the trimmed RT in ms. -->
-<!-- ```{r} -->
-<!-- dat$RT_trimmed_log <- log(dat$RT_trimmed) -->
-<!-- dat$RT_trimmed_rcp <- -1/(dat$RT_trimmed) -->
-<!-- ``` -->
-
-<!-- plot transformations of rt in the trimmed data -->
-
-<!-- ```{r, warning=FALSE, echo=F} -->
-<!-- p.dens <- -->
-<!-- dat %>% -->
-<!--   gather(key=metric, value=value, RT_trimmed, RT_trimmed_log, RT_trimmed_rcp) %>% -->
-<!--     ggplot(aes(value)) + -->
-<!--     geom_density() + -->
-<!--     facet_wrap(~metric, scales="free") + -->
-<!--     theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) -->
-<!-- ``` -->
-
-<!-- ```{r, warning=FALSE, echo=F} -->
-<!-- p.point <- -->
-<!-- dat %>% -->
-<!--   gather(key=metric, value=value, RT_trimmed, RT_trimmed_log, RT_trimmed_rcp) %>% -->
-<!--     ggplot(aes(x=Obs, y=value)) + -->
-<!--     geom_point(size=.1) + -->
-<!--     facet_wrap(~metric, scales="free") + -->
-<!--     theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) -->
-<!-- ``` -->
-
-<!-- ```{r, warning=FALSE, echo=F} -->
-<!-- grid.arrange(p.dens,p.point) -->
-<!-- ``` -->
-
-<!-- Compute the ci's from untransformed data that were trimmed using summarysewithin2 and plot them on a log scale to reproduce the plot in the Springer submission. -->
-
-<!-- ```{re2-rtplot, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE} -->
-<!-- rtdataplot1 <- summarySEwithin2(dat, measurevar="RT_trimmed_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject") -->
-
-<!-- rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness)) -->
-
-<!-- ggplot(rtdataplot1, aes(x=Item, group=Condition, fill=Vagueness)) +  -->
-<!--   geom_line(aes(x=Item, y=log(RT_trimmedNormed))) + -->
-<!--   facet_grid(~Number) -->
-
-
-
-<!-- +  -->
-<!--   geom_errorbar(width=.2, aes(ymin=RT_trimmedNormed-ci, ymax=RT_trimmedNormed+ci)) +  -->
-<!--   geom_point(size=2, col=1, aes(shape=Vagueness)) +  -->
-<!--   scale_fill_grey(name="Vagueness", start=0, end=1) +   -->
-<!--   scale_shape_manual(name="Vagueness", values=c(21,22)) +  -->
-<!--   ggtitle("Response time") +  -->
-<!--   ylab("Respone time (log (ms))") +  -->
-<!--   xlab(NULL) +  -->
-<!--   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background=element_rect(fill=NA, color='white'), strip.background=element_blank(), axis.text.x = element_text(angle = 15))  -->
-
-
-
-<!-- ``` -->
-
-
-
-<!-- ```{r e2-rtplot, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE} -->
-<!-- rtdataplot1 <- summarySEwithin2(dat, measurevar="RT_trimmed_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject") -->
-
-<!-- rtdataplot1$Condition <- as.factor(paste(sep=':', rtdataplot1$Number, rtdataplot1$Vagueness)) -->
-
-<!-- rtplot <-  -->
-<!--   ggplot(rtdataplot1, aes(y=RT_trimmed_logNormed, x=Item, group=Condition, fill=Vagueness)) +  -->
-<!--   geom_line() +  -->
-<!--   geom_errorbar(width=.2, aes(ymin=RT_trimmed_logNormed-ci, ymax=RT_trimmed_logNormed+ci)) +  -->
-<!--   geom_point(size=2, col=1, aes(shape=Vagueness)) +  -->
-<!--   scale_fill_grey(name="Vagueness", start=0, end=1) +   -->
-<!--   scale_shape_manual(name="Vagueness", values=c(21,22)) +  -->
-<!--   ggtitle("Response time") +  -->
-<!--   ylab("Respone time (log (ms))") +  -->
-<!--   xlab(NULL) +  -->
-<!--   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background=element_rect(fill=NA, color='white'), strip.background=element_blank(), axis.text.x = element_text(angle = 15)) + facet_grid(~Number) -->
-
-<!-- rtplot -->
-<!-- ``` -->
-
-
-<!-- ## Response time models  -->
-
-<!-- ### Full RT model -->
-
-<!-- ```{r 'rt-full-model', cache=TRUE, echo=TRUE} -->
-<!-- rtFullModel <- lmerTest::lmer(RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), rtdata) -->
-<!-- ``` -->
-
-<!-- ```{r 'make a pretty coefficients table for rtFullModel', echo=FALSE, results='asis'} -->
-<!-- pretty_coef_table(rtFullModel, "rtFullModel") %>% print() -->
-<!-- ``` -->
-
-<!-- ```{r, 'make a pretty coefficients plot for rtFullModel', echo=FALSE, fig.width=6, fig.height=3} -->
-<!-- pretty_coef_plot(rtFullModel, "rtFullModel") -->
-<!-- ``` -->
-
-<!-- ### Numeric only RT model -->
-
-<!-- ```{r 'rt-numeric-only model', cache=TRUE, echo=TRUE} -->
-<!-- rtNumOnlyModel <- lmerTest::lmer(RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), subset(rtdata,Number=="Numeric")) -->
-<!-- ``` -->
-
-<!-- ```{r 'make a pretty coefficients table for rtNumOnlyModel', echo=FALSE, results='asis'} -->
-<!-- pretty_coef_table(rtNumOnlyModel, "rtNumOnlyModel") %>% print() -->
-<!-- ``` -->
-
-<!-- ```{r, 'make a pretty coefficients plot for rtNumOnlyModel', echo=FALSE, fig.width=6, fig.height=3} -->
-<!-- pretty_coef_plot(rtNumOnlyModel, "rtNumOnlyModel") -->
-<!-- ``` -->
-
-<!-- ### Verbal only RT model -->
-
-<!-- ```{r 'rt-verbal-only model', cache=TRUE, echo=TRUE} -->
-<!-- rtVerbalOnlyModel <- lmerTest::lmer(RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), subset(rtdata,Number=="Verbal")) -->
-<!-- ``` -->
-
-<!-- ```{r 'make a pretty coefficients table for rtVerbalOnlyModel', echo=FALSE, results='asis'} -->
-<!-- pretty_coef_table(rtVerbalOnlyModel, "rtVerbalOnlyModel") %>% print() -->
-<!-- ``` -->
-
-<!-- ```{r, 'make a pretty coefficients plot for rtVerbalOnlyModel', echo=FALSE, fig.width=6, fig.height=3} -->
-<!-- pretty_coef_plot(rtVerbalOnlyModel, "rtVerbalOnlyModel") -->
-<!-- ``` -->
-
-<!-- # Borderline response data -->
-
-<!-- ```{r} -->
-<!-- bldata <- trim_data -->
-<!-- ``` -->
-
-<!-- ```{r e2-blBarChart, fig.width=7, fig.height=3.5, echo=FALSE, message=FALSE} -->
-<!-- bldata$response_category <- relevel(bldata$response_category, ref='expected') -->
-
-<!-- blBarChart = ggplot(bldata) + geom_bar(aes(response_category, group=Number:Vagueness, fill=Vagueness), position=position_dodge(width=NULL)) +   scale_fill_grey() + xlab(NULL) + ggtitle('Borderline response distribution') + facet_grid(~Number) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="right", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15)) -->
-
-<!-- blBarChart -->
-<!-- ``` -->
-
-<!-- ## Borderline response models -->
-
-<!-- ### Full borderline response model -->
-
-<!-- ```{r 'bl-full-model', cache=TRUE, echo=TRUE} -->
-<!-- blFullModel <- lme4::glmer(isBorderline ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), bldata, family="binomial", control = glmerControl(optimizer = "bobyqa")) -->
-<!-- ``` -->
-
-<!-- ```{r 'make a pretty coefficients table for blFullModel', echo=FALSE, results='asis'} -->
-<!-- pretty_coef_table(blFullModel, "blFullModel") %>% print() -->
-<!-- ``` -->
-
-<!-- ```{r, 'make a pretty coefficients plot for blFullModel', echo=FALSE, fig.width=6, fig.height=3} -->
-<!-- pretty_coef_plot(blFullModel, "blFullModel") -->
-<!-- ``` -->
-
-
-
-<!-- Original fullmodel with Helmert contrasts on Item -->
-<!-- ```{r "original full RT model Helmert", echo=4:5} -->
-<!-- dat_model <- dat -->
-<!-- dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5) -->
-<!-- dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5) -->
-<!-- contrasts(dat_model$Item) <- contr.helmert(4) -->
-<!-- # had to drop c_Vag * Item slopes for subject -->
-<!-- rtFullModel_helmert <- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + Item + (1 + c_Vag + c_Num + Item | Subject), dat_model) -->
-<!-- pretty_coef_table(rtFullModel_helmert, "rtFullModel Helmert") -->
-<!-- ``` -->
-
-
-
-
-<!-- # Re-run without 6:15:24 -->
-<!-- ```{r, echo=F, message=F, warning=F, results='hide'} -->
-<!-- dat_reduced <- droplevels(subset(dat, Item!="06:15:24")) -->
-<!-- dat_plot <- summarySEwithin2(dat_reduced, measurevar="RT_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject") -->
-<!-- ``` -->
-
-<!-- ```{r, echo=F, results='hide'} -->
-<!-- # correction from Morey (2008) applied to condition means -->
-<!-- mywidth=0 -->
-<!-- pdodge=position_dodge(width=mywidth) -->
-<!-- # -->
-<!-- ggplot(dat_plot, aes(x=Item, y=RT_logNormed, group=Vagueness, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci, shape=Vagueness, fill=Vagueness)) + -->
-<!--   facet_wrap(~Number) + -->
-<!--   scale_fill_grey(name="Vagueness", start=0, end=1) +   -->
-<!--   scale_shape_manual(name="Vagueness", values=c(21,22)) + -->
-<!--   theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background=element_rect(fill="white", colour="black")) + -->
-<!--   ylab("RT log(ms)") + -->
-<!--   # -->
-<!--   geom_errorbar(position=pdodge, width=0.25) + -->
-<!--   geom_line(position=pdodge) + -->
-<!--   geom_point(position=pdodge, size=2)  -->
-<!-- ``` -->
