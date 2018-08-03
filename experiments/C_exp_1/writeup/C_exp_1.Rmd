@@ -217,7 +217,7 @@ On the basis of the restricted model:
 * [Hypothesis 1] Crisp/Vague RT:
     * after dropping the 6:15:24 level, there is still a disadvantage for Vagueness, but it is not significant (p=.24).
     * When the model was restricted to numeric-only instructions the disadvantage for vagueness was very small and not significant.
-    * When the model was restricted to verbal-only instructions there was a small and non-significant disadvantage for vagueness.
+    * When the model was restricted to verbal-only instructions the disadvantage for vagueness was small and not significant.
 * [Hypothesis 2] Numeric/Verbal RT: 
     * There is still a significant disadvantage for Numeric instruction format (p<.001).
 * [Hypothesis 3] Item RT: 
