@@ -10,7 +10,7 @@ output:
 ```{r 'load Libraries and source my functions', message=FALSE, echo=FALSE}
 library(knitr)
 library(tidyverse)
-library(tidymodels)
+#library(tidymodels)
 library(broom.mixed)
 library(lme4)
 library(lmerTest)
@@ -226,8 +226,15 @@ On the basis of the restricted model:
 
 # Discussion
 
+This experiment tested whether vague instructions would result in faster responses than crisp instructions, when borderline cases were present. Faster responses for vague instructions were found in pilot experiment B, but there were no borderline cases in that experiment.
 
+In this experiment we found in contrast that vague instructions resulted in slower responses than crisp instructions: a difference that was significant when considering the full data (112ms), but which was not significant after removing the smallest arrays from the analysis, which had a pattern opposite to the main trends in the rest of the data.
 
+We also found that the effect of instruction format was significant, with numerical format slowing responses by 689 ms on average, such that the disadvantage of numerical format overwhelmed the contribution of vagueness. The verbal vague condition still yielded faster responses than the numerical crisp condition, so the pattern from pilot experiment B was reproduced, but in the light of the evidence from this experiment (Experiment 1), in the presence of borderline cases, the advantage that was ascribed to vagueness before now looks more like an advantage of verbal instruction format.
+
+However, once again there is a possibly confounding factor. Observe that, in Experiment 1, instruction format (i.e., the choice between numeric and verbal) went hand in hand with might be called the (human) "selection algorithm": To see this, consider the task of selecting the dot array that contains "few dots":" to do this, it suffices to _compare_ the three arrays and select the one that contains the fewest elements.  To select the dot array that contains "16 dots" seems to require the participant to estimate, and then _match_, the cardinality of (at least) one dot array to 16, a process which could plausibly take longer, independently of vagueness. Therefore, our results so far permit the interpretation that what made the instructions in the verbal condition fast is not the fact that they were worded verbally, but that they allowed participants to use _comparison_ rather than having to resort to _matching_.
+
+In the next two experiments we pitted the comparison algorithm and matching algorithm selection tasks against each other while controlling vagueness and instruction format. In Experiment 2 we restricted all the instructions to numeric quantifiers while factorially manipulating vagueness and selection task. In Experiment 3 we ensured that all instructions used verbal quantifiers, while also factorially manipulating vagueness and selection task. This allowed us to distinguish between the predictions of the selection task account and the instruction format account. 
 
 
 
