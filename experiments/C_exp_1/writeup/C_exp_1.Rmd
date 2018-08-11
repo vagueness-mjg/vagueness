@@ -10,7 +10,7 @@ output:
 ```{r 'load Libraries and source my functions', message=FALSE, echo=FALSE}
 library(knitr)
 library(tidyverse)
-library(tidymodels)
+library(broom)
 library(broom.mixed)
 library(lme4)
 library(lmerTest)
@@ -19,19 +19,18 @@ library(kableExtra)
 library(LMERConvenienceFunctions)
 library(data.table)
 library(gridExtra)
-source('summarySEwithin2.R')
-source('concatenate_raw_data.R')
-source('add_borderline_vars.R')
-source('annotate_the_raw_data.R')
-source('declare_impossible_rt.R')
-source('remove_impossible_trials.R')
-source('pretty_coef_table.R')
-source('pretty_coef_plot.R')
+source("C_exp_1_functions/concatenate_raw_data.R")
+source("C_exp_1_functions/annotate_the_raw_data.R")
+source("C_exp_1_functions/add_borderline_vars.R")
+source("C_exp_1_functions/pretty_coef_table.R")
+source("C_exp_1_functions/summarySEwithin2.R")
+root_dir <- getwd()
+data_dir <- "C_exp_1_data"
 ```
 
 ```{r, "get data for RT analysis", echo=F, message=F, warning=F, results='hide'}
 dat <- 
-  concatenate_raw_data() %>%
+  concatenate_raw_data(root_dir, data_dir) %>%
   annotate_the_raw_data() %>% # at this point RT has min=1 (resp_type="sticky") and max=59,999 (resp_type="timeout")
   filter(RT>1 & RT<59999) # at this point RT has min=445, max=42,685 (42 seconds) and nrow(dat) is 7677 down from 7680
 dat <- perSubjectTrim.fnc(dat, response='RT', subject='Subject', trim = 2.5)$data %>% select(-SD, -Mean, -Scaled)
@@ -40,7 +39,7 @@ dat$RT_log <- log(dat$RT)
 
 ```{r, "get data for borderline analysis", echo=F}
 dat_borderline <- 
-  concatenate_raw_data() %>%
+  concatenate_raw_data(root_dir, data_dir) %>%
   add_borderline_vars() %>%
   annotate_the_raw_data() %>% # at this point RT has min=1 (resp_type="sticky") and max=59,999 (resp_type="timeout")
   filter(RT>1 & RT<59999) # at this point RT has min=445, max=42,685 (42 seconds) and nrow(dat) is 7677 down from 7680
@@ -86,16 +85,10 @@ instructions_table <-
     unique() %>%
     arrange(Item, Quantity, Vagueness, Number) %>%
     spread(key=Vagueness, value=Instruction)
-```
-
-```{r, echo=FALSE}
+# kable(instructions_table, format="latex", booktabs = TRUE)
 instructions_table %>% 
   kable(align='cccll', caption="Full table of instructions") %>% 
       kable_styling(full_width = F, position = "left", font_size = 11) 
-```
-
-```{r, echo=FALSE, eval=FALSE}
-kable(instructions_table, format="latex", booktabs = TRUE)
 ```
 
 # Means plots
