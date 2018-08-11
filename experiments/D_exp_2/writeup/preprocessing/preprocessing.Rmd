@@ -1,5 +1,8 @@
 ```{r readdata}
 
+# The policy as of Aug 2018 is that:
+# RT=0 is stripped, and one case with a very long time RT=49871 is stripped.
+
 # The policy for this file as of May 2017 is not to remove any cases (rows). 
 # That means that one case of RT=0 exists, and one case with a very long time RT=49871 exists.
 # The input is the concatenated individual subject files (data_raw.txt).
@@ -199,30 +202,24 @@ dat[ dat$Condition==3 , 'Vagueness'] <- 'Vague'
 dat[ dat$Condition==4 , 'Vagueness'] <- 'Crisp'
 dat$Vagueness <- as.factor(dat$Vagueness)
 
-
-
+# Create a factor coding for Selection
 dat$Selection = ""
 dat[dat$Condition %in% c(3,4), "Selection"] <- "Comparison"
 dat[dat$Condition %in% c(1,2), "Selection"] <- "Matching"
 dat$Condition <- NULL
-
 dat$Selection <- as.factor(dat$Selection)
 
 # ORDER
 # give the levels of Order meaningful names
 dat$Order <- factor(dat$Order, levels=c(1,2), labels=c('LtoR','RtoL'))
 
-
 # QUANTITY
 # give the levels of Quantity meaningful names
 dat$Quantity <- factor(dat$Quantity, levels=c(1,2), labels=c('Small','Large'))
 
-
-
 # INSTRUCTION
 # add number of characters in the instruction # 29 30 34 36 38
 dat$nchar_instr = nchar(as.character(dat$Instruction))
-
 
 # make Instruction be a factor (17 levels)
 dat$Instruction <- as.factor(dat$Instruction) 
@@ -233,26 +230,19 @@ dat$RT_log       <- log(dat$RT)
 dat$RT_raw       <- dat$RT
 
 # add preceding RT
-my_rt <- dat$RT[-1]
-
 dat$RTprev <- c(NA,dat$RT[1:nrow(dat)-1])
 
 # add transformations of previous RT
 dat$RTprev_log       <- log(dat$RTprev)
 dat$RTprev_raw       <- dat$RTprev
 
-
-dat$RT <- NULL
 dat$RTprev <- NULL
 
 dat$rt_instr <- dat$Instruction_RT; dat$Instruction_RT <- NULL
 
-# This data set non-impossible trials and renamed/recomputed variables
-# dat.out <- subset(dat, select=c(Subject, Trial, Item, c_Itm, Vagueness, c_Vag, Selection, c_Sel, Instruction, Order, Quantity, RT, RT_log, response_catResponse))
-# write.table(dat.out, file="data_processed.txt")
-
-dat <- subset(dat, select=c(Subject,Item,id,Trial,Vagueness,Selection, 
-                             Order, Quantity, Instruction, nchar_instr, RT_raw, RT_log, RTprev_log, RTprev_raw, rt_instr, response_cat ))
+dat <- subset(dat, 
+              subset=RT>0 & RT<49871,
+              select=c(Subject,Item,id,Trial,Vagueness,Selection, Order, Quantity, Instruction, nchar_instr, RT, RT_raw, RT_log, RTprev_log, RTprev_raw, rt_instr, response_cat ))
 
 write.table(dat, "data_processed.txt")
 summary(dat)

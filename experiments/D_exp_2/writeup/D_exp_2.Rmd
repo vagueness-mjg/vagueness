@@ -49,7 +49,7 @@ pander(i, justify=c('center', 'center'))
 ```
 
 ```{r getData, echo=T}
-# data.txt
+# data_processed.txt has RT subset=RT>0 & RT<49871
 rawdata <- read.table('preprocessing/data_processed.txt', sep=' ')
 ```
 
@@ -105,7 +105,11 @@ ggplot(rawdata, aes(y=RT_log, x=Item, group=Condition, shape=Condition, fill=Con
 
 
 ```{r rtlmer, cache=TRUE}
-rtlmer = lmerTest::lmer(data=rtdata,
+dat_model <- rtdata
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+rtlmer = lmerTest::lmer(data=dat_model,
                         RT_log ~ c_Vag * c_Sel + c_Itm +
                           (1 + c_Vag * c_Sel + c_Itm | Subject))
 ```
@@ -115,13 +119,17 @@ print(xtable(summary(rtlmer)$coef, digits=c(0,2,2,1,1,4)),type='html')
 ```
 
 ```{r seplmersforcomparison, results='asis', cache=TRUE, echo=-3}
-s1 <- subset(rtdata, subset=Selection=='Comparison')
-s1lm <- lmerTest::lmer(data=s1, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
+dat_model <- subset(rtdata, subset=Selection=='Comparison')
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+s1lm <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
 print(xtable(summary(s1lm)$coef, digits=c(0,2,2,1,1,4)), type='html')
 ```
 
 ```{r seplmersformatching, results='asis', cache=TRUE, echo=-3}
-s2 <- subset(rtdata, subset=Selection=='Matching')
-s2lm <- lmerTest::lmer(data=s2, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
+dat_model <- subset(rtdata, subset=Selection=='Matching')
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+s2lm <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
 print(xtable(summary(s2lm)$coef, digits=c(0,2,2,1,1,4)), type='html')
 ```
