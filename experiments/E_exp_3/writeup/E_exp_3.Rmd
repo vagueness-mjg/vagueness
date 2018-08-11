@@ -30,8 +30,8 @@ Each subject saw 192 trials, being 3 cycles of 64 trials. There were 40 subjects
 First an instruction was presented until subjects dismissed it with a key press. Then a grey screen was presented for 1 second. Then a prime was presented for 2 seconds. Then a grey screen was presented for 1 second. Then the squares with dots were presented until the subject responded, with a 10 second timeout if they did not respond.
 
 <figure>
-<img src="./flow-of-experiment4.pdf" alt="Mountain View" style="width:480px;height:300px;">
-<figcaption>Flow of experiment 4.</figcaption>
+<img src="./E_exp_3-flow.jpg" alt="flow-of-D_exp_3" style="width:480px;height:300px;">
+<figcaption>Flow of experiment E_exp_3.</figcaption>
 </figure>
 
 # Describe the data
