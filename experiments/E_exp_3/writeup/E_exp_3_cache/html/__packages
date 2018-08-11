@@ -16,3 +16,7 @@ languageR
 pander
 data.table
 dplyr
+kableExtra
+broom
+broom.mixed
+bindrcpp

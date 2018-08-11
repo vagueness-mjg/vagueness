@@ -20,6 +20,10 @@ table, th, td {
 
 ```{r libs, message=FALSE}
 library(knitr); library(MASS); library(ggplot2); library(lme4); library(xtable); library(plyr); library(lattice); library(LMERConvenienceFunctions); library(car); library(grid); library(lmerTest); library(reshape2); library(ggplot2); library(languageR); library(pander); source('summarySEwithin2.R')
+library(kableExtra)
+library(broom)
+library(broom.mixed)
+source("pretty_coef_table.R")
 ```
 
 # Experiment 4
@@ -117,24 +121,19 @@ rtplot=ggplot(rtdataplot1, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, yma
 rtplot
 ```
 
-```{r rtlmer, cache=TRUE}
-rtlmer = lmerTest::lmer(data=rtdata,
-                        RT_log ~ c_Vag * c_Sel + c_Itm +
-                          (1 + c_Vag * c_Sel + c_Itm | Subject))
-```
-
-```{r rtlmersummaryxtable, results='asis', cache=TRUE, echo=F}
-print(xtable(summary(rtlmer)$coef, digits=c(0,2,2,1,1,4)),type='html')
+```{r rtlmer, results='asis', cache=TRUE, echo=-2}
+rtlmer = lmerTest::lmer(data=rtdata, RT_log ~ c_Vag * c_Sel + c_Itm + (1 + c_Vag * c_Sel + c_Itm | Subject))
+pretty_coef_table(rtlmer, "rtlmer")
 ```
 
 ```{r seplmersforcomparison, results='asis', cache=TRUE, echo=-3}
 s1 <- subset(rtdata, subset=Selection=='Comparison')
 s1lm <- lmerTest::lmer(data=s1, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
-print(xtable(summary(s1lm)$coef, digits=c(0,2,2,1,1,4)), type='html')
+pretty_coef_table(s1lm, "s1lm")
 ```
 
 ```{r seplmersformatching, results='asis', cache=TRUE, echo=-3}
 s2 <- subset(rtdata, subset=Selection=='Matching')
 s2lm <- lmerTest::lmer(data=s2, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
-print(xtable(summary(s2lm)$coef, digits=c(0,2,2,1,1,4)), type='html')
+pretty_coef_table(s2lm, "s2lm")
 ```
