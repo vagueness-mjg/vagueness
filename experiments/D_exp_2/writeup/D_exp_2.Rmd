@@ -1,33 +1,38 @@
 ---
-title: "Experiment 3 of 4"
+title: "D_exp_2"
 author: "Matt Green"
 output:
   html_document:
     toc: true
-    <!--toc_float: true-->
-    mathjax: default
-    template: default
-    code_folding: show
-    theme: default
+    toc_float: false
 ---  
-<style>
-table, th, td {
-    border: 1px grey;
-    border-collapse: collapse;
-    padding:2px 5px 2px 5px
-}  
-</style>
 
-# Experiment 3
-
-```{r loadLibraries, message=FALSE}
-library(knitr); library(MASS); library(ggplot2); library(lme4); library(xtable); library(plyr); library(lattice); library(LMERConvenienceFunctions); library(car); library(grid); library(lmerTest); library(reshape2); library(ggplot2); library(languageR); library(pander); source('summarySEwithin2.R'); library(Hmisc)
+```{r, echo=FALSE, message=FALSE}
+library(knitr)
+library(tidyverse)
 library(broom)
 library(broom.mixed)
-source("add_stars.R")
+library(lme4)
+library(lmerTest)
+library(dotwhisker)
 library(kableExtra)
-source("pretty_coef_table.R")
+library(LMERConvenienceFunctions)
+library(data.table)
+library(gridExtra)
+source("D_exp_2_functions/preprocessing.R")
+source("D_exp_2_functions/pretty_coef_table.R")
+source("D_exp_2_functions/summarySEwithin2.R")
+root_dir <- getwd()
+data_dir <- "D_exp_2_data"
 ```
+
+```{r}
+dat <- preprocessing(root_dir, data_dir)
+dat <- perSubjectTrim.fnc(dat, response='RT', subject='Subject', trim = 2.5)$data
+dat$RT_log <- log(dat$RT)
+```
+
+# Info and Procedure (Method)
 
 Experiment Structure: 
 Each subject saw 192 trials, being 3 cycles of 64 trials. There were 38 participants. There were 7296 rows in the full data set.
@@ -35,42 +40,35 @@ Each subject saw 192 trials, being 3 cycles of 64 trials. There were 38 particip
 Trial Procedure: 
 First an instruction that was a referring expression was presented until participants dismissed it with a key press. Then the squares with dots were presented until the participant responded with a key press, with a 60 second timeout if they did not respond.
 
-```{r showInstructions, echo=FALSE, cache=TRUE}
-v = c("crisp", "crisp", "vague", "vague")
-n = c('number', 'number', 'number', 'number')
-t = c("matching", "comparison", "matching", "comparison")
-e = c("Choose a square with 6 dots", "Choose a square with fewer than 20 dots", "Choose a square with about 10 dots", "Choose a square with far fewer than 20 dots")
-i = data.frame(v, n, t, e)
-names(i) = c("vagueness", "instruction format", "selection task", "example instruction")
-pander(i, justify=c('center', 'left', 'left', 'left'))
+# Sample display
+
+Remember to do a screenshot for the sample display.
+
+# Full table of instructions
+
+```{r, echo=FALSE}
+instructions_table <- 
+  dat %>%
+    select(Item, Quantity, Vagueness, Selection, Instruction) %>%
+    unique() %>%
+    arrange(Item, Quantity, Vagueness, Selection) %>%
+    spread(key=Vagueness, value=Instruction)
+# kable(instructions_table, format="latex", booktabs = TRUE)
+instructions_table %>% 
+  kable(align='cccll', caption="Full table of instructions") %>% 
+      kable_styling(full_width = F, position = "left", font_size = 11) 
 ```
 
-```{r showItems, echo=FALSE, cache=TRUE}
-items = c(1,2,3,4,5,6,7,8)
-i = data.frame(Item = c("1","2","3","4"),
-               x = c("06:15:24", "16:25:34", "26:35:44", "36:45:54"))
-names(i) = c('Item', 'Numbers of dots')
-pander(i, justify=c('center', 'center'))
-```
-
-```{r getData, echo=T}
-# data_processed.txt has RT subset=RT>0 & RT<49871
-rawdata <- read.table('preprocessing/data_processed.txt', sep=' ')
-```
+# Means plots
 
 ```{r trimat25sd}
-trimdata <- perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim = 2.5)$data
-rtdata <- trimdata
+dat_plot <- summarySEwithin2(dat, measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
 ```
 
 ```{r rtplot1, fig.width=7, fig.height=3}
-# this plot uses a precomputed summary done by summarySEwithin
-# and data trimmed at 2.5 sd per subject
-rtdataplot1 <- summarySEwithin2(data=perSubjectTrim.fnc(rawdata, response='RT', subject='Subject', trim = 2.5)$data,
-                                measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
 dodge = position_dodge(width=0.2)
-rtdataplot1$Condition <- as.factor(paste(sep=' ', rtdataplot1$Selection, rtdataplot1$Vagueness))
-rtplot=ggplot(rtdataplot1,
+dat_plot$Condition <- as.factor(paste(sep=' ', dat_plot$Selection, dat_plot$Vagueness))
+rtplot=ggplot(dat_plot,
               aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci,
                 group=Condition, shape=Condition, fill=Condition)) +
   geom_line(position=dodge) +
@@ -90,27 +88,30 @@ rtplot=ggplot(rtdataplot1,
 rtplot
 ```
 
-```{r rtplotHmisc, fig.width=7, fig.height=3}
-# n.b. rtdata has been trimmed at 2.5 sd: use rawdata if you want untrimmed data
-rawdata$Condition <- as.factor(paste(sep=' ', rawdata$Selection, rawdata$Vagueness))
-ggplot(rawdata, aes(y=RT_log, x=Item, group=Condition, shape=Condition, fill=Condition)) + 
-  stat_summary(fun.data = "mean_cl_boot", position=position_dodge(0.2)) +
-  scale_shape_manual("",values = c(22, 22, 21, 21)) +
-  scale_fill_manual("",values=c("black","white","black","white")) +
-  facet_grid(~Selection) +
-  theme(
-    panel.background=element_rect(fill=NA, color='black'),
-    panel.grid.major=element_line(color='grey95'), 
-        #panel.grid.minor = element_blank(),
-        legend.key=element_blank(), 
-        aspect.ratio=1,
-        axis.text.x=element_text(angle = 45, hjust = 1)
-        )
+```{r}
+dat_borderline <- dat
 ```
 
+```{r, "Borderline response distribution plot", fig.width=7, fig.height=3.5, echo=FALSE, results='hide'}
+dat_borderline$response_cat <- factor(dat_borderline$response_cat, levels= c("Near", "Expected", "Far"))
+
+ggplot(dat_borderline) + 
+  geom_bar(aes(response_cat, group=Selection:Vagueness, fill=Vagueness), position=position_dodge(width=NULL)) +   
+  scale_fill_grey() + 
+  xlab(NULL) + 
+  ggtitle('Borderline response distribution') + 
+  facet_grid(~Selection) +
+  theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="top", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15))
+
+```
+
+# Hypotheses
+
+# Results
 
 ```{r rtlmer, cache=TRUE, results='asis'}
-dat_model <- rtdata
+dat_model <- dat
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
@@ -120,18 +121,24 @@ rtlmer = lmerTest::lmer(data=dat_model,
 pretty_coef_table(rtlmer, "rtlmer")
 ```
 
-```{r seplmersforcomparison, results='asis', cache=TRUE, echo=-3}
-dat_model <- subset(rtdata, subset=Selection=='Comparison')
+```{r seplmersforcomparison, results='asis', cache=TRUE, echo=-5}
+dat_model <- subset(dat, subset=Selection=='Comparison')
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
 s1lm <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
 pretty_coef_table(s1lm, "s1lm")
 ```
 
-```{r seplmersformatching, results='asis', cache=TRUE, echo=-3}
-dat_model <- subset(rtdata, subset=Selection=='Matching')
+```{r seplmersformatching, results='asis', cache=TRUE, echo=-5}
+dat_model <- subset(dat, subset=Selection=='Matching')
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
 s2lm <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
 pretty_coef_table(s2lm, "s2lm")
 ```
+
+# Discussion
+
+
+
+
