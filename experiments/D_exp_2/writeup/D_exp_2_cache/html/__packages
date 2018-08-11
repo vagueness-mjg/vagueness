@@ -19,3 +19,7 @@ Formula
 Hmisc
 data.table
 dplyr
+broom
+broom.mixed
+bindrcpp
+kableExtra
