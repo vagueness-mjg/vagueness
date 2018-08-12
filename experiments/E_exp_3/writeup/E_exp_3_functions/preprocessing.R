@@ -1,26 +1,25 @@
 preprocessing = function(root_dir, data_dir) {
   
-  # The policy as of Aug 2018 is that:
-  # RT=0 is stripped, and one case with a very long time RT=49871 is stripped.
-  
   dat <- read.delim(file.path(root_dir, data_dir, "data_raw.txt"), stringsAsFactors = FALSE)
   
   # declare local variables
-  number_of_valid_subjects <- 38
-  number_of_rows <- 7296
-  number_of_trials_per_subject <- number_of_rows / number_of_valid_subjects # 192
+  Number_of_valid_subjects <- 40
+  Number_of_rows <- 7680
+  Number_of_trials_per_subject <- Number_of_rows / Number_of_valid_subjects # 192
   
   # sort out borderline responses into expected near and far
-  dat$RESPONSE <- as.character(dat$RESPONSE)
+  # How many squares in the square they chose? 
+  dat$RESPONSE <- as.character(dat$key)
   for (row in 1 : nrow(dat) ) {
     switch(dat[row,'RESPONSE'],
-           'LEFT' = {dat[row, 'choice'] <- dat[row, 'Left']},
-           'MIDDLE' = {dat[row, 'choice'] <- dat[row, 'Mid']},
-           'RIGHT' = {dat[row, 'choice'] <- dat[row, 'Right']}         
+           'L' = {dat[row, 'choice'] <- dat[row, 'Lft']},
+           'M' = {dat[row, 'choice'] <- dat[row, 'Mid']},
+           'R' = {dat[row, 'choice'] <- dat[row, 'Rgt']}         
     )
   }
-
-  dat$crossed=paste('Con',dat$Condition,':Quan',dat$Quantity,':Item',dat$Item,sep="")
+  dat$Item <- dat$Itm
+  dat$Itm <- NULL
+  dat$crossed=paste('Con',dat$Cnd,':Quan',dat$Qty,':Item',dat$Item,sep="")
   
   dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseExpected'] <-  6 
   dat[dat$crossed=='Con1:Quan1:Item1', 'ResponseNear']     <- 15  
@@ -151,8 +150,8 @@ preprocessing = function(root_dir, data_dir) {
   dat[dat$crossed=='Con4:Quan2:Item4', 'ResponseFar']      <- 36
   
   dat$isResponseExpected <- dat$choice == dat$ResponseExpected
-  dat$isResponseNear <- dat$choice ==     dat$ResponseNear
-  dat$isResponseFar <- dat$choice ==      dat$ResponseFar
+  dat$isResponseNear <- dat$choice == dat$ResponseNear
+  dat$isResponseFar <- dat$choice == dat$ResponseFar
   
   for ( row in 1:nrow(dat) ) {
     dat[row, 'response_cat'] <- 
@@ -161,47 +160,51 @@ preprocessing = function(root_dir, data_dir) {
   }
   
   # ensure Subject is a factor 
-  dat$Subject=factor(paste("s",sprintf("%02d",dat$Subject),sep=""))
+  dat$Subject=factor(paste("s",sprintf("%02d",dat$Sub),sep=""))
   
   # Trial for subject, 1 to 192
-  dat$Trial = rep(x = 1:number_of_trials_per_subject, times = number_of_valid_subjects)
+  dat$Trial = rep(x = 1:Number_of_trials_per_subject, times = Number_of_valid_subjects)
   
-  # id is a unique identifier for the 7296 row data
-  dat$Obs <- 1:number_of_rows
+  # Obs is a unique identifier for the 7680 row data
+  dat$Obs <- 1:7680
   
   # make Item be a factor and assign labels
   dat$Item <- factor(dat$Item, levels=c(1,2,3,4), labels=c("06:15:24", "16:25:34", "26:35:44", "36:45:54"))
   
   # Create a factor coding for Vagueness
-  dat[ dat$Condition==1 , 'Vagueness'] <- 'Vague'
-  dat[ dat$Condition==2 , 'Vagueness'] <- 'Crisp'
-  dat[ dat$Condition==3 , 'Vagueness'] <- 'Vague'
-  dat[ dat$Condition==4 , 'Vagueness'] <- 'Crisp'
+  dat[ dat$Cnd==1 , 'Vagueness'] <- 'Vague'
+  dat[ dat$Cnd==2 , 'Vagueness'] <- 'Crisp'
+  dat[ dat$Cnd==3 , 'Vagueness'] <- 'Vague'
+  dat[ dat$Cnd==4 , 'Vagueness'] <- 'Crisp'
   dat$Vagueness <- as.factor(dat$Vagueness)
   
-  # Create a factor coding for Selection
+  # Create a variable coding for Selection Algorithm
   dat$Selection = ""
-  dat[dat$Condition %in% c(3,4), "Selection"] <- "Comparison"
-  dat[dat$Condition %in% c(1,2), "Selection"] <- "Matching"
-  dat$Condition <- NULL
+  dat[dat$Cnd %in% c(1,2), "Selection"] <- "Matching"
+  dat[dat$Cnd %in% c(3,4), "Selection"] <- "Comparison"
   dat$Selection <- as.factor(dat$Selection)
   
   # give the levels of Order meaningful names
-  dat$Order <- factor(dat$Order, levels=c(1,2), labels=c('LtoR','RtoL'))
+  dat$Order <- factor(dat$Ord, levels=c(1,2), labels=c('LtoR','RtoL'))
   
   # give the levels of Quantity meaningful names
-  dat$Quantity <- factor(dat$Quantity, levels=c(1,2), labels=c('Small','Large'))
+  dat$Quantity <- factor(dat$Qty, levels=c(1,2), labels=c('Small','Large'))
   
-  # add number of characters in the instruction # 29 30 34 36 38
-  dat$nchar_instr = nchar(as.character(dat$Instruction))
+  # add Number of characters in the instruction # 29 30 34 36 38
+  dat$nchar_instr = nchar(as.character(dat$Ins))
   
   # make Instruction be a factor (17 levels)
-  dat$Instruction <- as.factor(dat$Instruction) 
-
-  # RT for the instructions screen  
-  dat$rt_instr <- dat$Instruction_RT; dat$Instruction_RT <- NULL
+  dat$Instruction <- as.factor(dat$Ins) 
   
-  dat <- subset(dat, select=c(Subject, Item, Obs, Trial, Vagueness, Selection, Order, Quantity, Instruction, nchar_instr, RT, rt_instr, response_cat))
+  # Say how many dots were in the target
+  dat$Target <- dat$Prm
+  
+  # give rt the expected name RT
+  dat$RT <- dat$rt
+  
+  # select vars for main df
+  dat <- subset(dat, select=c(Subject, Trial, Obs, Order, Quantity, Vagueness, Selection, Item, Target, Instruction, response_cat, RT))
+  
   return(dat)
   
 }

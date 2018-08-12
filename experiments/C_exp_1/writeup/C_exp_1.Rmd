@@ -78,7 +78,7 @@ Remember to do a screenshot for the sample display.
 
 # Full table of instructions
 
-```{r, echo=FALSE}
+```{r, "full table of instructions", echo=FALSE}
 instructions_table <- 
   dat %>%
     select(Item, Quantity, Vagueness, Number, Instruction) %>%
@@ -93,15 +93,13 @@ instructions_table %>%
 
 # Means plots
 
-```{r, echo=F}
+```{r, "make summary data for rt plot", echo=FALSE}
 dat_plot <- summarySEwithin2(dat, measurevar="RT_log", withinvars=c("Vagueness", "Number", "Item"), idvar="Subject")
 ```
 
-```{r, "RT condition means plot", fig.width=7, fig.height=3.5, echo=FALSE, results='hide'}
-# correction from Morey (2008) applied to condition means
+```{r, "EXP_C_RT_condition_means_plot", fig.width=7, fig.height=3.5, echo=FALSE}
 mywidth=0
 pdodge=position_dodge(width=mywidth)
-#
 ggplot(dat_plot, aes(x=Item, y=RT_logNormed, group=Vagueness, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci, shape=Vagueness, fill=Vagueness)) +
   ggtitle("Response time condition means") +
   facet_wrap(~Number) +
@@ -109,14 +107,12 @@ ggplot(dat_plot, aes(x=Item, y=RT_logNormed, group=Vagueness, ymin=RT_logNormed-
   scale_shape_manual(name="Vagueness", values=c(21,22)) +
   theme(aspect.ratio = 1, panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_rect(fill="white", colour="black"), strip.background=element_blank(), legend.key = element_blank(), legend.key.size=unit(4, 'mm'), legend.position="top", axis.text.x = element_text(angle = 15)) +
   ylab("RT log(ms)") + xlab(NULL) +
-  #
   geom_errorbar(position=pdodge, width=0.25) +
   geom_line(position=pdodge) +
   geom_point(position=pdodge, size=2)
-
 ```
 
-```{r, "Borderline response distribution plot", fig.width=7, fig.height=3.5, echo=FALSE, results='hide'}
+```{r, "EXP_C_Borderline_response_distribution_plot", fig.width=7, fig.height=3.5, echo=FALSE}
 dat_borderline$response_category <- relevel(dat_borderline$response_category, ref='expected')
 
 ggplot(dat_borderline) + 
@@ -149,7 +145,7 @@ We formulated the following hypotheses for Experiment 1:
 ## Full data
 
 Original full model
-```{r "original full RT model", echo=F, cache=TRUE}
+```{r "original full RT model", cache=TRUE}
 dat_model <- dat
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
@@ -159,7 +155,7 @@ pretty_coef_table(rtFullModel, "rtFullModel")
 ```
 
 Numeric only
-```{r, echo=FALSE}
+```{r "numeric only RT model", cache=TRUE}
 dat_model <- droplevels(subset(dat, Number=="Numeric"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
@@ -168,7 +164,7 @@ pretty_coef_table(rtFullModel_num, "rtFullModel_num")
 ```
 
 Verbal only
-```{r, echo=FALSE}
+```{r "verbal only RT model", cache=TRUE}
 dat_model <- droplevels(subset(dat, Number=="Verbal"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
@@ -177,7 +173,7 @@ pretty_coef_table(rtFullModel_verb, "rtFullModel_verb")
 ```
 
 Borderline model
-```{r 'bl-full-model', cache=TRUE, echo=FALSE}
+```{r "borderline full model", cache=TRUE}
 dat_model <- dat_borderline
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
@@ -209,7 +205,7 @@ A clearer picture of the effects of interest might be obtained by removing the 6
 With less data available, the model formula had to be simplified in order to converge -- specifically the following terms were dropped: per-subject slopes for the Vagueness by Item interaction, and per-subject slopes for the effect of Item.
 
 Model of the data after the 6:15:24 level of Item is removed
-```{r, echo=F, cache=TRUE}
+```{r, "full RT model after drop item", cache=TRUE}
 dat_model <- droplevels(subset(dat, Item!="06:15:24"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Num <- ifelse(dat_model$Number=="Verbal", -0.5, 0.5)
@@ -219,7 +215,7 @@ pretty_coef_table(rtRestrictedModel, "rtRestrictedModel")
 ```
 
 Numeric only after the 6:15:24 level of Item is removed
-```{r, echo=F, cache=TRUE}
+```{r, "num only RT model after drop item", cache=TRUE}
 dat_model <- droplevels(subset(dat, Item!="06:15:24" & Number=="Numeric"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="16:25:34", -.3333, ifelse(dat_model$Item=="26:35:44", .0000, .3333))
@@ -228,7 +224,7 @@ pretty_coef_table(rtRestrictedModel_num, "rtRestrictedModel_num")
 ```
 
 Verbal-only after the 6:15:24 level of Item is removed
-```{r, echo=F, cache=TRUE}
+```{r, "verbal only RT model after drop item", cache=TRUE}
 dat_model <- droplevels(subset(dat, Item!="06:15:24" & Number=="Verbal"))
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="16:25:34", -.3333, ifelse(dat_model$Item=="26:35:44", .0000, .3333))

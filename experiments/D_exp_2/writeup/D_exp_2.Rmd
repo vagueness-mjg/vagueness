@@ -27,7 +27,9 @@ data_dir <- "D_exp_2_data"
 ```
 
 ```{r}
-dat <- preprocessing(root_dir, data_dir)
+dat_full <- preprocessing(root_dir, data_dir)
+dat <- subset(dat_full, subset=RT>0 & RT<49871)
+dat_borderline <- dat
 dat <- perSubjectTrim.fnc(dat, response='RT', subject='Subject', trim = 2.5)$data
 dat$RT_log <- log(dat$RT)
 ```
@@ -61,16 +63,14 @@ instructions_table %>%
 
 # Means plots
 
-```{r trimat25sd}
+```{r}
 dat_plot <- summarySEwithin2(dat, measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
 ```
 
-```{r rtplot1, fig.width=7, fig.height=3}
+```{r, "EXP_D_RT_means_plot", fig.width=7, fig.height=3, echo=FALSE}
 dodge = position_dodge(width=0.2)
 dat_plot$Condition <- as.factor(paste(sep=' ', dat_plot$Selection, dat_plot$Vagueness))
-rtplot=ggplot(dat_plot,
-              aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci,
-                group=Condition, shape=Condition, fill=Condition)) +
+ggplot(dat_plot, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNormed+ci, group=Condition, shape=Condition, fill=Condition)) +
   geom_line(position=dodge) +
   geom_errorbar(width=.2, position=dodge) +
   geom_point(size=2, position=dodge) +
@@ -85,16 +85,11 @@ rtplot=ggplot(dat_plot,
         axis.text.x = element_text(angle = 45, hjust = 1),
         plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Selection) 
-rtplot
 ```
 
-```{r}
-dat_borderline <- dat
-```
 
-```{r, "Borderline response distribution plot", fig.width=7, fig.height=3.5, echo=FALSE, results='hide'}
+```{r, "EXP_D_Borderline_response_distribution_plot", fig.width=7, fig.height=3.5, echo=FALSE}
 dat_borderline$response_cat <- factor(dat_borderline$response_cat, levels= c("Near", "Expected", "Far"))
-
 ggplot(dat_borderline) + 
   geom_bar(aes(response_cat, group=Selection:Vagueness, fill=Vagueness), position=position_dodge(width=NULL)) +   
   scale_fill_grey() + 
@@ -103,42 +98,37 @@ ggplot(dat_borderline) +
   facet_grid(~Selection) +
   theme_bw() + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank(), legend.position="top", aspect.ratio=1, plot.background = element_rect(fill=NA, color='white'), strip.background=element_blank(), legend.key.size=unit(4, 'mm'), axis.text.x = element_text(angle = 15))
-
 ```
 
 # Hypotheses
 
 # Results
 
-```{r rtlmer, cache=TRUE, results='asis'}
+```{r, "rt_lmer_full_model_all_items", cache=TRUE}
 dat_model <- dat
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
-rtlmer = lmerTest::lmer(data=dat_model,
-                        RT_log ~ c_Vag * c_Sel + c_Itm +
-                          (1 + c_Vag * c_Sel + c_Itm | Subject))
-pretty_coef_table(rtlmer, "rtlmer")
+rtlmer = lmerTest::lmer(data=dat_model, RT_log ~ c_Vag * c_Sel + c_Itm + (1 + c_Vag * c_Sel + c_Itm | Subject))
+pretty_coef_table(rtlmer, "rt_lmer_full_model_all_items")
 ```
 
-```{r seplmersforcomparison, results='asis', cache=TRUE, echo=-5}
+```{r, "rt_lmer_for_comparison_all_items", cache=TRUE}
 dat_model <- subset(dat, subset=Selection=='Comparison')
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
-s1lm <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
-pretty_coef_table(s1lm, "s1lm")
+comp_lmer <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
+pretty_coef_table(comp_lmer, "rt_lmer_for_comparison_all_items")
 ```
 
-```{r seplmersformatching, results='asis', cache=TRUE, echo=-5}
+```{r, "rt_lmer_for_matching_all_items", cache=TRUE}
 dat_model <- subset(dat, subset=Selection=='Matching')
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
-s2lm <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
-pretty_coef_table(s2lm, "s2lm")
+match_lmer <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
+pretty_coef_table(match_lmer, "rt_lmer_for_matching_all_items")
 ```
 
 # Discussion
-
-
 
 

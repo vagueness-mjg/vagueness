@@ -492,7 +492,13 @@ Choose a square with many dots
 <h1>Results</h1>
 <div id="full-data" class="section level2">
 <h2>Full data</h2>
-Original full model
+<p>Original full model</p>
+<pre class="r"><code>dat_model &lt;- dat
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Num &lt;- ifelse(dat_model$Number==&quot;Verbal&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;06:15:24&quot;, -.75, ifelse(dat_model$Item==&quot;16:25:34&quot;, -.25, ifelse(dat_model$Item==&quot;26:35:44&quot;, .25, .75)))
+rtFullModel &lt;- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), dat_model)
+pretty_coef_table(rtFullModel, &quot;rtFullModel&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 rtFullModel
@@ -632,7 +638,12 @@ c_Vag:c_Num
 </tr>
 </tbody>
 </table>
-Numeric only
+<p>Numeric only</p>
+<pre class="r"><code>dat_model &lt;- droplevels(subset(dat, Number==&quot;Numeric&quot;))
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;06:15:24&quot;, -.75, ifelse(dat_model$Item==&quot;16:25:34&quot;, -.25, ifelse(dat_model$Item==&quot;26:35:44&quot;, .25, .75)))
+rtFullModel_num &lt;- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), dat_model)
+pretty_coef_table(rtFullModel_num, &quot;rtFullModel_num&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 rtFullModel_num
@@ -720,7 +731,12 @@ c_Itm
 </tr>
 </tbody>
 </table>
-Verbal only
+<p>Verbal only</p>
+<pre class="r"><code>dat_model &lt;- droplevels(subset(dat, Number==&quot;Verbal&quot;))
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;06:15:24&quot;, -.75, ifelse(dat_model$Item==&quot;16:25:34&quot;, -.25, ifelse(dat_model$Item==&quot;26:35:44&quot;, .25, .75)))
+rtFullModel_verb &lt;- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), dat_model)
+pretty_coef_table(rtFullModel_verb, &quot;rtFullModel_verb&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 rtFullModel_verb
@@ -807,7 +823,13 @@ c_Itm
 </tr>
 </tbody>
 </table>
-Borderline model
+<p>Borderline model</p>
+<pre class="r"><code>dat_model &lt;- dat_borderline
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Num &lt;- ifelse(dat_model$Number==&quot;Verbal&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;06:15:24&quot;, -.75, ifelse(dat_model$Item==&quot;16:25:34&quot;, -.25, ifelse(dat_model$Item==&quot;26:35:44&quot;, .25, .75)))
+blFullModel &lt;- lme4::glmer(isBorderline ~ c_Vag * c_Num + c_Itm + (1 + c_Vag * c_Num + c_Itm | Subject), dat_model, family=&quot;binomial&quot;, control = glmerControl(optimizer = &quot;bobyqa&quot;))
+pretty_coef_table(blFullModel, &quot;blFullModel&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 blFullModel
@@ -959,7 +981,13 @@ c_Vag:c_Num
 <p>However, given that the plot shows that responses to 6:15:24 in the “crisp numeric” instructions condition were extremely fast relative to the “vague numeric” instructions to 6:15:24, the effects in the model of the full dataset could be driven by this difference.</p>
 <p>A clearer picture of the effects of interest might be obtained by removing the 6:15:24 level of Item from the data set, and fitting the model to this restricted data. Doing this results in the effects tabled below.</p>
 <p>With less data available, the model formula had to be simplified in order to converge – specifically the following terms were dropped: per-subject slopes for the Vagueness by Item interaction, and per-subject slopes for the effect of Item.</p>
-Model of the data after the 6:15:24 level of Item is removed
+<p>Model of the data after the 6:15:24 level of Item is removed</p>
+<pre class="r"><code>dat_model &lt;- droplevels(subset(dat, Item!=&quot;06:15:24&quot;))
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Num &lt;- ifelse(dat_model$Number==&quot;Verbal&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;16:25:34&quot;, -.3333, ifelse(dat_model$Item==&quot;26:35:44&quot;, .0000, .3333))
+rtRestrictedModel &lt;- lmerTest::lmer(1 + RT_log ~ c_Vag * c_Num + c_Itm + (1 + c_Vag + c_Num  | Subject), dat_model)
+pretty_coef_table(rtRestrictedModel, &quot;rtRestrictedModel&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 rtRestrictedModel
@@ -1096,7 +1124,12 @@ c_Vag:c_Num
 </tr>
 </tbody>
 </table>
-Numeric only after the 6:15:24 level of Item is removed
+<p>Numeric only after the 6:15:24 level of Item is removed</p>
+<pre class="r"><code>dat_model &lt;- droplevels(subset(dat, Item!=&quot;06:15:24&quot; &amp; Number==&quot;Numeric&quot;))
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;16:25:34&quot;, -.3333, ifelse(dat_model$Item==&quot;26:35:44&quot;, .0000, .3333))
+rtRestrictedModel_num &lt;- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag | Subject), dat_model)
+pretty_coef_table(rtRestrictedModel_num, &quot;rtRestrictedModel_num&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 rtRestrictedModel_num
@@ -1183,7 +1216,12 @@ c_Itm
 </tr>
 </tbody>
 </table>
-Verbal-only after the 6:15:24 level of Item is removed
+<p>Verbal-only after the 6:15:24 level of Item is removed</p>
+<pre class="r"><code>dat_model &lt;- droplevels(subset(dat, Item!=&quot;06:15:24&quot; &amp; Number==&quot;Verbal&quot;))
+dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
+dat_model$c_Itm &lt;- ifelse(dat_model$Item==&quot;16:25:34&quot;, -.3333, ifelse(dat_model$Item==&quot;26:35:44&quot;, .0000, .3333))
+rtRestrictedModel_verb &lt;- lmerTest::lmer(1 + RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject), dat_model)
+pretty_coef_table(rtRestrictedModel_verb, &quot;rtRestrictedModel_verb&quot;)</code></pre>
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <caption style="font-size: initial !important;">
 rtRestrictedModel_verb

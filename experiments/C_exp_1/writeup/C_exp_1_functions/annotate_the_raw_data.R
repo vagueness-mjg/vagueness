@@ -32,9 +32,6 @@ annotate_the_raw_data = function (dat) {
   # add an Observation index, over the whole data set (1:7680)
   dat$Obs <- 1:7680
   
-  # remove variables that don't matter for purposes of RT analysis
-  #dat <- select(dat, Obs, Trial, Instruction, Subject, Item, Quantity, Order, Vagueness, Number, response_category, isBorderline, RT)
-  
   return(dat)
 }  
 
