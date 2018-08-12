@@ -28,7 +28,7 @@ data_dir <- "D_exp_2_data"
 
 ```{r}
 dat_full <- preprocessing(root_dir, data_dir)
-dat <- subset(dat_full, subset=RT>0 & RT<49871)
+dat <- subset(dat_full, subset=RT>0 & RT<25000) # loses 2 RTs that were judged to be outliers 25978 49871
 dat_borderline <- dat
 dat <- perSubjectTrim.fnc(dat, response='RT', subject='Subject', trim = 2.5)$data
 dat$RT_log <- log(dat$RT)
@@ -36,17 +36,22 @@ dat$RT_log <- log(dat$RT)
 
 # Info and Procedure (Method)
 
-Experiment Structure: 
-Each subject saw 192 trials, being 3 cycles of 64 trials. There were 38 participants. There were 7296 rows in the full data set.
+The main aim of this experiment was to see whether vague instructions would confer advantages over crisp alternatives when all instructions used numerals, and when there were vague and crisp versions of each of the comparison and matching strategies.
 
-Trial Procedure: 
-First an instruction that was a referring expression was presented until participants dismissed it with a key press. Then the squares with dots were presented until the participant responded with a key press, with a 60 second timeout if they did not respond.
+On each trial, first the referring expression that constituted the instruction for that trial was displayed (e.g., "Choose a square with about 10 dots"). Participants then pressed a key to indicate that they had read the instruction. 
 
-# Sample display
+The instruction remained on screen, and after 1000 ms, the arrays appeared (see Figure below).
+<figure>
+<img src="D_exp_2_screenshots/EXP_D_example_screenshot.bmp" style="width:480px;height:300px;">
+</figure>
 
-Remember to do a screenshot for the sample display.
+Response time was measured from the presentation of the arrays until the keypress indicating the participant's choice. The trial would timeout after 60 seconds if there was no response.
+
+In this experiment, no feedback was given. This was because, in the vague conditions, we did not regard any response as "correct" or "incorrect", but instead as "expected response"; "borderline response"; and "extreme response", and we did not want to draw participants' attention to this distinction explicitly. Which choice the participant made was recorded for analysis.
 
 # Full table of instructions
+
+The instructions for this experiment were similar to C_exp_2, except that we changed "fewer than" to "far fewer than": this was because "far fewer than" can have borderline cases whereas "fewer than" cannot have borderline cases.
 
 ```{r, echo=FALSE}
 instructions_table <- 
@@ -102,7 +107,22 @@ ggplot(dat_borderline) +
 
 # Hypotheses
 
+We formulated the following hypotheses:
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * Vague instructions should result in faster responses than crisp instructions.
+* [Hypothesis 2] Comparison/Matching RT:
+    * Instructions that allow comparison should result in faster responses than instructions that necessitate matching.
+* [Hypothesis 3] Vagueness effect differs between comparison and matching: 
+    * The effects of vagueness should differ when the selection task is comparison versus when it is matching.
+
 # Results
+
+Response times were trimmed at 25,000 ms, resulting in the loss of 2 trials that were judged to have outlier RTs. The remaining data were trimmed separately for each participant at 2.5 standard deviations below and above that participant's mean RT, leading to the loss of 204 trials (2.8% of the remaining trials). RTs in milliseconds were log-transformed so that they better approximated a normal distribution for the purposes of analysis.
+
+## The first set of models
+
+The first set of models considered included main effects of Vagueness and Item as well as their interaction.
 
 ```{r, "rt_lmer_full_model_all_items", cache=TRUE}
 dat_model <- dat
@@ -128,6 +148,17 @@ dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Ite
 match_lmer <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
 pretty_coef_table(match_lmer, "rt_lmer_for_matching_all_items")
 ```
+
+Considering the first set of models with Vagueness and Item as main effects and the Vagueness:Item interaction in the same model:
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * _Vague instructions should result in faster responses than crisp instructions_ : Vague instructions resulted in faster responses than crisp instructions but the difference was not significant (p=0.716). 
+* [Hypothesis 2] Comparison/Matching RT:
+    * _Instructions that allow comparison should result in faster responses than instructions that necessitate matching_ : comparison instructions resulted in faster responses than matching instructions, and the difference was significant (p<0.001).
+* [Hypothesis 3] Vagueness effect differs between comparison and matching
+    * _The effects of vagueness should differ when the selection task is comparison versus when it is matching_ : Vagueness exerted effects in different directions for the two selection tasks (p<0.001). Separate analyses at each level of selection provided evidence that vague instructions resulted in faster responses than crisp instructions for the comparison condition (p<0.01); and slower responses than crisp instructions in the matching condition (p<0.01). 
+
+## The models conducted to test for main effects _in the presence of interactions involving those main effects_ (after Levy, 2018)
 
 # Discussion
 
