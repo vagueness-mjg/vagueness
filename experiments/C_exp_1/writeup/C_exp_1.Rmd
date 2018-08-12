@@ -64,17 +64,17 @@ The way in which borderline responses were construed is as follows, using as an 
 
 * For crisp verbal, we used Choose the square with the fewest dots. We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
 
-On each trial, first the referring expression that constituted the instruction for that trial was displayed. 
-Participants then pressed a key to indicate that they had read the instruction. 
-After 1000 ms, the arrays were presented, while preserving the text of the referring expression. 
-The response time dependent variable was measured from the presentation of the arrays, until the keypress indicating the participant's choice, which was also recorded. 
-The trial would timeout after 60 seconds if there was no response.
-In this experiment, no feedback was given. This was because, in the vague conditions, we did not regard any response as "correct" or "incorrect", but instead as "expected response"; "borderline response"; and "extreme response", and we did not want to draw participants' attention to this distinction explicitly. 
-We simply recorded whether the participant chose the best referent, the borderline case or the poorest referent, and how long it took the participant to respond.
+On each trial, first the referring expression that constituted the instruction for that trial was displayed (e.g., "Choose a square with about 10 dots"). Participants then pressed a key to indicate that they had read the instruction. 
 
-# Sample display
+The instruction remained on screen, and after 1000 ms, the arrays appeared (see Figure below).
+<figure>
+<img src="C_exp_1_screenshots/EXP_C_example_screenshot.bmp" style="width:480px;height:300px;">
+</figure>
 
-Remember to do a screenshot for the sample display.
+Response time was measured from the presentation of the arrays until the keypress indicating the participant's choice. The trial would timeout after 60 seconds if there was no response.
+
+In this experiment, no feedback was given. This was because, in the vague conditions, we did not regard any response as "correct" or "incorrect", but instead as "expected response"; "borderline response"; and "extreme response", and we did not want to draw participants' attention to this distinction explicitly. Which choice the participant made was recorded for analysis.
+
 
 # Full table of instructions
 

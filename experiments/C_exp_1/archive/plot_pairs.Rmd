@@ -1,8 +1,0 @@
-```{r}
-# pairs plot 
-# (shows effect of transformations, and how they affect subjects, items, and condition)
-
-# make plot
-par(pty='s')
-pairs(dd[c('Subject','Item','Condition', 'Trial', 'RT_Rec', 'RT_log', 'RT_raw')], pch='.')
-```

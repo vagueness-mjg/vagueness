@@ -1,4 +1,4 @@
-function exp3(SUBJECT)
+function do_c(SUBJECT)
 % This third study has the following structure:
 % Practice, Rest, Block1 Block 2 Block 3, Block 4
 % There are 256 trials
