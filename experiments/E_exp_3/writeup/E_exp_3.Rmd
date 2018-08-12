@@ -107,8 +107,22 @@ ggplot(dat_borderline) +
 
 # Hypotheses
 
+We formulated the following hypotheses:
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * Vague instructions should result in faster responses than crisp instructions.
+* [Hypothesis 2] Comparison/Matching RT:
+    * Instructions that allow comparison should result in faster responses than instructions that necessitate matching.
+* [Hypothesis 3] Vagueness effect differs between comparison and matching: 
+    * The effects of vagueness should differ when the selection task is comparison versus when it is matching.
+
 # Results
 
+An initial observation is that response times were much faster than in our previous experiments. It seems that when there are no numbers in the instructions, and the instructions refer to a previously-seen trial-initial array, participants are able to resolve those instructions an order of magnitude more quickly than when the instructions use numbers, and make no reference to any previously-seen trial-initial array.
+
+Response times were trimmed at 9,500 ms, resulting in the loss of 9 trials that were judged to have outlier RTs. The remaining data were trimmed separately for each participant at 2.5 standard deviations below and above that participant's mean RT, leading to the loss of 211 trials (2.8% of the remaining trials). RTs in milliseconds were log-transformed so that they better approximated a normal distribution for the purposes of analysis.
+
+## The first set of models
 
 ```{r, "rt_lmer_full_model_all_items", cache=TRUE}
 dat_model <- dat
@@ -134,5 +148,18 @@ dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Ite
 match_lmer <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag + c_Itm | Subject))
 pretty_coef_table(match_lmer, "rt_lmer_for_matching_all_items")
 ```
+
+Considering the first set of models:
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * _Vague instructions should result in faster responses than crisp instructions_ : Vague instructions resulted in faster responses than crisp instructions, but this effect was very small and not significant (p=0.13)
+* [Hypothesis 2] Comparison/Matching RT:
+    * _Instructions that allow comparison should result in faster responses than instructions that necessitate matching_ : Comparison instructions resulted in faster responses than matching and this difference was significant (p<0.001)
+* [Hypothesis 3] Vagueness effect differs between comparison and matching:
+    * _The effects of vagueness should differ when the selection task is comparison versus when it is matching_ : Vague instructions did have different effects depending on whether the selection task is comprison or matching (p<0.001). In the comparison condition vague instructions resulted in significantly faster responses (p<0.001). In the selection condition vague instructions slowed down responses significantly (p<0.001)
+    
+## The second set of models
+
+The second set of models considered were conducted to test for main effects _in the presence of interactions involving those main effects_ (after Levy, 2018)
 
 # Discussion

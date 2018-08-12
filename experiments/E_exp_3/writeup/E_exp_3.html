@@ -134,7 +134,10 @@ $(document).ready(function () {
 <li><a href="#full-table-of-instructions">Full table of instructions</a></li>
 <li><a href="#means-plots">Means plots</a></li>
 <li><a href="#hypotheses">Hypotheses</a></li>
-<li><a href="#results">Results</a></li>
+<li><a href="#results">Results</a><ul>
+<li><a href="#the-first-set-of-models">The first set of models</a></li>
+<li><a href="#the-second-set-of-models">The second set of models</a></li>
+</ul></li>
 <li><a href="#discussion">Discussion</a></li>
 </ul>
 </div>
@@ -683,9 +686,28 @@ NA
 </div>
 <div id="hypotheses" class="section level1">
 <h1>Hypotheses</h1>
+<p>We formulated the following hypotheses:</p>
+<ul>
+<li>[Hypothesis 1] Crisp/Vague RT:
+<ul>
+<li>Vague instructions should result in faster responses than crisp instructions.</li>
+</ul></li>
+<li>[Hypothesis 2] Comparison/Matching RT:
+<ul>
+<li>Instructions that allow comparison should result in faster responses than instructions that necessitate matching.</li>
+</ul></li>
+<li>[Hypothesis 3] Vagueness effect differs between comparison and matching:
+<ul>
+<li>The effects of vagueness should differ when the selection task is comparison versus when it is matching.</li>
+</ul></li>
+</ul>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
+<p>An initial observation is that response times were much faster than in our previous experiments. It seems that when there are no numbers in the instructions, and the instructions refer to a previously-seen trial-initial array, participants are able to resolve those instructions an order of magnitude more quickly than when the instructions use numbers, and make no reference to any previously-seen trial-initial array.</p>
+<p>Response times were trimmed at 9,500 ms, resulting in the loss of 9 trials that were judged to have outlier RTs. The remaining data were trimmed separately for each participant at 2.5 standard deviations below and above that participant’s mean RT, leading to the loss of 211 trials (2.8% of the remaining trials). RTs in milliseconds were log-transformed so that they better approximated a normal distribution for the purposes of analysis.</p>
+<div id="the-first-set-of-models" class="section level2">
+<h2>The first set of models</h2>
 <pre class="r"><code>dat_model &lt;- dat
 dat_model$c_Vag &lt;- ifelse(dat_model$Vagueness==&quot;Crisp&quot;, -0.5, 0.5)
 dat_model$c_Sel &lt;- ifelse(dat_model$Selection==&quot;Comparison&quot;, -0.5, 0.5)
@@ -1014,6 +1036,26 @@ c_Itm
 </tr>
 </tbody>
 </table>
+<p>Considering the first set of models:</p>
+<ul>
+<li>[Hypothesis 1] Crisp/Vague RT:
+<ul>
+<li><em>Vague instructions should result in faster responses than crisp instructions</em> : Vague instructions resulted in faster responses than crisp instructions, but this effect was very small and not significant (p=0.13)</li>
+</ul></li>
+<li>[Hypothesis 2] Comparison/Matching RT:
+<ul>
+<li><em>Instructions that allow comparison should result in faster responses than instructions that necessitate matching</em> : Comparison instructions resulted in faster responses than matching and this difference was significant (p&lt;0.001)</li>
+</ul></li>
+<li>[Hypothesis 3] Vagueness effect differs between comparison and matching:
+<ul>
+<li><em>The effects of vagueness should differ when the selection task is comparison versus when it is matching</em> : Vague instructions did have different effects depending on whether the selection task is comprison or matching (p&lt;0.001). In the comparison condition vague instructions resulted in significantly faster responses (p&lt;0.001). In the selection condition vague instructions slowed down responses significantly (p&lt;0.001)</li>
+</ul></li>
+</ul>
+</div>
+<div id="the-second-set-of-models" class="section level2">
+<h2>The second set of models</h2>
+<p>The second set of models considered were conducted to test for main effects <em>in the presence of interactions involving those main effects</em> (after Levy, 2018)</p>
+</div>
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>

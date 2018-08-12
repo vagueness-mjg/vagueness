@@ -122,8 +122,6 @@ Response times were trimmed at 25,000 ms, resulting in the loss of 2 trials that
 
 ## The first set of models
 
-The first set of models considered included main effects of Vagueness and Item as well as their interaction.
-
 ```{r, "rt_lmer_full_model_all_items", cache=TRUE}
 dat_model <- dat
 dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
@@ -149,7 +147,7 @@ match_lmer <- lmerTest::lmer(data=dat_model, RT_log ~ c_Vag + c_Itm + (1 + c_Vag
 pretty_coef_table(match_lmer, "rt_lmer_for_matching_all_items")
 ```
 
-Considering the first set of models with Vagueness and Item as main effects and the Vagueness:Item interaction in the same model:
+Considering the first set of models:
 
 * [Hypothesis 1] Crisp/Vague RT:
     * _Vague instructions should result in faster responses than crisp instructions_ : Vague instructions resulted in faster responses than crisp instructions but the difference was not significant (p=0.716). 
@@ -158,7 +156,9 @@ Considering the first set of models with Vagueness and Item as main effects and 
 * [Hypothesis 3] Vagueness effect differs between comparison and matching
     * _The effects of vagueness should differ when the selection task is comparison versus when it is matching_ : Vagueness exerted effects in different directions for the two selection tasks (p<0.001). Separate analyses at each level of selection provided evidence that vague instructions resulted in faster responses than crisp instructions for the comparison condition (p<0.01); and slower responses than crisp instructions in the matching condition (p<0.01). 
 
-## The models conducted to test for main effects _in the presence of interactions involving those main effects_ (after Levy, 2018)
+## The second set of models
+
+The second set of models considered were conducted to test for main effects _in the presence of interactions involving those main effects_ (after Levy, 2018)
 
 # Discussion
 
