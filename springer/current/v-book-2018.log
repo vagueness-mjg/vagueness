@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  2 AUG 2018 14:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  17 AUG 2018 14:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -468,23 +468,23 @@ Package pdftex.def Info: figures/e2-blBarChart-1.pdf  used on input line 92.
 <figures/e3-rtplot-1.pdf, id=79, 505.89pt x 216.81pt>
 File: figures/e3-rtplot-1.pdf Graphic file (type pdf)
 <use figures/e3-rtplot-1.pdf>
-Package pdftex.def Info: figures/e3-rtplot-1.pdf  used on input line 43.
+Package pdftex.def Info: figures/e3-rtplot-1.pdf  used on input line 45.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
 
-Overfull \hbox (5.79933pt too wide) in paragraph at lines 49--50
+Overfull \hbox (5.79933pt too wide) in paragraph at lines 51--52
 []\OT1/ptm/m/n/10 Vague in-struc-tions were non-significantly eas-ier for the r
 eader
  []
 
-) (./e3.tex [11 <./figures/e3-rtplot-1.pdf>] [12]
+) [11 <./figures/e3-rtplot-1.pdf>] (./e3.tex [12]
 <figures/e4-rtplot-1.pdf, id=92, 505.89pt x 216.81pt>
 File: figures/e4-rtplot-1.pdf Graphic file (type pdf)
 <use figures/e4-rtplot-1.pdf>
 Package pdftex.def Info: figures/e4-rtplot-1.pdf  used on input line 56.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
 )
-(./discussion-of-e2-and-e3.tex [13 <./figures/e4-rtplot-1.pdf>])
-(./general-discussion.tex [14] [15] [16]) [17] [18
+(./discussion-of-e2-and-e3.tex) [13] (./general-discussion.tex [14 <./figures/e
+4-rtplot-1.pdf>] [15] [16]) [17] [18
 
 
 ] (./v-book-2018.bbl
@@ -495,10 +495,10 @@ Underfull \hbox (badness 1783) in paragraph at lines 66--68
 
 [19]) [20] (./v-book-2018.aux) ) 
 Here is how much of TeX's memory you used:
- 3373 strings out of 492982
- 47534 string characters out of 6134897
- 212933 words of memory out of 5000000
- 6805 multiletter control sequences out of 15000+600000
+ 3376 strings out of 492982
+ 47642 string characters out of 6134897
+ 212958 words of memory out of 5000000
+ 6808 multiletter control sequences out of 15000+600000
  49563 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,25p,1780b,282s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -511,7 +511,7 @@ texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
 s/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
 /usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on v-book-2018.pdf (26 pages, 165083 bytes).
+Output written on v-book-2018.pdf (26 pages, 165565 bytes).
 PDF statistics:
  157 PDF objects out of 1000 (max. 8388607)
  108 compressed objects within 2 object streams

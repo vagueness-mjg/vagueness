@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex v-book-2018"] 1533217237 "v-book-2018.aux" "v-book-2018.bbl" "v-book-2018" 1533217498
+["bibtex v-book-2018"] 1534511324 "v-book-2018.aux" "v-book-2018.bbl" "v-book-2018" 1534511334
   "./spbasic.bst" 1533211057 33237 f4c2cac675c3bb7ec802ff7b7c9fb105 ""
-  "v-book-2018.aux" 1533217498 6432 448b643f4f193f09356a34652f805d36 ""
+  "v-book-2018.aux" 1534511324 6535 8949f9d7974fdbd82755c80fa2f2c685 ""
   "v-book-2018.bcf" 0 -1 0 ""
-  "v-book-2018.bib" 1533211057 7546 c24b59a8256a6e158d35e9a44ba02e9d ""
+  "v-book-2018.bib" 1534511175 8035 0c9f5a8b59c59b95419da973c02012e6 ""
   (generated)
   "v-book-2018.bbl"
   "v-book-2018.blg"
-["pdflatex"] 1533217498 "v-book-2018.tex" "v-book-2018.pdf" "v-book-2018" 1533217498
+["pdflatex"] 1534511324 "v-book-2018.tex" "v-book-2018.pdf" "v-book-2018" 1534511334
   "/etc/texmf/web2c/texmf.cnf" 1532898404 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -100,7 +100,7 @@
   "authoring-notes.tex" 1533211057 359 901129027d2030d7b5e82f41808ed63d ""
   "discussion-of-e2-and-e3.tex" 1533211057 927 b46d55633d3181bb854ba14df3a94e8f ""
   "e1.tex" 1533217498 13894 28af995f68e66f61eff4f887f924e852 ""
-  "e2.tex" 1533211057 4750 32cb5c0d4b193eba77e7649804c79d64 ""
+  "e2.tex" 1534511315 4910 59d27753cec964be87e90b28c15d8de4 ""
   "e3.tex" 1533211057 4418 c7a8c9135e80af430ed082e342e21a70 ""
   "figures/e2-blBarChart-1.pdf" 1533211057 4811 20f7dda085254b84437954f64da70a78 ""
   "figures/e2-rtplot-1.pdf" 1533211057 5538 7ed973044a7328795631010dcea5827c ""
@@ -111,12 +111,12 @@
   "our-approach-to-the-problem.tex" 1533211057 5102 9a4e08d52b1969e11fc4f88ee9a29ca6 ""
   "related-work.tex" 1533211057 4787 e19d2bfbf9a123a582f439025fdb4b55 ""
   "svmono.cls" 1533211057 70326 f590a8b416955a58dfb1fea2aaac8dc3 ""
-  "v-book-2018.aux" 1533217498 6432 448b643f4f193f09356a34652f805d36 ""
-  "v-book-2018.bbl" 1533217237 6217 6642dd1351f0d16d1b801c4e30865bee "bibtex v-book-2018"
+  "v-book-2018.aux" 1534511324 6535 8949f9d7974fdbd82755c80fa2f2c685 ""
+  "v-book-2018.bbl" 1534511324 6415 b263ae62308abbb886cd7bf1a15286e5 "bibtex v-book-2018"
   "v-book-2018.tex" 1533211057 2205 26bcd3945165af68893817a41ae57e61 ""
-  "v-book-2018.toc" 1533217498 1360 cc7e11a6dfa7e5426fc66395388f2b51 ""
+  "v-book-2018.toc" 1534511324 1360 446e7d8559991c60b4455cb42204a662 ""
   (generated)
-  "v-book-2018.aux"
   "v-book-2018.toc"
-  "v-book-2018.log"
   "v-book-2018.pdf"
+  "v-book-2018.aux"
+  "v-book-2018.log"
