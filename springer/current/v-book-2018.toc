@@ -9,11 +9,11 @@
 \contentsline {subsection}{\numberline {1.4.4}Discussion}{9}
 \contentsline {section}{\numberline {1.5}Experiment 2: focus on instructions that contain numerals}{10}
 \contentsline {subsection}{\numberline {1.5.1}Hypotheses}{10}
-\contentsline {subsection}{\numberline {1.5.2}Experimental Method}{10}
+\contentsline {subsection}{\numberline {1.5.2}Experimental Method}{11}
 \contentsline {subsection}{\numberline {1.5.3}Results}{11}
 \contentsline {section}{\numberline {1.6}Experiment 3: focus on instructions that do not contain numerals}{12}
 \contentsline {subsection}{\numberline {1.6.1}Hypotheses}{12}
 \contentsline {subsection}{\numberline {1.6.2}Results}{13}
-\contentsline {section}{\numberline {1.7}Discussion of experiments 2 and 3}{13}
+\contentsline {section}{\numberline {1.7}Discussion of experiments 2 and 3}{14}
 \contentsline {section}{\numberline {1.8}General Discussion}{14}
 \contentsline {section}{References}{19}
