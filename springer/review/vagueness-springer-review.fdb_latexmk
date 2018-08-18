@@ -1,11 +1,11 @@
 # Fdb version 3
-["bibtex vagueness-springer-review"] 1534597245 "vagueness-springer-review.aux" "vagueness-springer-review.bbl" "vagueness-springer-review" 1534597248
-  "vagueness-springer-review.aux" 1534597247 820 0c6cfd9b4ee89ef57b8765d83a4ac78f ""
+["bibtex vagueness-springer-review"] 1534597245 "vagueness-springer-review.aux" "vagueness-springer-review.bbl" "vagueness-springer-review" 1534599622
+  "vagueness-springer-review.aux" 1534599620 820 0c6cfd9b4ee89ef57b8765d83a4ac78f ""
   "vagueness-springer-review.bcf" 0 -1 0 ""
   (generated)
-  "vagueness-springer-review.bbl"
   "vagueness-springer-review.blg"
-["pdflatex"] 1534597246 "vagueness-springer-review.tex" "vagueness-springer-review.pdf" "vagueness-springer-review" 1534597248
+  "vagueness-springer-review.bbl"
+["pdflatex"] 1534599619 "vagueness-springer-review.tex" "vagueness-springer-review.pdf" "vagueness-springer-review" 1534599622
   "/dev/null" 1534591969 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/etc/texmf/web2c/texmf.cnf" 1532898404 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -135,12 +135,12 @@
   "kpsewhich -var-value=max_print_line" 0 -1 0 ""
   "tufte-common.def" 1533211057 70892 d170883770a3fb3b643fabc94d55da1e ""
   "tufte-handout.cls" 1533211057 928 8b9bf4e8b298d7266b4bbfb41f032b03 ""
-  "vagueness-springer-review.aux" 1534597247 820 0c6cfd9b4ee89ef57b8765d83a4ac78f ""
+  "vagueness-springer-review.aux" 1534599620 820 0c6cfd9b4ee89ef57b8765d83a4ac78f ""
   "vagueness-springer-review.bbl" 1534597245 0 d41d8cd98f00b204e9800998ecf8427e "bibtex vagueness-springer-review"
-  "vagueness-springer-review.out" 1534597247 219 a90e5a768957173081e0229d313188ad ""
+  "vagueness-springer-review.out" 1534599620 219 a90e5a768957173081e0229d313188ad ""
   "vagueness-springer-review.tex" 1534597244 11542 7537733ce831d998b120e5aae61c21a3 ""
   (generated)
-  "vagueness-springer-review.out"
-  "vagueness-springer-review.aux"
-  "vagueness-springer-review.log"
   "vagueness-springer-review.pdf"
+  "vagueness-springer-review.log"
+  "vagueness-springer-review.aux"
+  "vagueness-springer-review.out"

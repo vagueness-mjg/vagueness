@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  18 AUG 2018 14:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  18 AUG 2018 14:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -717,7 +717,10 @@ LaTeX Info: Redefining \selectfont on input line 30.
 * \headsep=28.0pt
 * \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \marginparwidth=144.0pt
+* \marginparsep=24.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -758,31 +761,28 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \langwohyphens=\language84
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 47.
 
-! Missing number, treated as zero.
-<to be read again> 
-                   \vskip 
-l.43 ...ote[]{Addressed in points x y and z below}
-                                                  
-? 
-! Emergency stop.
-<to be read again> 
-                   \vskip 
-l.43 ...ote[]{Addressed in points x y and z below}
-                                                  
-End of file on the terminal!
 
- 
-Here is how much of TeX's memory you used:
- 13346 strings out of 492982
- 188325 string characters out of 6134897
- 384175 words of memory out of 5000000
- 16712 multiletter control sequences out of 15000+600000
- 13529 words of font info for 21 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 45i,3n,45p,718b,271s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
-fd
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplx.fd
+File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
+)
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 47.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlzplm.fd
+File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 47.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omszplm.fd
+File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 47.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Try loading font information for OT1+zplm on input line 47.
