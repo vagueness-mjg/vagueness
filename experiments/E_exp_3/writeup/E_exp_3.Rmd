@@ -61,7 +61,6 @@ instructions_table <-
     unique() %>%
     arrange(Item, Target, Quantity, Vagueness, Selection) %>%
     spread(key=Vagueness, value=Instruction)
-# kable(instructions_table, format="latex", booktabs = TRUE)
 instructions_table %>% 
   kable(align='ccccll', caption="Full table of instructions") %>% 
       kable_styling(full_width = F, position = "left", font_size = 11) 
