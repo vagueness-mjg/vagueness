@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  18 AUG 2018 14:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  19 AUG 2018 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -369,20 +369,12 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 
-] (./authoring-notes.tex
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 4.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
-File: omsptm.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 4.
-) [5] [6]
+]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 32.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
 
 
-Package mathptmx Warning: There are no bold math fonts on input line 32.
+Package mathptmx Warning: There are no bold math fonts on input line 31.
 
 (./v-book-2018.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
@@ -417,19 +409,19 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 \tf@toc=\write3
 \openout3 = `v-book-2018.toc'.
 
- [7
+ [5
 
 
-] [8
+] [6
 
 
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 33.
 (./abstract.tex)
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 36.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 35.
  (./introduction.tex [1
 
 
@@ -442,92 +434,97 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.29004> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5.10005> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 8.
 ) (./related-work.tex [2] [3])
-(./our-approach-to-the-problem.tex [4])
-Package marginnote Info: Margin note 11.1 is on absolute page 11
-(marginnote)              on input line 42.
-Package marginnote Info: xpos seems to be 135.26999pt,
-(marginnote)             \marginnoterightadjust ignored on input line 42.
- (./e1.tex
-Package marginnote Info: Margin note 11.2 is on absolute page 11
-(marginnote)              on input line 6.
-Package marginnote Info: xpos seems to be 135.26999pt,
-(marginnote)             \marginnoterightadjust ignored on input line 6.
- [5]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 45.
- [6] [7]
-<figures/e2-rtplot-1.pdf, id=51, 505.89pt x 252.945pt>
-File: figures/e2-rtplot-1.pdf Graphic file (type pdf)
-<use figures/e2-rtplot-1.pdf>
-Package pdftex.def Info: figures/e2-rtplot-1.pdf  used on input line 93.
-(pdftex.def)             Requested size: 163.12146pt x 118.09294pt.
-<figures/e2-blBarChart-1.pdf, id=53, 505.89pt x 252.945pt>
-File: figures/e2-blBarChart-1.pdf Graphic file (type pdf)
-<use figures/e2-blBarChart-1.pdf>
-Package pdftex.def Info: figures/e2-blBarChart-1.pdf  used on input line 94.
-(pdftex.def)             Requested size: 163.12146pt x 118.09294pt.
- [8]) (./e2.tex
-Package marginnote Info: Margin note 15.1 is on absolute page 16
+(./our-approach-to-the-problem.tex [4] [5]) (./e1.tex
+Package marginnote Info: Margin note 10.1 is on absolute page 10
 (marginnote)              on input line 2.
 Package marginnote Info: xpos seems to be 135.26999pt,
 (marginnote)             \marginnoteleftadjust ignored on input line 2.
-
-[9 <./figures/e2-rtplot-1.pdf> <./figures/e2-blBarChart-1.pdf>] [10]
-<figures/e3-rtplot-1.pdf, id=79, 505.89pt x 216.81pt>
-File: figures/e3-rtplot-1.pdf Graphic file (type pdf)
-<use figures/e3-rtplot-1.pdf>
-Package pdftex.def Info: figures/e3-rtplot-1.pdf  used on input line 61.
+ [6]
+<figures/Ce1-example-screenshot.jpg, id=40, 1284.8pt x 803.0pt>
+File: figures/Ce1-example-screenshot.jpg Graphic file (type jpg)
+<use figures/Ce1-example-screenshot.jpg>
+Package pdftex.def Info: figures/Ce1-example-screenshot.jpg  used on input line
+ 42.
+(pdftex.def)             Requested size: 249.67291pt x 156.03912pt.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 47.
+ [7] [8 <./figures/Ce1-example-screenshot.jpg>] [9]
+<figures/Ce1-rtplot-1.pdf, id=54, 505.89pt x 252.945pt>
+File: figures/Ce1-rtplot-1.pdf Graphic file (type pdf)
+<use figures/Ce1-rtplot-1.pdf>
+Package pdftex.def Info: figures/Ce1-rtplot-1.pdf  used on input line 85.
+(pdftex.def)             Requested size: 163.12146pt x 118.09294pt.
+<figures/Ce1-blBarChart-1.pdf, id=56, 505.89pt x 252.945pt>
+File: figures/Ce1-blBarChart-1.pdf Graphic file (type pdf)
+<use figures/Ce1-blBarChart-1.pdf>
+Package pdftex.def Info: figures/Ce1-blBarChart-1.pdf  used on input line 86.
+(pdftex.def)             Requested size: 163.12146pt x 118.09294pt.
+ [10 <./figures/Ce1-rtplot-1.pdf> <./figures/Ce1-blBarChart-1.pdf>]) (./e2.tex
+Package marginnote Info: Margin note 15.1 is on absolute page 15
+(marginnote)              on input line 2.
+Package marginnote Info: xpos seems to be 135.26999pt,
+(marginnote)             \marginnoterightadjust ignored on input line 2.
+ [11]
+<figures/De2-rtplot-1.pdf, id=77, 505.89pt x 216.81pt>
+File: figures/De2-rtplot-1.pdf Graphic file (type pdf)
+<use figures/De2-rtplot-1.pdf>
+Package pdftex.def Info: figures/De2-rtplot-1.pdf  used on input line 58.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
 
-Overfull \hbox (5.79933pt too wide) in paragraph at lines 67--68
+Overfull \hbox (5.79933pt too wide) in paragraph at lines 64--65
 []\OT1/ptm/m/n/10 Vague in-struc-tions were non-significantly eas-ier for the r
 eader
  []
 
-[11 <./figures/e3-rtplot-1.pdf>]) (./e3.tex
-Package marginnote Info: Margin note 18.1 is on absolute page 18
+[12]) (./e3.tex
+Package marginnote Info: Margin note 17.1 is on absolute page 17
 (marginnote)              on input line 2.
 Package marginnote Info: xpos seems to be 135.26999pt,
-(marginnote)             \marginnoteleftadjust ignored on input line 2.
- [12]
-<figures/e4-rtplot-1.pdf, id=92, 505.89pt x 216.81pt>
-File: figures/e4-rtplot-1.pdf Graphic file (type pdf)
-<use figures/e4-rtplot-1.pdf>
-Package pdftex.def Info: figures/e4-rtplot-1.pdf  used on input line 58.
+(marginnote)             \marginnoterightadjust ignored on input line 2.
+ [13 <./figures/De2-rtplot-1.pdf>]
+<figures/Ee3-flow.jpg, id=90, 400.3758pt x 562.9833pt>
+File: figures/Ee3-flow.jpg Graphic file (type jpg)
+<use figures/Ee3-flow.jpg>
+Package pdftex.def Info: figures/Ee3-flow.jpg  used on input line 7.
+(pdftex.def)             Requested size: 249.67291pt x 351.08197pt.
+ [14 <./figures/Ee3-flow.jpg>] [15]
+<figures/Ee3-rtplot-1.pdf, id=98, 505.89pt x 216.81pt>
+File: figures/Ee3-rtplot-1.pdf Graphic file (type pdf)
+<use figures/Ee3-rtplot-1.pdf>
+Package pdftex.def Info: figures/Ee3-rtplot-1.pdf  used on input line 78.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
-)
-(./discussion-of-e2-and-e3.tex [13]) (./general-discussion.tex [14 <./figures/e
-4-rtplot-1.pdf>] [15] [16]) [17] [18
-
-
-] (./v-book-2018.bbl
+) (./discussion-of-e2-and-e3.tex) [16 <./figures/Ee3-rtplot-1.pdf>]
+(./general-discussion.tex [17] [18] [19]) [20] (./v-book-2018.bbl
 Underfull \hbox (badness 1783) in paragraph at lines 66--68
 []\OT1/ptm/m/n/10 Izard V, De-haene S (2008) Cal-i-brat-ing the men-tal num-ber
  line. Cog-ni-tion
  []
 
-[19]) [20] (./v-book-2018.aux) ) 
+[21
+
+
+]) [22] (./v-book-2018.aux) ) 
 Here is how much of TeX's memory you used:
- 3378 strings out of 492982
- 47687 string characters out of 6134897
- 213009 words of memory out of 5000000
- 6812 multiletter control sequences out of 15000+600000
+ 3372 strings out of 492982
+ 47742 string characters out of 6134897
+ 221014 words of memory out of 5000000
+ 6808 multiletter control sequences out of 15000+600000
  48933 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,10n,25p,1780b,282s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
-s/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on v-book-2018.pdf (26 pages, 165520 bytes).
+ 41i,10n,25p,1791b,282s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/bas
+e/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
+tmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on v-book-2018.pdf (26 pages, 264370 bytes).
 PDF statistics:
- 157 PDF objects out of 1000 (max. 8388607)
+ 159 PDF objects out of 1000 (max. 8388607)
  108 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 33 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
