@@ -158,52 +158,59 @@ Considering the first set of models:
 The second set of models considered were conducted to test for main effects _in the presence of interactions involving those main effects_ (after Levy, 2018).
 
 The variables are:
-Vagueness 2 levels (X) sumcoded -.5, +.5 
+Vagueness 2 levels (X) 
 Item 4 levels (Y) 
 Selection 2 levels (Z)
 
 Note that the null-hypothsesis model _includes_ random slopes for the main effect of X; Y; and Z; as well as for their interactions -- including a seperate random slope for all combiations of X, Y, and Z achieves this.
 
 ```{r}
-dat$XYZ <- with(dat, factor(paste(Vagueness,Item,Selection)))
-```
-
-Convert a K level factor Y into a sum-coding representation.
-
-```{r}
-Item.numeric <- sapply(dat$Item,function(i) contr.sum(4)[i,])
-dat$Item1 <- Item.numeric[1,]
-dat$Item2 <- Item.numeric[2,]
-dat$Item3 <- Item.numeric[3,]
+#dat$XYZ <- with(dat, factor(paste(Vagueness,Item,Selection)))
 ```
 
 ```{r}
-dat_model <- dat
+dat_model <- subset(dat, select=c(Subject, Item, Vagueness, Selection, RT_log))
+
 Item.numeric <- sapply(dat_model$Item,function(i) contr.sum(4)[i,])
 dat_model$Item1 <- Item.numeric[1,]
 dat_model$Item2 <- Item.numeric[2,]
 dat_model$Item3 <- Item.numeric[3,]
-dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
-dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
-dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
+
+Selection.numeric <- sapply(dat_model$Selection,function(i) contr.sum(2)[i,])
+dat_model$Selection1 <- Selection.numeric[]
+
+Vagueness.numeric <- sapply(dat_model$Vagueness,function(i) contr.sum(2)[i,])
+dat_model$Vagueness1 <- Vagueness.numeric[]
+
 dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
+  
+head(dat_model)
+```
 
+```{r, "null model 0"}
+# make the null model
 null.model <- lmer(RT_log ~ 
-                     Item1 + c_Vag:Item1 +
-                     Item2 + c_Vag:Item2 + 
-                     Item3 + c_Vag:Item3 + 
-                     c_Sel + c_Vag:c_Sel + 
-                     (1 + c_Vag * c_Itm * c_Sel|Subject), dat_model, REML=FALSE)
+                     Item1 + Vagueness1:Item1 +
+                     Item2 + Vagueness1:Item2 + 
+                     Item3 + Vagueness1:Item3 + 
+                     Selection1 + Vagueness1:Selection1 + 
+                     (Vagueness1 * Selection1 * c_Itm |Subject), dat_model, REML=FALSE)
 pretty_coef_table(null.model, "null model")
+```
 
+```{r, "full model0"}
+# make the full model
 full.model <- lmer(RT_log ~ 
-                     Item1 + c_Vag:Item1 +
-                     Item2 + c_Vag:Item2 + 
-                     Item3 + c_Vag:Item3 + 
-                     c_Sel + c_Vag:c_Sel + c_Vag +
-                     (1 + c_Vag * c_Itm * c_Sel|Subject), dat_model, REML=FALSE)
+                     Item1 + Vagueness1:Item1 +
+                     Item2 + Vagueness1:Item2 + 
+                     Item3 + Vagueness1:Item3 + 
+                     Selection1 + Vagueness1:Selection1 + Vagueness1 +
+                     (Vagueness1 * Selection1 * c_Itm |Subject), dat_model, REML=FALSE)
 pretty_coef_table(full.model, "full model")
+```
 
+```{r}
+# do model comparison between the null and full models
 anova(null.model, full.model)
 ```
 
