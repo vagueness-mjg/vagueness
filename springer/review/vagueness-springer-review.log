@@ -1,6 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  18 AUG 2018 14:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.7.30)  20 AUG 2018 12:37
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
 **vagueness-springer-review.tex
 (./vagueness-springer-review.tex
@@ -803,12 +804,12 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 LaTeX Warning: Marginpar on page 3 moved.
 
 [3]
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 117.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 121.
  (/usr/share/texlive/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 8.50006pt on input line 117.
+(Font)              scaled to size 8.50006pt on input line 121.
  [4]
 
 LaTeX Warning: Marginpar on page 5 moved.
@@ -821,35 +822,35 @@ Package bibentry Warning: You have used \nobibliography*
 (bibentry)                without a following \bibliography.
 (bibentry)                You may not be able to run BibTeX.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 143.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 149.
 [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 143.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 149.
  (./vagueness-springer-review.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 143.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 143.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 149.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 149.
 Package rerunfilecheck Info: File `vagueness-springer-review.out' has not chang
 ed.
-(rerunfilecheck)             Checksum: A90E5A768957173081E0229D313188AD;219.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 143.
+(rerunfilecheck)             Checksum: 33FAC9EDA4FEB6279FAAAA4BCC04581D;456.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 149.
  ) 
 Here is how much of TeX's memory you used:
- 13552 strings out of 492982
- 191351 string characters out of 6134897
- 394411 words of memory out of 5000000
- 16825 multiletter control sequences out of 15000+600000
+ 13558 strings out of 492982
+ 191417 string characters out of 6134896
+ 393411 words of memory out of 5000000
+ 16828 multiletter control sequences out of 15000+600000
  40849 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,11n,45p,753b,550s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,11n,45p,753b,506s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/fpl/fplrij8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/bera/fvmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/
 uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
 
-Output written on vagueness-springer-review.pdf (5 pages, 67427 bytes).
+Output written on vagueness-springer-review.pdf (5 pages, 68601 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
- 32 named destinations out of 1000 (max. 500000)
- 1041 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 104 PDF objects out of 1000 (max. 8388607)
+ 91 compressed objects within 1 object stream
+ 35 named destinations out of 1000 (max. 500000)
+ 1065 words of extra memory for PDF output out of 10000 (max. 10000000)
 
