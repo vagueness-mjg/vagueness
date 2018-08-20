@@ -51,7 +51,7 @@ In this experiment, no feedback was given. This was because, in the vague condit
 
 # Full table of instructions
 
-The instructions for this experiment were similar to C_exp_2, except that we changed "fewer than" to "far fewer than": this was because "far fewer than" can have borderline cases whereas "fewer than" cannot have borderline cases.
+We changed "fewer than" (crisp) to "far fewer than" (in vague): this was because "far fewer than" can have borderline cases whereas "fewer than" cannot have borderline cases.
 
 ```{r, echo=FALSE}
 instructions_table <- 
@@ -67,7 +67,7 @@ instructions_table %>%
 
 # Means plots
 
-```{r}
+```{r, cho=FALSE}
 dat_plot <- summarySEwithin2(dat, measurevar="RT_log", withinvars=c("Vagueness", "Selection", "Item"), idvar="Subject")
 ```
 
@@ -90,16 +90,6 @@ ggplot(dat_plot, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNo
         plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Selection) 
 ```
-
-```{r}
-dat$Condition <- as.factor(paste(dat$Item, dat$Vagueness))
-ggplot(data=dat, mapping=aes(x=Item, y=RT_log, group=Vagueness)) +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), aspect.ratio = 1) +
-  facet_wrap(~Selection) +
-  stat_summary(mapping=aes(y=RT_log, x=Item, group=Vagueness, colour=Vagueness), fun.y=mean, geom="line", lwd=2) +
-  geom_smooth(mapping=aes(y=RT_log, x=Item, group=Vagueness, colour=Vagueness), method="loess")
-```
-
 ```{r, "EXP_D_Borderline_response_distribution_plot", fig.width=7, fig.height=3.5, echo=FALSE}
 dat_borderline$response_cat <- factor(dat_borderline$response_cat, levels= c("Near", "Expected", "Far"))
 ggplot(dat_borderline) + 
@@ -167,97 +157,55 @@ Considering the first set of models:
 
 The second set of models considered were conducted to test for main effects _in the presence of interactions involving those main effects_ (after Levy, 2018).
 
-Testing for a main effect of X when X is a two-level factor and the model also includes a main effect of a three-level factor  and the interaction between X and Y.
+The variables are:
+Vagueness 2 levels (X) sumcoded -.5, +.5 
+Item 4 levels (Y) 
+Selection 2 levels (Z)
 
-Testing for a main effect of Vagueness when Vagueness is a two-level factor and the model also includes a main effect of a four-level factor Item and the interaction between Vagueness and Item.
+Note that the null-hypothsesis model _includes_ random slopes for the main effect of X; Y; and Z; as well as for their interactions -- including a seperate random slope for all combiations of X, Y, and Z achieves this.
 
 ```{r}
-Item.numeric <- sapply(dat$Item, function(i) contr.sum(4)[i,])
+dat$XYZ <- with(dat, factor(paste(Vagueness,Item,Selection)))
+```
+
+Convert a K level factor Y into a sum-coding representation.
+
+```{r}
+Item.numeric <- sapply(dat$Item,function(i) contr.sum(4)[i,])
 dat$Item1 <- Item.numeric[1,]
 dat$Item2 <- Item.numeric[2,]
 dat$Item3 <- Item.numeric[3,]
-m0 <- lm(RT_log ~ 
-           Item1 + Vagueness:Item1 + 
-           Item2 + Vagueness:Item2 + 
-           Item3 + Vagueness:Item3 +
-           Selection +
-           Selection:Vagueness, 
-         dat)
-contrasts(dat$Item) <- contr.sum(4)
-m.test <- lm(RT_log ~ 
-               Item +
-           Vagueness:Item1 + 
-           Vagueness:Item2 + 
-           Vagueness:Item3 +
-           Selection +
-           Selection:Vagueness, 
-         dat)
-m1 <- lm(RT_log ~ 
-           Item1 + Vagueness:Item1 + 
-           Item2 + Vagueness:Item2 + 
-           Item3 + Vagueness:Item3 +
-           Selection +
-           Selection:Vagueness +
-           Vagueness,
-         dat)
-m100 <- lm(RT_log ~
-             Item +
-             Vagueness +
-             Item:Vagueness+
-             Selection+
-             Selection:Vagueness,
-           dat)
-#m1 and m100 are the same model
-anova(m0,m1,test="F")
-```
-
-
-```{r}
-Item.numeric <- sapply(dat$Item, function(i) contr.sum(4)[i,])
-dat$Item1 <- Item.numeric[1,]
-dat$Item2 <- Item.numeric[2,]
-dat$Item3 <- Item.numeric[3,]
-m3 <- lm(RT_log ~ 
-           Item1 + 
-           Item2 +  
-           Item3 , 
-         dat)
-contrasts(dat$Item) <- contr.sum(4)
-m4 <- lm(RT_log ~
-           Item,
-         dat)
-# m3 and m4 are the same model
 ```
 
 ```{r}
-Item.numeric <- sapply(dat$Item, function(i) contr.sum(4)[i,])
-dat$Item1 <- Item.numeric[1,]
-dat$Item2 <- Item.numeric[2,]
-dat$Item3 <- Item.numeric[3,]
+dat_model <- dat
+Item.numeric <- sapply(dat_model$Item,function(i) contr.sum(4)[i,])
+dat_model$Item1 <- Item.numeric[1,]
+dat_model$Item2 <- Item.numeric[2,]
+dat_model$Item3 <- Item.numeric[3,]
+dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
 
-m.full <- lm(RT_log ~
-             Item +
-             Vagueness +
-             Selection + 
-             Item:Vagueness +
-             Item:Selection + 
-             Vagueness:Selection,
-           dat)
-m.reduced <- lm(RT_log ~
-                Item1 + 
-                Item2 + 
-                Item3 + 
-                Vagueness:Item1 + 
-                Vagueness:Item2 +
-                Vagueness:Item3 +
-                Vagueness:Selection +
-                Selection +
-                Item:Selection
-                ,dat  )
-anova(m.reduced, m.full, test="F")
+null.model <- lmer(RT_log ~ 
+                     Item1 + c_Vag:Item1 +
+                     Item2 + c_Vag:Item2 + 
+                     Item3 + c_Vag:Item3 + 
+                     c_Sel + c_Vag:c_Sel + 
+                     (1 + c_Vag * c_Itm * c_Sel|Subject), dat_model, REML=FALSE)
+pretty_coef_table(null.model, "null model")
+
+full.model <- lmer(RT_log ~ 
+                     Item1 + c_Vag:Item1 +
+                     Item2 + c_Vag:Item2 + 
+                     Item3 + c_Vag:Item3 + 
+                     c_Sel + c_Vag:c_Sel + c_Vag +
+                     (1 + c_Vag * c_Itm * c_Sel|Subject), dat_model, REML=FALSE)
+pretty_coef_table(full.model, "full model")
+
+anova(null.model, full.model)
 ```
 
-
-# Discussion
 
 
