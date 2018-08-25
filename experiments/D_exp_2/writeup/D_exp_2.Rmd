@@ -90,6 +90,7 @@ ggplot(dat_plot, aes(y=RT_logNormed, x=Item, ymin=RT_logNormed-ci, ymax=RT_logNo
         plot.background=element_rect(fill=NA, color='white')) +
   facet_grid(~Selection) 
 ```
+
 ```{r, "EXP_D_Borderline_response_distribution_plot", fig.width=7, fig.height=3.5, echo=FALSE}
 dat_borderline$response_cat <- factor(dat_borderline$response_cat, levels= c("Near", "Expected", "Far"))
 ggplot(dat_borderline) + 
@@ -162,57 +163,56 @@ Vagueness 2 levels (X)
 Item 4 levels (Y) 
 Selection 2 levels (Z)
 
-Note that the null-hypothsesis model _includes_ random slopes for the main effect of X; Y; and Z; as well as for their interactions -- including a seperate random slope for all combiations of X, Y, and Z achieves this.
+Note that the null-hypothsesis model _includes_ random slopes for the main effect of X; Y; and Z; as well as for their interactions -- including a seperate random slope for all combinations of X, Y, and Z achieves this.
 
 ```{r}
-#dat$XYZ <- with(dat, factor(paste(Vagueness,Item,Selection)))
-```
-
-```{r}
-dat_model <- subset(dat, select=c(Subject, Item, Vagueness, Selection, RT_log))
+dat_model <- dat
+dat_model$c_Vag <- ifelse(dat_model$Vagueness=="Crisp", -0.5, 0.5)
+dat_model$c_Sel <- ifelse(dat_model$Selection=="Comparison", -0.5, 0.5)
+dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
 
 Item.numeric <- sapply(dat_model$Item,function(i) contr.sum(4)[i,])
 dat_model$Item1 <- Item.numeric[1,]
 dat_model$Item2 <- Item.numeric[2,]
 dat_model$Item3 <- Item.numeric[3,]
-
-Selection.numeric <- sapply(dat_model$Selection,function(i) contr.sum(2)[i,])
-dat_model$Selection1 <- Selection.numeric[]
-
-Vagueness.numeric <- sapply(dat_model$Vagueness,function(i) contr.sum(2)[i,])
-dat_model$Vagueness1 <- Vagueness.numeric[]
-
-dat_model$c_Itm <- ifelse(dat_model$Item=="06:15:24", -.75, ifelse(dat_model$Item=="16:25:34", -.25, ifelse(dat_model$Item=="26:35:44", .25, .75)))
-  
-head(dat_model)
-```
-
-```{r, "null model 0"}
-# make the null model
-null.model <- lmer(RT_log ~ 
-                     Item1 + Vagueness1:Item1 +
-                     Item2 + Vagueness1:Item2 + 
-                     Item3 + Vagueness1:Item3 + 
-                     Selection1 + Vagueness1:Selection1 + 
-                     (Vagueness1 * Selection1 * c_Itm |Subject), dat_model, REML=FALSE)
-pretty_coef_table(null.model, "null model")
-```
-
-```{r, "full model0"}
-# make the full model
-full.model <- lmer(RT_log ~ 
-                     Item1 + Vagueness1:Item1 +
-                     Item2 + Vagueness1:Item2 + 
-                     Item3 + Vagueness1:Item3 + 
-                     Selection1 + Vagueness1:Selection1 + Vagueness1 +
-                     (Vagueness1 * Selection1 * c_Itm |Subject), dat_model, REML=FALSE)
-pretty_coef_table(full.model, "full model")
 ```
 
 ```{r}
-# do model comparison between the null and full models
-anova(null.model, full.model)
+null.model2 <- lmer(RT_log ~ 
+                     c_Sel + c_Vag:c_Sel + # main effect of selection and the interaction with vagueness
+                     Item1 + c_Vag:Item1 +         # item effect and interaction with vagueness
+                     Item2 + c_Vag:Item2 +         # item effect and interaction with vagueness
+                     Item3 + c_Vag:Item3 +         # item effect and interaction with vagueness
+                     (c_Sel + c_Vag + c_Itm| Subject), # per-subject
+                   dat_model, REML=FALSE) 
 ```
 
+```{r}
+pretty_coef_table(null.model2, "null.model2")
+```
 
+```{r}
+full.model2 <- lmer(RT_log ~ 
+                     c_Vag + 
+                     c_Sel + c_Vag:c_Sel + # main effect of selection and the interaction with vagueness
+                     Item1 + c_Vag:Item1 +         # item effect and interaction with vagueness
+                     Item2 + c_Vag:Item2 +         # item effect and interaction with vagueness
+                     Item3 + c_Vag:Item3 +         # item effect and interaction with vagueness
+                     (c_Sel + c_Vag + c_Itm| Subject), # per-subject
+                   dat_model, REML=FALSE) 
+```
 
+```{r}
+pretty_coef_table(full.model2, "full.model2")
+```
+
+```{r}
+anova(null.model2, full.model2)
+```
+
+* [Hypothesis 1] Crisp/Vague RT:
+    * _Vague instructions should result in faster responses than crisp instructions_ : Vague instructions resulted in faster responses than crisp instructions on average (beta = -0.0057 units of log(ms)). However this difference was not significant in the full model (p=0.678). Using Levy's method to test for main effects in the presence of higher-order interactions, by doing model comparison between a null model that included all interaction terms involving Vagueness but leaving out a term for the main effect of Vagueness, against a full model that differed only by including Vagueness as a main effect, showed that the full model was no better than the reduced model (df=1, p=0.6764) - consituting more evidence that Vagueness did not exert a significant main effect on response times. 
+* [Hypothesis 2] Comparison/Matching RT:
+    * _Instructions that allow comparison should result in faster responses than instructions that necessitate matching_ : comparison instructions resulted in faster responses than matching instructions, and the difference was significant (beta=0.1618, p<0.001).
+* [Hypothesis 3] Vagueness effect differs between comparison and matching
+    * _The effects of vagueness should differ when the selection task is comparison versus when it is matching_ : Although Vagueness did not exert a significant main effect, Vagueness did exert effects in interactions with some other variables: the interaction between Vagueness and Selection task  was significant (beta=0.1206, p<0.001), suggesting that Vagueness speeded RTs in the comparison condition but slowed them down in the matching task. Separate analyses at each level of selection provided evidence that vague instructions resulted in faster responses than crisp instructions for the comparison condition (p<0.01); and slower responses than crisp instructions in the matching condition (p<0.01). 
