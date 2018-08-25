@@ -33,23 +33,23 @@ Item & Quantity & Selection & Crisp & Vague \\
 \end{tabular}
 \end{table}
 
-\subsection{Hypotheses}
+\subsection{Hypotheses (Experiment 2)}
 
-For Experiment 2, we hypothesised:
+For Experiment 2, we formulated the following hypotheses:
 
 \begin{description}
-	\item [Hypothesis 1] Vague instructions are easier for the reader than crisp ones (main effect of vagueness)
-	\item [Hypothesis 2] Comparison is easier for the reader than matching (main effect of selection task)
-	\item [Hypothesis 3] Effects of vagueness are different depending on whether the selection task is matching or comparison (interaction effect selection x vagueness).
+\item [Hypothesis 1] Vague instructions should result in faster responses than crisp instructions (main effect of vagueness).
+\item [Hypothesis 2] Instructions that allow comparison should result in faster responses than instructions that necessitate matching (main effect of selection task).
+\item [Hypothesis 3] Vagueness effect should differ between comparison and matching: The effects of vagueness should differ when the selection task is comparison versus when it is matching (interaction effect selection x vagueness).
 \end{description}
 
-\subsection{Experimental Method}
+\subsection{Experimental Method (Experiment 2)}
 
 38 participants were recruited. We used a 2 x 2 factorial manipulation of vagueness and selection task (see Table \ref{Instructions for e2}). On each trial an instruction was presented: participants pressed a key to dismiss the instruction, at which time the dot arrays were presented until the participant responded, and the response time and choice were recorded.
 
-\subsection{Results}
+\subsection{Results (Experiment 2)}
 
-We used the method proposed by \citet{Levy:MainEffectsInteractions} to test for the main effect of Vagueness in the presence of its higher-order interactions.
+%We used the method proposed by \citet{Levy:MainEffectsInteractions} to test for the main effect of Vagueness in the presence of its higher-order interactions.
 
 Response times were trimmed at 2.5 SD separately for each subject, leading to the loss of 204 trials (2.8\% of the trials). Condition means for the remaining (logged) RTs are plotted in Figure \ref{resultsD-exp-2}. A linear mixed model was constructed for the logged response times, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant for random effects.
 
@@ -60,13 +60,20 @@ Response times were trimmed at 2.5 SD separately for each subject, leading to th
 \label{resultsD-exp-2}
 \end{figure}
 
-\begin{description}
-	\item [Test of Hypothesis 1] Vague instructions were non-significantly easier for the reader than crisp instructions when vagueness was considered as a main effect ($\beta=-0.01$, $se=0.01$, $t=-0.4$, $p=0.7158$). 
-	\item [Test of Hypothesis 2] There was a statistically significant main effect of selection task, with the comparison task speeding responses compared to the matching task ($\beta=0.16$, $se=0.03$, $t=6.2$, $p<0.0001$). 
-	\item [Test of Hypothesis 3] Vagueness exerted effects in different directions for the comparison task and for the matching task: there was a significant interaction between vagueness and selection task ($\beta=0.13$, $se=0.03$, $t=4.2$, $p<0.0001$). 
-Separate analyses were conducted testing for effects of vagueness at each level of the selection task.
-Within the comparison task vagueness significantly speeded response times compared with crisp controls ($\beta=-0.07$, $se=0.02$, $t=-3.5$, $p<0.0012$). 
-Within the matching task vagueness significantly \emph{slowed} response times compared with crisp controls ($\beta=0.06$, $se=0.02$, $t=2.9$, $p<0.0061$). 
+\begin{description} %
+	\item [Test of Hypothesis 1] Vague instructions resulted in faster responses than crisp instructions on average. However this difference was not significant in the full model ($\beta=-0.0057$, $se=0.0137$, $t=-0.42$, $p=0.678$). Using Levy's method \citep{Levy:MainEffectsInteractions} to test for main effects in the presence of higher-order interactions, by doing model comparison between a null model that included all interaction terms involving Vagueness but leaving out a term for the main effect of Vagueness, against a full model that differed only by including Vagueness as a main effect, showed that the full model was no better than the reduced model (df=1, p=0.6764) - consituting more evidence that Vagueness did not exert a significant main effect on response times. 
+	\item [Test of Hypothesis 2] comparison instructions resulted in faster responses than matching instructions, and the difference was significant ($\beta=0.1618$, $se=0.0255$, $t=6.34$, $p<0.001$).
+	\item [Test of Hypothesis 3] Although Vagueness did not exert a significant main effect, Vagueness did exert effects in interactions with some other variables: the interaction between Vagueness and Selection task  was significant ($\beta=0.1306$, $se=0.0205$, $t=6.38$, $p<0.001$), suggesting that Vagueness speeded RTs in the comparison condition but slowed them down in the matching task. 
+	Separate analyses at each level of selection \ldots
+	%provided evidence that vague instructions resulted in faster responses than crisp instructions for the comparison condition (p<0.01); and slower responses than crisp instructions in the matching condition (p<0.01). 
+%
+%Separate analyses were conducted testing for effects of vagueness at each level of the selection task.
+%Within the comparison task vagueness significantly speeded response times compared with crisp controls ($\beta=-0.07$, $se=0.02$, $t=-3.5$, $p<0.0012$). 
+%Within the matching task vagueness significantly \emph{slowed} response times compared with crisp controls ($\beta=0.06$, $se=0.02$, $t=2.9$, $p<0.0061$). 
 \end{description}
 
-In other words, the cost reduction account was wrong to predict significant main effect advantages for vagueness (although there was a non-significant trend in the \emph{direction} predicted by the cost reduction account), and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was significantly advantageous in the comparison task.
+\subsection{Discussion (Experiment 2)}
+The cost reduction account predicted that there should be a significant main effect of Vagueness such that responses would be faster for Vague intructions than for crisp instructions. We found that although there was a very small effect in that direction, the effect was not statistically significant. Models that differed only in the presence of Vagueness as a main effect were shown not to differ signigicantly in their explanatory value. However we did find that Vagueness exerted effects on other variables: Vgueness speeded RTs in the comparison task and slowed RTs in the matching task.
+
+
+%In other words, the cost reduction account was wrong to predict significant main effect advantages for vagueness (although there was a non-significant trend in the \emph{direction} predicted by the cost reduction account), and wrong to predict that vagueness should be beneficial at each level of the selection task: however vagueness was significantly advantageous in the comparison task.

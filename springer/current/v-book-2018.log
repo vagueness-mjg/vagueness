@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  19 AUG 2018 22:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  21 AUG 2018 14:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -448,18 +448,19 @@ Package pdftex.def Info: figures/Ce1-example-screenshot.jpg  used on input line
 (pdftex.def)             Requested size: 249.67291pt x 156.03912pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 47.
- [7] [8 <./figures/Ce1-example-screenshot.jpg>] [9]
-<figures/Ce1-rtplot-1.pdf, id=54, 505.89pt x 252.945pt>
+ [7] [8 <./figures/Ce1-example-screenshot.jpg>]
+<figures/Ce1-rtplot-1.pdf, id=48, 505.89pt x 252.945pt>
 File: figures/Ce1-rtplot-1.pdf Graphic file (type pdf)
 <use figures/Ce1-rtplot-1.pdf>
-Package pdftex.def Info: figures/Ce1-rtplot-1.pdf  used on input line 85.
-(pdftex.def)             Requested size: 163.12146pt x 118.09294pt.
-<figures/Ce1-blBarChart-1.pdf, id=56, 505.89pt x 252.945pt>
+Package pdftex.def Info: figures/Ce1-rtplot-1.pdf  used on input line 72.
+(pdftex.def)             Requested size: 163.12146pt x 113.4691pt.
+<figures/Ce1-blBarChart-1.pdf, id=50, 505.89pt x 252.945pt>
 File: figures/Ce1-blBarChart-1.pdf Graphic file (type pdf)
 <use figures/Ce1-blBarChart-1.pdf>
-Package pdftex.def Info: figures/Ce1-blBarChart-1.pdf  used on input line 86.
-(pdftex.def)             Requested size: 163.12146pt x 118.09294pt.
- [10 <./figures/Ce1-rtplot-1.pdf> <./figures/Ce1-blBarChart-1.pdf>]) (./e2.tex
+Package pdftex.def Info: figures/Ce1-blBarChart-1.pdf  used on input line 73.
+(pdftex.def)             Requested size: 163.12146pt x 109.1965pt.
+ [9 <./figures/Ce1-rtplot-1.pdf> <./figures/Ce1-blBarChart-1.pdf>] [10]) (./e2.
+tex
 Package marginnote Info: Margin note 15.1 is on absolute page 15
 (marginnote)              on input line 2.
 Package marginnote Info: xpos seems to be 135.26999pt,
@@ -470,31 +471,26 @@ File: figures/De2-rtplot-1.pdf Graphic file (type pdf)
 <use figures/De2-rtplot-1.pdf>
 Package pdftex.def Info: figures/De2-rtplot-1.pdf  used on input line 58.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
-
-Overfull \hbox (5.79933pt too wide) in paragraph at lines 64--65
-[]\OT1/ptm/m/n/10 Vague in-struc-tions were non-significantly eas-ier for the r
-eader
- []
-
-[12]) (./e3.tex
-Package marginnote Info: Margin note 17.1 is on absolute page 17
+ [12]) (./e3.tex
+Package marginnote Info: Margin note 17.1 is on absolute page 18
 (marginnote)              on input line 2.
 Package marginnote Info: xpos seems to be 135.26999pt,
-(marginnote)             \marginnoterightadjust ignored on input line 2.
+(marginnote)             \marginnoteleftadjust ignored on input line 2.
  [13 <./figures/De2-rtplot-1.pdf>]
 <figures/Ee3-flow.jpg, id=90, 400.3758pt x 562.9833pt>
 File: figures/Ee3-flow.jpg Graphic file (type jpg)
 <use figures/Ee3-flow.jpg>
 Package pdftex.def Info: figures/Ee3-flow.jpg  used on input line 7.
-(pdftex.def)             Requested size: 249.67291pt x 351.08197pt.
- [14 <./figures/Ee3-flow.jpg>] [15]
-<figures/Ee3-rtplot-1.pdf, id=98, 505.89pt x 216.81pt>
+(pdftex.def)             Requested size: 166.44861pt x 234.05464pt.
+ [14 <./figures/Ee3-flow.jpg>]
+<figures/Ee3-rtplot-1.pdf, id=94, 505.89pt x 216.81pt>
 File: figures/Ee3-rtplot-1.pdf Graphic file (type pdf)
 <use figures/Ee3-rtplot-1.pdf>
-Package pdftex.def Info: figures/Ee3-rtplot-1.pdf  used on input line 78.
+Package pdftex.def Info: figures/Ee3-rtplot-1.pdf  used on input line 66.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
-) (./discussion-of-e2-and-e3.tex) [16 <./figures/Ee3-rtplot-1.pdf>]
-(./general-discussion.tex [17] [18] [19]) [20] (./v-book-2018.bbl
+ [15]) (./discussion-of-e2-and-e3.tex
+[16 <./figures/Ee3-rtplot-1.pdf>]) (./general-discussion.tex [17] [18] [19])
+[20] (./v-book-2018.bbl
 Underfull \hbox (badness 1783) in paragraph at lines 66--68
 []\OT1/ptm/m/n/10 Izard V, De-haene S (2008) Cal-i-brat-ing the men-tal num-ber
  line. Cog-ni-tion
@@ -507,7 +503,7 @@ Underfull \hbox (badness 1783) in paragraph at lines 66--68
 Here is how much of TeX's memory you used:
  3372 strings out of 492982
  47742 string characters out of 6134897
- 221014 words of memory out of 5000000
+ 222013 words of memory out of 5000000
  6808 multiletter control sequences out of 15000+600000
  48933 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -521,7 +517,7 @@ mf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
 tmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on v-book-2018.pdf (26 pages, 264370 bytes).
+Output written on v-book-2018.pdf (26 pages, 265014 bytes).
 PDF statistics:
  159 PDF objects out of 1000 (max. 8388607)
  108 compressed objects within 2 object streams
