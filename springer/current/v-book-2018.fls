@@ -199,6 +199,8 @@ INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT e1.tex
 INPUT e1.tex
+INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+INPUT /usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 INPUT figures/Ce1-example-screenshot.jpg
 INPUT ./figures/Ce1-example-screenshot.jpg
 INPUT ./figures/Ce1-example-screenshot.jpg

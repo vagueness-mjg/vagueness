@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  21 AUG 2018 14:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.2)  27 AUG 2018 14:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -440,56 +440,76 @@ Package marginnote Info: Margin note 10.1 is on absolute page 10
 Package marginnote Info: xpos seems to be 135.26999pt,
 (marginnote)             \marginnoteleftadjust ignored on input line 2.
  [6]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 12.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
 <figures/Ce1-example-screenshot.jpg, id=40, 1284.8pt x 803.0pt>
 File: figures/Ce1-example-screenshot.jpg Graphic file (type jpg)
 <use figures/Ce1-example-screenshot.jpg>
 Package pdftex.def Info: figures/Ce1-example-screenshot.jpg  used on input line
- 42.
+ 55.
 (pdftex.def)             Requested size: 249.67291pt x 156.03912pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 47.
- [7] [8 <./figures/Ce1-example-screenshot.jpg>]
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 60.
+ [7]
+Overfull \hbox (5.59909pt too wide) in paragraph at lines 65--66
+[]\OT1/ptm/m/n/10 Vague in-struc-tions should re-sult in faster re-sponses
+ []
+
+[8 <./figures/Ce1-example-screenshot.jpg>]
+Package marginnote Info: Margin note 13.1 is on absolute page 13
+(marginnote)              on input line 74.
+Package marginnote Info: xpos seems to be 135.26999pt,
+(marginnote)             \marginnoterightadjust ignored on input line 74.
 <figures/Ce1-rtplot-1.pdf, id=48, 505.89pt x 252.945pt>
 File: figures/Ce1-rtplot-1.pdf Graphic file (type pdf)
 <use figures/Ce1-rtplot-1.pdf>
-Package pdftex.def Info: figures/Ce1-rtplot-1.pdf  used on input line 72.
+Package pdftex.def Info: figures/Ce1-rtplot-1.pdf  used on input line 79.
 (pdftex.def)             Requested size: 163.12146pt x 113.4691pt.
 <figures/Ce1-blBarChart-1.pdf, id=50, 505.89pt x 252.945pt>
 File: figures/Ce1-blBarChart-1.pdf Graphic file (type pdf)
 <use figures/Ce1-blBarChart-1.pdf>
-Package pdftex.def Info: figures/Ce1-blBarChart-1.pdf  used on input line 73.
+Package pdftex.def Info: figures/Ce1-blBarChart-1.pdf  used on input line 80.
 (pdftex.def)             Requested size: 163.12146pt x 109.1965pt.
- [9 <./figures/Ce1-rtplot-1.pdf> <./figures/Ce1-blBarChart-1.pdf>] [10]) (./e2.
-tex
+ [9 <./figures/Ce1-rtplot-1.pdf> <./figures/Ce1-blBarChart-1.pdf>]
+Overfull \hbox (7.46933pt too wide) in paragraph at lines 94--95
+[]\OT1/ptm/m/n/10 Participants were sig-nif-i-cantly more likely to choose
+ []
+
+[10]) (./e2.tex
 Package marginnote Info: Margin note 15.1 is on absolute page 15
 (marginnote)              on input line 2.
 Package marginnote Info: xpos seems to be 135.26999pt,
 (marginnote)             \marginnoterightadjust ignored on input line 2.
- [11]
-<figures/De2-rtplot-1.pdf, id=77, 505.89pt x 216.81pt>
+ [11] [12]
+<figures/De2-rtplot-1.pdf, id=80, 505.89pt x 216.81pt>
 File: figures/De2-rtplot-1.pdf Graphic file (type pdf)
 <use figures/De2-rtplot-1.pdf>
-Package pdftex.def Info: figures/De2-rtplot-1.pdf  used on input line 58.
+Package pdftex.def Info: figures/De2-rtplot-1.pdf  used on input line 54.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
- [12]) (./e3.tex
-Package marginnote Info: Margin note 17.1 is on absolute page 18
+ [13 <./figures/De2-rtplot-1.pdf>]) (./e3.tex
+Package marginnote Info: Margin note 18.1 is on absolute page 18
 (marginnote)              on input line 2.
 Package marginnote Info: xpos seems to be 135.26999pt,
 (marginnote)             \marginnoteleftadjust ignored on input line 2.
- [13 <./figures/De2-rtplot-1.pdf>]
 <figures/Ee3-flow.jpg, id=90, 400.3758pt x 562.9833pt>
 File: figures/Ee3-flow.jpg Graphic file (type jpg)
 <use figures/Ee3-flow.jpg>
 Package pdftex.def Info: figures/Ee3-flow.jpg  used on input line 7.
 (pdftex.def)             Requested size: 166.44861pt x 234.05464pt.
- [14 <./figures/Ee3-flow.jpg>]
-<figures/Ee3-rtplot-1.pdf, id=94, 505.89pt x 216.81pt>
+ [14]
+[15 <./figures/Ee3-flow.jpg>]
+<figures/Ee3-rtplot-1.pdf, id=98, 505.89pt x 216.81pt>
 File: figures/Ee3-rtplot-1.pdf Graphic file (type pdf)
 <use figures/Ee3-rtplot-1.pdf>
 Package pdftex.def Info: figures/Ee3-rtplot-1.pdf  used on input line 66.
 (pdftex.def)             Requested size: 332.89723pt x 142.67157pt.
- [15]) (./discussion-of-e2-and-e3.tex
-[16 <./figures/Ee3-rtplot-1.pdf>]) (./general-discussion.tex [17] [18] [19])
+ [16 <./figures/Ee3-rtplot-1.pdf>])
+(./discussion-of-e2-and-e3.tex) (./general-discussion.tex [17] [18] [19])
 [20] (./v-book-2018.bbl
 Underfull \hbox (badness 1783) in paragraph at lines 66--68
 []\OT1/ptm/m/n/10 Izard V, De-haene S (2008) Cal-i-brat-ing the men-tal num-ber
@@ -501,10 +521,10 @@ Underfull \hbox (badness 1783) in paragraph at lines 66--68
 
 ]) [22] (./v-book-2018.aux) ) 
 Here is how much of TeX's memory you used:
- 3372 strings out of 492982
- 47742 string characters out of 6134897
- 222013 words of memory out of 5000000
- 6808 multiletter control sequences out of 15000+600000
+ 3388 strings out of 492982
+ 48014 string characters out of 6134897
+ 223030 words of memory out of 5000000
+ 6821 multiletter control sequences out of 15000+600000
  48933 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,25p,1791b,282s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -517,7 +537,7 @@ mf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
 tmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on v-book-2018.pdf (26 pages, 265014 bytes).
+Output written on v-book-2018.pdf (26 pages, 264457 bytes).
 PDF statistics:
  159 PDF objects out of 1000 (max. 8388607)
  108 compressed objects within 2 object streams

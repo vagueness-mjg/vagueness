@@ -62,7 +62,7 @@ The way in which borderline responses were construed is as follows, using as an 
 
 * In the crisp numerical condition we used "Choose the square with 6 dots". The smaller flanking array always contained exactly the specified number of dots. We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
 
-* For crisp verbal, we used Choose the square with the fewest dots. We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
+* For crisp verbal, we used "Choose the square with the fewest dots". We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
 
 On each trial, first the referring expression that constituted the instruction for that trial was displayed (e.g., "Choose a square with about 10 dots"). Participants then pressed a key to indicate that they had read the instruction. 
 

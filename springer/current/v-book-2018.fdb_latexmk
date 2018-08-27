@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex v-book-2018"] 1534857931 "v-book-2018.aux" "v-book-2018.bbl" "v-book-2018" 1534858953
+["bibtex v-book-2018"] 1535376021 "v-book-2018.aux" "v-book-2018.bbl" "v-book-2018" 1535376144
   "./spbasic.bst" 1533211057 33237 f4c2cac675c3bb7ec802ff7b7c9fb105 ""
-  "v-book-2018.aux" 1534857931 7553 8d57140f1c3b975addd9ce4d3b63e7af ""
+  "v-book-2018.aux" 1535376144 7480 22fa71fb97d7b1b519c6dac6a0fc1969 ""
   "v-book-2018.bcf" 0 -1 0 ""
   "v-book-2018.bib" 1534511175 8035 0c9f5a8b59c59b95419da973c02012e6 ""
   (generated)
   "v-book-2018.blg"
   "v-book-2018.bbl"
-["pdflatex"] 1534857931 "v-book-2018.tex" "v-book-2018.pdf" "v-book-2018" 1534858953
+["pdflatex"] 1535376144 "v-book-2018.tex" "v-book-2018.pdf" "v-book-2018" 1535376144
   "/etc/texmf/web2c/texmf.cnf" 1532898404 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -83,6 +83,7 @@
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/helvet.sty" 1480098837 1500 3c2647c8649928795ededd42a6e85f85 ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptmx.sty" 1480098837 4632 cd6d04f090f831ba44222ab7ccd5d2d4 ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd" 1480098837 411 12564a37a279e4e0b533cdf5e03eeb7c ""
+  "/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd" 1480098837 576 95c2c0baea9c719a4be29a3d4122498b ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd" 1480098837 348 f4ce75d394e7d9ac12ca7aac4045ed77 ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd" 1480098837 329 c8cddcc90b6f567b28408eb374773c9c ""
   "/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd" 1480098837 985 1ed784d7bfe47179f3550d2303b073f8 ""
@@ -96,8 +97,8 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1533214497 4126991 e0cde089e03563e149c178284c686118 ""
   "abstract.tex" 1533211057 817 ce5c1de5f678bc63940e6bf17bc1c835 ""
   "discussion-of-e2-and-e3.tex" 1533211057 927 b46d55633d3181bb854ba14df3a94e8f ""
-  "e1.tex" 1534857320 12677 a147dd16f2905fa3c7e2238c83c4dcd8 ""
-  "e2.tex" 1534857919 7621 87b8be0de164cbc035ecfd99d1d31633 ""
+  "e1.tex" 1535376141 14180 bbe3b581d1976c29f8772eb890b454f5 ""
+  "e2.tex" 1535375123 7571 d9611cd42b6a9841ea121f9552f6c14f ""
   "e3.tex" 1534857928 7798 0626f62927ab809e1e0777805212a398 ""
   "figures/Ce1-blBarChart-1.pdf" 1533211057 4811 20f7dda085254b84437954f64da70a78 ""
   "figures/Ce1-example-screenshot.jpg" 1534690863 33698 2c06010d56faf2fb80125f0457a914ff ""
@@ -110,12 +111,12 @@
   "our-approach-to-the-problem.tex" 1534690208 8933 00d956be4e44b343a3d106d634f2d56f ""
   "related-work.tex" 1533211057 4787 e19d2bfbf9a123a582f439025fdb4b55 ""
   "svmono.cls" 1533211057 70326 f590a8b416955a58dfb1fea2aaac8dc3 ""
-  "v-book-2018.aux" 1534857931 7553 8d57140f1c3b975addd9ce4d3b63e7af ""
-  "v-book-2018.bbl" 1534857931 6415 b263ae62308abbb886cd7bf1a15286e5 "bibtex v-book-2018"
+  "v-book-2018.aux" 1535376144 7480 22fa71fb97d7b1b519c6dac6a0fc1969 ""
+  "v-book-2018.bbl" 1535376021 6415 b263ae62308abbb886cd7bf1a15286e5 "bibtex v-book-2018"
   "v-book-2018.tex" 1534714926 1860 192e3e585fa1324bdfff3f95b2690270 ""
-  "v-book-2018.toc" 1534857931 1650 db7dc783bb98d5a4e151dbdda54b0a26 ""
+  "v-book-2018.toc" 1535376144 1618 a2c31b0f05de69b10dbe74001c897150 ""
   (generated)
   "v-book-2018.log"
   "v-book-2018.pdf"
-  "v-book-2018.toc"
   "v-book-2018.aux"
+  "v-book-2018.toc"
