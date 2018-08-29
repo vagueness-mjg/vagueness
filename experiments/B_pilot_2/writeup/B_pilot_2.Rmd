@@ -1,15 +1,11 @@
 ---
-title: "Experiment 1 of 4"
+title: "B_pilot_2"
 author: "Matt Green"
 output:
   html_document:
     toc: yes
-    <!--toc_float: true-->
-    mathjax: default
-    template: default
-    <!--code_folding: show-->
-    theme: default
----  
+---
+
 <style>
 table, th, td {
     border: 1px grey;
