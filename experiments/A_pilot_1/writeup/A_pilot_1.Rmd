@@ -1,15 +1,9 @@
 ---
-title: "Experiment 0 pilot"
+title: "A_pilot_1"
 author: "Matt Green"
 output:
   html_document:
     toc: yes
-    toc_float: true
-    mathjax: default
-    template: default
-    code_folding: show
-    theme: default
-  
 ---  
 
 This document aims to be a complete and up to date record of the analysis for vagueness 0, the pilot experiment.
