@@ -14,13 +14,10 @@ The variables were: subitizability; vagueness; target_size; gap_size; side (i.e.
 
 # Libraries and functions
 
-```{r load knitr}
-library(knitr)
-```
-
 Load libraries.
 
 ```{r load libraries, message=FALSE, warning=FALSE}
+library(knitr)
 library(tidyverse)
 library(broom)
 library(dotwhisker)
@@ -40,7 +37,7 @@ source("CIfunctions.R") # for summarySEwithin etc
 
 Get the data. 
 
-```{r "make the data.txt file unless it's already there; read the data from file, add some vars and code the added vars"}
+```{r "make the data.txt file unless it's already there; read the data from file, add some vars and code the added vars", message=FALSE}
 
 # make the data file from the individual subjects' data unless it's already there in the directory
 if (!file.exists("data.txt")) {
@@ -94,7 +91,7 @@ d$c.side  <- ifelse(d$side=="Left", -.5, .5)
 
 Size of the data is `r nrow(d)` trials.  There are `r nrow(subset(d,err==1))` error trials. Error trials are removed from analysis of RT
 
-```{r}
+```{r, "remove error trials"}
 d <- subset(d, err==0)
 ```
 
@@ -103,9 +100,11 @@ d <- subset(d, err==0)
 
 ## Eyeball the RTs
 
-### Uncapped
+### Untrimmed
 
-```{r fig.show='hide', warning=FALSE, echo=FALSE}
+Notice min is -6; max in 20258.
+
+```{r, "make untrimmed plot", fig.show='hide', warning=FALSE, echo=FALSE}
 # all the (correct) RTs
 summary(d$rt_ms)
 
@@ -122,12 +121,12 @@ ga2untrimmed = ggplot(data_for_plot, aes(rt_value)) +
   geom_density(na.rm=TRUE) +
   facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal")), scales="free") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
 
-myg1 <- grid.arrange(ga1untrimmed, ga2untrimmed, nrow=2, top = textGrob("Untrimmed",gp=gpar(fontsize=20,font=3)))
+myg1 <- grid.arrange(ga1untrimmed, ga2untrimmed, nrow=2, top = textGrob("Untrimmed", gp = gpar(fontsize=20, font=3)))
 ```
 
-### Capped at 0 ms and 10,000 ms
+### Trimmed at 0 ms and 10,000 ms
 
-```{r fig.show='hide', warning=FALSE, echo=FALSE}
+```{r, "make trimmed plot", fig.show='hide', warning=FALSE, echo=FALSE}
 # now with a simple cap imposed to select RTs between 0 and 10000 ms
 summary(d$rt_ms[d$rt_ms >= 0 & d$rt_ms<10000])
 
@@ -145,10 +144,10 @@ ga2trimmed = ggplot(data_for_plot, aes(rt_value)) +
   geom_density(na.rm=TRUE) +
   facet_wrap(~factor(rt_metric, levels=c("rt_ms", "rt_log", "rt_reciprocal")), scales="free") + theme(aspect.ratio = 1, axis.text.x = element_text(angle = 45, hjust = 1))
 
-myg2 <- grid.arrange(ga1trimmed, ga2trimmed, nrow=2, top = textGrob("Trimmed at 10,1000 ms",gp=gpar(fontsize=20,font=3)))
+myg2 <- grid.arrange(ga1trimmed, ga2trimmed, nrow=2, top = textGrob("Trimmed at 0 and 10,1000 ms", gp = gpar(fontsize=20, font=3)))
 ``` 
 
-```{r, fig.width=10,fig.height=10}
+```{r, "put trimmed-untrimmed plot", fig.width=10,fig.height=10, echo=FALSE}
 grid.arrange(myg1, myg2, nrow=2)
 ```
 
@@ -169,21 +168,20 @@ dat %>%
   theme(aspect.ratio = 1, panel.background = element_rect(fill="white", colour="black", linetype = "solid"))
 ```
 
-
-```{r}
+```{r boxplot crisp and vague, fig.width=3, fig.height=3}
 dat %>% 
   gather(key=rt_metric, value=rt_value, rt_ms, rt_log, rt_reciprocal) %>%
   filter(rt_metric=="rt_log") %>%
   ggplot(aes(group=vag, y=rt_value)) +
-  geom_boxplot(aes(x=item, col=vag))
+  geom_boxplot(aes(x=vag, col=vag)) + 
+  theme(aspect.ratio=1)
 ```
-
 
 # RT modelling
 
 Do a first lmer model. You can't put subit or gap over items because they are between-items.
 
-```{r, lmer1}
+```{r, "lmer 1 compare different rt metrics using the same model structure", warning=FALSE, cache=TRUE}
 lmer1.ms  <- lmer(data=dat, rt_ms ~         vag + subit + quan + gap + side + (1|subject) + (1|item))
 lmer1.log <- lmer(data=dat, rt_log ~        vag + subit + quan + gap + side + (1|subject) + (1|item))
 lmer1.rcp <- lmer(data=dat, rt_reciprocal ~ vag + subit + quan + gap + side + (1|subject) + (1|item))
@@ -196,20 +194,16 @@ rbind(
 )
 
 dwplot(models, vline = geom_vline(xintercept = 0)) + facet_wrap(~model, scales="free", ncol=1)
-
 ```
 
-
-
-```{r mler on logrt}
+```{r lmer on logrt, warning=FALSE, cache=TRUE}
 lmer2.log <- lmer(data=dat, rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item))
-dwplot(lmer2.log %>% tidy() %>% filter(group=="fixed")) + 
-  ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)")
+dwplot(lmer2.log %>% tidy() %>% filter(group=="fixed")) + ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)")
 
+lmer2.rcp <- lmer(data=dat, rt_reciprocal~subit*vag + (vag|subject) + (vag|item))
 
-lmer2 <- lmer(data=dat, rt_reciprocal~subit*vag + (vag|subject) + (vag|item))
 # lmer3 is closer to the original anova than lmer2
-lmer3 <- tidy(lme4::lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item)))
+lmer3 <- tidy(lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item)))
 dwplot(lmer3 %>% filter(group=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2)) + xlab("Coefficient")
 ```
 
