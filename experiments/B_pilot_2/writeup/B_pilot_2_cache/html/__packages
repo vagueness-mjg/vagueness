@@ -12,3 +12,14 @@ dplyr
 dtplyr
 LMERConvenienceFunctions
 tidyr
+kableExtra
+tidyverse
+tibble
+readr
+purrr
+stringr
+forcats
+broom
+broom.mixed
+dotwhisker
+bindrcpp

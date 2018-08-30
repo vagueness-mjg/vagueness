@@ -6,33 +6,43 @@ output:
     toc: yes
 ---
 
-<style>
-table, th, td {
-    border: 1px grey;
-    border-collapse: collapse;
-    padding:2px 5px 2px 5px
-}  
-</style>
+<!-- <style> -->
+<!-- table, th, td { -->
+<!--     border: 1px grey; -->
+<!--     border-collapse: collapse; -->
+<!--     padding:2px 5px 2px 5px -->
+<!-- }   -->
+<!-- </style> -->
 
 <!-- no wrap table entries on their white space -->
 
-<style>
-table {
-  white-space: nowrap;
-}
-</style>
+<!-- <style> -->
+<!-- table { -->
+<!--   white-space: nowrap; -->
+<!-- } -->
+<!-- </style> -->
 
-```{r pander, echo=FALSE, cache=FALSE}
-library(pander)
+```{r pander, echo=FALSE, cache=FALSE, message=FALSE}
 library(knitr)
+library(tidyverse)
+library(broom)
+library(broom.mixed)
+library(lme4)
+library(lmerTest)
+library(dotwhisker)
+library(kableExtra)
+library(LMERConvenienceFunctions)
+library(data.table)
+library(gridExtra)
+source('summarySEwithin2.R')
+source("B_pilot_2_functions/pretty_coef_table.R")
 ```
 
 ```{r showInstructions, echo=FALSE, cache=TRUE}
 v = c("crisp","vague")
 e <- c("Choose the the square with many dots", "Choose the square with 20 dots")
-i = data.frame(v, e)
-names(i) = c("vagueness", "example instruction")
-pander(i, justify=c('center', 'left'))
+i = data.frame(Vagueness = v, Instruction = e)
+kable(i) %>% kable_styling(full_width = F, position = "left", font_size = 11) 
 ```
 
 ```{r showItems, echo=FALSE, cache=TRUE}
@@ -41,20 +51,12 @@ i = data.frame(Gap = c("05","10","15","20"),
                x = c("25:20","25:15","25:10","25:05"),
                z = c("25:30","25:35","25:40","25:45") )
 names(i) = c('Gap Size', 'Small Target', 'Large Target')
-pander(i, justify=c('center', 'center', 'center'))
-```
-
-```{r loadLibraries, message=FALSE, echo=FALSE, cache=FALSE}
-library(ggplot2); library(xtable); library(gridExtra); library(lme4); library(lmerTest);  library(data.table); library(dplyr); library(dtplyr); library(pander); library(LMERConvenienceFunctions); source('summarySEwithin2.R') 
-```
-
-```{r tidyr, echo=FALSE, message=FALSE}
-library(tidyr)
+kable(i) %>% kable_styling(full_width = F, position = "left", font_size = 11) 
 ```
 
 ```{r rawdata, cache=FALSE}
 rawdata <- read.table('data.txt', sep=' ')
-rawdata %>% head() %>% kable()
+rawdata %>% head() 
 ```
 
 In this experiment it was possible to identify errors.
@@ -138,62 +140,21 @@ ac.lmer.1 <- lme4::glmer(
 # Response times
 
 ```{r, results='asis', echo=F}
-print(
-  xtable(rtdataplot1,
-         caption='Condition means'),
-  include.rownames=FALSE,
-  caption.placement='top',
-  type='html')
+kable(rtdataplot1, caption="condition means") %>% kable_styling(full_width = F, position = "left", font_size = 11) 
 ```
 
 ```{r tableRTmodelSimple, results='asis', echo=FALSE, cache=TRUE}
-x = as.data.frame(format(summary(rt.lmer.1)$coef, scientific=FALSE), stringsAsFactors = FALSE)
-
-for (i in 1:(ncol(x)-1)) {
-  for (j in 1:nrow(x)) {
-    x[j,i] <-  substr(x[j,i], start=1, stop=7)
-  }
-}
-
-for (i in 1:(ncol(x)-1)) {
-  x[,i] <- as.numeric(x[,i])
-}
-
-for (i in ncol(x)) {
-  for (j in 1:nrow(x)) {
-    x[j,i] <-  substr(x[j,i], start=1, stop=7)
-  }
-}
-print(
-  xtable(
-    align='lrrrrr', 
-    digits=c(0, 2, 2, 1, 1, 3),
-    x,
-    caption="Response time model"), 
-    caption.placement="top", 
-  type='html')
+pretty_coef_table(rt.lmer.1, "rt.lmer.1")
 ```
 
 # Error rates
 
 ```{r erdataplot1, results='asis', echo=F}
-print(
-  xtable(erdataplot1,
-         caption='Condition means'),
-  include.rownames=FALSE,
-  caption.placement='top',
-  type='html')
+kable(erdataplot1, caption="condition means") %>% kable_styling(full_width = F, position = "left", font_size = 11) 
 ```
 
 ```{r tableErrorModelsimple, results='asis', cache=TRUE, echo=FALSE}
-print(
-  xtable(
-    summary(
-    ac.lmer.1
-    )$coefficients,
-    digits=c(0, 2, 2, 2, 7), 
-    caption="Error rates model"),
-  caption.placement="top", type='html')
+pretty_coef_table(ac.lmer.1, "ac.lmer.1")
 ```
 
 <!-- ```{r} -->
