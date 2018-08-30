@@ -4,6 +4,8 @@ author: "Matt Green"
 output:
   html_document:
     toc: yes
+    theme: default
+    css: styles.css
 ---  
 
 This document aims to be a complete and up to date record of the analysis for vagueness 0, the pilot experiment.
@@ -164,7 +166,7 @@ dat %>%
   ggplot(aes(x=trial, y=rt_value, col=vag)) +
   geom_point() +
   geom_smooth(se=F) +
-  facet_wrap(~subject) +
+  facet_wrap(~subject, ncol = 7) +
   theme(aspect.ratio = 1, panel.background = element_rect(fill="white", colour="black", linetype = "solid"))
 ```
 
@@ -196,15 +198,23 @@ rbind(
 dwplot(models, vline = geom_vline(xintercept = 0)) + facet_wrap(~model, scales="free", ncol=1)
 ```
 
-```{r lmer on logrt, warning=FALSE, cache=TRUE}
+```{r lmer on logrt, warning=FALSE, cache=TRUE, fig.width=6, fig.height=2}
 lmer2.log <- lmer(data=dat, rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item))
-dwplot(lmer2.log %>% tidy() %>% filter(group=="fixed")) + ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)")
+
+dwplot(lmer2.log %>% tidy() %>% filter(group=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 1)) +
+  xlab("Coefficient") +
+  ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)") + 
+  theme(plot.title = element_text(size = 8), axis.title.x = element_text(size=8), axis.text.x = element_text(size=8))
 
 lmer2.rcp <- lmer(data=dat, rt_reciprocal~subit*vag + (vag|subject) + (vag|item))
 
 # lmer3 is closer to the original anova than lmer2
-lmer3 <- tidy(lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item)))
-dwplot(lmer3 %>% filter(group=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2)) + xlab("Coefficient")
+lmer3 <- lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item))
+
+dwplot(lmer3 %>% tidy() %>% filter(group=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 1)) +
+  xlab("Coefficient") + 
+  ggtitle("rt_reciprocal ~ vag * subit + quan + gap + (vag+subit|subject) + (vag|item)") + 
+  theme(plot.title = element_text(size = 8), axis.title.x = element_text(size=8), axis.text.x = element_text(size=8))
 ```
 
 
