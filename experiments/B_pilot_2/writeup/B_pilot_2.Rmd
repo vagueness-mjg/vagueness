@@ -21,7 +21,7 @@ library(LMERConvenienceFunctions)
 library(data.table)
 library(grid)
 library(gridExtra)
-source('summarySEwithin2.R')
+source("B_pilot_2_functions/summarySEwithin2.R")
 source("B_pilot_2_functions/pretty_coef_table.R")
 ```
 
@@ -41,7 +41,7 @@ names(i) = c('Gap Size', 'Small Target', 'Large Target')
 kable(i) %>% kable_styling(full_width = F, position = "left", font_size = 11) 
 ```
 
-```{r rawdata, cache=FALSE}
+```{r rawdata, cache=FALSE, comment=NA}
 rawdata <- read.table('data.txt', sep=' ')
 rawdata %>% head() 
 ```

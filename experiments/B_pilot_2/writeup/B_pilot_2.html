@@ -70,6 +70,7 @@ h6 {
 }
 </style>
 
+<link href="data:text/css;charset=utf-8,%20body%7B%20%0Afont%2Dsize%3A%2012px%3B%0A%7D%0Atd%20%7B%20%0Afont%2Dsize%3A%208px%3B%0A%7D%0Ah1%2Etitle%20%7B%0Afont%2Dsize%3A%2038px%3B%0A%7D%0Ah1%20%7B%20%0Afont%2Dsize%3A%2028px%3B%0A%7D%0Ah2%20%7B%20%0Afont%2Dsize%3A%2022px%3B%0A%7D%0Ah3%20%7B%20%0Afont%2Dsize%3A%2018px%3B%0A%7D%0A%2Er%7B%20%0Afont%2Dsize%3A%2010px%3B%0A%7D%0Apre%20%7B%20%0A%0Afont%2Dsize%3A%2010px%3B%0A%7D%0Atable%20%7B%20%0Awhite%2Dspace%3A%20nowrap%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -134,19 +135,6 @@ $(document).ready(function () {
 </ul>
 </div>
 
-<!-- <style> -->
-<!-- table, th, td { -->
-<!--     border: 1px grey; -->
-<!--     border-collapse: collapse; -->
-<!--     padding:2px 5px 2px 5px -->
-<!-- }   -->
-<!-- </style> -->
-<!-- no wrap table entries on their white space -->
-<!-- <style> -->
-<!-- table { -->
-<!--   white-space: nowrap; -->
-<!-- } -->
-<!-- </style> -->
 <table class="table" style="font-size: 11px; width: auto !important; ">
 <thead>
 <tr>
@@ -240,20 +228,20 @@ Large Target
 </table>
 <pre class="r"><code>rawdata &lt;- read.table('data.txt', sep=' ')
 rawdata %&gt;% head() </code></pre>
-<pre><code>##   subject trial condition leftN rightN item_ratio side string   Vgn c_Vgn
-## 1   sub01     1         7    40     25      0.625    L   many Vague   0.5
-## 2   sub01     2         4    25     20      0.800    R    few Vague   0.5
-## 3   sub01     3         3    15     25      0.600    L    few Vague   0.5
-## 4   sub01     4         3    15     25      0.600    L     15 Crisp  -0.5
-## 5   sub01     5         4    20     25      0.800    L     20 Crisp  -0.5
-## 6   sub01     6         7    40     25      0.625    L     40 Crisp  -0.5
-##    Ord c_Ord   Qty c_Qty    Gap c_Gap error   rt    logrt
-## 1 RtoL   0.5 Large   0.5 gap 15   0.5 FALSE  716 6.573680
-## 2 RtoL   0.5 Small  -0.5 gap 05  -1.5 FALSE  741 6.608001
-## 3 LtoR  -0.5 Small  -0.5 gap 10  -0.5 FALSE  621 6.431331
-## 4 LtoR  -0.5 Small  -0.5 gap 10  -0.5 FALSE  918 6.822197
-## 5 LtoR  -0.5 Small  -0.5 gap 05  -1.5 FALSE 3584 8.184235
-## 6 RtoL   0.5 Large   0.5 gap 15   0.5 FALSE 1429 7.264730</code></pre>
+<pre><code>  subject trial condition leftN rightN item_ratio side string   Vgn c_Vgn
+1   sub01     1         7    40     25      0.625    L   many Vague   0.5
+2   sub01     2         4    25     20      0.800    R    few Vague   0.5
+3   sub01     3         3    15     25      0.600    L    few Vague   0.5
+4   sub01     4         3    15     25      0.600    L     15 Crisp  -0.5
+5   sub01     5         4    20     25      0.800    L     20 Crisp  -0.5
+6   sub01     6         7    40     25      0.625    L     40 Crisp  -0.5
+   Ord c_Ord   Qty c_Qty    Gap c_Gap error   rt    logrt
+1 RtoL   0.5 Large   0.5 gap 15   0.5 FALSE  716 6.573680
+2 RtoL   0.5 Small  -0.5 gap 05  -1.5 FALSE  741 6.608001
+3 LtoR  -0.5 Small  -0.5 gap 10  -0.5 FALSE  621 6.431331
+4 LtoR  -0.5 Small  -0.5 gap 10  -0.5 FALSE  918 6.822197
+5 LtoR  -0.5 Small  -0.5 gap 05  -1.5 FALSE 3584 8.184235
+6 RtoL   0.5 Large   0.5 gap 15   0.5 FALSE 1429 7.264730</code></pre>
 <p>In this experiment it was possible to identify errors. This is because there were only 2 squares and an instruction uniquely identified one of them. Therefore error trials were removed from analysis of response times:</p>
 <pre class="r"><code>rtdata &lt;- subset(rawdata, error==FALSE)
 erdata &lt;- rawdata</code></pre>
