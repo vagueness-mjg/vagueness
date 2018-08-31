@@ -23,3 +23,6 @@
         /* This determines font size for output chunks (## chunks) */
     font-size: 10px;
   }
+  table { /* no wrap table entries on their white space */
+  white-space: nowrap;
+}
