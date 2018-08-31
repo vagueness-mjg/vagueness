@@ -4,23 +4,9 @@ author: "Matt Green"
 output:
   html_document:
     toc: yes
+    theme: default
+    css: styles.css
 ---
-
-<!-- <style> -->
-<!-- table, th, td { -->
-<!--     border: 1px grey; -->
-<!--     border-collapse: collapse; -->
-<!--     padding:2px 5px 2px 5px -->
-<!-- }   -->
-<!-- </style> -->
-
-<!-- no wrap table entries on their white space -->
-
-<!-- <style> -->
-<!-- table { -->
-<!--   white-space: nowrap; -->
-<!-- } -->
-<!-- </style> -->
 
 ```{r pander, echo=FALSE, cache=FALSE, message=FALSE}
 library(knitr)

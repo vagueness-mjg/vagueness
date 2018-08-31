@@ -4,7 +4,8 @@ author: "Matt Green"
 output:
   html_document:
     toc: yes
-    toc_float: false
+    theme: default
+    css: styles.css    
 ---    
 
 ```{r 'load Libraries and source my functions', message=FALSE, echo=FALSE}

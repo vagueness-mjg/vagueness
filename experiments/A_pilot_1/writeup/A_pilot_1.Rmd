@@ -8,45 +8,25 @@ output:
     css: styles.css
 ---  
 
-This document aims to be a complete and up to date record of the analysis for vagueness 0, the pilot experiment.
-
-The pilot experiment used subitizable numbers as well as bigger numbers.
-The instructions had the form: _Choose the square with {{few, many},{two, three, four, five, six, seven, eight, nine}} dots._
-The variables were: subitizability; vagueness; target_size; gap_size; side (i.e., which side was the bigger number on?)
-
-# Libraries and functions
-
-Load libraries.
-
 ```{r load libraries, message=FALSE, warning=FALSE}
 library(knitr)
 library(tidyverse)
 library(broom)
-library(dotwhisker)
-library(grid)
-library(gridExtra)
+library(broom.mixed)
 library(lme4)
-# R CMD INSTALL broom.mixed # https://github.com/bbolker/broom.mixed
+library(lmerTest)
+library(dotwhisker)
+library(kableExtra)
+library(LMERConvenienceFunctions)
+library(data.table)
+library(gridExtra)
+source('summarySEwithin2.R')
+source("A_pilot_1_functions/pretty_coef_table.R")
 ```
 
-Source additional R files with functions for computing confidence intervals.
+The experiment used subitizable numbers as well as bigger numbers. The instructions had the form: _Choose the square with {{few, many},{two, three, four, five, six, seven, eight, nine}} dots._ The variables were: subitizability; vagueness; target_size; gap_size; side (i.e., which side was the bigger number on?)
 
-```{r sourceCIFunctions}
-source("CIfunctions.R") # for summarySEwithin etc
-```
-
-# Data
-
-Get the data. 
-
-```{r "make the data.txt file unless it's already there; read the data from file, add some vars and code the added vars", message=FALSE}
-
-# make the data file from the individual subjects' data unless it's already there in the directory
-if (!file.exists("data.txt")) {
-  system("echo 'gap\ttarget\tside\tvagueness\tpair\tVersion\tLeft\tRight\tText\tCondition\tcorrectAnswer\tsubject\tactualAnswer\tisCorrect\trt' > data.txt")
-  system("cat ../experimentCode/output/*.dat >> data.txt", wait=TRUE)
-}
-
+```{r "read the data from file, add some vars", message=FALSE}
 # read in the data from file
 din <- read_delim("data.txt", delim="\t")
 
@@ -79,8 +59,8 @@ d <- tibble(
   err = 1 - din$isCorrect, 
   rt_ms = din$rt,
   rt_log = log( din$rt ),
-  rt_reciprocal = -1/din$rt # rate of slowing: # We multiplied reciprocal scores [1/RT] by -1 [-1/RT] to maintain the direction of effects compatible for the three variants, effectively converting speed [number of responses per ms] into 'rate of slowing' - A linear mixed model analysis of masked repetition priming, Kliegl, Masson & Richter, VISUAL COGNITION,2010,18(5),655--681 (p.~662) 
-)
+  rt_reciprocal = -1/din$rt)
+# reciprocal is rate of slowing: "We multiplied reciprocal scores [1/RT] by -1 [-1/RT] to maintain the direction of effects compatible for the three variants, effectively converting speed [number of responses per ms] into 'rate of slowing' " - A linear mixed model analysis of masked repetition priming, Kliegl, Masson & Richter, VISUAL COGNITION,2010,18(5),655--681 (p.~662) 
 ```
 
 ```{r "make centred variables for factors"}
