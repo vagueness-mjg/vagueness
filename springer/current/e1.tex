@@ -1,12 +1,10 @@
-\marginnote{C-Exp-1}
+% C_exp_1
 
 To find out what happens when words are used in a context where their potential for vagueness comes to the fore, Experiment 1 used three arrays (rather than two) so that the vague description had more than one possible referent, and used indefinite articles to avoid the impression that only one response counted as correct, and was carried out without error feedback. An indication that the potential for vagueness was indeed realised in Experiment 1 is that the borderline response was chosen fairly often: 16\% of the time.
 
-In Experiment 1, an item was a referring expression instruction followed by a set of three dot arrays defined by a triple of numbers, representing the number of dots in the left, middle, and right arrays. We used four different triples of numbers: (6,15,24); (16,25,34); (26,35,44); (36,45,54). Each set of arrays comprised three arrays (instead of two as in Experiment 1); the array representing the central number was always presented in the middle of the three; there were two flanking arrays where one had fewer dots than the central array and the other had more, and these flanking arrays appeared equally often on the left and right of the central array. 
+In Experiment 1, an item was an instruction followed by a set of three dot arrays defined by a triple of numbers, representing the number of dots in the left, middle, and right arrays. We used four different triples of numbers: (6,15,24); (16,25,34); (26,35,44); (36,45,54). Each set of arrays comprised three arrays (instead of two as in \citet{green2013utility}); the array representing the central number was always presented in the middle of the three; there were two flanking arrays where one had fewer dots than the central array and the other had more, and these flanking arrays appeared equally often on the left and right of the central array. 
 
-Table \ref{instructionsC-exp-1} gives the full set of stimuli and associated instructions. 
-%
-The way in which borderline responses were construed is as follows, using as an example the array (6:15:24) and instructions that identified the smaller flanking array (6). 6 was classified as the expected response. 15 was classified as the borderline response. 24 was classified as the extreme response. 
+Table \ref{instructionsC-exp-1} gives the full set of stimuli and associated instructions. The way in which borderline responses were construed is as follows, using as an example the array (6:15:24) and instructions that identified the smaller flanking array (6). 6 was classified as the expected response. 15 was classified as the borderline response. 24 was classified as the extreme response. 
 
 \begin{itemize}
 \item In the vague numerical condition the instruction was "Choose a square with about 10 dots" -- none of the arrays contained exactly 10 dots, but 10 is closer to 6 than it is to 15, making 6 a better response to that instruction, 15 a borderline response, and 24 an extreme response. 
@@ -15,9 +13,7 @@ The way in which borderline responses were construed is as follows, using as an 
 \item For crisp verbal, we used "Choose the square with the fewest dots". We considered this to be equivalent in terms of which responses were expected (6), borderline (15) and extreme (24).
 \end{itemize}
 
-On each trial, first the referring expression that constituted the instruction for that trial was displayed (e.g., "Choose a square with about 10 dots"). Participants then pressed a key to indicate that they had read the instruction. The instruction remained on screen, and after 1000 ms, the arrays appeared. An example stimulus is given in Figure \ref{Experiment1and2examplestimulus}. Response time was measured from the presentation of the arrays until the keypress indicating the participant's choice. The trial would timeout after 60 seconds if there was no response. 
-%
-In this experiment, no feedback was given. This was because, in the vague conditions, we did not regard any response as "correct" or "incorrect", but instead as "expected response"; "borderline response"; and "extreme response", and we did not want to draw participants' attention to this distinction explicitly. Which choice the participant made was recorded for analysis.
+On each trial, first the referring expression that constituted the instruction for that trial was displayed (e.g., "Choose a square with about 10 dots"). Participants then pressed a key to indicate that they had read the instruction. The instruction remained on screen, and after 1000 ms, the arrays appeared. An example stimulus is given in Figure \ref{Experiment1and2examplestimulus}. Response time was measured from the presentation of the arrays until the keypress indicating the participant's choice. The trial would timeout after 60 seconds if there was no response. In this experiment, no feedback was given. This was because, in the vague conditions, we did not regard any response as "correct" or "incorrect", but instead as "expected response"; "borderline response"; and "extreme response", and we did not want to draw participants' attention to this distinction explicitly. Which choice the participant made was recorded for analysis.
 
 \begin{table}[htbp]
 \centering
@@ -69,10 +65,8 @@ We formulated the following hypotheses for Experiment 1:
 \end{description}
 
 \subsection{Results (Experiment 1)} 
-\subsubsection{Full model}
-\marginnote{needs numbers for the stats}
 
-Means for response times and proportion of borderline responses are given in Fig. (\ref{resultsC-exp-1}). Response times from all trials were trimmed at 2.5 standard deviations for each subject, leading to the loss of 236 trials, 3.1\% of the data. A linear mixed model was constructed for the (logged) response times, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and per-participant intercepts and slopes for sum-coded vagueness, instruction format, (and their interaction) as random effects. We found:
+Response times from all trials were trimmed at 2.5 standard deviations for each subject, leading to the loss of 236 trials, 3.1\% of the data. The distribution of remaining response times was skewed with many long responses. These remaining response times were log-transformed which reduced this skew so that their distribution more closely approximated a normal distribution. Means for response times and proportion of borderline responses are given in Figure \ref{resultsC-exp-1}. 
 
 \begin{figure}[htbp]
 \centering
@@ -82,37 +76,23 @@ Means for response times and proportion of borderline responses are given in Fig
 \label{resultsC-exp-1}
 \end{figure}
 
+A linear mixed model was constructed for the (log-transformed) response times, with sum-coded vagueness, instruction format, and their interaction, and item, as fixed effects, and per-participant intercepts and slopes for sum-coded vagueness, instruction format, and their interaction as random effects. 
+
 \begin{description}
-\item [Hypothesis 1 (Crisp/Vague RT)] Vague instructions actually led to significantly slower responses than crisp instructions, against Hypothesis 1: $\beta=$, $se=$, $t=$, $p$. When the model was restricted to numeric-only instructions Vague instructions still led to significantly slower responses than crisp instructions $\beta=$, $se=$, $t=$, $p$. When the model was restricted to verbal-only instructions Vague instructions tended to slow responses, but not significantly: $\beta=$, $se=$, $t=$, $p$.
-\item [Hypothesis 2 (Numeric/Verbal RT)] There was actually a significant difference between numeric and verbal instructions, with numeric instructions leading to longer responses than verbal instructions, against Hypothesis 2: $\beta=$, $se=$, $t=$, $p$.
-\item [Hypothesis 3 (Item RT)] Responses took longer as the levels of Item increased, supporting Hypothesis 3: $\beta=$, $se=$, $t=$, $p$.
+\item [Hypothesis 1 (Crisp/Vague RT)] Vague instructions actually led to significantly slower responses than crisp instructions, against Hypothesis 1: $\beta=0.058$, $se=0.013$, $t=4.55$, $p<0.001$. When the model was restricted to numeric-only instructions Vague instructions still led to significantly slower responses than crisp instructions $\beta=0.093$, $se=0.021$, $t=4.51$, $p<0.001$. When the model was restricted to verbal-only instructions Vague instructions tended to slow responses, but not significantly: $\beta=0.024$, $se=0.016$, $t=1.46$, $p=0.155$.
+\item [Hypothesis 2 (Numeric/Verbal RT)] There was actually a significant difference between numeric and verbal instructions, with numeric instructions leading to longer responses than verbal instructions, against Hypothesis 2: $\beta0.265=$, $se=0.072$, $t=5.08$, $p<0.001$.
+\item [Hypothesis 3 (Item RT)] Responses took longer as the levels of Item increased, supporting Hypothesis 3: $\beta=0.120$, $se=0.017$, $t=7.11$, $p<0.001$.
 \end{description}
 
-A generalized linear mixed model \citet{jaeger2008categorical} was fit to the data for selection of the borderline response, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant, as well as per-participant intercepts as random effects. The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Fig, \ref{resultsC-exp-1}. Participants chose the borderline square on $16.6\%$ of trials overall.
+However, given that the response time plot in the left panel of Figure \ref{resultsC-exp-1} shows that responses to 6:15:24 in the "crisp numeric" instructions condition were extremely fast relative to the "vague numeric" instructions to 6:15:24, the effects in the model of the full dataset could be driven by this difference. A clearer picture of the effects of interest might be obtained by removing the 6:15:24 level of Item from the data set, and fitting the model to this restricted data. Doing this did not affect the direction of the effects in the full dataset, but whereas the effects were significant in the full dataset, they were not significant in the restricted dataset. Full details of the analysis of the restricted dataset are available in the online materials.
+
+A generalized linear mixed model \citet{jaeger2008categorical} was fit to the data for selection of the borderline response, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant, as well as per-participant intercepts as random effects. The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Figure \ref{resultsC-exp-1}. Participants chose the borderline square on $16.6\%$ of trials overall.
 
 \begin{description}
 \item [Hypothesis 4 (Response Type)] Participants were significantly more likely to choose the borderline option for vague instructions than for crisp instructions (21.9\% vs 11.3\%: $\beta=0.62$, $se=0.22$, $z=2.8$, $p=0.0059$). Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%: $\beta=-3.35$, $se=0.23$, $z=-14.6$, $p<0.0001$). 
 \end{description}
 
-\subsubsection{Restricted model}
-
-However, given that the plot shows that responses to 6:15:24 in the "crisp numeric" instructions condition were extremely fast relative to the "vague numeric" instructions to 6:15:24, the effects in the model of the full dataset could be driven by this difference. 
-
-A clearer picture of the effects of interest might be obtained by removing the 6:15:24 level of Item from the data set, and fitting the model to this restricted data. Doing this results in the effects tabled below. 
-
-With less data available, the model formula had to be simplified in order to converge -- specifically the following terms were dropped: per-subject slopes for the Vagueness by Item interaction, and per-subject slopes for the effect of Item.
-
-On the basis of the restricted model:
-
-\begin{description}
-\item [Hypothesis 1 (Crisp/Vague RT)] After dropping the 6:15:24 level, there is still a disadvantage for Vagueness, but it is not significant (p=.24) $\beta=$, $se=$, $t=$, $p$. When the model was restricted to numeric-only instructions the disadvantage for vagueness was very small and not significant $\beta=$, $se=$, $t=$, $p$. When the model was restricted to verbal-only instructions the disadvantage for vagueness was small and not significant $\beta=$, $se=$, $t=$, $p$.
-\item [Hypothesis 2 (Numeric/Verbal RT)] There is still a significant disadvantage for Numeric instruction format (p<.001).
-\item [Hypothesis 3 (Item RT)] There is still a disadvantage for increasing the number of dots but it is not significant (p=.323). 
-%\item The interaction between Vagueness and Instruction format changes sign, and is now non-significant (beta=-.022, p=.374). 
-\end{description}
-
 \subsection{Discussion (Experiment 1)}
-
 
 This experiment tested whether vague instructions would result in faster responses than crisp instructions, when borderline cases were present. Faster responses for vague instructions were found in pilot experiment B, but there were no borderline cases in that experiment.
 
