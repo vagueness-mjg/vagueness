@@ -20,13 +20,25 @@ indent_mode=2
 [project]
 name=springer-project
 base_path=/home/matt/wd/vagueness/springer/current
+description=
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=-1
+current_page=0
+FILE_NAME_0=145;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fv-book-2018.tex;0;4
+FILE_NAME_1=817;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fabstract.tex;0;4
+FILE_NAME_2=0;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fintroduction.tex;0;4
+FILE_NAME_3=0;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Frelated-work.tex;0;4
+FILE_NAME_4=0;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Four-approach-to-the-problem.tex;0;4
+FILE_NAME_5=8855;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fe1.tex;0;4
+FILE_NAME_6=3980;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fe2.tex;0;4
+FILE_NAME_7=1653;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fe3.tex;0;4
+FILE_NAME_8=0;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fdiscussion-of-e2-and-e3.tex;0;4
+FILE_NAME_9=7639;LaTeX;0;EUTF-8;1;1;1;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fgeneral-discussion.tex;0;4
+FILE_NAME_10=3273;LaTeX;0;EUTF-8;1;1;0;%2Fhome%2Fmatt%2Fwd%2Fvagueness%2Fspringer%2Fcurrent%2Fv-book-2018.bib;0;4
 
 [VTE]
 last_dir=/home/matt

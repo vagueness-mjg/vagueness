@@ -66,14 +66,15 @@ We formulated the following hypotheses for Experiment 1:
 
 \subsection{Results (Experiment 1)} 
 
-30 participants were recruited. Response times from all trials were trimmed at 2.5 standard deviations for each subject, leading to the loss of 236 trials, 3.1\% of the data. The distribution of remaining response times was skewed with many long responses. These remaining response times were log-transformed which reduced this skew so that their distribution more closely approximated a normal distribution. Condition means for response times and proportion of borderline responses are given in Figure \ref{resultsC-exp-1}. 
+\paragraph{\textbf{Response times}}
+
+30 participants were recruited. Response times from all trials were trimmed at 2.5 standard deviations for each subject, leading to the loss of 236 trials, 3.1\% of the data. The distribution of remaining response times was skewed with many long responses. These remaining response times were log-transformed which reduced this skew so that their distribution more closely approximated a normal distribution. Condition means for response times are given in Figure \ref{resultsC-exp-1-RT}. 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[trim = 20mm 0mm 30mm 0mm, clip, width=.49\textwidth]{figures/Ce1-rtplot-1.pdf}
-\includegraphics[trim = 20mm 0mm 25mm 0mm, clip, width=.49\textwidth]{figures/Ce1-blBarChart-1}
-\caption{Experiment 1 results: mean response times by condition and item, and counts of borderline case responses by condition.}
-\label{resultsC-exp-1}
+\includegraphics[width=\textwidth]{figures/Ce1-rtplot-1.pdf}
+\caption{Experiment 1 results: mean response times by condition and item}
+\label{resultsC-exp-1-RT}
 \end{figure}
 
 A linear mixed model was constructed for the (log-transformed) response times, with sum-coded vagueness, instruction format, and their interaction, and item, as fixed effects, and per-participant intercepts and slopes for sum-coded vagueness, instruction format, and their interaction as random effects. 
@@ -84,12 +85,21 @@ A linear mixed model was constructed for the (log-transformed) response times, w
 	\item [Test of Hypothesis 3 (Item RT)] Responses took longer as the levels of Item increased, supporting Hypothesis 3: $\beta=0.120$, $se=0.017$, $t=7.11$, $p<0.001$.
 \end{description}
 
-However, given that the response time plot in the left panel of Figure \ref{resultsC-exp-1} shows that responses to 6:15:24 in the "crisp numeric" instructions condition were extremely fast relative to the "vague numeric" instructions to 6:15:24, the effects in the model of the full dataset could be driven by this difference. A clearer picture of the effects of interest might be obtained by removing the 6:15:24 level of Item from the data set, and fitting the model to this restricted data. Doing this did not affect the direction of the effects in the full dataset, but whereas the effects were significant in the full dataset, they were not significant in the restricted dataset. Full details of the analysis of the restricted dataset are available in the online materials.
+However, given that the response time plot in Figure \ref{resultsC-exp-1-RT} shows that responses to 6:15:24 in the "crisp numeric" instructions condition were extremely fast relative to the "vague numeric" instructions to 6:15:24, the effects in the model of the full dataset could be driven by this difference. A clearer picture of the effects of interest might be obtained by removing the 6:15:24 level of Item from the data set, and fitting the model to this restricted data. Doing this did not affect the direction of the effects in the full dataset, but whereas the effects were significant in the full dataset, they were not significant in the restricted dataset. Full details of the analysis of the restricted dataset are available in the online materials.
 
-A generalized linear mixed model \citet{jaeger2008categorical} was fit to the data for selection of the borderline response, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant, as well as per-participant intercepts as random effects. The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Figure \ref{resultsC-exp-1}. Participants chose the borderline square on $16.6\%$ of trials overall.
+\paragraph{\textbf{Borderline cases}}
+
+A generalized linear mixed model \citet{jaeger2008categorical} was fit to the data for the distribution of responses indicating the borderline response, with sum-coded vagueness, instruction format, (and their interaction), and item as fixed effects, and the same effects as slopes over participant, as well as per-participant intercepts as random effects. The distribution of responses over the nearest match square, the borderline square, and the furthest match square are given in Figure \ref{resultsC-exp-1-BL}. Participants chose the borderline square on $16.6\%$ of trials overall.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/Ce1-blBarChart-1}
+\caption{Experiment 1 results: counts of borderline case responses by condition.}
+\label{resultsC-exp-1-BL}
+\end{figure}
 
 \begin{description}
-	\item [Hypothesis 4 (Response Type)] Participants were significantly more likely to choose the borderline option for vague instructions than for crisp instructions (21.9\% vs 11.3\%: $\beta=0.62$, $se=0.22$, $z=2.8$, $p=0.0059$). Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%: $\beta=-3.35$, $se=0.23$, $z=-14.6$, $p<0.0001$). 
+	\item [Test of Hypothesis 4 (Response Type)] Participants were significantly more likely to choose the borderline option for vague instructions than for crisp instructions (21.9\% vs 11.3\%: $\beta=0.62$, $se=0.22$, $z=2.8$, $p=0.0059$). Participants were also significantly more likely to choose the borderline square when the instruction used the numerical format rather than the verbal format (30.1\% vs 3.0\%: $\beta=-3.35$, $se=0.23$, $z=-14.6$, $p<0.0001$). 
 \end{description}
 
 \subsection{Discussion (Experiment 1)}
