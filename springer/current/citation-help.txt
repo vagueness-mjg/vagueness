@@ -6,6 +6,6 @@
 \citetp[chap. 2]{key} 		==>>   (Jones et al., 1990, chap. 2)
 \citetp[e.g.][]{key} 		==>>   (e.g. Jones et al., 1990)
 \citetp[e.g.][p. 32]{key} 	==>>   (e.g. Jones et al., p. 32)
-\citeauthoruthor{key}		==>>   Jones et al.
-\citeauthoruthor*{key} 		==>>   Jones, Baker, and Smith
+\citeauthor{key}		==>>   Jones et al.
+\citeauthor*{key} 		==>>   Jones, Baker, and Smith
 \citetyear{key} 		==>>   1990
