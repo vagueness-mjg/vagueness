@@ -1,5 +1,5 @@
 ---
-title: "D_exp_2"
+title: "Utility of vagueness: Experiment 2"
 author: "Matt Green"
 output:
   html_document:
