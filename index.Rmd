@@ -3,9 +3,9 @@ title: "Index"
 output: html_document
 ---
 
-Experiment 1 [html](C_exp_1.html); [R](C_exp_1.R)
+Experiment 1 [html](experiments/C_exp_1.html); [R](experiments/C_exp_1.R)
 
-Experiment 2 [html](D_exp_2.html); [R](D_exp_2.R)
+Experiment 2 [html](experiments/D_exp_2.html); [R](experiments/D_exp_2.R)
 
-Experiment 3 [html](E_exp_3.html); [R](E_exp_3.R)
+Experiment 3 [html](experiments/E_exp_3.html); [R](experiments/E_exp_3.R)
 
