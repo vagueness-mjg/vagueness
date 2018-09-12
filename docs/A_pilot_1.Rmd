@@ -25,7 +25,7 @@ source("A_pilot_1_functions/pretty_coef_table.R")
 source("A_pilot_1_functions/summarySEwithin2.R")
 ```
 
-The experiment used subitizable numbers as well as bigger numbers. The instructions had the form: _Choose the square with {{few, many},{two, three, four, five, six, seven, eight, nine}} dots._ The variables were: subitizability; vagueness; target_size; gap_size; side (i.e., which side was the bigger number on?)
+The experiment used subitizable numbers as well as bigger numbers. The instructions had the form: _Choose the square with (few, many), (two, three, four, five, six, seven, eight, nine) dots._ The variables were: subitizability; vagueness; target_size; gap_size; side (i.e., which side was the bigger number on?)
 
 ```{r "read the data from file, add some vars", message=FALSE}
 # read in the data from file
