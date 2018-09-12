@@ -1,0 +1,39 @@
+# Make data frame
+
+```{r makeDataFrame}
+dat <- read.delim("data_raw.txt", header=FALSE)
+names(dat) <- c("condition", "leftN", "rightN", "vgn", "side", "string", "subject", "rt", "error")
+dat$condition <- as.factor(dat$condition)
+# item_ratio
+for (c in unique(dat$condition)) {
+  x=subset(dat, condition==c)
+  x$item_ratio=unique(min(x$leftN,x$rightN)/max(x$leftN,x$rightN))
+  dat[dat$condition==c, 'item_ratio']=x$item_ratio
+}
+# trial
+for (s in unique(dat$subject)) {
+  x=subset(dat, subject==s)
+  x$trial=1:nrow(x)
+  dat[dat$subject==s, 'trial']=x$trial
+}
+dat$subject <- as.factor(paste("sub",sep="",sprintf("%02d",dat$subject,sep="")))
+dat$error <- as.logical(1-dat$error)
+dat$Ord <- as.factor(ifelse(dat$leftN < dat$rightN, 'LtoR', 'RtoL'))
+dat$c_Ord <- ifelse(dat$Ord=='LtoR', -.5, .5)
+dat$bigside <- ifelse(dat$leftN > dat$rightN, 'L', 'R')
+dat$Qty <- as.factor(ifelse(dat$side==dat$bigside, "Large", "Small"))
+dat$bigside=NULL
+dat$c_Qty <- ifelse(dat$Qty=='Small', -.5, .5)
+dat$Gap <- as.factor(as.character(paste("gap", sep=" ", sprintf("%02d",abs(dat$leftN-dat$rightN)))))
+dat$c_Gap[dat$Gap=="gap 05"] <- -1.5
+dat$c_Gap[dat$Gap=="gap 10"] <- -.5
+dat$c_Gap[dat$Gap=="gap 15"] <- .5
+dat$c_Gap[dat$Gap=="gap 20"] <- 1.5
+dat$Vgn <- as.factor(ifelse(dat$vgn=="P", "Crisp", "Vague"))
+dat$vgn = NULL
+dat$c_Vgn <- ifelse(dat$Vgn=='Crisp', -.5, .5)
+dat$logrt <- log(dat$rt)
+dat <- subset(dat, select=c(subject, trial, condition, leftN, rightN, item_ratio, side, string, Vgn, c_Vgn, Ord, c_Ord, Qty, c_Qty, Gap, c_Gap, error, rt, logrt))
+row.names(dat) <- NULL
+write.table(x=dat, "../data.txt")
+```

@@ -1,0 +1,257 @@
+Item	Condition	Order	Quantity	Left	Mid	Right	Instruction	Subject	RT	RESPONSE
+1	3	2	1	24	15	6	"Choose a square with few dots"	18	1218	RIGHT
+2	1	2	2	34	25	16	"Choose a square with about 30 dots"	18	2027	MIDDLE
+3	1	1	2	26	35	44	"Choose a square with about 40 dots"	18	2474	MIDDLE
+4	1	2	2	54	45	36	"Choose a square with about 50 dots"	18	1689	MIDDLE
+1	2	1	2	6	15	24	"Choose the square with 24 dots"	18	3208	RIGHT
+2	2	1	1	16	25	34	"Choose the square with 16 dots"	18	1646	LEFT
+3	2	2	1	44	35	26	"Choose the square with 26 dots"	18	1665	RIGHT
+4	3	1	1	36	45	54	"Choose a square with few dots"	18	1844	LEFT
+1	4	1	2	6	15	24	"Choose the square with the most dots"	18	1676	RIGHT
+2	1	2	1	34	25	16	"Choose a square with about 20 dots"	18	2056	RIGHT
+3	2	1	1	26	35	44	"Choose the square with 26 dots"	18	1659	LEFT
+4	3	1	2	36	45	54	"Choose a square with many dots"	18	1412	RIGHT
+1	3	1	1	6	15	24	"Choose a square with few dots"	18	1299	LEFT
+2	4	1	1	16	25	34	"Choose the square with the fewest dots"	18	2490	LEFT
+3	4	2	2	44	35	26	"Choose the square with the most dots"	18	2584	LEFT
+4	4	1	1	36	45	54	"Choose the square with the fewest dots"	18	2043	LEFT
+1	4	1	1	6	15	24	"Choose the square with the fewest dots"	18	1568	LEFT
+2	2	1	2	16	25	34	"Choose the square with 34 dots"	18	3961	RIGHT
+3	1	2	2	44	35	26	"Choose a square with about 40 dots"	18	2093	LEFT
+4	3	2	2	54	45	36	"Choose a square with many dots"	18	1669	LEFT
+1	4	2	1	24	15	6	"Choose the square with the fewest dots"	18	1417	RIGHT
+2	4	2	1	34	25	16	"Choose the square with the fewest dots"	18	1939	RIGHT
+3	3	2	2	44	35	26	"Choose a square with many dots"	18	1338	LEFT
+4	2	1	2	36	45	54	"Choose the square with 54 dots"	18	1218	RIGHT
+1	1	1	1	6	15	24	"Choose a square with about 10 dots"	18	2699	LEFT
+2	1	1	2	16	25	34	"Choose a square with about 30 dots"	18	1504	RIGHT
+3	4	2	1	44	35	26	"Choose the square with the fewest dots"	18	1676	RIGHT
+4	4	2	2	54	45	36	"Choose the square with the most dots"	18	1297	LEFT
+1	1	1	2	6	15	24	"Choose a square with about 20 dots"	18	7727	RIGHT
+2	3	1	1	16	25	34	"Choose a square with few dots"	18	1192	LEFT
+3	2	1	2	26	35	44	"Choose the square with 44 dots"	18	893	RIGHT
+4	1	1	1	36	45	54	"Choose a square with about 40 dots"	18	2396	MIDDLE
+1	3	2	2	24	15	6	"Choose a square with many dots"	18	1005	LEFT
+2	3	2	1	34	25	16	"Choose a square with few dots"	18	1939	RIGHT
+3	3	1	2	26	35	44	"Choose a square with many dots"	18	1557	RIGHT
+4	4	1	2	36	45	54	"Choose the square with the most dots"	18	1450	RIGHT
+1	1	2	1	24	15	6	"Choose a square with about 10 dots"	18	2306	MIDDLE
+2	4	2	2	34	25	16	"Choose the square with the most dots"	18	1270	LEFT
+3	1	2	1	44	35	26	"Choose a square with about 30 dots"	18	2019	MIDDLE
+4	1	1	2	36	45	54	"Choose a square with about 50 dots"	18	1103	RIGHT
+1	3	1	2	6	15	24	"Choose a square with many dots"	18	936	RIGHT
+2	4	1	2	16	25	34	"Choose the square with the most dots"	18	828	RIGHT
+3	4	1	1	26	35	44	"Choose the square with the fewest dots"	18	1579	LEFT
+4	2	2	2	54	45	36	"Choose the square with 54 dots"	18	1191	LEFT
+1	4	2	2	24	15	6	"Choose the square with the most dots"	18	1138	LEFT
+2	3	2	2	34	25	16	"Choose a square with many dots"	18	1107	LEFT
+3	1	1	1	26	35	44	"Choose a square with about 30 dots"	18	1336	MIDDLE
+4	4	2	1	54	45	36	"Choose the square with the fewest dots"	18	2057	RIGHT
+1	2	2	1	24	15	6	"Choose the square with 6 dots"	18	861	RIGHT
+2	2	2	2	34	25	16	"Choose the square with 34 dots"	18	1146	MIDDLE
+3	4	1	2	26	35	44	"Choose the square with the most dots"	18	842	RIGHT
+4	3	2	1	54	45	36	"Choose a square with few dots"	18	2275	RIGHT
+1	2	1	1	6	15	24	"Choose the square with 6 dots"	18	1053	LEFT
+2	1	1	1	16	25	34	"Choose a square with about 20 dots"	18	1106	MIDDLE
+3	2	2	2	44	35	26	"Choose the square with 44 dots"	18	1368	LEFT
+4	1	2	1	54	45	36	"Choose a square with about 40 dots"	18	4529	LEFT
+1	1	2	2	24	15	6	"Choose a square with about 20 dots"	18	1403	LEFT
+2	2	2	1	34	25	16	"Choose the square with 16 dots"	18	1810	MIDDLE
+3	3	1	1	26	35	44	"Choose a square with few dots"	18	1501	LEFT
+4	2	1	1	36	45	54	"Choose the square with 36 dots"	18	3564	MIDDLE
+1	2	2	2	24	15	6	"Choose the square with 24 dots"	18	1145	LEFT
+2	3	1	2	16	25	34	"Choose a square with many dots"	18	1105	RIGHT
+3	3	2	1	44	35	26	"Choose a square with few dots"	18	2770	RIGHT
+4	2	2	1	54	45	36	"Choose the square with 36 dots"	18	3452	MIDDLE
+1	1	2	2	24	15	6	"Choose a square with about 20 dots"	18	1086	LEFT
+2	1	1	2	16	25	34	"Choose a square with about 30 dots"	18	1085	RIGHT
+3	1	2	1	44	35	26	"Choose a square with about 30 dots"	18	2906	MIDDLE
+4	2	2	2	54	45	36	"Choose the square with 54 dots"	18	1159	LEFT
+1	3	2	2	24	15	6	"Choose a square with many dots"	18	978	LEFT
+2	2	1	1	16	25	34	"Choose the square with 16 dots"	18	1451	MIDDLE
+3	1	2	2	44	35	26	"Choose a square with about 40 dots"	18	1267	LEFT
+4	1	2	1	54	45	36	"Choose a square with about 40 dots"	18	2427	MIDDLE
+1	2	2	2	24	15	6	"Choose the square with 24 dots"	18	3664	LEFT
+2	1	1	1	16	25	34	"Choose a square with about 20 dots"	18	1306	MIDDLE
+3	4	2	1	44	35	26	"Choose the square with the fewest dots"	18	1107	RIGHT
+4	1	1	1	36	45	54	"Choose a square with about 40 dots"	18	1006	MIDDLE
+1	4	2	2	24	15	6	"Choose the square with the most dots"	18	1445	LEFT
+2	2	2	1	34	25	16	"Choose the square with 16 dots"	18	1134	MIDDLE
+3	3	1	2	26	35	44	"Choose a square with many dots"	18	2738	RIGHT
+4	4	2	2	54	45	36	"Choose the square with the most dots"	18	1905	LEFT
+1	2	1	2	6	15	24	"Choose the square with 24 dots"	18	3838	RIGHT
+2	4	2	1	34	25	16	"Choose the square with the fewest dots"	18	1064	RIGHT
+3	4	1	1	26	35	44	"Choose the square with the fewest dots"	18	1750	LEFT
+4	3	1	2	36	45	54	"Choose a square with many dots"	18	902	RIGHT
+1	1	1	1	6	15	24	"Choose a square with about 10 dots"	18	1434	MIDDLE
+2	4	1	2	16	25	34	"Choose the square with the most dots"	18	890	RIGHT
+3	2	1	2	26	35	44	"Choose the square with 44 dots"	18	1280	RIGHT
+4	3	2	1	54	45	36	"Choose a square with few dots"	18	1733	RIGHT
+1	4	1	2	6	15	24	"Choose the square with the most dots"	18	854	RIGHT
+2	3	1	2	16	25	34	"Choose a square with many dots"	18	873	RIGHT
+3	2	2	2	44	35	26	"Choose the square with 44 dots"	18	1118	LEFT
+4	3	1	1	36	45	54	"Choose a square with few dots"	18	1741	LEFT
+1	3	1	1	6	15	24	"Choose a square with few dots"	18	1199	LEFT
+2	3	2	2	34	25	16	"Choose a square with many dots"	18	1564	LEFT
+3	3	2	2	44	35	26	"Choose a square with many dots"	18	1219	LEFT
+4	2	1	2	36	45	54	"Choose the square with 54 dots"	18	1171	RIGHT
+1	3	2	1	24	15	6	"Choose a square with few dots"	18	1318	LEFT
+2	1	2	2	34	25	16	"Choose a square with about 30 dots"	18	4226	LEFT
+3	2	2	1	44	35	26	"Choose the square with 26 dots"	18	4724	MIDDLE
+4	4	1	1	36	45	54	"Choose the square with the fewest dots"	18	2084	LEFT
+1	4	1	1	6	15	24	"Choose the square with the fewest dots"	18	1206	LEFT
+2	3	1	1	16	25	34	"Choose a square with few dots"	18	1331	LEFT
+3	4	1	2	26	35	44	"Choose the square with the most dots"	18	1046	RIGHT
+4	2	2	1	54	45	36	"Choose the square with 36 dots"	18	5942	MIDDLE
+1	3	1	2	6	15	24	"Choose a square with many dots"	18	1006	RIGHT
+2	3	2	1	34	25	16	"Choose a square with few dots"	18	2222	RIGHT
+3	4	2	2	44	35	26	"Choose the square with the most dots"	18	1035	LEFT
+4	3	2	2	54	45	36	"Choose a square with many dots"	18	1270	LEFT
+1	2	1	1	6	15	24	"Choose the square with 6 dots"	18	1284	LEFT
+2	2	1	2	16	25	34	"Choose the square with 34 dots"	18	1392	RIGHT
+3	3	2	1	44	35	26	"Choose a square with few dots"	18	1434	RIGHT
+4	4	1	2	36	45	54	"Choose the square with the most dots"	18	897	RIGHT
+1	1	2	1	24	15	6	"Choose a square with about 10 dots"	18	3555	RIGHT
+2	4	1	1	16	25	34	"Choose the square with the fewest dots"	18	2200	LEFT
+3	1	1	1	26	35	44	"Choose a square with about 30 dots"	18	1212	RIGHT
+4	4	2	1	54	45	36	"Choose the square with the fewest dots"	18	2212	RIGHT
+1	4	2	1	24	15	6	"Choose the square with the fewest dots"	18	1609	RIGHT
+2	1	2	1	34	25	16	"Choose a square with about 20 dots"	18	3812	MIDDLE
+3	3	1	1	26	35	44	"Choose a square with few dots"	18	2183	LEFT
+4	1	2	2	54	45	36	"Choose a square with about 50 dots"	18	1854	LEFT
+1	2	2	1	24	15	6	"Choose the square with 6 dots"	18	928	RIGHT
+2	2	2	2	34	25	16	"Choose the square with 34 dots"	18	1267	LEFT
+3	2	1	1	26	35	44	"Choose the square with 26 dots"	18	1918	LEFT
+4	2	1	1	36	45	54	"Choose the square with 36 dots"	18	1253	MIDDLE
+1	1	1	2	6	15	24	"Choose a square with about 20 dots"	18	1756	RIGHT
+2	4	2	2	34	25	16	"Choose the square with the most dots"	18	1217	LEFT
+3	1	1	2	26	35	44	"Choose a square with about 40 dots"	18	1952	RIGHT
+4	1	1	2	36	45	54	"Choose a square with about 50 dots"	18	1460	RIGHT
+1	2	2	1	24	15	6	"Choose the square with 6 dots"	18	1197	RIGHT
+2	4	1	2	16	25	34	"Choose the square with the most dots"	18	958	RIGHT
+3	4	2	2	44	35	26	"Choose the square with the most dots"	18	1647	LEFT
+4	1	1	2	36	45	54	"Choose a square with about 50 dots"	18	1577	RIGHT
+1	2	1	2	6	15	24	"Choose the square with 24 dots"	18	1252	RIGHT
+2	3	2	1	34	25	16	"Choose a square with few dots"	18	881	RIGHT
+3	4	1	2	26	35	44	"Choose the square with the most dots"	18	1088	RIGHT
+4	2	1	2	36	45	54	"Choose the square with 54 dots"	18	1274	RIGHT
+1	3	2	2	24	15	6	"Choose a square with many dots"	18	1093	LEFT
+2	1	2	2	34	25	16	"Choose a square with about 30 dots"	18	1424	LEFT
+3	2	2	1	44	35	26	"Choose the square with 26 dots"	18	2066	MIDDLE
+4	3	1	1	36	45	54	"Choose a square with few dots"	18	1485	LEFT
+1	2	1	1	6	15	24	"Choose the square with 6 dots"	18	939	LEFT
+2	2	1	1	16	25	34	"Choose the square with 16 dots"	18	5395	LEFT
+3	1	2	2	44	35	26	"Choose a square with about 40 dots"	18	1999	LEFT
+4	2	2	2	54	45	36	"Choose the square with 54 dots"	18	1012	LEFT
+1	4	1	2	6	15	24	"Choose the square with the most dots"	18	1118	RIGHT
+2	2	2	1	34	25	16	"Choose the square with 16 dots"	18	1769	RIGHT
+3	2	2	2	44	35	26	"Choose the square with 44 dots"	18	1696	LEFT
+4	3	2	1	54	45	36	"Choose a square with few dots"	18	1349	RIGHT
+1	3	2	1	24	15	6	"Choose a square with few dots"	18	1789	RIGHT
+2	4	2	1	34	25	16	"Choose the square with the fewest dots"	18	1648	RIGHT
+3	1	1	1	26	35	44	"Choose a square with about 30 dots"	18	1638	RIGHT
+4	4	1	2	36	45	54	"Choose the square with the most dots"	18	1073	RIGHT
+1	3	1	1	6	15	24	"Choose a square with few dots"	18	1016	LEFT
+2	2	1	2	16	25	34	"Choose the square with 34 dots"	18	1359	RIGHT
+3	3	1	2	26	35	44	"Choose a square with many dots"	18	1144	RIGHT
+4	1	1	1	36	45	54	"Choose a square with about 40 dots"	18	3368	MIDDLE
+1	4	1	1	6	15	24	"Choose the square with the fewest dots"	18	1190	LEFT
+2	1	1	1	16	25	34	"Choose a square with about 20 dots"	18	6194	MIDDLE
+3	3	1	1	26	35	44	"Choose a square with few dots"	18	1497	LEFT
+4	2	2	1	54	45	36	"Choose the square with 36 dots"	18	4086	MIDDLE
+1	1	2	1	24	15	6	"Choose a square with about 10 dots"	18	1389	RIGHT
+2	1	2	1	34	25	16	"Choose a square with about 20 dots"	18	3017	MIDDLE
+3	1	1	2	26	35	44	"Choose a square with about 40 dots"	18	1365	RIGHT
+4	4	2	1	54	45	36	"Choose the square with the fewest dots"	18	3097	RIGHT
+1	4	2	2	24	15	6	"Choose the square with the most dots"	18	927	LEFT
+2	4	2	2	34	25	16	"Choose the square with the most dots"	18	993	LEFT
+3	3	2	2	44	35	26	"Choose a square with many dots"	18	1277	LEFT
+4	4	1	1	36	45	54	"Choose the square with the fewest dots"	18	2888	LEFT
+1	1	2	2	24	15	6	"Choose a square with about 20 dots"	18	1281	LEFT
+2	3	1	1	16	25	34	"Choose a square with few dots"	18	1328	LEFT
+3	2	1	1	26	35	44	"Choose the square with 26 dots"	18	2675	MIDDLE
+4	4	2	2	54	45	36	"Choose the square with the most dots"	18	1919	LEFT
+1	2	2	2	24	15	6	"Choose the square with 24 dots"	18	2222	LEFT
+2	2	2	2	34	25	16	"Choose the square with 34 dots"	18	1278	LEFT
+3	1	2	1	44	35	26	"Choose a square with about 30 dots"	18	2653	LEFT
+4	2	1	1	36	45	54	"Choose the square with 36 dots"	18	1369	RIGHT
+1	1	1	1	6	15	24	"Choose a square with about 10 dots"	18	2996	MIDDLE
+2	3	2	2	34	25	16	"Choose a square with many dots"	18	1896	LEFT
+3	4	1	1	26	35	44	"Choose the square with the fewest dots"	18	1635	LEFT
+4	1	2	1	54	45	36	"Choose a square with about 40 dots"	18	2836	LEFT
+1	1	1	2	6	15	24	"Choose a square with about 20 dots"	18	1693	RIGHT
+2	4	1	1	16	25	34	"Choose the square with the fewest dots"	18	1259	LEFT
+3	2	1	2	26	35	44	"Choose the square with 44 dots"	18	881	RIGHT
+4	1	2	2	54	45	36	"Choose a square with about 50 dots"	18	1805	LEFT
+1	4	2	1	24	15	6	"Choose the square with the fewest dots"	18	1716	RIGHT
+2	1	1	2	16	25	34	"Choose a square with about 30 dots"	18	1307	RIGHT
+3	4	2	1	44	35	26	"Choose the square with the fewest dots"	18	1932	RIGHT
+4	3	2	2	54	45	36	"Choose a square with many dots"	18	1135	LEFT
+1	3	1	2	6	15	24	"Choose a square with many dots"	18	1702	RIGHT
+2	3	1	2	16	25	34	"Choose a square with many dots"	18	1602	RIGHT
+3	3	2	1	44	35	26	"Choose a square with few dots"	18	2245	RIGHT
+4	3	1	2	36	45	54	"Choose a square with many dots"	18	1169	RIGHT
+1	2	2	2	24	15	6	"Choose the square with 24 dots"	18	1295	LEFT
+2	3	2	2	34	25	16	"Choose a square with many dots"	18	1341	LEFT
+3	2	2	1	44	35	26	"Choose the square with 26 dots"	18	1530	MIDDLE
+4	4	1	1	36	45	54	"Choose the square with the fewest dots"	18	1949	LEFT
+1	4	1	1	6	15	24	"Choose the square with the fewest dots"	18	941	LEFT
+2	4	1	1	16	25	34	"Choose the square with the fewest dots"	18	1591	LEFT
+3	3	2	2	44	35	26	"Choose a square with many dots"	18	1183	LEFT
+4	4	1	2	36	45	54	"Choose the square with the most dots"	18	1037	RIGHT
+1	1	1	2	6	15	24	"Choose a square with about 20 dots"	18	1712	RIGHT
+2	4	2	1	34	25	16	"Choose the square with the fewest dots"	18	939	RIGHT
+3	2	2	2	44	35	26	"Choose the square with 44 dots"	18	1010	LEFT
+4	2	1	1	36	45	54	"Choose the square with 36 dots"	18	2135	MIDDLE
+1	3	2	1	24	15	6	"Choose a square with few dots"	18	951	RIGHT
+2	1	2	2	34	25	16	"Choose a square with about 30 dots"	18	1398	LEFT
+3	1	1	2	26	35	44	"Choose a square with about 40 dots"	18	960	RIGHT
+4	4	2	2	54	45	36	"Choose the square with the most dots"	18	1317	LEFT
+1	4	2	2	24	15	6	"Choose the square with the most dots"	18	1766	LEFT
+2	2	1	1	16	25	34	"Choose the square with 16 dots"	18	2610	LEFT
+3	2	1	2	26	35	44	"Choose the square with 44 dots"	18	1228	RIGHT
+4	2	1	2	36	45	54	"Choose the square with 54 dots"	18	897	RIGHT
+1	1	2	1	24	15	6	"Choose a square with about 10 dots"	18	2668	MIDDLE
+2	3	1	1	16	25	34	"Choose a square with few dots"	18	1205	LEFT
+3	1	2	2	44	35	26	"Choose a square with about 40 dots"	18	1281	LEFT
+4	1	2	1	54	45	36	"Choose a square with about 40 dots"	18	1495	MIDDLE
+1	2	1	1	6	15	24	"Choose the square with 6 dots"	18	1827	LEFT
+2	4	1	2	16	25	34	"Choose the square with the most dots"	18	944	RIGHT
+3	3	2	1	44	35	26	"Choose a square with few dots"	18	1392	RIGHT
+4	2	2	1	54	45	36	"Choose the square with 36 dots"	18	2137	MIDDLE
+1	2	1	2	6	15	24	"Choose the square with 24 dots"	18	1414	RIGHT
+2	2	2	2	34	25	16	"Choose the square with 34 dots"	18	1221	LEFT
+3	4	2	2	44	35	26	"Choose the square with the most dots"	18	1496	LEFT
+4	3	1	2	36	45	54	"Choose a square with many dots"	18	1120	RIGHT
+1	4	1	2	6	15	24	"Choose the square with the most dots"	18	1431	RIGHT
+2	3	1	2	16	25	34	"Choose a square with many dots"	18	894	RIGHT
+3	1	2	1	44	35	26	"Choose a square with about 30 dots"	18	2060	LEFT
+4	3	2	1	54	45	36	"Choose a square with few dots"	18	1102	RIGHT
+1	2	2	1	24	15	6	"Choose the square with 6 dots"	18	1076	RIGHT
+2	1	1	1	16	25	34	"Choose a square with about 20 dots"	18	1428	MIDDLE
+3	3	1	1	26	35	44	"Choose a square with few dots"	18	1772	LEFT
+4	3	1	1	36	45	54	"Choose a square with few dots"	18	1186	LEFT
+1	3	1	1	6	15	24	"Choose a square with few dots"	18	1295	LEFT
+2	2	2	1	34	25	16	"Choose the square with 16 dots"	18	2056	RIGHT
+3	4	1	2	26	35	44	"Choose the square with the most dots"	18	1356	RIGHT
+4	1	1	1	36	45	54	"Choose a square with about 40 dots"	18	939	RIGHT
+1	3	1	2	6	15	24	"Choose a square with many dots"	18	899	RIGHT
+2	1	2	1	34	25	16	"Choose a square with about 20 dots"	18	2179	MIDDLE
+3	4	1	1	26	35	44	"Choose the square with the fewest dots"	18	1837	LEFT
+4	1	2	2	54	45	36	"Choose a square with about 50 dots"	18	1106	LEFT
+1	4	2	1	24	15	6	"Choose the square with the fewest dots"	18	1204	RIGHT
+2	4	2	2	34	25	16	"Choose the square with the most dots"	18	1059	LEFT
+3	2	1	1	26	35	44	"Choose the square with 26 dots"	18	1480	RIGHT
+4	4	2	1	54	45	36	"Choose the square with the fewest dots"	18	1787	MIDDLE
+1	1	2	2	24	15	6	"Choose a square with about 20 dots"	18	1856	LEFT
+2	1	1	2	16	25	34	"Choose a square with about 30 dots"	18	1910	RIGHT
+3	3	1	2	26	35	44	"Choose a square with many dots"	18	1004	RIGHT
+4	3	2	2	54	45	36	"Choose a square with many dots"	18	1345	LEFT
+1	3	2	2	24	15	6	"Choose a square with many dots"	18	1222	LEFT
+2	2	1	2	16	25	34	"Choose the square with 34 dots"	18	1139	RIGHT
+3	4	2	1	44	35	26	"Choose the square with the fewest dots"	18	4334	RIGHT
+4	2	2	2	54	45	36	"Choose the square with 54 dots"	18	1125	LEFT
+1	1	1	1	6	15	24	"Choose a square with about 10 dots"	18	1683	MIDDLE
+2	3	2	1	34	25	16	"Choose a square with few dots"	18	1345	RIGHT
+3	1	1	1	26	35	44	"Choose a square with about 30 dots"	18	1216	RIGHT
+4	1	1	2	36	45	54	"Choose a square with about 50 dots"	18	994	RIGHT
