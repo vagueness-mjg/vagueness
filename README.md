@@ -5,4 +5,4 @@ Cloning or downloading the repository gives you all the files needed for complet
 * Experiment 1: data; html; octave
 * Experiment 2: data; html; octave
 * Experiment 3: data; html; octave
-* Manuscript [https://mjgreen.github.io/vagueness/manuscript/v-book-2018.pdf](pre-final draft)
+* Manuscript ((pre-final draft))[https://mjgreen.github.io/vagueness/manuscript/v-book-2018.pdf]
