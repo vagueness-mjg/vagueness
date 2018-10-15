@@ -1,0 +1,196 @@
+---
+title: "B_pilot_2"
+author: "Matt Green"
+output:
+  html_document:
+    toc: yes
+    theme: default
+    css: styles.css
+---
+
+```{r pander, echo=FALSE, cache=FALSE, message=FALSE}
+library(knitr)
+library(tidyverse)
+library(broom)
+library(broom.mixed)
+library(lme4)
+library(lmerTest)
+library(dotwhisker)
+library(kableExtra)
+library(LMERConvenienceFunctions)
+library(data.table)
+library(grid)
+library(gridExtra)
+source("B_pilot_2_functions/summarySEwithin2.R")
+source("B_pilot_2_functions/pretty_coef_table.R")
+```
+
+```{r showInstructions, echo=FALSE, cache=TRUE}
+v = c("crisp","vague")
+e <- c("Choose the the square with many dots", "Choose the square with 20 dots")
+i = data.frame(Vagueness = v, Instruction = e)
+kable(i) %>% kable_styling(full_width = F, position = "left", font_size = 11) 
+```
+
+```{r showItems, echo=FALSE, cache=TRUE}
+items = c(1,2,3,4,5,6,7,8)
+i = data.frame(Gap = c("05","10","15","20"),
+               x = c("25:20","25:15","25:10","25:05"),
+               z = c("25:30","25:35","25:40","25:45") )
+names(i) = c('Gap Size', 'Small Target', 'Large Target')
+kable(i) %>% kable_styling(full_width = F, position = "left", font_size = 11) 
+```
+
+```{r rawdata, cache=FALSE, comment=NA}
+rawdata <- read.table('B_pilot_2_data/data.txt', sep=' ')
+rawdata %>% head() 
+```
+
+In this experiment it was possible to identify errors.
+This is because there were only 2 squares and an instruction uniquely identified one of them.
+Therefore error trials were removed from analysis of response times: 
+
+```{r separateDataFramesForRTandErrorAnalyses, echo=TRUE, cache=FALSE}
+rtdata <- subset(rawdata, error==FALSE)
+erdata <- rawdata
+```
+
+There were `r nrow(rawdata)` trials; and `r  nrow(subset(rawdata,error==TRUE))` error trials, representing 
+`r round(nrow(subset(rawdata,error==TRUE))/nrow(rawdata) * 100, 1)`% of the raw data.
+
+Correct responses were trimmed at 2.5 sd separately for each subject:
+
+```{r trimData, echo=TRUE, cache=FALSE}
+tempdata <- perSubjectTrim.fnc(rtdata, response='rt', subject='subject', trim = 2.5)$data
+rtdata <- tempdata
+```
+
+This code creates the condition means with confidence intervals used for plotting:
+
+```{r computeSummariesForGraphs, cache=FALSE}
+rtdataplot1 = summarySEwithin2(rtdata,  measurevar="logrt",  withinvars=c("Vgn","Gap"), idvar="subject")
+erdataplot1 <- summarySEwithin2(erdata, measurevar="error", withinvars=c("Vgn","Gap"), idvar="subject")
+```
+
+```{r rtplot, echo=FALSE}
+dodge=.06
+rtplot = ggplot(rtdataplot1, aes(y=logrtNormed, x=Gap, group=Vgn, fill=Vgn, shape=Vgn, ymin=logrtNormed-ci, ymax=logrtNormed+ci)) + 
+  geom_line(position=position_dodge(dodge)) + 
+  geom_errorbar(width=.3, lty=1, position=position_dodge(dodge)) + 
+  geom_point(pch=21, size=2, position=position_dodge(dodge)) +
+  ggtitle("Response time") + 
+  ylab("Respone time (log (ms))") + 
+  xlab("Gap Size") +
+  scale_fill_grey(name=element_blank(), start=0, end=1, guide=FALSE) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() ) +
+  theme(aspect.ratio=1) + xlab("")
+```
+
+```{r erplot, echo=FALSE}
+dodge=.06
+erplot = ggplot(erdataplot1, aes(y=errorNormed, x=Gap, group=Vgn, fill=Vgn, shape=Vgn, ymin=errorNormed-ci, ymax=errorNormed+ci)) + 
+  geom_line(position=position_dodge(dodge)) + 
+  geom_errorbar(width=.3, lty=1, position=position_dodge(dodge)) + 
+  geom_point(pch=21, size=2, position=position_dodge(dodge)) +
+  ggtitle("Error rate") + 
+  ylab("Error rate (proportion of errors)") + 
+  xlab("Gap Size") +
+  scale_fill_grey(name=element_blank(), start=0, end=1)+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.key = element_blank() )+
+  theme(aspect.ratio=1) + xlab("")
+```
+
+```{r plotRTandErrorRates, fig.width=7.5, fig.height=3, message=FALSE, echo=FALSE}
+grid.arrange(rtplot, erplot, ncol=2)
+```
+
+This code computes the models:
+
+```{r showVersions, echo=FALSE, comment=NA}
+cat (paste(sep="", 
+           c("lmerTest version "), c(packageDescription("lmerTest", fields = "Version")),
+           "; ", 
+           c("lme4 version "), c(packageDescription("lme4", fields = "Version"))) ) 
+```
+
+```{r computeLmerModels, cache = TRUE, tidy=FALSE}
+rt.lmer.1 <- lmerTest::lmer(
+  data=rtdata, logrt ~ c_Vgn * c_Gap + (c_Vgn * c_Gap|subject))
+
+ac.lmer.1 <- lme4::glmer(
+  data = erdata, error ~ c_Vgn * c_Gap + (c_Vgn * c_Gap | subject), 
+  family="binomial", control = glmerControl(optimizer = "bobyqa"))
+```
+
+# Response times
+
+```{r, results='asis', echo=F}
+kable(rtdataplot1, caption="condition means") %>% kable_styling(full_width = F, position = "left", font_size = 11) 
+```
+
+```{r tableRTmodelSimple, results='asis', echo=FALSE, cache=TRUE}
+pretty_coef_table(rt.lmer.1, "rt.lmer.1")
+```
+
+# Error rates
+
+```{r erdataplot1, results='asis', echo=F}
+kable(erdataplot1, caption="condition means") %>% kable_styling(full_width = F, position = "left", font_size = 11) 
+```
+
+```{r tableErrorModelsimple, results='asis', cache=TRUE, echo=FALSE}
+pretty_coef_table(ac.lmer.1, "ac.lmer.1")
+```
+
+<!-- ```{r} -->
+<!-- rt.lmer.2 <- lmerTest::lmer( -->
+<!--   data=rtdata, logrt ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- ac.lmer.2 <- lme4::glmer( -->
+<!--   data = erdata, error ~ c_Vgn * c_Gap + c_Ord + c_Qty + (c_Vgn * c_Gap + c_Ord + c_Qty | subject),  -->
+<!--   family="binomial", control = glmerControl(optimizer = "bobyqa")) -->
+<!-- ``` -->
+
+
+<!-- ```{r tableRTmodelMaximal, results='asis', echo=FALSE, cache=TRUE} -->
+<!-- x = as.data.frame(format(summary(rt.lmer.2)$coef, scientific=FALSE), stringsAsFactors = FALSE) -->
+
+<!-- for (i in 1:(ncol(x)-1)) { -->
+<!--   for (j in 1:nrow(x)) { -->
+<!--     x[j,i] <-  substr(x[j,i], start=1, stop=7) -->
+<!--   } -->
+<!-- } -->
+
+<!-- for (i in 1:(ncol(x)-1)) { -->
+<!--   x[,i] <- as.numeric(x[,i]) -->
+<!-- } -->
+
+<!-- for (i in ncol(x)) { -->
+<!--   for (j in 1:nrow(x)) { -->
+<!--     x[j,i] <-  substr(x[j,i], start=1, stop=7) -->
+<!--   } -->
+<!-- } -->
+<!-- print( -->
+<!--   xtable( -->
+<!--     align='lrrrrr',  -->
+<!--     digits=c(0,  2,2,2,2,3), -->
+<!--     x, -->
+<!--     caption="Maximal response time model"),  -->
+<!--     caption.placement="top",  -->
+<!--   type='html') -->
+<!-- ``` -->
+
+
+<!-- ```{r tableErrorModelMaximal, results='asis', cache=TRUE, echo=FALSE} -->
+<!-- print( -->
+<!--   xtable( -->
+<!--     digits=3, summary( -->
+<!--       ac.lmer.2)$coefficients, -->
+<!--              caption="Maximal error rates model"), -->
+<!--              caption.placement="top", type='html') -->
+<!-- ``` -->
+
