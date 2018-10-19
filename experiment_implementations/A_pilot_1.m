@@ -15,7 +15,8 @@ try
     results_filename = strcat('output/subject', num2str(participant_number), '.dat');
     results_filename_practice = strcat('output/subject', num2str(participant_number),'Practice','.dat');
     % check for existing results file to prevent accidentally overwriting
-    % files from a previous participant (except for participant numbers >= 100, which can be used for test runs):
+    % files from a previous participant (except for participant numbers >= 100,
+    % which can be used for test runs):
     if participant_number < 100 && fopen(results_filename, 'rt') ~= -1
         error('A results file for a participant with that number already exists!\nRun the experiment again with a different participant number.');
     else
@@ -68,8 +69,7 @@ try
 
     errorFeedback = sprintf('WRONG!!!');
 
-    % set machine working hard
-    Priority(MaxPriority(w));
+
 
     % Do the acclimatisation trial
     acclimatisation_status = 0;
