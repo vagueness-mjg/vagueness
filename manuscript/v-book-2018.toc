@@ -2,20 +2,20 @@
 \contentsline {section}{\numberline {1.1}Introduction}{1}
 \contentsline {section}{\numberline {1.2}Related work}{3}
 \contentsline {section}{\numberline {1.3}Our Approach to the Problem}{5}
-\contentsline {section}{\numberline {1.4}Experiment 1: separating vagueness from instruction format}{7}
+\contentsline {section}{\numberline {1.4}Experiment 1: Separating vagueness from instruction format}{7}
 \contentsline {subsection}{\numberline {1.4.1}Hypotheses (Experiment 1)}{8}
 \contentsline {subsection}{\numberline {1.4.2}Results (Experiment 1)}{10}
 \contentsline {paragraph}{\textbf {Response times}}{10}
 \contentsline {paragraph}{\textbf {Borderline cases}}{11}
 \contentsline {subsection}{\numberline {1.4.3}Discussion (Experiment 1)}{12}
-\contentsline {section}{\numberline {1.5}Experiment 2: focus on instructions that contain numerals}{13}
+\contentsline {section}{\numberline {1.5}Experiment 2: Focus on instructions that contain numerals}{13}
 \contentsline {subsection}{\numberline {1.5.1}Hypotheses (Experiment 2)}{13}
 \contentsline {subsection}{\numberline {1.5.2}Results (Experiment 2)}{14}
 \contentsline {subsection}{\numberline {1.5.3}Discussion (Experiment 2)}{15}
-\contentsline {section}{\numberline {1.6}Experiment 3: focus on instructions that do not contain numerals}{15}
+\contentsline {section}{\numberline {1.6}Experiment 3: Focus on instructions that do not contain numerals}{15}
 \contentsline {subsection}{\numberline {1.6.1}Hypotheses (Experiment 3)}{17}
 \contentsline {subsection}{\numberline {1.6.2}Results (Experiment 3)}{17}
 \contentsline {subsection}{\numberline {1.6.3}Discussion (Experiment 3)}{18}
-\contentsline {section}{\numberline {1.7}Discussion of experiments 2 and 3}{18}
+\contentsline {section}{\numberline {1.7}Discussion of Experiments 2 and 3}{18}
 \contentsline {section}{\numberline {1.8}General Discussion}{19}
 \contentsline {section}{References}{23}
