@@ -226,8 +226,20 @@ function C_exp_1(SUBJECT)
         Screen('PutImage', w, screenshotForInstructions,[340 0 980 375]);
         DrawFormattedText(w, instructionText, instructionX, instructionY, WhiteIndex(w));
         Screen('Flip', w);
-        RestrictKeysForKbCheck([returnkey]);
-        KbWait();
+        RestrictKeysForKbCheck([returnkey, escapekey]);
+        KbReleaseWait;
+        start_time = GetSecs;
+        RestrictKeysForKbCheck([spacebar,escapekey]) % only allow spacebar to dismiss trialmessage or escapekey to abort
+        while (GetSecs - start_time) <= 10000
+         [keyIsDown, press_time, keyCode] = KbCheck;
+         if keyCode(spacebar) == 1
+           break;
+         end
+         if keyCode(escapekey) == 1
+           error("aborted by escape key");
+         end
+           WaitSecs(0.001);
+        end
         Screen(w,'FillRect',gray);
         Screen('Flip', w);
 
@@ -343,7 +355,7 @@ function C_exp_1(SUBJECT)
         foo=GetSecs;
         RestrictKeysForKbCheck(40,escapekey)
         while (GetSecs - foo) <= 10000
-             [keyIsDown, [], keyCode] = KbCheck;
+             [keyIsDown, endRT, keyCode] = KbCheck;
              if keyCode(escapekey)==1
                 error("aborted by escape key");
              end
