@@ -5,8 +5,15 @@ output:
   html_document:
     toc: yes
     theme: default
-    css: styles.css
+    code_folding: show
 ---  
+
+<style>
+.main-container{width: 1500px;max-width:2800px;}
+body{font-size: 13pt;}
+.r{font-size: 12px;}
+pre{font-size: 12px}
+</style>
 
 ```{r load libraries, message=FALSE, warning=FALSE}
 library(knitr)
@@ -107,6 +114,7 @@ ga2untrimmed = ggplot(data_for_plot, aes(rt_value)) +
 myg1 <- grid.arrange(ga1untrimmed, ga2untrimmed, nrow=2, top = textGrob("Untrimmed", gp = gpar(fontsize=20, font=3)))
 ```
 
+
 ### Trimmed at 0 ms and 10,000 ms
 
 ```{r, "make trimmed plot", fig.show='hide', warning=FALSE, echo=FALSE}
@@ -165,48 +173,63 @@ dat %>%
 Do a first lmer model. You can't put subit or gap over items because they are between-items.
 
 ```{r, "lmer 1 compare different rt metrics using the same model structure", warning=FALSE}
+# no interaction
 lmer1.ms  <- lmer(data=dat, rt_ms ~         vag + subit + quan + gap + side + (1|subject) + (1|item))
 lmer1.log <- lmer(data=dat, rt_log ~        vag + subit + quan + gap + side + (1|subject) + (1|item))
-lmer1.rcp <- lmer(data=dat, rt_reciprocal ~ vag + subit + quan + gap + side + (1|subject) + (1|item))
+# with interaction
+lmer2.ms <- lmer(data=dat, rt_ms ~          vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item))
+lmer2.log <- lmer(data=dat, rt_log ~        vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item))
 ```
 
 ```{r}
 models <- 
-rbind(
-  cbind(tidy(lmer1.ms),model="ms"), 
-  cbind(tidy(lmer1.log),model="log"), 
-  cbind(tidy(lmer1.rcp),model="rcp")
-)
-
-dwplot(models, vline = geom_vline(xintercept = 0)) + facet_wrap(~model, scales="free", ncol=1)
+  rbind(
+    cbind(tidy(lmer1.ms), model="ms no interaction"), 
+    cbind(tidy(lmer1.log), model="log no interaction"),
+    cbind(tidy(lmer2.ms), model="ms with interaction"), 
+    cbind(tidy(lmer2.log), model="log with interaction")
+  ) %>%
+  filter(effect == 'fixed', term != "(Intercept)") %>%
+  select(-group)
 ```
 
-```{r lmer on logrt, warning=FALSE}
-lmer2.log <- lmer(data=dat, rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item))
-```
 
-```{r, fig.width=6, fig.height=2}
-dwplot(lmer2.log %>% tidy() %>% filter(effect=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 1)) +
-  xlab("Coefficient") +
-  ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)") + 
-  theme(plot.title = element_text(size = 8), axis.title.x = element_text(size=8), axis.text.x = element_text(size=8))
+```{r, fig.height=12}
+dwplot(models, vline = geom_vline(xintercept = 0)) + facet_wrap(vars(model), scales="free", ncol=1, drop=TRUE)
 ```
 
 ```{r}
-lmer2.rcp <- lmer(data=dat, rt_reciprocal~subit*vag + (vag|subject) + (vag|item))
+summary(lmer2.log)$coefficients %>% kable() %>% kable_styling(full_width = FALSE, position='left')
 ```
 
-```{r}
-# lmer3 is closer to the original anova than lmer2
-lmer3 <- lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item))
-```
+<!-- Lmer2 includes the interaction of vagueness and subitizability. -->
 
-```{r, fig.width=6, fig.height=2}
-dwplot(lmer3 %>% tidy() %>% filter(effect=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 1)) +
-  xlab("Coefficient") + 
-  ggtitle("rt_reciprocal ~ vag * subit + quan + gap + (vag+subit|subject) + (vag|item)") + 
-  theme(plot.title = element_text(size = 8), axis.title.x = element_text(size=8), axis.text.x = element_text(size=8))
-```
+<!-- ```{r lmer on logrt, warning=FALSE} -->
+<!-- lmer2.log <- lmer(data=dat, rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)) -->
+<!-- ``` -->
+
+<!-- ```{r, fig.width=6, fig.height=2} -->
+<!-- dwplot(lmer2.log %>% tidy() %>% filter(effect=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 1)) + -->
+<!--   xlab("Coefficient") + -->
+<!--   ggtitle("rt_log ~ vag * subit + quan + gap + side + (1+vag|subject) + (1+vag|item)") +  -->
+<!--   theme(plot.title = element_text(size = 8), axis.title.x = element_text(size=8), axis.text.x = element_text(size=8)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- lmer2.rcp <- lmer(data=dat, rt_reciprocal~subit*vag + (vag|subject) + (vag|item)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # lmer3 is closer to the original anova than lmer2 -->
+<!-- lmer3 <- lmer(data=dat, rt_reciprocal~vag*subit+quan+gap + (vag+subit|subject) + (vag|item)) -->
+<!-- ``` -->
+
+<!-- ```{r, fig.width=6, fig.height=2} -->
+<!-- dwplot(lmer3 %>% tidy() %>% filter(effect=="fixed"), vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 1)) + -->
+<!--   xlab("Coefficient") +  -->
+<!--   ggtitle("rt_reciprocal ~ vag * subit + quan + gap + (vag+subit|subject) + (vag|item)") +  -->
+<!--   theme(plot.title = element_text(size = 8), axis.title.x = element_text(size=8), axis.text.x = element_text(size=8)) -->
+<!-- ``` -->
 
 
 <!-- ```{r} -->

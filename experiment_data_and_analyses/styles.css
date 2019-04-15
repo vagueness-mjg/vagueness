@@ -1,28 +1,32 @@
-  body{ /* Normal  */
+.main-container{
+  width: 1500px;
+  max-width:2800px;
+}
+body{ /* Normal  */
     font-size: 12px;
-  }
-  td {  /* Table  */
-    font-size: 8px;
-  }
-  h1.title {
-    font-size: 38px;
-  }
-  h1 { /* Header 1 */
-    font-size: 28px;
-  }
-  h2 { /* Header 2 */
-    font-size: 22px;
-  }
-  h3 { /* Header 3 */
-    font-size: 18px;
-  }
-  .r{ /* Code block */
+}
+td {  /* Table  */
+  font-size: 8px;
+}
+h1.title {
+  font-size: 38px;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+}
+h2 { /* Header 2 */
+  font-size: 22px;
+}
+h3 { /* Header 3 */
+  font-size: 18px;
+}
+.r{ /* Code block */
   font-size: 10px;
-  }
+}
   pre { /* Code block - determines code spacing between lines */
         /* This determines font size for output chunks (## chunks) */
-    font-size: 10px;
-  }
+  font-size: 10px;
+}
   table { /* no wrap table entries on their white space */
   white-space: nowrap;
 }
