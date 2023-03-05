@@ -11,7 +11,7 @@
 [html](https://mjgreen.github.io/vagueness/experiment_data_and_analyses/B_pilot_2.html); 
 [octave](https://github.com/mjgreen/vagueness/blob/master/experiment_implementations/B_pilot_2.m)
 * Experiment 1: 
-[data](https://github.com/mjgreen/vagueness/tree/master/experiment_data_and_analyses/C_exp_1_data)
+[data](https://github.com/mjgreen/vagueness/tree/master/experiment_data_and_analyses/C_exp_1_data); 
 [html](https://mjgreen.github.io/vagueness/experiment_data_and_analyses/C_exp_1.html); 
 [octave](https://github.com/mjgreen/vagueness/blob/master/experiment_implementations/C_exp_1.m)
 * Experiment 2: 
