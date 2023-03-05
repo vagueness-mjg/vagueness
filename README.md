@@ -23,4 +23,7 @@
 [html](https://mjgreen.github.io/vagueness/experiment_data_and_analyses/E_exp_3.html); 
 [octave](https://github.com/mjgreen/vagueness/blob/master/experiment_implementations/E_exp_3.m)
 * Manuscript 
-[(pre-final draft)](https://mjgreen.github.io/vagueness/manuscript/v-book-2018.pdf)
+    * whole book: [eBook](https://link.springer.com/book/10.1007/978-3-030-15931-3)
+    * chapter: [DOI](10.1007/978-3-030-15931-3_5)
+    * chapter: pre-final draft as [pdf](https://mjgreen.github.io/vagueness/manuscript/v-book-2018.pdf); 
+
