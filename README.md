@@ -4,10 +4,8 @@
 
 * Manuscript 
     * whole book: [eBook](https://link.springer.com/book/10.1007/978-3-030-15931-3)
-    * chapter: [DOI](10.1007/978-3-030-15931-3_5)
+    * chapter: [https://doi.org/10.1007/978-3-030-15931-3_5](https://doi.org/10.1007/978-3-030-15931-3_5)
     * chapter: pre-final draft as [pdf](https://mjgreen.github.io/vagueness/manuscript/v-book-2018.pdf) 
-
-
 
 * First pilot experiment: 
     * [data (.txt)](https://mjgreen.github.io/vagueness/experiment_data_and_analyses/A_pilot_1_data/data.txt) 
