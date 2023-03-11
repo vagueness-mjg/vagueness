@@ -2,12 +2,9 @@
 
 Green, M. J., & van Deemter, K. (2019). The Elusive Benefits of Vagueness: Evidence from Experiments. In: Dietz, R. (eds) _Vagueness and Rationality in Language Use and Cognition. Language, Cognition, and Mind, vol 5. 63-86, Springer, Cham._ [https://doi.org/10.1007/978-3-030-15931-3_5](https://doi.org/10.1007/978-3-030-15931-3_5)
 
-<!-- Green, M. J., & van Deemter, K. (2019). The elusive benefits of vagueness: Evidence from experiments. _Vagueness and rationality in language use and cognition_, 63-86. -->
-
 [Cloning](https://github.com/mjgreen/vagueness) or [downloading](https://github.com/mjgreen/vagueness/archive/master.zip) the repository gives you all the files needed for complete replication of our experiments, data analyses, and manuscript. The links below allow you to view selected parts without having to download the full repository.
 
 * Manuscript 
-    <!-- * book: [ISBN](https://link.springer.com/book/10.1007/978-3-030-15931-3) -->
     * [publisher version](https://doi.org/10.1007/978-3-030-15931-3_5)
     * [pre-final draft as pdf](https://mjgreen.github.io/vagueness/manuscript/v-book-2018.pdf) 
 
