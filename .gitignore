@@ -5,3 +5,13 @@
 .idea
 experiment_implementations/results/
 
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+notes-*/.obsidian/workspace*.json
+notes-*/.obsidian/cache/
+notes-*/.trash/
